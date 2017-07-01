@@ -1,0 +1,34 @@
+#COREWAR#
+
+
+
+
+.s		assembleur
+.cor	bytecode
+
+
+#ENCODAGE#
+
+
+	1 - Le code de l'instruction. (on le trouve dans op_tab dans op.c)
+		{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
+
+		T_DIR = 2 mais c est quoi bordel ?
+
+
+
+
+
+
+	functions :
+
+		sti : r1, r2, r3// r2 + r3 = r4    r4 = r1
+
+
+#CHAMPION#
+
+ Le champion le plus simple "The Imp".
+
+ 	mov 0,1;
+
+L'instruction mov se copie elle meme dans l'espace suivant.
