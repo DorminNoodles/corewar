@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/01 16:48:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/03 04:46:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,28 @@ void	init_p_nb(t_vm *vm)
 
 }
 
+char	*get_data(char *filename)
+{
+	int		fd;
+	char	buff[4096];
+
+	fd = 0;
+	fd = open(filename, O_RDONLY);
+	read(fd, buff, 4096);
+
+
+}
+
+void	write_player(t_vm *vm)
+{
+	char *data;
+
+	data = get_data("filename");
+
+
+
+}
+
 void	init_each_players(t_vm *vm)
 {
 	int nb;
@@ -42,6 +64,7 @@ void	init_each_players(t_vm *vm)
 	while (nb < vm->p_nb)
 	{
 		init_p_bag(vm, nb);
+		write_player(vm);
 		nb++;
 	}
 

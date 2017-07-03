@@ -32,3 +32,6 @@
  	mov 0,1;
 
 L'instruction mov se copie elle meme dans l'espace suivant.
+
+- Si dans le code du player on demande un acces a un registre inexistant l instruction ne semble pas fonctionner
+- Le premier registre == r1
