@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/03 04:46:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/06 04:24:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,51 @@ char	*get_data(char *filename)
 {
 	int		fd;
 	char	buff[4096];
+	char	*data;
+	int		ret;
 
 	fd = 0;
+	ret = 0;
 	fd = open(filename, O_RDONLY);
-	read(fd, buff, 4096);
+	if (fd < 0)
+		error("error : file\n");
+	ret = read(fd, buff, 4096);
+	data = ft_memalloc(ret + 1);
 
-
+	int i = 0;
+	while (i < ret)
+	{
+		printf("%02x ", (unsigned char)buff[i]);
+		i++;
+	}
+	printf("\n EOF \n\n");
+	ft_memcpy(data, buff, ret);
+	return (data);
 }
 
 void	write_player(t_vm *vm)
 {
 	char *data;
+	int i;
 
-	data = get_data("filename");
+	i = 0;
+	// i += 4; //magic
+	// i += 128 + 1; //prog_name
 
+	data = get_data("resources/corewar/champs/slider2.cor");
 
+	while (i < 4096)
+	{
+		printf("%02x ", (unsigned char)data[i]);
+		i++;
+	}
 
+	// while (i < 2048)
+	// {
+	// 	printf(" > %02x \n", (unsigned char)data[i]);
+	// 	i++;
+	// 	// printf("    \nfuck > %d    \n", (unsigned int)data[i + 1]);
+	// }
 }
 
 void	init_each_players(t_vm *vm)
