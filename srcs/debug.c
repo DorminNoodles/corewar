@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/01 17:40:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/10 18:36:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ void	show_mem(t_vm *vm)
 	int i;
 	i = 0;
 
-	*(char*)vm->mem = 42;
-
 	while (i < MEM_SIZE)
 	{
-		printf("%x ", *((char*)vm->mem + i));
+		printf("%02x ", *((unsigned char*)vm->mem + i));
 		i++;
 	}
 }
