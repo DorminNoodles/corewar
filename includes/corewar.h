@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/10 19:43:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/11 13:59:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_vm
 {
 	int		p_nb;
 	void	*mem;
-	void	*op_tab[20];
+	void	(*op_tab[20])(void *a1, void *a2, void *a3);
 	t_bag	*p_bag;
 
 }	t_vm;

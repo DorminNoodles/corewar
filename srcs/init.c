@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/10 19:29:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/11 15:36:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,7 @@ char	*get_data(char *filename)
 	data = ft_memalloc(ret + 1);
 
 	int i = 0;
-	// while (i < ret)
-	// {
-	// 	printf("%02x ", (unsigned char)buff[i]);
-	// 	i++;
-	// }
-	// printf("\n EOF \n\n");
+
 	ft_memcpy(data, buff, ret);
 	return (data);
 }
@@ -106,11 +101,6 @@ void	write_player(t_vm *vm)
 		i++;
 		j++;
 	}
-
-
-	// printf("\n EOF \n\n");
-
-
 }
 
 void	init_each_players(t_vm *vm)

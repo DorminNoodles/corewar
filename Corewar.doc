@@ -47,8 +47,8 @@ Chaque instruction est encode par
 	r1,r3,34 donne l’octet de codage 0b01011100, soit 0x5C
 
 	un registre == 01;
-	un nombre == 11;
-	un nombre avec % == 1 ou 10 ?
+	un nombre indirect == 11;
+	un nombre direct avec % == 1 ou 10 ?
 
 3 - Les paramètres, directement, selon le modèle suivant :
 	r2,23,%34 donne l’OCP 0x78 puis 0x02 0x00 0x17 0x00 0x00 0x00 0x22
@@ -63,3 +63,6 @@ Chaque instruction est encode par
 	23: 0x00, 0x17
 	45: 0x00, 0x2d
 	%34: 0x00, 0x00, 0x00, 0x22
+
+- Un %x nombre direct sur 2 octets, des short donc...
+- Un nombre indirect est aussi sur 2 octets en fait tous les nombres sont sur 2 octets
