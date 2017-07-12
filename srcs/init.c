@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/11 15:36:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/12 22:23:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	init_p_nb(t_vm *vm)
 
 
 }
+
 
 char	*get_data(char *filename)
 {
@@ -73,6 +74,7 @@ int		get_prog_size(char *data)
 	return (ret);
 }
 
+//c est un fill_mem, on remplit la memoire du code du player
 void	write_player(t_vm *vm)
 {
 	char *data;
