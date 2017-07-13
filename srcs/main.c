@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/12 23:05:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/13 17:36:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,35 @@ void	get_bytes_format(t_vm *vm, int player)
 
 }
 
-void	instructoid(t_vm *vm, char *data, int player)
+// void	instructoid(t_vm *vm, char *data, int player)
+// {
+// 	printf("player : %d   -> %#04x\n", player, (unsigned char)*data);
+//
+// 	if(vm->p_bag[player].pc + 1 < MEM_SIZE - 1)
+// 		vm->p_bag[player].pc++;
+// 	else
+// 		vm->p_bag[player].pc = 0;
+//
+// 	//take the instruction opcode
+//
+// 	get_bytes_format(vm, player);
+//
+// }
+
+void	move_pc(t_vm *vm, int player)
 {
-
-	printf("player : %d   -> %#04x\n", player, (unsigned char)*data);
-
-	if(vm->p_bag[player].pc + 1 < MEM_SIZE - 1)
+	if (vm->p_bag[player].pc + 1 < MEM_SIZE - 1)
 		vm->p_bag[player].pc++;
 	else
 		vm->p_bag[player].pc = 0;
+}
 
-	//take the instruction opcode
+void	fill_inst(t_vm *vm, int player, char *data)
+{
+	int inst_chunk;
 
-	get_bytes_format()
+	inst_chunk = vm->p_bag[player].inst_chunk;
+	vm->p_bag[player].inst_buff[inst_chunk] =
 
 }
 
@@ -67,27 +83,17 @@ void	run(t_vm *vm)
 {
 	int i;
 
-	// printf("%d\n", vm->mem[0]);
-
-	while (1)
+	while (1)// si il n y a plus qu un seul player en vie stop :)
 	{
-		i = 1;
+		i = 0;
 		while (i < vm->p_nb)
 		{
-			//printf("%s\n", vm->mem);
-			instructoid(vm, &vm->mem[vm->p_bag[i].pc], i);
+			move_pc(vm, i);
+			fill_inst(vm, player, &vm->mem[p_bag[i].pc]);
+			//instructoid(vm, &vm->mem[vm->p_bag[i].pc], i);
 			i++;
 		}
 	}
-	// while (1)
-	// {
-	// 	i = 0;
-	// 	while (i < vm->p_nb)
-	// 	{
-	//
-	// 		i++;
-	// 	}
-	// }
 }
 
 void	function_de_test(void *a1, void *a2, void *a3)
@@ -98,12 +104,11 @@ void	function_de_test(void *a1, void *a2, void *a3)
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
-	// int		*op_tab[20];
 
 
 	vm.op_tab[0] =  &function_de_test;
 
-	check_param(argc, argv);// check des parametres
+	check_param(argc, argv);//check des parametres
 	init_vm(&vm);//initialisation de la machine virtuelle
 
 // -------------------  TEST
@@ -112,7 +117,6 @@ int		main(int argc, char **argv)
 	// (op_table[0]) = &function_de_test;
 	// (op_table[0])();
 	// (*op_tab[0]) = function_de_test;
-	//
 	// printf("\n   %d  \n\n\n", (op_tab));
 
 
@@ -122,13 +126,12 @@ int		main(int argc, char **argv)
 
 
 
-
-
-
-
-
 	run(&vm);//lancement du combat
 	show_mem(&vm);
 
 	return (0);
 }
+
+
+// Faire un instruction buffer et un instruction_is_complete pour voir si on run l instruction ou pas
+// je dois quand meme savoir ce que je dois chercher ensuite (dans le prochain octet)

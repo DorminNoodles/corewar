@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/12 11:11:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/13 17:13:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,23 @@
 // #define PC;
 
 
+typedef struct s_inst
+{
+	char	name;
+	char	fmt;
+	short	ar1;
+	short	ar2;
+	short	ar3;
+
+}
+
 typedef struct s_bag
 {
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	char	carry;// je sais plus
 	void	*r;//la on garde les registres en void* car ca taille est defini par une macro
-
-
+	int		in_inst;
 }	t_bag;
 
 typedef struct s_vm
