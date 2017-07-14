@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/13 17:13:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/14 14:37:57 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,32 @@
 #define MEM_SIZE 4096
 // #define PC;
 
+#define INST_IDLE 0
+#define INST_NAME 1
+#define INST_OCP 2
+#define INST_ARG 2
+
 
 typedef struct s_inst
 {
 	char	name;
 	char	fmt;
-	short	ar1;
+	char	ar1;
 	short	ar2;
 	short	ar3;
+	struct s_inst	*inst;
 
-}
+}	t_inst;
 
 typedef struct s_bag
 {
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
+	int		state;
 	char	carry;// je sais plus
 	void	*r;//la on garde les registres en void* car ca taille est defini par une macro
 	int		in_inst;
+	t_inst	*cur_inst;
 }	t_bag;
 
 typedef struct s_vm
@@ -53,7 +61,6 @@ typedef struct s_vm
 	char	*mem;
 	void	(*op_tab[20])(void *a1, void *a2, void *a3);
 	t_bag	*p_bag;
-
 }	t_vm;
 
 

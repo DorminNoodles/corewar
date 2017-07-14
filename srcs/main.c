@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/13 17:36:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/14 14:41:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	get_bytes_format(t_vm *vm, int player)
 
 }
 
+
+
 // void	instructoid(t_vm *vm, char *data, int player)
 // {
 // 	printf("player : %d   -> %#04x\n", player, (unsigned char)*data);
@@ -70,12 +72,16 @@ void	move_pc(t_vm *vm, int player)
 		vm->p_bag[player].pc = 0;
 }
 
-void	fill_inst(t_vm *vm, int player, char *data)
-{
-	int inst_chunk;
+// void	fill_inst(t_vm *vm, int player, char *data)
+// {
+// 	int		pos;
+//
+//
+// }
 
-	inst_chunk = vm->p_bag[player].inst_chunk;
-	vm->p_bag[player].inst_buff[inst_chunk] =
+void	stock_inst()
+{
+
 
 }
 
@@ -89,7 +95,10 @@ void	run(t_vm *vm)
 		while (i < vm->p_nb)
 		{
 			move_pc(vm, i);
-			fill_inst(vm, player, &vm->mem[p_bag[i].pc]);
+			if (is_opcode(vm->mem[vm->p_bag->pc]))
+			{
+				stock_inst();
+			}
 			//instructoid(vm, &vm->mem[vm->p_bag[i].pc], i);
 			i++;
 		}
