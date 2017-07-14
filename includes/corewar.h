@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/14 14:37:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/14 16:10:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ typedef struct s_inst
 	char	ar1;
 	short	ar2;
 	short	ar3;
-	struct s_inst	*inst;
-
+	int		cooldown;
 }	t_inst;
 
 typedef struct s_bag

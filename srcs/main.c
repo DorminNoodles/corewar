@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/14 14:41:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/14 16:36:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,56 @@ void	move_pc(t_vm *vm, int player)
 //
 // }
 
-void	stock_inst()
+void	stock_inst(t_bag *bag, char data)
 {
-
-
+	bag->cur_inst = (t_inst*)ft_memalloc(sizeof(t_inst));
+	ft_bzero(bag->cur_inst, sizeof(bag->cur_inst));
+	bag->cur_inst->name = data;
+	bag->cur_inst->cooldown = 50;
 }
 
 void	run(t_vm *vm)
 {
-	int i;
+	int		player;
+	t_bag	*p_cur;
 
 	while (1)// si il n y a plus qu un seul player en vie stop :)
 	{
-		i = 0;
-		while (i < vm->p_nb)
+		player = 0;
+		while (player < vm->p_nb)
 		{
-			move_pc(vm, i);
-			if (is_opcode(vm->mem[vm->p_bag->pc]))
+			p_cur = vm->p_bag[player];
+
+			if (p_cur->cur_inst) //si une instruction est deja en buffer
 			{
-				stock_inst();
+				if (p_cur->cur_inst->cooldown > 0)
+				{
+					p_cur->cur_inst->cooldown--;
+
+				}
+				// if (is_opcode(vm->mem[vm->p_bag->pc]))
+				// {
+				// 	stock_inst(&vm->p_bag[player], vm->mem[vm->p_bag->pc]);
+				// }
+				// else
+				// {
+				//
+				// }
 			}
-			//instructoid(vm, &vm->mem[vm->p_bag[i].pc], i);
-			i++;
+			else //sinon il n y a pas d inst en buffer
+			{//on va chercher si opcode
+				if (is_opcode(vm->mem[p_cur->pc % MEM_SIZE]))
+				{
+					stock_inst(p_cur, vm->mem[p_cur->pc % MEM_SIZE]);
+				}
+				else //sinon pas opcode move pc
+				{
+					p_cur->pc++;
+				}
+			}
+
+				// move_pc(vm, player);
+			player++;
 		}
 	}
 }

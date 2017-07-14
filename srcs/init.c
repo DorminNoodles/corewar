@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/14 13:10:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/14 16:12:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_p_bag(t_vm *vm, int nb)
 	vm->p_bag->id = nb;
 	vm->p_bag->pc = 0;
 	vm->p_bag->state = 1;
-	vm->p_bag->cur_inst = ft_memalloc(sizeof(t_inst));
+	vm->p_bag->cur_inst = NULL;
 
 }
 
