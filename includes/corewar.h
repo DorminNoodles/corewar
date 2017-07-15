@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/14 16:10:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/15 15:14:47 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <time.h>
 #include "libft.h"
 #include "stdlib.h"
 #include "stdio.h"
@@ -32,14 +33,21 @@
 #define INST_OCP 2
 #define INST_ARG 2
 
+#define T_REG 1
+#define T_DIR 2
+#define T_IND 3
+
 
 typedef struct s_inst
 {
 	char	name;
-	char	fmt;
-	char	ar1;
-	short	ar2;
-	short	ar3;
+	char	ocp;
+	int		ar1;
+	int		ar2;
+	int		ar3;
+	int		ar1_typ;
+	int		ar2_typ;
+	int		ar3_typ;
 	int		cooldown;
 }	t_inst;
 
@@ -57,6 +65,7 @@ typedef struct s_bag
 typedef struct s_vm
 {
 	int		p_nb;
+	int		cycle;
 	char	*mem;
 	void	(*op_tab[20])(void *a1, void *a2, void *a3);
 	t_bag	*p_bag;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/14 16:12:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/15 09:56:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	init_vm(t_vm *vm)
 {//appel de toutes les fonctions d init
 	init_mem(vm);
 	init_each_players(vm);
+	vm->cycle = 0;
 }
 
 void	init_op_table(t_vm *vm)
