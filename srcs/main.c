@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/15 18:53:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/16 22:53:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,6 @@ void	get_bytes_format(t_vm *vm, int player)
 	vm->p_bag[player].pc++;
 }
 
-// void	instructoid(t_vm *vm, char *data, int player)
-// {
-// 	printf("player : %d   -> %#04x\n", player, (unsigned char)*data);
-//
-// 	if(vm->p_bag[player].pc + 1 < MEM_SIZE - 1)
-// 		vm->p_bag[player].pc++;
-// 	else
-// 		vm->p_bag[player].pc = 0;
-//
-// 	//take the instruction opcode
-//
-// 	get_bytes_format(vm, player);
-//
-// }
-
 void	move_pc(t_vm *vm, int player)
 {
 	if (vm->p_bag[player].pc + 1 < MEM_SIZE - 1)
@@ -84,11 +69,9 @@ void	stock_inst(t_bag *bag, char data)
 	bag->cur_inst->cooldown = 50;
 }
 
-void		run_op(t_vm *vm, t_inst *op)
+void		run_op(t_vm *vm, t_inst *op, int player)
 {
-
-
-
+	vm->op_tab[op->name](vm, op, player);
 }
 
 int			need_ocp()
@@ -128,7 +111,7 @@ char		get_type_ocp(int pos, char ocp)
 
 int			get_arg(t_vm *vm, int num, char type, int player)
 {
-	t_bag *bag;
+	t_bag	*bag;
 	int		ret;
 
 	ret = 0;
@@ -144,9 +127,11 @@ int			get_arg(t_vm *vm, int num, char type, int player)
 	if (type == T_DIR)
 	{
 		bag->pc++;
-		ret = (int)vm->mem[bag->pc];
+		ret = (unsigned char)vm->mem[bag->pc];
 		ret = ret << 8;
-		ret = ret | (int)vm->mem[bag->pc];
+		printf("ret :> %d\n", ret);
+		bag->pc++;
+		ret = ret | (unsigned char)vm->mem[bag->pc];
 		return(ret);
 	}
 	return (0);
@@ -171,23 +156,32 @@ void		fill_cur_op(t_vm *vm, t_inst *op, int player)
 
 		printf("ar2 => %d\n", op->ar2);
 
+		printf("player pc-> %d\n", vm->p_bag[player].pc);
+
+		// printf("mem --> %x\n", vm->mem[vm->p_bag[player].pc + 1]);
 		op->ar3 = get_arg(vm, 3, get_type_ocp(3, op->ocp), player);
-		printf("ar3 => %d\n", op->ar2);
+
+		printf("ar3 => %d\n", op->ar3);
 	}
+}
+
+void	remove_op(t_bag *bag)
+{
+	bag->cur_inst = NULL;
 }
 
 void	run(t_vm *vm)
 {
 	int		player;
 	t_bag	*p_cur;
+	int test = 150;
 
-	while (1)// si il n y a plus qu un seul player en vie stop :)
+	while (test)// si il n y a plus qu un seul player en vie stop :)
 	{
 		player = 0;
 		while (player < vm->p_nb)
 		{
 			p_cur = &vm->p_bag[player];
-
 			if (p_cur->cur_inst) //si une instruction est deja en buffer
 			{
 				if (p_cur->cur_inst->cooldown > 0)
@@ -197,7 +191,10 @@ void	run(t_vm *vm)
 				else
 				{
 					fill_cur_op(vm, p_cur->cur_inst, player);
-					run_op(vm, vm->p_bag[player].cur_inst);
+					printf("op > %d\n", p_cur->cur_inst->name);
+					run_op(vm, vm->p_bag[player].cur_inst, player);
+					printf("Here\n");
+					remove_op(&vm->p_bag[player]);
 				}
 			}
 			else //sinon il n y a pas d inst en buffer
@@ -216,26 +213,64 @@ void	run(t_vm *vm)
 		vm->cycle++;
 		printf("cycle : %d\n", vm->cycle);
 		usleep(12000);
+		test--;
 	}
 }
 
-void	function_de_test(void *a1, void *a2, void *a3)
+void	sti(t_vm *vm, t_inst *op, int player)
+{
+	int addr;
+	int reg;
+	t_bag *bag;
+
+	bag = &vm->p_bag[player];
+	addr = op->ar2 + op->ar3;
+	reg = op->ar1;
+
+	printf("ADDR = %d = %d + %d\n", addr, op->ar2, op->ar3);
+	printf("ADDR = %d\n", addr % MEM_SIZE);
+	printf("Player = %d\n", player);
+	printf("Reg = %x\n", bag->reg[reg]);
+	// printf("REG = %d\n", bag->reg[reg]);
+	// printf("REG = %d")
+	vm->mem[addr % MEM_SIZE] = bag->reg[reg];
+	vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>8;
+	vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>16;
+	vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg] >>24;
+
+}
+
+void	and(t_vm *vm, t_inst *op, int player)
+{
+	int		ret;
+	t_bag	*bag;
+
+	bag = &vm->p_bag[player];
+	ret = op->ar1 & op->ar2;
+	bag->reg[op->ar3] = ret;
+}
+
+
+void	function_de_test(t_vm *vm, void *a1, void *a2, void *a3)
 {
 	printf("function de merde\n");
 }
+
 
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
-	vm.op_tab[0] =  &function_de_test;
+	// vm.op_tab[0] =  &function_de_test;
+	vm.op_tab[11] =  &sti;
+	vm.op_tab[06] =  &and;
 
 	check_param(argc, argv);//check des parametres
 	init_vm(&vm);//initialisation de la machine virtuelle
 
 // -------------------  TEST
 
-	vm.op_tab[0](NULL, NULL, NULL);
+	//vm.op_tab[0](NULL, NULL, NULL);
 	// (op_table[0]) = &function_de_test;
 	// (op_table[0])();
 	// (*op_tab[0]) = function_de_test;

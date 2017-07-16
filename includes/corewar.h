@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/15 15:14:47 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/16 17:06:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 
-#define REG_NUMBER 2
+#define REG_NUMBER 16
 #define REG_SIZE 1
 #define MEM_SIZE 4096
 // #define PC;
@@ -57,7 +57,7 @@ typedef struct s_bag
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
 	char	carry;// je sais plus
-	void	*r;//la on garde les registres en void* car ca taille est defini par une macro
+	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		in_inst;
 	t_inst	*cur_inst;
 }	t_bag;
@@ -67,7 +67,7 @@ typedef struct s_vm
 	int		p_nb;
 	int		cycle;
 	char	*mem;
-	void	(*op_tab[20])(void *a1, void *a2, void *a3);
+	void	(*op_tab[20])(struct s_vm *vm, t_inst *op, int player);
 	t_bag	*p_bag;
 }	t_vm;
 

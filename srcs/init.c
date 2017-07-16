@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/15 09:56:37 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/16 19:42:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	init_mem(t_vm *vm)
 
 void	init_p_bag(t_vm *vm, int nb)
 {//ca c est les donnes propre a un joueur son "sac"
+	int i;
+
+	i = 0;
 	if(!(vm->p_bag = (t_bag*)ft_memalloc(sizeof(t_bag) * vm->p_nb)))
 		error("error : malloc failed\n");
 
@@ -28,6 +31,13 @@ void	init_p_bag(t_vm *vm, int nb)
 	vm->p_bag->state = 1;
 	vm->p_bag->cur_inst = NULL;
 
+	while (i < vm->p_nb)
+	{
+		vm->p_bag[i].reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER);
+		vm->p_bag[i].reg[1] = (i + 1) * -1;
+//reg1 prend le num du player mais en negatif.....
+		i++;
+	}
 }
 
 void	init_p_nb(t_vm *vm)
