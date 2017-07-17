@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/16 19:42:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/17 21:41:42 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_p_bag(t_vm *vm, int nb)
 	vm->p_bag->id = nb;
 	vm->p_bag->pc = 0;
 	vm->p_bag->state = 1;
-	vm->p_bag->cur_inst = NULL;
+	vm->p_bag->cur_op = NULL;
 
 	while (i < vm->p_nb)
 	{
@@ -129,15 +129,33 @@ void	init_each_players(t_vm *vm)
 
 }
 
+
+void	init_optab(t_vm *vm)
+{
+	t_optab		*optab;
+
+	optab = (t_optab*)ft_memalloc(sizeof(t_optab) * 17);
+
+	vm->optab[0].func = NULL;
+	vm->optab[0].nb_arg = 0;
+	vm->optab[0].direct = 2;
+	vm->optab[2].func = &ld;
+	vm->optab[2].nb_arg = 2;
+	vm->optab[2].direct = 4;
+	vm->optab[6].func = &and;
+	vm->optab[6].nb_arg = 3;
+	vm->optab[6].direct = 2;
+	vm->optab[11].func = &sti;
+	vm->optab[11].nb_arg = 3;
+	vm->optab[11].direct = 2;
+
+	// vm->optab = optab;
+}
+
 void	init_vm(t_vm *vm)
 {//appel de toutes les fonctions d init
 	init_mem(vm);
 	init_each_players(vm);
+	init_optab(vm);
 	vm->cycle = 0;
-}
-
-void	init_op_table(t_vm *vm)
-{
-
-
 }

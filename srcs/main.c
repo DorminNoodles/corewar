@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/16 22:53:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/17 21:46:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@ int		shrt_value(char *tab)
 
 int		is_opcode(char data)
 {
-	printf("WARBOY\n");
-	if (data < 17 && data > 0)
+	if (data == 11)
 		return (1);
-	else
-		return (0);
+	if (data == 06)
+		return (1);
+	if (data == 02)
+		return (1);
 
+	return (0);
+	// if (data < 17 && data > 0)
+	// 	return (1);
+	// else
+	// 	return (0);
 }
 
 void	get_bytes_format(t_vm *vm, int player)
@@ -54,24 +60,18 @@ void	move_pc(t_vm *vm, int player)
 		vm->p_bag[player].pc = 0;
 }
 
-// void	fill_inst(t_vm *vm, int player, char *data)
-// {
-// 	int		pos;
-//
-//
-// }
-
 void	stock_inst(t_bag *bag, char data)
 {
-	bag->cur_inst = (t_inst*)ft_memalloc(sizeof(t_inst));
-	ft_bzero(bag->cur_inst, sizeof(bag->cur_inst));
-	bag->cur_inst->name = data;
-	bag->cur_inst->cooldown = 50;
+	bag->cur_op = (t_inst*)ft_memalloc(sizeof(t_inst));
+	ft_bzero(bag->cur_op, sizeof(bag->cur_op));
+	printf("######### ###### data : %d\n", data);
+	bag->cur_op->code = data;
+	bag->cur_op->cooldown = 20;
 }
 
 void		run_op(t_vm *vm, t_inst *op, int player)
 {
-	vm->op_tab[op->name](vm, op, player);
+	vm->optab[op->code].func(vm, op, player);
 }
 
 int			need_ocp()
@@ -112,54 +112,92 @@ char		get_type_ocp(int pos, char ocp)
 int			get_arg(t_vm *vm, int num, char type, int player)
 {
 	t_bag	*bag;
+	t_inst	*op;
 	int		ret;
+	int		direct;
 
 	ret = 0;
 	bag = &vm->p_bag[player];
+	direct = vm->optab[bag->cur_op->code].direct;
+
+	printf("############### OP->direct : %d	\n", direct);
 
 	printf("type of arg >> %d\n", type);
+
 	if (type == T_REG)
 	{
 		bag->pc++;
 		ret = (int)vm->mem[bag->pc];
 		return (ret);
 	}
-	if (type == T_DIR)
+	if (type == T_DIR && direct == 2)
 	{
 		bag->pc++;
 		ret = (unsigned char)vm->mem[bag->pc];
 		ret = ret << 8;
-		printf("ret :> %d\n", ret);
+
 		bag->pc++;
 		ret = ret | (unsigned char)vm->mem[bag->pc];
+		// if ()
+		return(ret);
+	}
+	if (type == T_DIR && direct == 4)
+	{
+		bag->pc++;
+		ret = (unsigned char)vm->mem[bag->pc];
+		ret = ret << 8;
+
+		bag->pc++;
+		ret = ret | (unsigned char)vm->mem[bag->pc];
+		ret = ret << 8;
+
+		bag->pc++;
+		ret = ret | (unsigned char)vm->mem[bag->pc];
+		ret = ret << 8;
+
+		bag->pc++;
+		ret = ret | (unsigned char)vm->mem[bag->pc];
+		ret = ret << 8;
+		// if ()
 		return(ret);
 	}
 	return (0);
 }
 
+int		get_arg_num(t_vm *vm, int opcode)
+{
+	return (vm->optab[opcode].nb_arg);
+}
+
 void		fill_cur_op(t_vm *vm, t_inst *op, int player)
 {
+	printf("FILL_CUR_OP\n");
 	int pos;
 
 	if (need_ocp())
 	{
 		op->ocp = get_ocp(vm, player);
-
 		printf("ocp > %d\n", op->ocp);
 
-		op->ar1 = get_arg(vm, 1, get_type_ocp(1, op->ocp), player);
+
+		printf("GET ARG NUM %d\n", get_arg_num(vm, op->code));
+
+		if (get_arg_num(vm, op->code) >= 1)
+			op->ar1 = get_arg(vm, 1, get_type_ocp(1, op->ocp), player);
+		printf("FUCKKKKKKKKKKKKKKKKKKK\n");
 
 		printf("ar1 => %d\n", op->ar1);
 		printf("ocp > %d\n", op->ocp);
 
-		op->ar2 = get_arg(vm, 2, get_type_ocp(2, op->ocp), player);
+		if (get_arg_num(vm, op->code) >= 2)
+			op->ar2 = get_arg(vm, 2, get_type_ocp(2, op->ocp), player);
 
 		printf("ar2 => %d\n", op->ar2);
 
 		printf("player pc-> %d\n", vm->p_bag[player].pc);
 
-		// printf("mem --> %x\n", vm->mem[vm->p_bag[player].pc + 1]);
-		op->ar3 = get_arg(vm, 3, get_type_ocp(3, op->ocp), player);
+		if (get_arg_num(vm, op->code) >= 3)
+			op->ar3 = get_arg(vm, 3, get_type_ocp(3, op->ocp), player);
 
 		printf("ar3 => %d\n", op->ar3);
 	}
@@ -167,14 +205,14 @@ void		fill_cur_op(t_vm *vm, t_inst *op, int player)
 
 void	remove_op(t_bag *bag)
 {
-	bag->cur_inst = NULL;
+	bag->cur_op = NULL;
 }
 
 void	run(t_vm *vm)
 {
 	int		player;
 	t_bag	*p_cur;
-	int test = 150;
+	int test = 80;
 
 	while (test)// si il n y a plus qu un seul player en vie stop :)
 	{
@@ -182,18 +220,17 @@ void	run(t_vm *vm)
 		while (player < vm->p_nb)
 		{
 			p_cur = &vm->p_bag[player];
-			if (p_cur->cur_inst) //si une instruction est deja en buffer
+			if (p_cur->cur_op) //si une instruction est deja en buffer
 			{
-				if (p_cur->cur_inst->cooldown > 0)
+				if (p_cur->cur_op->cooldown > 0)
 				{
-					p_cur->cur_inst->cooldown--;
+					p_cur->cur_op->cooldown--;
 				}
 				else
 				{
-					fill_cur_op(vm, p_cur->cur_inst, player);
-					printf("op > %d\n", p_cur->cur_inst->name);
-					run_op(vm, vm->p_bag[player].cur_inst, player);
-					printf("Here\n");
+					printf("RUN OP\n");
+					fill_cur_op(vm, p_cur->cur_op, player);
+					run_op(vm, vm->p_bag[player].cur_op, player);
 					remove_op(&vm->p_bag[player]);
 				}
 			}
@@ -201,6 +238,7 @@ void	run(t_vm *vm)
 			{//on va chercher si opcode
 				if (is_opcode(vm->mem[p_cur->pc % MEM_SIZE]))
 				{
+					printf(" -> OPCODE   :  %d\n", vm->mem[p_cur->pc % MEM_SIZE]);
 					stock_inst(p_cur, vm->mem[p_cur->pc % MEM_SIZE]);
 				}
 				else //sinon pas opcode move pc
@@ -212,36 +250,14 @@ void	run(t_vm *vm)
 		}
 		vm->cycle++;
 		printf("cycle : %d\n", vm->cycle);
-		usleep(12000);
+		usleep(10000);
 		test--;
 	}
 }
 
-void	sti(t_vm *vm, t_inst *op, int player)
-{
-	int addr;
-	int reg;
-	t_bag *bag;
-
-	bag = &vm->p_bag[player];
-	addr = op->ar2 + op->ar3;
-	reg = op->ar1;
-
-	printf("ADDR = %d = %d + %d\n", addr, op->ar2, op->ar3);
-	printf("ADDR = %d\n", addr % MEM_SIZE);
-	printf("Player = %d\n", player);
-	printf("Reg = %x\n", bag->reg[reg]);
-	// printf("REG = %d\n", bag->reg[reg]);
-	// printf("REG = %d")
-	vm->mem[addr % MEM_SIZE] = bag->reg[reg];
-	vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>8;
-	vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>16;
-	vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg] >>24;
-
-}
-
 void	and(t_vm *vm, t_inst *op, int player)
 {
+	printf(">>>>>ENTER AND<<<<<\n");
 	int		ret;
 	t_bag	*bag;
 
@@ -251,19 +267,20 @@ void	and(t_vm *vm, t_inst *op, int player)
 }
 
 
+
 void	function_de_test(t_vm *vm, void *a1, void *a2, void *a3)
 {
 	printf("function de merde\n");
 }
-
 
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
 	// vm.op_tab[0] =  &function_de_test;
-	vm.op_tab[11] =  &sti;
-	vm.op_tab[06] =  &and;
+	// vm.optab[11].func =  &sti;
+	// vm.optab[6].func =  &and;
+	// vm.optab[2].func =  &ld;
 
 	check_param(argc, argv);//check des parametres
 	init_vm(&vm);//initialisation de la machine virtuelle
@@ -278,10 +295,9 @@ int		main(int argc, char **argv)
 
 // --------------------- TEST END
 
-
-
-
 	run(&vm);//lancement du combat
+
+	printf(">>>>>>%d\n", vm.p_bag[0].reg[1]);
 	show_mem(&vm);
 
 	return (0);

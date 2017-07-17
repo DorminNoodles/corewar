@@ -2,7 +2,10 @@ VM_NAME = corewar
 SRC =		main.c						\
 			init.c						\
 			error.c						\
-			debug.c
+			debug.c						\
+			sti.c						\
+			ld.c
+
 SRCS = $(addprefix srcs/, $(SRC))
 INC = -I includes -I libft/includes
 OBJ = $(SRC:.c=.o)

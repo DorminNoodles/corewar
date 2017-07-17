@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/16 17:06:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/17 21:47:07 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@
 #define T_DIR 2
 #define T_IND 3
 
+typedef struct s_vm t_vm;
 
 typedef struct s_inst
 {
-	char	name;
+	char	code;
 	char	ocp;
 	int		ar1;
 	int		ar2;
@@ -59,22 +60,33 @@ typedef struct s_bag
 	char	carry;// je sais plus
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		in_inst;
-	t_inst	*cur_inst;
+	t_inst	*cur_op;
 }	t_bag;
+
+typedef struct s_optab
+{
+	void	(*func)(t_vm *vm, t_inst *op, int player);
+	int		nb_arg;
+	int		direct;
+
+}	t_optab;
 
 typedef struct s_vm
 {
 	int		p_nb;
 	int		cycle;
 	char	*mem;
-	void	(*op_tab[20])(struct s_vm *vm, t_inst *op, int player);
+	//void	(*op_tab[20])(struct s_vm *vm, t_inst *op, int player);
+
+	t_optab	optab[17];
 	t_bag	*p_bag;
 }	t_vm;
 
-
 void	init_vm(t_vm *vm);
 void	error(char *str);
-
+void	and(t_vm *vm, t_inst *op, int player);
+void	ld(t_vm *vm, t_inst *op, int player);
+void	sti(t_vm *vm, t_inst *op, int player);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
