@@ -4,7 +4,9 @@ SRC =		main.c						\
 			error.c						\
 			debug.c						\
 			sti.c						\
-			ld.c
+			ld.c						\
+			live.c						\
+			add.c
 
 SRCS = $(addprefix srcs/, $(SRC))
 INC = -I includes -I libft/includes

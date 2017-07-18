@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/17 20:59:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/18 19:06:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	sti(t_vm *vm, t_inst *op, int player)
 	printf("Registre Number = %d\n", op->ar1);
 	printf("Reg = %x\n", bag->reg[reg]);
 
-	vm->mem[addr % MEM_SIZE] = bag->reg[reg];
-	vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>8;
-	vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>16;
-	vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg] >>24;
+	vm->mem[addr % MEM_SIZE] = bag->reg[reg] >>24;
+	vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>16;
+	vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>8;
+	vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg];
 }

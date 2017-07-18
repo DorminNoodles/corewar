@@ -66,3 +66,5 @@ Chaque instruction est encode par
 
 - Un %x nombre direct sur 2 octets, des short donc...
 - Un nombre indirect est aussi sur 2 octets en fait tous les nombres sont sur 2 octets
+
+- Cooldown sur les fonctions

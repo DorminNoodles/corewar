@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/17 21:46:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/18 21:06:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ int		is_opcode(char data)
 		return (1);
 	if (data == 02)
 		return (1);
-
+	if (data == 01)
+		return (1);
+	if (data == 04)
+		return (1);
 	return (0);
-	// if (data < 17 && data > 0)
-	// 	return (1);
-	// else
-	// 	return (0);
 }
 
 void	get_bytes_format(t_vm *vm, int player)
@@ -64,13 +63,14 @@ void	stock_inst(t_bag *bag, char data)
 {
 	bag->cur_op = (t_inst*)ft_memalloc(sizeof(t_inst));
 	ft_bzero(bag->cur_op, sizeof(bag->cur_op));
-	printf("######### ###### data : %d\n", data);
+	// printf("######### ###### data : %d\n", data);
 	bag->cur_op->code = data;
 	bag->cur_op->cooldown = 20;
 }
 
 void		run_op(t_vm *vm, t_inst *op, int player)
 {
+	printf("#############################OPCODE >> %d\n", op->code);
 	vm->optab[op->code].func(vm, op, player);
 }
 
@@ -90,26 +90,27 @@ char		get_ocp(t_vm *vm, int player)
 	return (ocp);
 }
 
-char		get_type_ocp(int pos, char ocp)
+unsigned char		get_type_ocp(int pos, char ocp)
 {
+	printf("POSSSS = %d\n", pos);
 	if (pos == 1)
-		return(ocp >> 6);
+		return((unsigned char)ocp >> 6);
 	if (pos == 2)
 	{
 		ocp = ocp >> 4;
 		ocp = ocp & 0x3;
-		return (ocp);
+		return ((unsigned char)ocp);
 	}
 	if (pos == 3)
 	{
 		ocp = ocp >> 2;
 		ocp = ocp & 0x3;
-		return (ocp);
+		return ((unsigned char)ocp);
 	}
 	return (0);
 }
 
-int			get_arg(t_vm *vm, int num, char type, int player)
+int			get_arg(t_vm *vm, int num, unsigned char type, int player)
 {
 	t_bag	*bag;
 	t_inst	*op;
@@ -120,7 +121,7 @@ int			get_arg(t_vm *vm, int num, char type, int player)
 	bag = &vm->p_bag[player];
 	direct = vm->optab[bag->cur_op->code].direct;
 
-	printf("############### OP->direct : %d	\n", direct);
+	// printf("############### OP->direct : %d	\n", direct);
 
 	printf("type of arg >> %d\n", type);
 
@@ -143,28 +144,25 @@ int			get_arg(t_vm *vm, int num, char type, int player)
 	}
 	if (type == T_DIR && direct == 4)
 	{
+		printf("DIRECT == 4\n");
 		bag->pc++;
 		ret = (unsigned char)vm->mem[bag->pc];
 		ret = ret << 8;
-
 		bag->pc++;
 		ret = ret | (unsigned char)vm->mem[bag->pc];
 		ret = ret << 8;
-
 		bag->pc++;
 		ret = ret | (unsigned char)vm->mem[bag->pc];
 		ret = ret << 8;
-
 		bag->pc++;
 		ret = ret | (unsigned char)vm->mem[bag->pc];
-		ret = ret << 8;
-		// if ()
+
 		return(ret);
 	}
 	return (0);
 }
 
-int		get_arg_num(t_vm *vm, int opcode)
+int			get_arg_num(t_vm *vm, int opcode)
 {
 	return (vm->optab[opcode].nb_arg);
 }
@@ -182,9 +180,11 @@ void		fill_cur_op(t_vm *vm, t_inst *op, int player)
 
 		printf("GET ARG NUM %d\n", get_arg_num(vm, op->code));
 
+		printf("Get_type_ocp : %d \n", get_type_ocp(1, op->ocp));
+
 		if (get_arg_num(vm, op->code) >= 1)
 			op->ar1 = get_arg(vm, 1, get_type_ocp(1, op->ocp), player);
-		printf("FUCKKKKKKKKKKKKKKKKKKK\n");
+		// printf("FUCKKKKKKKKKKKKKKKKKKK\n");
 
 		printf("ar1 => %d\n", op->ar1);
 		printf("ocp > %d\n", op->ocp);
@@ -194,12 +194,14 @@ void		fill_cur_op(t_vm *vm, t_inst *op, int player)
 
 		printf("ar2 => %d\n", op->ar2);
 
-		printf("player pc-> %d\n", vm->p_bag[player].pc);
+		// printf("player pc-> %d\n", vm->p_bag[player].pc);
 
 		if (get_arg_num(vm, op->code) >= 3)
 			op->ar3 = get_arg(vm, 3, get_type_ocp(3, op->ocp), player);
 
-		printf("ar3 => %d\n", op->ar3);
+		vm->p_bag[player].pc++;
+
+		// printf("ar3 => %d\n", op->ar3);
 	}
 }
 
@@ -212,7 +214,7 @@ void	run(t_vm *vm)
 {
 	int		player;
 	t_bag	*p_cur;
-	int test = 80;
+	int test = 220;
 
 	while (test)// si il n y a plus qu un seul player en vie stop :)
 	{
@@ -228,7 +230,9 @@ void	run(t_vm *vm)
 				}
 				else
 				{
-					printf("RUN OP\n");
+					printf("#######################RUN OP\n");
+					printf("#######################PC = %d\n", p_cur->pc);
+					printf("#######################OPCODE = %d\n", p_cur->cur_op->code);
 					fill_cur_op(vm, p_cur->cur_op, player);
 					run_op(vm, vm->p_bag[player].cur_op, player);
 					remove_op(&vm->p_bag[player]);

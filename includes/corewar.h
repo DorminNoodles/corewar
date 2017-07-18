@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/17 21:47:07 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/18 17:04:41 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_optab
 	void	(*func)(t_vm *vm, t_inst *op, int player);
 	int		nb_arg;
 	int		direct;
-
+	int		ocp;
 }	t_optab;
 
 typedef struct s_vm
@@ -87,6 +87,8 @@ void	error(char *str);
 void	and(t_vm *vm, t_inst *op, int player);
 void	ld(t_vm *vm, t_inst *op, int player);
 void	sti(t_vm *vm, t_inst *op, int player);
+void	live(t_vm *vm, t_inst *op, int player);
+void	add(t_vm *vm, t_inst *op, int player);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);

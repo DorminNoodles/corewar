@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/17 21:41:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/18 21:12:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,17 +139,32 @@ void	init_optab(t_vm *vm)
 	vm->optab[0].func = NULL;
 	vm->optab[0].nb_arg = 0;
 	vm->optab[0].direct = 2;
+	vm->optab[0].ocp = 0;
+
 	vm->optab[2].func = &ld;
 	vm->optab[2].nb_arg = 2;
 	vm->optab[2].direct = 4;
+	vm->optab[2].ocp = 1;
+
 	vm->optab[6].func = &and;
 	vm->optab[6].nb_arg = 3;
 	vm->optab[6].direct = 2;
+	vm->optab[6].ocp = 1;
+
 	vm->optab[11].func = &sti;
 	vm->optab[11].nb_arg = 3;
 	vm->optab[11].direct = 2;
+	vm->optab[11].ocp = 1;
 
-	// vm->optab = optab;
+	vm->optab[1].func = &live;
+	vm->optab[1].nb_arg = 1;
+	vm->optab[1].direct = 2;
+	vm->optab[1].ocp = 0;
+
+	vm->optab[4].func = &add;
+	vm->optab[4].nb_arg = 3;
+	vm->optab[4].direct = 0;
+	vm->optab[4].ocp = 1;
 }
 
 void	init_vm(t_vm *vm)
