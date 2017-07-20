@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/18 21:12:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/20 10:57:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,27 @@ void	init_mem(t_vm *vm)
 		error("error : malloc failed\n");
 }
 
-void	init_p_bag(t_vm *vm, int nb)
-{//ca c est les donnes propre a un joueur son "sac"
-	int i;
-
-	i = 0;
-	if(!(vm->p_bag = (t_bag*)ft_memalloc(sizeof(t_bag) * vm->p_nb)))
-		error("error : malloc failed\n");
-
-	vm->p_bag->id = nb;
-	vm->p_bag->pc = 0;
-	vm->p_bag->state = 1;
-	vm->p_bag->cur_op = NULL;
-
-	while (i < vm->p_nb)
-	{
-		vm->p_bag[i].reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER);
-		vm->p_bag[i].reg[1] = (i + 1) * -1;
-//reg1 prend le num du player mais en negatif.....
-		i++;
-	}
-}
+// void	init_p_bag(t_vm *vm, int nb)
+// {//ca c est les donnes propre a un joueur son "sac"
+// 	int i;
+//
+// 	i = 0;
+// 	if(!(vm->p_bag = (t_bag*)ft_memalloc(sizeof(t_bag) * vm->p_nb)))
+// 		error("error : malloc failed\n");
+//
+// 	vm->p_bag->id = nb;
+// 	vm->p_bag->pc = 0;
+// 	vm->p_bag->state = 1;
+// 	vm->p_bag->cur_op = NULL;
+//
+// 	while (i < vm->p_nb)
+// 	{
+// 		vm->p_bag[i].reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER);
+// 		vm->p_bag[i].reg[1] = (i + 1) * -1;
+// //reg1 prend le num du player mais en negatif.....
+// 		i++;
+// 	}
+// }
 
 void	init_p_nb(t_vm *vm)
 {//init le nombre de players
@@ -84,34 +84,80 @@ int		get_prog_size(char *data)
 }
 
 //c est un fill_mem, on remplit la memoire du code du player
-void	write_player(t_vm *vm)
+// void	write_player(t_vm *vm)
+// {
+// 	char *data;
+// 	int i;
+// 	int j;
+// 	int prog_size;
+//
+// 	j = 0;
+// 	prog_size = 0;
+// 	i = 0;
+// 	i += 4; //magic
+// 	i += 128 + 4; //prog_name
+//
+// 	data = get_data("resources/corewar/champs/ex.cor");
+//
+// 	prog_size = get_prog_size(data + i);
+//
+// 	printf("\n\n prog_size : %d\n", prog_size);
+//
+// 	i += 2048 + 4; //prog_comments
+// 	i += 4; //prog size
+// 	while (j < prog_size)
+// 	{
+// 		((char*)vm->mem)[j] = (unsigned char)data[i];
+// 		// printf("%02x ", (unsigned char)data[i]);
+// 		i++;
+// 		j++;
+// 	}
+// }
+
+int		*init_registre()
 {
-	char *data;
 	int i;
-	int j;
-	int prog_size;
+	int	*reg;
 
-	j = 0;
-	prog_size = 0;
 	i = 0;
-	i += 4; //magic
-	i += 128 + 4; //prog_name
 
-	data = get_data("resources/corewar/champs/ex.cor");
+	if(!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
+		error("error : MALLOC\n");
+	return (reg);
+}
 
-	prog_size = get_prog_size(data + i);
+void	create_process(t_vm *vm, int num)
+{
+	t_proc	*tmp;
 
-	printf("\n\n prog_size : %d\n", prog_size);
-
-	i += 2048 + 4; //prog_comments
-	i += 4; //prog size
-	while (j < prog_size)
+	if (!vm->proc)
 	{
-		((char*)vm->mem)[j] = (unsigned char)data[i];
-		// printf("%02x ", (unsigned char)data[i]);
-		i++;
-		j++;
+		vm->proc = (t_proc*)ft_memalloc(sizeof(t_proc));
+		tmp = vm->proc;
 	}
+	else
+	{
+		vm->proc->next = (t_proc*)ft_memalloc(sizeof(t_proc));
+		tmp = vm->proc->next;
+	}
+
+	tmp->id = (num * -1) + (-1);
+	tmp->pc = (MEM_SIZE / vm->p_nb) * tmp->id;
+	tmp->cur_op = NULL;
+	tmp->reg = init_registre();
+}
+
+void	init_process(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i < vm->p_nb)
+	{
+		create_process(vm, i);
+	}
+
+
 }
 
 void	init_each_players(t_vm *vm)
@@ -120,57 +166,53 @@ void	init_each_players(t_vm *vm)
 
 	nb = 0;
 	init_p_nb(vm);
-	while (nb < vm->p_nb)
-	{
-		init_p_bag(vm, nb);
-		write_player(vm);
-		nb++;
-	}
+	init_process(vm);
 
 }
 
 
-void	init_optab(t_vm *vm)
-{
-	t_optab		*optab;
-
-	optab = (t_optab*)ft_memalloc(sizeof(t_optab) * 17);
-
-	vm->optab[0].func = NULL;
-	vm->optab[0].nb_arg = 0;
-	vm->optab[0].direct = 2;
-	vm->optab[0].ocp = 0;
-
-	vm->optab[2].func = &ld;
-	vm->optab[2].nb_arg = 2;
-	vm->optab[2].direct = 4;
-	vm->optab[2].ocp = 1;
-
-	vm->optab[6].func = &and;
-	vm->optab[6].nb_arg = 3;
-	vm->optab[6].direct = 2;
-	vm->optab[6].ocp = 1;
-
-	vm->optab[11].func = &sti;
-	vm->optab[11].nb_arg = 3;
-	vm->optab[11].direct = 2;
-	vm->optab[11].ocp = 1;
-
-	vm->optab[1].func = &live;
-	vm->optab[1].nb_arg = 1;
-	vm->optab[1].direct = 2;
-	vm->optab[1].ocp = 0;
-
-	vm->optab[4].func = &add;
-	vm->optab[4].nb_arg = 3;
-	vm->optab[4].direct = 0;
-	vm->optab[4].ocp = 1;
-}
+// void	init_optab(t_vm *vm)
+// {
+// 	t_optab		*optab;
+//
+// 	optab = (t_optab*)ft_memalloc(sizeof(t_optab) * 17);
+//
+// 	vm->optab[0].func = NULL;
+// 	vm->optab[0].nb_arg = 0;
+// 	vm->optab[0].direct = 2;
+// 	vm->optab[0].ocp = 0;
+//
+// 	vm->optab[2].func = &ld;
+// 	vm->optab[2].nb_arg = 2;
+// 	vm->optab[2].direct = 4;
+// 	vm->optab[2].ocp = 1;
+//
+// 	vm->optab[6].func = &and;
+// 	vm->optab[6].nb_arg = 3;
+// 	vm->optab[6].direct = 2;
+// 	vm->optab[6].ocp = 1;
+//
+// 	vm->optab[11].func = &sti;
+// 	vm->optab[11].nb_arg = 3;
+// 	vm->optab[11].direct = 2;
+// 	vm->optab[11].ocp = 1;
+//
+// 	vm->optab[1].func = &live;
+// 	vm->optab[1].nb_arg = 1;
+// 	vm->optab[1].direct = 2;
+// 	vm->optab[1].ocp = 0;
+//
+// 	vm->optab[4].func = &add;
+// 	vm->optab[4].nb_arg = 3;
+// 	vm->optab[4].direct = 0;
+// 	vm->optab[4].ocp = 1;
+// }
 
 void	init_vm(t_vm *vm)
 {//appel de toutes les fonctions d init
 	init_mem(vm);
-	init_each_players(vm);
-	init_optab(vm);
+	init_process(vm);
+	// init_each_players(vm);
+	// init_optab(vm);
 	vm->cycle = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/18 17:04:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/20 15:54:47 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@
 #define INST_OCP 2
 #define INST_ARG 2
 
-#define T_REG 1
-#define T_DIR 2
-#define T_IND 3
+#define	IDLE 1
+#define	WAIT 2
+#define	READY 3
+
+// #define T_REG 1
+// #define T_DIR 2
+// #define T_IND 3
 
 typedef struct s_vm t_vm;
 
@@ -52,7 +56,7 @@ typedef struct s_inst
 	int		cooldown;
 }	t_inst;
 
-typedef struct s_bag
+typedef struct s_proc
 {
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
@@ -60,8 +64,10 @@ typedef struct s_bag
 	char	carry;// je sais plus
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		in_inst;
+	int		cooldown;
 	t_inst	*cur_op;
-}	t_bag;
+	struct	s_proc	*next;
+}	t_proc;
 
 typedef struct s_optab
 {
@@ -71,6 +77,19 @@ typedef struct s_optab
 	int		ocp;
 }	t_optab;
 
+typedef struct s_op
+{
+	char	*inst;
+	void	(*func)(t_vm *vm, t_proc *proc);
+	int		nb_arg;
+	int		ocp;
+	int		code;
+	int		cooldown;
+	char	*name;
+	int		pouet;
+	int		pouet2;//ocp
+}	t_op;
+
 typedef struct s_vm
 {
 	int		p_nb;
@@ -79,7 +98,7 @@ typedef struct s_vm
 	//void	(*op_tab[20])(struct s_vm *vm, t_inst *op, int player);
 
 	t_optab	optab[17];
-	t_bag	*p_bag;
+	t_proc	*proc;
 }	t_vm;
 
 void	init_vm(t_vm *vm);

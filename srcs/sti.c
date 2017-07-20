@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/18 19:06:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/20 11:11:31 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 void	sti(t_vm *vm, t_inst *op, int player)
 {
 	printf(">>>>>>ENTER STI<<<<<<\n");
-	int addr;
-	int reg;
-	t_bag *bag;
-
-	bag = &vm->p_bag[player];
-	addr = op->ar2 + op->ar3;
-	reg = op->ar1;
-
-	printf("ADDR = %d = %d + %d\n", addr, op->ar2, op->ar3);
-	printf("ADDR = %d\n", addr % MEM_SIZE);
-	printf("Player = %d\n", player);
-	printf("Registre Number = %d\n", op->ar1);
-	printf("Reg = %x\n", bag->reg[reg]);
-
-	vm->mem[addr % MEM_SIZE] = bag->reg[reg] >>24;
-	vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>16;
-	vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>8;
-	vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg];
+	// int addr;
+	//int reg;
+	// t_bag *bag;
+	//
+	// bag = &vm->p_bag[player];
+	// addr = op->ar2 + op->ar3;
+	// reg = op->ar1;
+	//
+	// printf("ADDR = %d = %d + %d\n", addr, op->ar2, op->ar3);
+	// printf("ADDR = %d\n", addr % MEM_SIZE);
+	// printf("Player = %d\n", player);
+	// printf("Registre Number = %d\n", op->ar1);
+	// printf("Reg = %x\n", bag->reg[reg]);
+	//
+	// vm->mem[addr % MEM_SIZE] = bag->reg[reg] >>24;
+	// vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>16;
+	// vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>8;
+	// vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg];
 }
