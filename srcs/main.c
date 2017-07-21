@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/20 18:28:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/21 16:52:52 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	check_param(int argc, char **argv)
 // 	return (ret);
 // }
 
-int		is_opcode(char data)
-{
-	if (data >= 1 && data <= 16)
-		return (1);
-	return (0);
-}
+// int		is_opcode(char data)
+// {
+// 	if (data >= 1 && data <= 16)
+// 		return (1);
+// 	return (0);
+// }
 
 //
 // void	get_bytes_format(t_vm *vm, int player)
@@ -161,11 +161,18 @@ int		is_opcode(char data)
 // }
 
 
+void	get_ocp(t_vm *vm)
+{
+	// return (vm->mem[cur->pc]);
+
+}
+
 
 
 void	fill_cur_op(t_vm *vm, t_proc *proc)
 {
-
+	// get_ocp();
+	//vm->mem[proc->pc] = 0;
 
 
 }
@@ -220,7 +227,7 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 // 	int		player;
 // 	t_bag	*p_cur;
 // 	int test = 160;
-//
+
 // 	while (test)// si il n y a plus qu un seul player en vie stop :)
 // 	{
 // 		player = 0;
@@ -264,53 +271,75 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 // 	}
 // }
 
-int		get_op(char *data)
+int		is_opcode(char data)
 {
-	if (is_opcode(*data))
-		return (1);
+	// int i;
+	//
+	// i = 0;
+	// while (op_tab[i].inst)
+	// {
+	// 	if ((char)op_tab[i].code == data)
+	// 		return (data);
+	// 	i++;
+	// }
 	return (0);
+}
+
+t_inst		*create_inst(char *data)
+{
+	// int		i;
+	// t_inst	*inst;
+	//
+	// i = 0;
+	// inst = NULL;
+	// if (!is_opcode(*data))
+	// 	return (NULL);
+	// if (!(inst = (inst*)ft_memalloc(sizeof(inst)))
+	// 	error("error : malloc\n");
+	// inst->code = *data;
+	return (NULL);
 }
 
 void	run(t_vm *vm)
 {
 	int		i;
 	int		player;
-	t_proc	*cur;
+	t_proc	*proc;
 	t_op	*op;
 
 	i = 0;
-	cur = vm->proc;
+	proc = vm->proc;
 	op = NULL;
 
-	while (i < 200)
+	while (i < 200) // main while stop if winner_exist
 	{
-		cur = vm->proc;
-		while (cur)
+		proc = vm->proc;
+		while (proc != NULL)
 		{
-			if (cur->state == IDLE)
+			if (proc->state == IDLE)
 			{
-				if (get_opcode(&vm->mem[cur->pc]))
-					cur->state = WAIT;
+				printf("IDLE\n");
+				if (proc->cur_op = create_inst(vm, ))
+					proc->state = WAIT;
 				else
-					cur->pc = (cur->pc + 1) % MEM_SIZE;
+					proc->pc = (proc->pc + 1) % MEM_SIZE;
 			}
-			else if (cur->state == WAIT)
+			else if (proc->state == WAIT)
 			{
-				cur->cooldown--;
-				if (cur->cooldown <= 0)
+				printf("fait chier\n");
+				proc->cur_op->cooldown--;
+				if (proc->cur_op->cooldown <= 0)
 				{
-					fill_cur_op(vm, );
-					op_code[cur->code].func(vm, cur);
-					cur->state = IDLE;
+					fill_cur_op(vm, proc);
+					op_tab[proc->cur_op->code].func(vm, proc);
+					proc->state = IDLE;
 				}
 			}
-			cur = cur->next;
+			proc = proc->next;
 		}
-		printf("Cycle \n");
+		// printf("Cycle \n");
 		i++;
 	}
-	//move all process if not cooldown
-
 }
 
 int		main(int argc, char **argv)
@@ -321,6 +350,7 @@ int		main(int argc, char **argv)
 	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat
 	show_mem(&vm);
+
 	return (0);
 }
 
