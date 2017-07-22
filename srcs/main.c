@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 16:02:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 19:29:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	check_param(int argc, char **argv)
 // 	ft_bzero(bag->cur_op, sizeof(bag->cur_op));
 // 	// printf("######### ###### data : %d\n", data);
 // 	bag->cur_op->code = data;
-// 	bag->cur_op->cooldown = 20;
+// 	bag->cur_op->loadtime = 20;
 // }
 
 // void		run_op(t_vm *vm, t_op *op, int player)
@@ -220,9 +220,9 @@ void	check_param(int argc, char **argv)
 // 			p_cur = &vm->p_bag[player];
 // 			if (p_cur->cur_op) //si une instruction est deja en buffer
 // 			{
-// 				if (p_cur->cur_op->cooldown > 0)
+// 				if (p_cur->cur_op->loadtime > 0)
 // 				{
-// 					p_cur->cur_op->cooldown--;
+// 					p_cur->cur_op->loadtime--;
 // 				}
 // 				else
 // 				{
@@ -337,7 +337,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
 	op->code = data;
-	op->cooldown = op_tab[data - 1].cooldown;
+	op->loadtime = op_tab[data - 1].loadtime;
 	return (op);
 }
 
@@ -367,12 +367,13 @@ void	run(t_vm *vm)
 			else if (proc->state == WAIT)
 			{
 				// op_tab[1].func(vm, proc);
-				printf("WAIT  %d\n", proc->op->cooldown);
-				proc->op->cooldown--;
-				if (proc->op->cooldown <= 0)
+				printf("WAIT  %d\n", proc->op->loadtime);
+				proc->op->loadtime--;
+				if (proc->op->loadtime <= 0)
 				{
 					fill_cur_op(vm, proc);
-					printf("SEGFAULT\n");
+					// printf("SEGFAULT\n");
+					// printf("SEGFAULT %d\n", proc->op->code - 1);
 					op_tab[proc->op->code - 1].func(vm, proc);
 					proc->state = IDLE;
 				}

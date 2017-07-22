@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 15:58:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 17:25:17 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_op
 	int		ar1_typ;
 	int		ar2_typ;
 	int		ar3_typ;
-	int		cooldown;
+	int		loadtime;
 }	t_op;
 
 typedef struct s_proc
@@ -123,10 +123,9 @@ typedef struct s_proc
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
-	char	carry;// je sais plus
+	char	carry;// Mystere
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
-	int		in_inst;
-	int		cooldown;
+	int		loadtime;
 	t_op	*op;
 	struct	s_proc	*next;
 }	t_proc;
@@ -146,7 +145,7 @@ typedef struct s_optab
 	int		nb_arg;
 	int		ocp;
 	int		code;
-	int		cooldown;
+	int		loadtime;
 	char	*name;
 	int		need_ocp;
 	int		pouet2;//ocp

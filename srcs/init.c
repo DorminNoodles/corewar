@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 11:28:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 16:56:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
-	int i;
 
-	i = 0;
 	if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
 		error("error : malloc failed\n");
 
-	while (i < 1)
-	{
-		write_player(vm);
 
-		i++;
-	}
 }
 
 // void	init_p_bag(t_vm *vm, int nb)
@@ -181,8 +174,16 @@ void	init_each_players(t_vm *vm)
 
 void	init_vm(t_vm *vm)
 {//appel de toutes les fonctions d init
+	int i;
+
+	i = 0;
 	vm->p_nb = 1; // FOR DEBBUG
 	init_mem(vm);
+	while (i < vm->p_nb)
+	{
+		write_player(vm);
+		i++;
+	}
 	init_process(vm);
 	// init_each_players(vm);
 	// init_optab(vm);
