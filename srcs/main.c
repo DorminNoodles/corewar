@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 19:49:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 19:49:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 
 	i = 0;
 	op = NULL;
+	printf("TEST %d\n", data);
 	if (!is_opcode(data))
 		return (NULL);
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
