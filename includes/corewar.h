@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/21 15:33:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 15:58:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 **
 */
 
-typedef char	t_arg_type;
+// typedef char	t_arg_type;
 
 #define T_REG					1
 #define T_DIR					2
@@ -105,7 +105,7 @@ typedef struct		header_s
 
 typedef struct s_vm t_vm;
 
-typedef struct s_inst
+typedef struct s_op
 {
 	char	code;
 	char	ocp;
@@ -116,7 +116,7 @@ typedef struct s_inst
 	int		ar2_typ;
 	int		ar3_typ;
 	int		cooldown;
-}	t_inst;
+}	t_op;
 
 typedef struct s_proc
 {
@@ -127,19 +127,19 @@ typedef struct s_proc
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		in_inst;
 	int		cooldown;
-	t_inst	*cur_op;
+	t_op	*op;
 	struct	s_proc	*next;
 }	t_proc;
 
-typedef struct s_optab
-{
-	void	(*func)(t_vm *vm, t_inst *op, int player);
-	int		nb_arg;
-	int		direct;
-	int		ocp;
-}	t_optab;
+// typedef struct s_optab
+// {
+// 	void	(*func)(t_vm *vm, t_op *op, int player);
+// 	int		nb_arg;
+// 	int		direct;
+// 	int		ocp;
+// }	t_optab;
 
-typedef struct s_op
+typedef struct s_optab
 {
 	char	*inst;
 	void	(*func)(t_vm *vm, t_proc *proc);
@@ -148,31 +148,31 @@ typedef struct s_op
 	int		code;
 	int		cooldown;
 	char	*name;
-	int		pouet;
+	int		need_ocp;
 	int		pouet2;//ocp
-}	t_op;
+}	t_optab;
 
 typedef struct s_vm
 {
 	int		p_nb;
 	int		cycle;
 	char	*mem;
-	//void	(*op_tab[20])(struct s_vm *vm, t_inst *op, int player);
+	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
 
 	t_optab	optab[17];
 	t_proc	*proc;
 }	t_vm;
 
 
-extern t_op op_tab[17];
+extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
 void	error(char *str);
-void	and(t_vm *vm, t_inst *op, int player);
-void	ld(t_vm *vm, t_inst *op, int player);
-void	sti(t_vm *vm, t_inst *op, int player);
-void	live(t_vm *vm, t_inst *op, int player);
-void	add(t_vm *vm, t_inst *op, int player);
+void	and(t_vm *vm, t_op *op, int player);
+void	ld(t_vm *vm, t_proc *proc);
+void	sti(t_vm *vm, t_op *op, int player);
+void	live(t_vm *vm, t_op *op, int player);
+void	add(t_vm *vm, t_op *op, int player);
 void	write_player(t_vm *vm);
 
 /*-------DEBUG-------*/

@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void	sti(t_vm *vm, t_inst *op, int player)
+void	sti(t_vm *vm, t_op *op, int player)
 {
 	printf(">>>>>>ENTER STI<<<<<<\n");
 	// int addr;

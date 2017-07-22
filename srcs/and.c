@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void	and(t_vm *vm, t_inst *op, int player)
+void	and(t_vm *vm, t_op *op, int player)
 {
 	printf(">>>>>>>ENTER_AND<<<<<<<\n");
 

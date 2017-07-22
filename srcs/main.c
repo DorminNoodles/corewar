@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/21 16:52:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 16:02:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ void	check_param(int argc, char **argv)
 
 // void	stock_inst(t_bag *bag, char data)
 // {
-// 	bag->cur_op = (t_inst*)ft_memalloc(sizeof(t_inst));
+// 	bag->cur_op = (t_op*)ft_memalloc(sizeof(t_op));
 // 	ft_bzero(bag->cur_op, sizeof(bag->cur_op));
 // 	// printf("######### ###### data : %d\n", data);
 // 	bag->cur_op->code = data;
 // 	bag->cur_op->cooldown = 20;
 // }
 
-// void		run_op(t_vm *vm, t_inst *op, int player)
+// void		run_op(t_vm *vm, t_op *op, int player)
 // {
 // 	printf("#############################OPCODE >> %d\n", op->code);
 // 	vm->optab[op->code].func(vm, op, player);
@@ -106,7 +106,7 @@ void	check_param(int argc, char **argv)
 // int			get_arg(t_vm *vm, int num, unsigned char type, int player)
 // {
 // 	t_bag	*bag;
-// 	t_inst	*op;
+// 	t_op	*op;
 // 	int		ret;
 // 	int		direct;
 //
@@ -161,23 +161,7 @@ void	check_param(int argc, char **argv)
 // }
 
 
-void	get_ocp(t_vm *vm)
-{
-	// return (vm->mem[cur->pc]);
-
-}
-
-
-
-void	fill_cur_op(t_vm *vm, t_proc *proc)
-{
-	// get_ocp();
-	//vm->mem[proc->pc] = 0;
-
-
-}
-
-// void		fill_cur_op(t_vm *vm, t_inst *op, int player)
+// void		fill_cur_op(t_vm *vm, t_op *op, int player)
 // {
 // 	// printf("FILL_CUR_OP\n");
 // 	int pos;
@@ -271,33 +255,90 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 // 	}
 // }
 
+void	get_ocp(t_vm *vm, t_proc *proc)
+{
+	if (op_tab[proc->op->code - 1].ocp)
+	{
+		proc->pc++;
+		proc->op->ocp = vm->mem[proc->pc];
+	}
+}
+
+void	*get_dir()
+{
+	int *ptr;
+
+	ptr = ft_memalloc(sizeof(int*));
+
+	*ptr = 5;
+
+
+	return ((void*)ptr);
+}
+
+
+
+void	find_args(t_vm *vm, t_proc *proc)
+{
+	char	ocp;
+	void	*pouet;
+
+	ocp = proc->op->ocp;
+
+	if (!ocp) //alors c est un T_DIR
+	{
+		proc->op->ar1_typ = T_DIR;
+		pouet = get_dir();
+		// proc->op->ar1 = *(DIR_SIZE)get_dir();
+	}
+	else
+	{
+		while (ocp)
+		{
+
+			ocp = ocp << 2;
+			proc->pc++;
+		}
+
+	}
+}
+
+void	fill_cur_op(t_vm *vm, t_proc *proc)
+{
+	if (op_tab[proc->op->code].ocp)
+		get_ocp(vm, proc);
+	printf("OP->OCP == %d\n", proc->op->ocp);
+	find_args(vm, proc);
+}
+
 int		is_opcode(char data)
 {
-	// int i;
-	//
-	// i = 0;
-	// while (op_tab[i].inst)
-	// {
-	// 	if ((char)op_tab[i].code == data)
-	// 		return (data);
-	// 	i++;
-	// }
+	int i;
+
+	i = 0;
+	while (i < 16)
+	{
+		if ((char)op_tab[i].code == data)
+			return (data);
+		i++;
+	}
 	return (0);
 }
 
-t_inst		*create_inst(char *data)
+t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 {
-	// int		i;
-	// t_inst	*inst;
-	//
-	// i = 0;
-	// inst = NULL;
-	// if (!is_opcode(*data))
-	// 	return (NULL);
-	// if (!(inst = (inst*)ft_memalloc(sizeof(inst)))
-	// 	error("error : malloc\n");
-	// inst->code = *data;
-	return (NULL);
+	int		i;
+	t_op	*op;
+
+	i = 0;
+	op = NULL;
+	if (!is_opcode(data))
+		return (NULL);
+	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
+		error("error : malloc\n");
+	op->code = data;
+	op->cooldown = op_tab[data - 1].cooldown;
+	return (op);
 }
 
 void	run(t_vm *vm)
@@ -305,11 +346,10 @@ void	run(t_vm *vm)
 	int		i;
 	int		player;
 	t_proc	*proc;
-	t_op	*op;
 
 	i = 0;
 	proc = vm->proc;
-	op = NULL;
+	proc->op = NULL;
 
 	while (i < 200) // main while stop if winner_exist
 	{
@@ -319,19 +359,21 @@ void	run(t_vm *vm)
 			if (proc->state == IDLE)
 			{
 				printf("IDLE\n");
-				if (proc->cur_op = create_inst(vm, ))
+				if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
 					proc->state = WAIT;
 				else
 					proc->pc = (proc->pc + 1) % MEM_SIZE;
 			}
 			else if (proc->state == WAIT)
 			{
-				printf("fait chier\n");
-				proc->cur_op->cooldown--;
-				if (proc->cur_op->cooldown <= 0)
+				// op_tab[1].func(vm, proc);
+				printf("WAIT  %d\n", proc->op->cooldown);
+				proc->op->cooldown--;
+				if (proc->op->cooldown <= 0)
 				{
 					fill_cur_op(vm, proc);
-					op_tab[proc->cur_op->code].func(vm, proc);
+					printf("SEGFAULT\n");
+					op_tab[proc->op->code - 1].func(vm, proc);
 					proc->state = IDLE;
 				}
 			}

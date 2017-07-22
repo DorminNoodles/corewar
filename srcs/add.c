@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-void	add(t_vm *vm, t_inst *op, int player)
+void	add(t_vm *vm, t_op *op, int player)
 {
 	printf(">>>>ENTER_ADD<<<<\n");
 	// t_bag *bag;

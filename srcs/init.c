@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/21 16:46:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 11:28:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void	create_process(t_vm *vm, int num)
 	}
 
 	tmp->id = (num * -1) + (-1);
-	tmp->pc = (MEM_SIZE / vm->p_nb) * tmp->id;
-	tmp->cur_op = NULL;
+	tmp->pc = (MEM_SIZE / vm->p_nb) * num;
+	tmp->op = NULL;
 	tmp->reg = init_registre();
 	tmp->state = IDLE;
 }
