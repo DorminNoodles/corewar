@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 19:52:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/22 19:55:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,13 +332,13 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 
 	i = 0;
 	op = NULL;
-	printf("TEST %d\n", (char)data);
+	// printf("TEST %d\n", (char)data);
 	if (!is_opcode(data))
 		return (NULL);
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
 	op->code = data;
-	printf("FILL OP CODE %d\n", op->code);
+	// printf("FILL OP CODE %d\n", op->code);
 	op->loadtime = op_tab[data - 1].loadtime;
 	return (op);
 }
