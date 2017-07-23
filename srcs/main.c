@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 12:16:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 15:29:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,6 +347,7 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 		find_args(vm, proc, i);
 		i++;
 	}
+	printf("");
 	proc->pc++;
 }
 

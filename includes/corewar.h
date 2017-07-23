@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 10:24:55 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 12:23:57 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	init_vm(t_vm *vm);
 void	error(char *str);
 void	and(t_vm *vm, t_op *op, int player);
 void	ld(t_vm *vm, t_proc *proc);
-void	sti(t_vm *vm, t_op *op, int player);
+void	sti(t_vm *vm, t_proc *proc);
 void	live(t_vm *vm, t_op *op, int player);
 void	add(t_vm *vm, t_op *op, int player);
 void	write_player(t_vm *vm);

@@ -6,16 +6,25 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 12:08:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 12:30:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	sti(t_vm *vm, t_op *op, int player)
+void	sti(t_vm *vm, t_proc *proc)
 {
 	printf(">>>>>>ENTER STI<<<<<<\n");
-	// int addr;
+
+	int addr;
+	int reg;
+
+	addr = proc->op->ar[1] + proc->op->ar[2];
+	reg = proc->op->ar[0] - 1;
+
+
+	printf("addr -> %d\n", proc->op->ar[1]);
+
 	//int reg;
 	// t_bag *bag;
 	//
@@ -29,8 +38,8 @@ void	sti(t_vm *vm, t_op *op, int player)
 	// printf("Registre Number = %d\n", op->ar1);
 	// printf("Reg = %x\n", bag->reg[reg]);
 	//
-	// vm->mem[addr % MEM_SIZE] = bag->reg[reg] >>24;
-	// vm->mem[(addr + 1) % MEM_SIZE] = bag->reg[reg] >>16;
-	// vm->mem[(addr + 2) % MEM_SIZE] = bag->reg[reg] >>8;
-	// vm->mem[(addr + 3) % MEM_SIZE] = bag->reg[reg];
+	vm->mem[addr % MEM_SIZE] = proc->reg[reg] >>24;
+	vm->mem[(addr + 1) % MEM_SIZE] = proc->reg[reg] >>16;
+	vm->mem[(addr + 2) % MEM_SIZE] = proc->reg[reg] >>8;
+	vm->mem[(addr + 3) % MEM_SIZE] = proc->reg[reg];
 }
