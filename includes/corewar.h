@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 17:25:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 10:24:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,8 @@ typedef struct s_vm t_vm;
 typedef struct s_op
 {
 	char	code;
-	char	ocp;
-	int		ar1;
-	int		ar2;
-	int		ar3;
+	unsigned char	ocp;
+	int		ar[3];
 	int		ar1_typ;
 	int		ar2_typ;
 	int		ar3_typ;

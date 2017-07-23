@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/22 19:55:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 11:37:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,51 +264,91 @@ void	get_ocp(t_vm *vm, t_proc *proc)
 	}
 }
 
-void	*get_dir()
+void	get_dir(t_vm *vm, t_proc *proc, int num)
 {
-	int *ptr;
+	unsigned int value;
 
-	ptr = ft_memalloc(sizeof(int*));
+	value = 0;
 
-	*ptr = 5;
+	proc->pc++;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->op->ar[num] = value;
+}
+
+void	get_reg(t_vm *vm, t_proc *proc, int num)
+{
+	unsigned char value;
+
+	proc->pc++;
+	value = (unsigned char)vm->mem[proc->pc];
+	proc->op->ar[num] = value;
+}
+
+void	get_ind(t_vm *vm, t_proc *proc, int num)
+{
 
 
-	return ((void*)ptr);
+
 }
 
 
 
-void	find_args(t_vm *vm, t_proc *proc)
+void	find_args(t_vm *vm, t_proc *proc, int num)
 {
-	char	ocp;
-	void	*pouet;
+	printf("ENTER FUNC : FIND_ARGS\n");
+	unsigned char	type;
+	unsigned char	mask;
 
-	ocp = proc->op->ocp;
+	type = proc->op->ocp;
+	printf("type = %x\n", type);
+	mask = 0xC0;
+	mask = mask >> (2 * num);
+	type = type & mask;
+	type = type >> (6 - 2 * num);
 
-	if (!ocp) //alors c est un T_DIR
-	{
-		proc->op->ar1_typ = T_DIR;
-		pouet = get_dir();
-		// proc->op->ar1 = *(DIR_SIZE)get_dir();
-	}
-	else
-	{
-		while (ocp)
-		{
+	printf("OCP = > %d\n", type);
 
-			ocp = ocp << 2;
-			proc->pc++;
-		}
+	if (type == T_REG)
+		get_reg(vm, proc, num);
+	if (type == T_DIR)
+		get_dir(vm, proc, num);
+	if (type == T_IND)
+		get_ind(vm, proc, num);
 
-	}
+	// if (mask )
+
+
+
 }
 
 void	fill_cur_op(t_vm *vm, t_proc *proc)
 {
-	if (op_tab[proc->op->code].ocp)
-		get_ocp(vm, proc);
+	int i;
+
+	i = 0;
+	get_ocp(vm, proc);
 	printf("OP->OCP == %d\n", proc->op->ocp);
-	find_args(vm, proc);
+
+	while (i < op_tab[proc->op->code].nb_arg)
+	{
+		find_args(vm, proc, i);
+		i++;
+	}
+	printf("REGISTRE 1 ==== %d\n", proc->op->ar[0]);
+	printf("REGISTRE 2 ==== %d\n", proc->op->ar[1]);
 }
 
 int		is_opcode(char data)
