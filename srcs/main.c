@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 11:38:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 12:16:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,11 +257,13 @@ void	check_param(int argc, char **argv)
 
 void	get_ocp(t_vm *vm, t_proc *proc)
 {
+	printf("MEM BEFORE   %x\n", (unsigned char)vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].ocp)
 	{
 		proc->pc++;
 		proc->op->ocp = vm->mem[proc->pc];
 	}
+	printf("MEM AFTER   %x\n", (unsigned char)vm->mem[proc->pc]);
 }
 
 void	get_dir(t_vm *vm, t_proc *proc, int num)
@@ -313,13 +315,11 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	unsigned char	mask;
 
 	type = proc->op->ocp;
-	printf("type = %x\n", type);
 	mask = 0xC0;
 	mask = mask >> (2 * num);
 	type = type & mask;
 	type = type >> (6 - 2 * num);
 
-	printf("OCP = > %d\n", type);
 
 	if (type == T_REG)
 		get_reg(vm, proc, num);
@@ -340,15 +340,14 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	get_ocp(vm, proc);
-	printf("OP->OCP == %d\n", proc->op->ocp);
 
+	printf("OCP ===== %x\n", proc->op->ocp);
 	while (i < op_tab[proc->op->code].nb_arg)
 	{
 		find_args(vm, proc, i);
 		i++;
 	}
-	printf("REGISTRE 1 ==== %d\n", proc->op->ar[0]);
-	printf("REGISTRE 2 ==== %d\n", proc->op->ar[1]);
+	proc->pc++;
 }
 
 int		is_opcode(char data)
@@ -414,7 +413,6 @@ void	run(t_vm *vm)
 				if (proc->op->loadtime <= 0)
 				{
 					fill_cur_op(vm, proc);
-					printf("SEGFAULT\n");
 					// printf("SEGFAULT %d\n", proc->op->code - 1);
 					op_tab[proc->op->code - 1].func(vm, proc);
 					// op_tab[1].func(vm, proc);
