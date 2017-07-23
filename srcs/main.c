@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 15:29:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 19:27:38 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ void	check_param(int argc, char **argv)
 void	get_ocp(t_vm *vm, t_proc *proc)
 {
 	printf("MEM BEFORE   %x\n", (unsigned char)vm->mem[proc->pc]);
-	if (op_tab[proc->op->code - 1].ocp)
+	if (op_tab[proc->op->code - 1].need_ocp)
 	{
 		proc->pc++;
 		proc->op->ocp = vm->mem[proc->pc];
@@ -272,6 +272,7 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 	value = 0;
 
+
 	proc->pc++;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
@@ -279,6 +280,13 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value << 8;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
+	printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
+	printf("hexa value %x\n", value);
+	if (op_tab[proc->op->code - 1].une_heure_de_perdue)
+	{
+		proc->op->ar[num] = value;
+		return ;
+	}
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->mem[proc->pc];
@@ -342,12 +350,13 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	get_ocp(vm, proc);
 
 	printf("OCP ===== %x\n", proc->op->ocp);
-	while (i < op_tab[proc->op->code].nb_arg)
+	printf("nb arg %d\n", op_tab[proc->op->code - 1].nb_arg);
+	while (i < op_tab[proc->op->code - 1].nb_arg)
 	{
 		find_args(vm, proc, i);
+		printf("Nature Arg %d\n", proc->op->ar[i]);
 		i++;
 	}
-	printf("");
 	proc->pc++;
 }
 
@@ -380,6 +389,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	op->code = data;
 	// printf("FILL OP CODE %d\n", op->code);
 	op->loadtime = op_tab[data - 1].loadtime;
+	op->pos_opcode = proc->pc;
 	return (op);
 }
 
@@ -400,7 +410,7 @@ void	run(t_vm *vm)
 		{
 			if (proc->state == IDLE)
 			{
-				printf("IDLE\n");
+				//printf("IDLE\n");
 				if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
 					proc->state = WAIT;
 				else
@@ -409,7 +419,7 @@ void	run(t_vm *vm)
 			else if (proc->state == WAIT)
 			{
 				// op_tab[1].func(vm, proc);
-				printf("WAIT  %d\n", proc->op->loadtime);
+				//printf("WAIT  %d\n", proc->op->loadtime);
 				proc->op->loadtime--;
 				if (proc->op->loadtime <= 0)
 				{

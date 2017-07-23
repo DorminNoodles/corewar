@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 12:23:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/23 19:23:33 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_op
 	int		ar2_typ;
 	int		ar3_typ;
 	int		loadtime;
+	int		pos_opcode;
 }	t_op;
 
 typedef struct s_proc
@@ -146,7 +147,7 @@ typedef struct s_optab
 	int		loadtime;
 	char	*name;
 	int		need_ocp;
-	int		pouet2;//ocp
+	int		une_heure_de_perdue; 	// nombre d'octect d'encodage. 2 ou 4;
 }	t_optab;
 
 typedef struct s_vm
