@@ -8,7 +8,11 @@ SRC =		main.c						\
 			live.c						\
 			add.c						\
 			and.c						\
-			op.c
+			op.c						\
+			or.c						\
+			xor.c						\
+			sub.c						\
+			st.c
 
 SRCS = $(addprefix srcs/, $(SRC))
 INC = -I includes -I libft/includes
