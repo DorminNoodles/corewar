@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 19:27:38 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/07/23 23:33:32 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,10 +281,10 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value | (unsigned char)vm->mem[proc->pc];
 
 	printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
-	printf("hexa value %x\n", value);
 	if (op_tab[proc->op->code - 1].une_heure_de_perdue)
 	{
 		proc->op->ar[num] = value;
+		printf("deux octets value %x\n", value);
 		return ;
 	}
 	proc->pc++;
@@ -295,6 +295,7 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value << 8;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
+	printf("4 octets value %x\n", value);
 	proc->op->ar[num] = value;
 }
 
@@ -304,6 +305,9 @@ void	get_reg(t_vm *vm, t_proc *proc, int num)
 
 	proc->pc++;
 	value = (unsigned char)vm->mem[proc->pc];
+
+	printf("reg value %d\n", value);
+
 	proc->op->ar[num] = value;
 }
 
@@ -327,7 +331,7 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	mask = mask >> (2 * num);
 	type = type & mask;
 	type = type >> (6 - 2 * num);
-
+	proc->op->ar_typ[num] = type;
 
 	if (type == T_REG)
 		get_reg(vm, proc, num);
@@ -357,6 +361,11 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 		printf("Nature Arg %d\n", proc->op->ar[i]);
 		i++;
 	}
+	printf("0 %x\n", proc->op->ar[0]);
+	printf("1 %x\n", proc->op->ar[1]);
+	printf("2 %x\n", proc->op->ar[2]);
+
+	printf("%s\n", "OURS ");
 	proc->pc++;
 }
 
@@ -424,8 +433,11 @@ void	run(t_vm *vm)
 				if (proc->op->loadtime <= 0)
 				{
 					fill_cur_op(vm, proc);
-					// printf("SEGFAULT %d\n", proc->op->code - 1);
-					op_tab[proc->op->code - 1].func(vm, proc);
+					printf("SEGFAULT %d\n", proc->op->code - 1);
+
+					if (op_tab[proc->op->code - 1].func != NULL)
+						op_tab[proc->op->code - 1].func(vm, proc);
+					printf("%s\n", " MAIS, NON ");
 					// op_tab[1].func(vm, proc);
 					proc->state = IDLE;
 				}

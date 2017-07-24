@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 19:23:33 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/07/24 16:04:05 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,7 @@ typedef struct s_op
 	char	code;
 	unsigned char	ocp;
 	int		ar[3];
-	int		ar1_typ;
-	int		ar2_typ;
-	int		ar3_typ;
+	int		ar_typ[3];
 	int		loadtime;
 	int		pos_opcode;
 }	t_op;
@@ -166,12 +164,16 @@ extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
 void	error(char *str);
-void	and(t_vm *vm, t_op *op, int player);
+void	and(t_vm *vm, t_proc *proc);
 void	ld(t_vm *vm, t_proc *proc);
 void	sti(t_vm *vm, t_proc *proc);
 void	live(t_vm *vm, t_op *op, int player);
-void	add(t_vm *vm, t_op *op, int player);
+void	add(t_vm *vm, t_proc *proc);
+void	or(t_vm *vm, t_proc *proc);
+void	xor(t_vm *vm, t_proc *proc);
+void	sub(t_vm *vm, t_proc *proc);
 void	write_player(t_vm *vm);
+void	st(t_vm *vm, t_proc *proc)
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);

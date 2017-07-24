@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c                                              :+:      :+:    :+:   */
+/*   xor.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/24 00:02:58 by mlambert         ###   ########.fr       */
+/*   Created: 2017/07/24 14:12:14 by mlambert          #+#    #+#             */
+/*   Updated: 2017/07/24 14:39:35 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	and(t_vm *vm, t_proc *proc)
+void	xor(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>>>ENTER_AND<<<<<<<\n");
 	unsigned int	ar1;
 	unsigned int	ar2;
 
@@ -26,5 +25,5 @@ void	and(t_vm *vm, t_proc *proc)
 		ar2 = proc->reg[proc->op->ar[1]];
 	else
 		ar2 = proc->op->ar[1];
-	 proc->reg[proc->op->ar[2]] = ar1 & ar2;
+	 proc->reg[proc->op->ar[2]] = ar1 ^ ar2;
 }
