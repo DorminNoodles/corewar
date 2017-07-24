@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/24 16:04:05 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/07/24 17:32:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	or(t_vm *vm, t_proc *proc);
 void	xor(t_vm *vm, t_proc *proc);
 void	sub(t_vm *vm, t_proc *proc);
 void	write_player(t_vm *vm);
-void	st(t_vm *vm, t_proc *proc)
+void	st(t_vm *vm, t_proc *proc);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
