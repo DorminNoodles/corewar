@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/25 18:48:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/25 19:45:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,13 +329,14 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 
 	// printf("deux octets value %x\n", value);
 
-	proc->pc++;
-	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
-
-	proc->pc++;
-	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	// proc->pc++;
+	// value = value << 8;
+	// value = value | (unsigned char)vm->mem[proc->pc];
+	//
+	// proc->pc++;
+	// value = value << 8;
+	// value = value | (unsigned char)vm->mem[proc->pc];
+	proc->op->ar[num] = value;
 }
 
 
