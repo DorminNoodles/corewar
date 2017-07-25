@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/24 17:32:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:19:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
-
 
 #define MAX_ARGS_NUMBER			4
 #define MAX_PLAYERS				4

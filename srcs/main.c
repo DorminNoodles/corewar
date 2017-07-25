@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/24 17:31:49 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:48:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,9 +313,29 @@ void	get_reg(t_vm *vm, t_proc *proc, int num)
 
 void	get_ind(t_vm *vm, t_proc *proc, int num)
 {
+	printf(">>>>>>>>>>GET_IND<<<<<<<<<<<\n");
 
+	unsigned int value;
 
+	value = 0;
 
+	printf("FUCK >>>>> %d\n", vm->mem[proc->pc]);
+	proc->pc++;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	// printf("deux octets value %x\n", value);
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
+
+	proc->pc++;
+	value = value << 8;
+	value = value | (unsigned char)vm->mem[proc->pc];
 }
 
 
@@ -333,11 +353,11 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	type = type >> (6 - 2 * num);
 	proc->op->ar_typ[num] = type;
 
-	if (type == T_REG)
+	if (type == REG_CODE)
 		get_reg(vm, proc, num);
-	if (type == T_DIR)
+	if (type == DIR_CODE)
 		get_dir(vm, proc, num);
-	if (type == T_IND)
+	if (type == IND_CODE)
 		get_ind(vm, proc, num);
 
 	// if (mask )
@@ -412,7 +432,7 @@ void	run(t_vm *vm)
 	proc = vm->proc;
 	proc->op = NULL;
 
-	while (i < 200) // main while stop if winner_exist
+	while (i < 400) // main while stop if winner_exist
 	{
 		proc = vm->proc;
 		while (proc != NULL)
@@ -436,7 +456,10 @@ void	run(t_vm *vm)
 					printf("SEGFAULT %d\n", proc->op->code - 1);
 
 					if (op_tab[proc->op->code - 1].func != NULL)
+					{
+						printf("ENTER IF FUNC \n");
 						op_tab[proc->op->code - 1].func(vm, proc);
+					}
 					printf("%s\n", " MAIS, NON ");
 					// op_tab[1].func(vm, proc);
 					proc->state = IDLE;
