@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/25 19:45:05 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/27 22:01:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,6 +423,29 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	return (op);
 }
 
+int		winner_exist(t_vm *vm)
+{
+	t_proc	*lst;
+	int		tmp;
+
+	lst = vm->proc;
+	tmp = 0;
+	while (lst)
+	{
+		if (lst->live)
+			tmp = lst->id * -1;
+		printf("PLAYER ID => %d\n", tmp);
+		while (lst && tmp)
+		{
+			if (lst->live && (lst->id * -1) != tmp)
+				return (1);
+			lst = lst->next;
+		}
+		lst = lst->next;
+	}
+	return (0);
+}
+
 void	run(t_vm *vm)
 {
 	int		i;
@@ -433,7 +456,7 @@ void	run(t_vm *vm)
 	proc = vm->proc;
 	proc->op = NULL;
 
-	while (i < 400) // main while stop if winner_exist
+	while (i < 400 && !winner_exist(vm)) // main while stop if winner_exist
 	{
 		proc = vm->proc;
 		while (proc != NULL)
@@ -468,7 +491,6 @@ void	run(t_vm *vm)
 			}
 			proc = proc->next;
 		}
-		// printf("Cycle \n");
 		i++;
 	}
 }

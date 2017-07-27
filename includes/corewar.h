@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/25 18:19:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/27 19:06:17 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_proc
 	char	carry;// Mystere
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		loadtime;
+	int		live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_proc	*next;
 }	t_proc;

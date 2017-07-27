@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/23 09:56:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/27 21:58:51 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ void	create_process(t_vm *vm, int num)
 	tmp->op = NULL;
 	tmp->reg = init_registre();
 	tmp->state = IDLE;
+	tmp->carry = 0;
+	tmp->live = 1;
 }
 
 void	init_process(t_vm *vm)
