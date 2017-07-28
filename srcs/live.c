@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/27 19:02:16 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/28 04:32:56 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void	live(t_vm *vm, t_op *op, int player)
 {
 	printf(">>>>>ENTER_LIVE<<<<<\n");
 
-	
-
-
-
-
-
-
+	if (proc->op->ar[0] >= 1 && proc->op->ar[0] <= vm->p_nb)
+		vm->life_signal[proc->op->ar[0] - 1] = 1;
 }

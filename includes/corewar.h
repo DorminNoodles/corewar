@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/27 19:06:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/28 04:26:14 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_proc
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
-	char	carry;// Mystere
+	char	carry;// Mystere //edit : plus maintenant;
 	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		loadtime;
 	int		live; // si le processus a fait appel a live durant CYCLE_TO_DIE
@@ -152,7 +152,11 @@ typedef struct s_vm
 {
 	int		p_nb;
 	int		cycle;
+	int		countdown;
 	char	*mem;
+	int		life_signal[4];			// tab pour les vies.
+
+
 	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
 
 	t_optab	optab[17];

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/27 21:58:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/28 04:24:31 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ void	init_mem(t_vm *vm)
 void	init_p_nb(t_vm *vm)
 {//init le nombre de players
 	vm->p_nb = 1;
+
+	vm->life_signal[0] = 0;
+
+	// ugly, i know.
+
+	vm->life_signal[1] = -1;
+	vm->life_signal[2] = -1;
+	vm->life_signal[3] = -1;
+	// vm->life_signal initialisation based on it.
+
 }
 
 char	*get_data(char *filename)

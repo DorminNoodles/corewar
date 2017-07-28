@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/27 22:01:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/07/28 05:51:45 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,14 +423,79 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	return (op);
 }
 
+//  FUNCTIONS WERE ADDED TO KILL PROCESSES, AND SO ALLOW VICTORY AND LOSE CONDITIONS
+//	TO HAVE AN EFFECT ON THE MEMORY.
+
+/*int		kill_process(t_proc *proc, int i)
+{
+	t_proc *tmp;
+
+	tmp = proc;
+	if (i == proc->id)
+	{
+		tmp = tmp->next;
+		ft_memdel(proc);			//  jsuis fatigue, probleme de maillons etc.
+		proc = tmp;
+	}
+	else
+		while (tmp->next)
+		{
+			if (tmp->next == proc && proc->next != NULL)
+			{
+				tmp->next = proc->next;
+				ft_memdel(proc);
+			}
+			else if (tmp->next == proc)
+				ft_memdel(tmp->next);
+			tmp->next = (tmp->next != NULL) ? tmp->next : tmp;
+		}
+}
+
+int		burial(t_proc *proc, int i)
+{
+	t_proc	*tmp;
+
+	tmp = proc;
+	if (proc == NULL)
+		return (0);
+	if (proc->id == i)
+		kill_process(tmp, i);
+	burial(proc->next, i);
+}*/
+
+//  FUNCTIONS WERE ADDED TO KILL PROCESSES, AND SO ALLOW VICTORY AND LOSE CONDITIONS
+//	TO HAVE AN EFFECT ON THE MEMORY.
+
+//WINNER EXIST TWEAKED BUT NOT TESTED.
+
+
 int		winner_exist(t_vm *vm)
 {
 	t_proc	*lst;
 	int		tmp;
+	int		i;
 
 	lst = vm->proc;
 	tmp = 0;
-	while (lst)
+	i = 0;
+	//  I SHOULD EDIT CYCLE TO DIE WOULD BE EASIER TO SEE RESULTS
+
+	if (vm->countdown == CYCLE_TO_DIE)
+	{
+		while (vm->life_signal[i] && vm->life_signal[i] != -1)
+		{
+			if (vm->life_signal[i] != 1)
+				champ_burial(vm->proc, i + 1);
+			else
+				n++;
+			i++;
+		}
+		if (n == 0)
+			// no winner  ? ?
+		if (n == 1)
+			return 0
+	}
+/*	while (lst)
 	{
 		if (lst->live)
 			tmp = lst->id * -1;
@@ -438,13 +503,17 @@ int		winner_exist(t_vm *vm)
 		while (lst && tmp)
 		{
 			if (lst->live && (lst->id * -1) != tmp)
-				return (1);
+				return (0);
 			lst = lst->next;
 		}
-		lst = lst->next;
-	}
-	return (0);
+		if (lst != NULL)
+			lst = lst->next;
+	}*/
+	return (1);
 }
+
+// J AI COMMENTE LA PARTIE DE LCHETY LCHETY LCHETY
+
 
 void	run(t_vm *vm)
 {
@@ -491,6 +560,7 @@ void	run(t_vm *vm)
 			}
 			proc = proc->next;
 		}
+		vm->countdown++;			// added to reach cycle to die   <<<<<<< ??? ??  ?  ?? ? ? ?? >>>>>
 		i++;
 	}
 }

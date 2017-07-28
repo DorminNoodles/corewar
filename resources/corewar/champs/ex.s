@@ -1,7 +1,13 @@
 .name "zork"
 .comment "just a basic living prog"
 
-#		ld	%600,r1
+		ld	%600,r1
+		ld	1,r2
+		zjmp %:test
+		add r1,r2,r3
+		zjmp %:test
+test:	ld %0, r2
+
 #		ld	1,r2
 #		ld	%200,r4
 #		ld	%200,r8
@@ -21,4 +27,4 @@
 #		sti	r2,%400,%0
 #		sti	r3,%410,%0
 
-		live %-1
+		live %-3
