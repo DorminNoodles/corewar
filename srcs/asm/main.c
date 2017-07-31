@@ -84,6 +84,7 @@ int find_op(char *word, char *line)
 
   oct = 1;
   i = 0;
+  tmp = 0;
   printf("word '%s'\n", word);
   while (op_tab[i].inst)
   {
@@ -100,10 +101,12 @@ int find_op(char *word, char *line)
         ++oct;
         op_ocp(i, line);
       }
+      oct = analyse(oct, line, tmp);
     }
     ++i;
   }
-  oct = analyse(oct, line, tmp);
+//  if (!tmp)
+//    return (0);
   printf(" ****** NB OCT %d ******\n", oct);
   return (oct);
 }
@@ -121,7 +124,7 @@ int parse(char *line)
   while (!ft_isprint(line[a]))
     ++a;
   word = take_word(line + a);
-//  printf("word = '%s' ", word);
+//  printf("line + a = %s word = '%s' ", line +  a, word);
   if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
 //    printf("is head\n");
       ;
@@ -134,7 +137,8 @@ int parse(char *line)
         ++a;
       while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
         ++a;
-      printf("line + a = '%s'\n", line + a);
+  //    printf("line + a = '%s'\n", line + a);
+      free(word);
       word = take_word(line + a);
       if (*word)
         bytes += find_op(word, line + a);
@@ -144,6 +148,7 @@ int parse(char *line)
 //    printf("is op\n");
     bytes += find_op(word, line + a);
   }
+    free(word);
   return (bytes); // JE TYPE EN RETURN INT POUR RECUPERER dans le main LE nb octect
   // bisous bisous
 }
@@ -159,6 +164,7 @@ int main (int argc, char **argv)
   line = NULL;
   while (get_next_line(fd, &line))
   {
+    printf("line = '%s'\n", line);
   //  if (!*line)
   //    printf("len line = %zu\n", ft_strlen(line));
 //    if (*line && ft_strlen(line) != 0)
@@ -168,8 +174,9 @@ int main (int argc, char **argv)
         {
         bytes += parse(line);
   //  }
-        ft_memdel((void*)&line);
       }
+      ft_memdel((void*)&line);
+  //    free(line);
       //  free(line);// Ca double free ici, je ne sais pas pourquoi - peut etre mon gnl
   }
   printf("Final bytes number = %d\n", bytes);
