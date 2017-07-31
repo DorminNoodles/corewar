@@ -66,10 +66,10 @@ int				get_next_line(const int fd, char **line)
 		list->content = ft_strnjoin(list->content, buf, len);
 	len = ft_make_line((char*)list->content, line);
 	if (*(char*)list->content == '\0')
-//	{
-//		ft_memdel((void**)list);
+	{
+		ft_memdel((void**)list);
 		return (0);
-//	}
+	}
 	str = list->content;
 	list->content = ft_strdup(list->content + len);
 	free(str);

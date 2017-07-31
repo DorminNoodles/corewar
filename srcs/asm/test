@@ -1,0 +1,23 @@
+line = .name           "42"
+line = .comment        "Just a basic Winner Program"
+line = entree:	live	%42		# entree
+line + a = 'live	%42		# entree'
+word 'live'
+ANALYSE - live	%42		# entree
+ ****** NB OCT 5 ******
+line = 	ld	%0,r5
+word 'ld'
+ANALYSE - ld	%0,r5
+ ****** NB OCT 7 ******
+line = 	ld	%0,r5
+word 'ld'
+ANALYSE - ld	%0,r5
+ ****** NB OCT 7 ******
+line = 	zjmp	%:bite
+word 'zjmp'
+ANALYSE - zjmp	%:bite
+ ****** NB OCT 3 ******
+line = "¬½ù
+word ''
+ANALYSE - 
+ ****** NB OCT 1 ******

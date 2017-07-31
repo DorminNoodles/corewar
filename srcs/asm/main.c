@@ -134,7 +134,6 @@ int parse(char *line)
         ++a;
       while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
         ++a;
-      free(word);
       printf("line + a = '%s'\n", line + a);
       word = take_word(line + a);
       if (*word)
@@ -155,16 +154,23 @@ int main (int argc, char **argv)
   char  *line;
   int   bytes;
 
-  line = NULL;
   bytes = 0;
   fd = open(argv[1], O_RDONLY);
+  line = NULL;
   while (get_next_line(fd, &line))
   {
-    if (ft_strlen(line))
-    {
+  //  if (!*line)
+  //    printf("len line = %zu\n", ft_strlen(line));
+//    if (*line && ft_strlen(line) != 0)
+//    {
+   //   printf("len line = %zu\n", ft_strlen(line));
+        if (line)
+        {
         bytes += parse(line);
-        //  free(line); Ca double free ici, je ne sais pas pourquoi - peut etre mon gnl
-    }
+  //  }
+        ft_memdel((void*)&line);
+      }
+      //  free(line);// Ca double free ici, je ne sais pas pourquoi - peut etre mon gnl
   }
   printf("Final bytes number = %d\n", bytes);
   return (0);
