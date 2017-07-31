@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 04:26:14 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/07/31 11:21:13 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ typedef struct s_optab
 	char	*name;
 	int		need_ocp;
 	int		une_heure_de_perdue; 	// nombre d'octect d'encodage. 2 ou 4;
+/* GROUPE DE FDP - comme les flics ces batards (on va niquer leurs meres)
+  MLAMBERT AU BUCHET
+*/
 }	t_optab;
 
 typedef struct s_vm
@@ -155,13 +158,17 @@ typedef struct s_vm
 	int		countdown;
 	char	*mem;
 	int		life_signal[4];			// tab pour les vies.
-
-
 	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
-
 	t_optab	optab[17];
 	t_proc	*proc;
 }	t_vm;
+
+typedef struct s_asm
+{
+  char          *label;
+  int           nb_oct;
+  struct s_asm  *next;
+}               t_asm;
 
 
 extern t_optab op_tab[17];
