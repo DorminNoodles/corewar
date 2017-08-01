@@ -118,39 +118,39 @@ int parse(char *line)
   char  *word;
   int   bytes;
 
-  a = 0;
-  oct = 0;
   bytes = 0;
-  while (!ft_isprint(line[a]))
-    ++a;
-  word = take_word(line + a);
-//  printf("line + a = %s word = '%s' ", line +  a, word);
-  if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
+  if (line)
+  {
+    a = 0;
+    oct = 0;
+    while (!ft_isprint(line[a]))
+      ++a;
+    word = take_word(line + a);
+    if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
 //    printf("is head\n");
       ;
-  else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
-  {
-    ;
+      else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
+      {
 //    bullshit pour tester si le compteur d'octets fonctionne
 //    on recuperera les label et leur postition soon
-      while(ft_isalpha(line[a]) || ft_isdigit(line[a]))
-        ++a;
-      while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
-        ++a;
+        while(ft_isalpha(line[a]) || ft_isdigit(line[a]))
+          ++a;
+        while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
+          ++a;
   //    printf("line + a = '%s'\n", line + a);
-      free(word);
-      word = take_word(line + a);
-      if (*word)
+        free(word);
+        word = take_word(line + a);
+        if (*word)
+          bytes += find_op(word, line + a);
+        }
+      else
+      {
         bytes += find_op(word, line + a);
-  }
-  else
-  {
-//    printf("is op\n");
-    bytes += find_op(word, line + a);
-  }
-    free(word);
-  return (bytes); // JE TYPE EN RETURN INT POUR RECUPERER dans le main LE nb octect
-  // bisous bisous
+      }
+      free(word);
+    }
+    return (bytes); // JE TYPE EN RETURN INT POUR RECUPERER dans le main LE nb octect
+    // bisous bisous
 }
 
 int main (int argc, char **argv)
@@ -165,19 +165,8 @@ int main (int argc, char **argv)
   while (get_next_line(fd, &line))
   {
     printf("line = '%s'\n", line);
-  //  if (!*line)
-  //    printf("len line = %zu\n", ft_strlen(line));
-//    if (*line && ft_strlen(line) != 0)
-//    {
-   //   printf("len line = %zu\n", ft_strlen(line));
-        if (line)
-        {
-        bytes += parse(line);
-  //  }
-      }
-      ft_memdel((void*)&line);
-  //    free(line);
-      //  free(line);// Ca double free ici, je ne sais pas pourquoi - peut etre mon gnl
+    bytes += parse(line);
+    ft_memdel((void*)&line);
   }
   printf("Final bytes number = %d\n", bytes);
   return (0);
