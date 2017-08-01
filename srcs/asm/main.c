@@ -40,7 +40,7 @@ int analyse_args(int oct, char *line, int i)
     oct += 1;
   else if (*line == '%')
   {
-    if ((i == 0 || i == 1 || i == 6 || i == 7 || i == 13))
+    if ((i == 0 || i == 1 || i == 5 || i == 6 || i == 7 || i == 13))
       oct += 4;
     else
       oct += 2;
