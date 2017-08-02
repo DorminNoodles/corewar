@@ -32,45 +32,7 @@ char  *moove_on_line(char *line)
     ++a;
   return (line + a);
 }
-/*
-char *moove_until_space(char *line)
-{
-  int a;
 
-  a = 0;
-  while (ft_isprint(line[a]))
-    ++a;
-  ++a;
-  return (line + a);
-}
-
-char  *moove_until_sep(char *line, int *a)
-{
-  printf("ENTER UNTIL SEPARATOR_CHAR '%s'\n", line + *a);
-    while(line[*a] && line[*a] != SEPARATOR_CHAR)
-      ++*a;
-    if (!line[*a])
-      return (NULL);
-    ++*a;
-    printf("EXIT UNTIL SEPARATOR_CHAR '%s'\n", line + *a);
-    return (line + *a);
-}
-
-char *moove_until_print(char *line)
-{
-  int a;
-
-  a = 0;
-  if (line)
-  {
-    while (line[a] && line[a] == ' ' || line[a] == '\t')
-      ++a;
-      printf("EXIT UNTIL PRINT %s\n", line + a);
-      return (line + a);
-  }
-  return (NULL);
-}
-*/
 int   detect_arg(char *line)
 {
   int a;
@@ -85,42 +47,62 @@ int   detect_arg(char *line)
   return (0);
 }
 
-void   test()
+char *concat_opcode(char *ocp, int arg)
+{
+  if (!ocp)
+  {
+    if (!(ocp = ft_strnew(0)))
+      error("Error : Malloc failed");
+  }
+    if (arg == REG_CODE)
+      ft_strcat(ocp, "01");
+    else if (arg == DIR_CODE)
+      ft_strcat(ocp, "10");
+    else if (arg == IND_CODE)
+      ft_strcat(ocp, "11");
+  return (ocp);
+}
+
+void write_ocp(t_asm_env *env, char *ocp)
 {
   char *str;
-  char *res;
-  char  ocp;
+  char res;
 
-  str = "01010100";
-  res = ft_convert_base(str, "01", "0123456789");
-  ocp = ft_atoi(res);
-  ft_printf("res= %x\n", ocp);
+  while (ft_strlen(ocp) != 8)
+    ft_strcat(ocp, "00");
+  str = ft_convert_base(ocp, "01", "0123456789");
+  res = ft_atoi(str);
+  ft_putchar_fd(res, env->fd);
 }
 
 void  op_ocp(t_asm_env *env, int i, char *line)
 {
   int  a;
+  int  num_arg;
   int res;
   char op;
-  char ocp;
+  char *ocp;
 
-  test();
   a = 0;
   op = i;
   res = 0;
+  ocp = NULL;
+  num_arg = 1;
   ft_putchar_fd(op, env->fd);
   line = moove_on_line(line);
   while (line[a])
   {
     res = detect_arg(line + a);
+    ocp = concat_opcode(ocp, res);
     while (line[a] && line[a] != SEPARATOR_CHAR)
       ++a;
     if (line[a] == SEPARATOR_CHAR)
       ++a;
     while(line[a] && line[a] == ' ' || line[a] == '\t')
       ++a;
+    ++num_arg;
   }
-  printf("\n");
+  write_ocp(env, ocp);
 }
 
 void  op_no_ocp(t_asm_env *env, int i, char *line)
