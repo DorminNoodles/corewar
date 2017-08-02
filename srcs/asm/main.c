@@ -8,7 +8,7 @@ char *take_word(char *str)
 
   a = 0;
   len = 0;
-  while (str[len] && str[len] != ' ' && str[len] != '\t')
+  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR)
     ++len;
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
     exit (0);
@@ -18,6 +18,7 @@ char *take_word(char *str)
     word[a] = str[a];
     ++a;
   }
+  word[a] = '\0';
   return (word);
 }
 
@@ -40,7 +41,7 @@ int   detect_arg(char *line)
   a = 0;
   if (line[a] == 'r')
     return (REG_CODE);
-  if (line[a] == LABEL_CHAR)
+  if (line[a] == LABEL_CHAR || ft_isdigit(line[a]))
     return (IND_CODE);
   if (line [a] == DIRECT_CHAR)
     return (DIR_CODE);
@@ -75,42 +76,180 @@ void write_ocp(t_asm_env *env, char *ocp)
   ft_putchar_fd(res, env->fd);
 }
 
+int  goto_nextarg(char *line)
+{
+  int a;
+
+  a  = 0;
+  while (line[a] && line[a] != SEPARATOR_CHAR)
+    ++a;
+  if (line[a] == SEPARATOR_CHAR)
+    ++a;
+  while(line[a] && line[a] == ' ' || line[a] == '\t')
+    ++a;
+  return (a);
+}
+
+void  write_reg(t_asm_env *env, char *line)
+{
+  int a;
+  char reg;
+  char *str;
+
+  a = 0;
+  line++;
+  while (line[a] && ft_isdigit(line[a]))
+    ++a;
+  str = ft_strndup(line, a);
+  reg = ft_atoi(str);
+  ft_putchar_fd(reg, env->fd);
+}
+
+int  reverse_int(int nb)
+{
+return (nb & 0x000000FFU) << 24 | (nb & 0x0000FF00U) << 8 |
+       (nb & 0x00FF0000U) >> 8 | (nb & 0xFF000000U) >> 24;
+}
+
+short reverse_short(short nb)
+{
+    return ((nb & 0xFFU) << 8 | (nb & 0xFF00U) >> 8);
+}
+
+int  dist_label(t_asm_env *env, char *label)
+{
+  t_tab_labs *tmp;
+
+  tmp = env->labs;
+  while (ft_strcmp(label, tmp->label))
+    tmp = tmp->next;
+//  printf("label find = '%s' with pos = %d\n", tmp->label, tmp->nb_oct);
+  return (tmp->nb_oct - env->bytes);
+}
+
+void  write_dir(t_asm_env *env, char *line, int i)
+{
+  int a;
+  int dir4o;
+  short dir2o;
+  char  *str;
+  char *label;
+
+  a = 0;
+  line++;
+  if (line[a] != LABEL_CHAR)
+  {
+    while (line[a] && ft_isdigit(line[a]))
+      ++a;
+    str = ft_strndup(line, a);
+  }
+  if (i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14)
+  {
+    if (line[a] == LABEL_CHAR)
+    {
+      label = take_word(line + 1);
+      dir4o = dist_label(env, label);
+    }
+    else
+      dir4o = ft_atoi(str);
+    dir4o = reverse_int(dir4o);
+    write(env->fd, &dir4o, 4);
+  }
+  else
+  {
+    if (line[a] == LABEL_CHAR)
+    {
+      label = take_word(line + 1);
+      dir2o = dist_label(env, label);
+    }
+    else
+      dir2o = ft_atoi(str);
+    dir2o = reverse_short(dir2o);
+    write(env->fd, &dir2o, 2);
+  }
+}
+
+void  write_ind(t_asm_env *env, char *line)
+{
+  int a;
+  short ind;
+  char *str;
+
+  a = 0;
+  if (ft_isdigit(*line))
+  {
+    while (line[a] && ft_isdigit(line[a]))
+      ++a;
+    str = ft_strndup(line, a);
+    ind = ft_atoi(str);
+  }
+  else
+  {
+    str = take_word(line + 1);
+    ind = dist_label(env, str);
+  }
+  ind = reverse_short(ind);
+  write(env->fd, &ind, 2);
+//  print_labs_lst(env->labs);
+}
+
+void  write_args(t_asm_env *env, char *line, int i)
+{
+  int a;
+  int res;
+
+  res = 0;
+  a = 0;
+  while (line[a])
+  {
+    res = detect_arg(line + a);
+    if (res == REG_CODE)
+      write_reg(env, line + a);
+    else if (res == DIR_CODE)
+      write_dir(env, line + a, i);
+    else if (res == IND_CODE)
+      write_ind(env, line + a);
+    a += goto_nextarg(line + a);
+  }
+
+}
+
 void  op_ocp(t_asm_env *env, int i, char *line)
 {
   int  a;
-  int  num_arg;
   int res;
-  char op;
   char *ocp;
 
   a = 0;
-  op = i;
   res = 0;
   ocp = NULL;
-  num_arg = 1;
-  ft_putchar_fd(op, env->fd);
+  ft_putchar_fd(i + 1, env->fd);
   line = moove_on_line(line);
   while (line[a])
   {
     res = detect_arg(line + a);
     ocp = concat_opcode(ocp, res);
-    while (line[a] && line[a] != SEPARATOR_CHAR)
-      ++a;
-    if (line[a] == SEPARATOR_CHAR)
-      ++a;
-    while(line[a] && line[a] == ' ' || line[a] == '\t')
-      ++a;
-    ++num_arg;
+    a += goto_nextarg(line + a);
   }
   write_ocp(env, ocp);
+  write_args(env, line, i + 1);
 }
 
 void  op_no_ocp(t_asm_env *env, int i, char *line)
 {
-  char op;
+  int  a;
+  int res;
 
-  op = i;
-  ft_putchar_fd(op, env->fd);
+  a = 0;
+  res = 0;
+  ft_putchar_fd(i + 1, env->fd);
+  line = moove_on_line(line);
+  while (line[a])
+  {
+    res = detect_arg(line + a);
+    a += goto_nextarg(line + a);
+  }
+  write_args(env, line, i + 1);
 }
 
 int analyse_args(int oct, char *line, int i)
@@ -165,7 +304,6 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode)
   oct = 1;
   i = 0;
   tmp = 0;
-//  printf("\n---------------------\n");
   while (op_tab[i].inst)
   {
     if (!ft_strcmp(word, op_tab[i].inst))
@@ -187,8 +325,6 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode)
     }
     ++i;
   }
-//  printf("Octets : %d\n", oct);
-//  printf("---------------------\n");
   return (oct);
 }
 
@@ -230,6 +366,7 @@ void parse(t_asm_env *env, char *line, int printmode)
       }
       free(word);
     }
+//    printf("bytes = %d\n", env->bytes);
 }
 
 void  create_file(t_asm_env *env, char *str)
@@ -257,16 +394,19 @@ int main (int argc, char **argv)
 
   fd = open(argv[1], O_RDONLY);
   line = NULL;
+  env.bytes = 1;
   while (get_next_line(fd, &line))
   {
+    printf("%s\n", line);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
   }
-  printf("\n\nFinal bytes number = %d\n\n", env.bytes);
+  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
   print_labs_lst(env.labs);
   create_file(&env, argv[1]);
   fd2 = open(argv[1], O_RDONLY);
   line = NULL;
+  env.bytes = 1;
   while (get_next_line(fd2, &line))
   {
 //    printf("line = '%s'\n", line);

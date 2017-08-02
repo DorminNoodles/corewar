@@ -1,6 +1,4 @@
-.name    "sebc"
-.comment "sebc"
+.name "test"
+.comment "test test"
 
-	st	r1, :l1
-	ld	%4, r3
-	xor r1, r1, r2
+live %1
