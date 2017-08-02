@@ -21,16 +21,114 @@ char *take_word(char *str)
   return (word);
 }
 
-void  op_ocp(int i, char *line)
+char  *moove_on_line(char *line)
 {
-  /*printf("*** ENTER OCP ***\n")*/;
-//  printf("line = %s\n", line);
+  int a;
+
+  a = 0;
+  while (ft_isalpha(line[a]) || ft_isdigit(line[a]))
+    ++a;
+  while(line[a] == ' ' || line[a] == '\t')
+    ++a;
+  return (line + a);
+}
+/*
+char *moove_until_space(char *line)
+{
+  int a;
+
+  a = 0;
+  while (ft_isprint(line[a]))
+    ++a;
+  ++a;
+  return (line + a);
 }
 
-void  op_no_ocp(int i, char *line)
+char  *moove_until_sep(char *line, int *a)
 {
-/*  printf("*** ENTER NO OCP ***\n")*/;
-//  printf("line = %s\n", line);
+  printf("ENTER UNTIL SEPARATOR_CHAR '%s'\n", line + *a);
+    while(line[*a] && line[*a] != SEPARATOR_CHAR)
+      ++*a;
+    if (!line[*a])
+      return (NULL);
+    ++*a;
+    printf("EXIT UNTIL SEPARATOR_CHAR '%s'\n", line + *a);
+    return (line + *a);
+}
+
+char *moove_until_print(char *line)
+{
+  int a;
+
+  a = 0;
+  if (line)
+  {
+    while (line[a] && line[a] == ' ' || line[a] == '\t')
+      ++a;
+      printf("EXIT UNTIL PRINT %s\n", line + a);
+      return (line + a);
+  }
+  return (NULL);
+}
+*/
+int   detect_arg(char *line)
+{
+  int a;
+
+  a = 0;
+  if (line[a] == 'r')
+    return (REG_CODE);
+  if (line[a] == LABEL_CHAR)
+    return (IND_CODE);
+  if (line [a] == DIRECT_CHAR)
+    return (DIR_CODE);
+  return (0);
+}
+
+void   test()
+{
+  char *str;
+  char *res;
+  char  ocp;
+
+  str = "01010100";
+  res = ft_convert_base(str, "01", "0123456789");
+  ocp = ft_atoi(res);
+  ft_printf("res= %x\n", ocp);
+}
+
+void  op_ocp(t_asm_env *env, int i, char *line)
+{
+  int  a;
+  int res;
+  char op;
+  char ocp;
+
+  test();
+  a = 0;
+  op = i;
+  res = 0;
+  ft_putchar_fd(op, env->fd);
+  line = moove_on_line(line);
+  while (line[a])
+  {
+    res = detect_arg(line + a);
+    while (line[a] && line[a] != SEPARATOR_CHAR)
+      ++a;
+    if (line[a] == SEPARATOR_CHAR)
+      ++a;
+    while(line[a] && line[a] == ' ' || line[a] == '\t')
+      ++a;
+  }
+  printf("\n");
+}
+
+void  op_no_ocp(t_asm_env *env, int i, char *line)
+{
+  char op;
+
+  op = i;
+  ft_putchar_fd(op, env->fd);
 }
 
 int analyse_args(int oct, char *line, int i)
@@ -54,7 +152,7 @@ int  analyse(int oct, char *line, int i)
   int a;
 
   a = 0;
-  printf("%s\n", line);
+//  printf("'%s'\n", line);
   while (line[a] && line[a] != '\n')
   {
     while (line[a] == ':')
@@ -76,7 +174,7 @@ int  analyse(int oct, char *line, int i)
     return (oct);
 }
 
-int find_op(char *word, char *line)
+int find_op(t_asm_env *env, char *word, char *line, int printmode)
 {
   int i;
   int tmp;
@@ -93,13 +191,15 @@ int find_op(char *word, char *line)
       if (!op_tab[i].need_ocp)
       {
         tmp = i;
-        op_no_ocp(i, line);
+        if (printmode)
+          op_no_ocp(env, i, line);
       }
       else
       {
         tmp = i;
         ++oct;
-        op_ocp(i, line);
+        if (printmode)
+          op_ocp(env, i, line);
       }
       oct = analyse(oct, line, tmp);
     }
@@ -110,49 +210,7 @@ int find_op(char *word, char *line)
   return (oct);
 }
 
-t_tab_labs    *new_label(char *line, int bytes)
-{
-  int         a;
-  int         len;
-  char        *name;
-  t_tab_labs  *new;
-
-  len = 0;
-  while (line[len] != ':')
-    ++len;
-  if (!(name = ft_strnew(len)))
-      error("Error : Malloc failed\n");
-  a = 0;
-  while (a != len)
-  {
-    name[a] = line[a];
-    ++a;
-  }
-  if (!(new = (t_tab_labs*)malloc(sizeof(t_tab_labs))))
-      error("Error : Malloc failed\n");
-  new->label = ft_strdup(name);
-  new->nb_oct = bytes;
-  new->next = NULL;
-  return (new);
-}
-
-void  create_label(t_tab_labs **labels, int bytes, char *line)
-{
-  t_tab_labs *tmp;
-
-  tmp = *labels;
-  if (tmp)
-  {
-    while (tmp->next)
-      tmp = tmp->next;
-    tmp->next = new_label(line, bytes);
-
-  }
-  else
-    *labels = new_label(line, bytes);
-}
-
-void parse(t_asm_env *env, char *line, int checkmode)
+void parse(t_asm_env *env, char *line, int printmode)
 {
   int   a;
   char  *word;
@@ -172,9 +230,9 @@ void parse(t_asm_env *env, char *line, int checkmode)
       {
 //    bullshit pour tester si le compteur d'octets fonctionne
 //    on recuperera les label et leur postition soon
-        if (checkmode)
-        //  env->labs = create_label(&env->labs , env->bytes, line + a);
+        if (!printmode)
           create_label(&env->labs , env->bytes, line + a);
+        //  env->labs = create_label(&env->labs , env->bytes, line + a);
         while(ft_isalpha(line[a]) || ft_isdigit(line[a]))
           ++a;
         while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
@@ -182,14 +240,30 @@ void parse(t_asm_env *env, char *line, int checkmode)
         free(word);
         word = take_word(line + a);
         if (*word)
-          env->bytes += find_op(word, line + a);
+          env->bytes += find_op(env, word, line + a, printmode);
         }
       else
       {
-        env->bytes += find_op(word, line + a);
+        env->bytes += find_op(env, word, line + a, printmode);
       }
       free(word);
     }
+}
+
+void  create_file(t_asm_env *env, char *str)
+{
+  int fd;
+  int len;
+  char *tmp;
+  char *name;
+
+  len = ft_strlen(str) - 2;
+  tmp = ft_strndup(str, len);
+  name = ft_strnew(len + 2);
+  name = ft_strcpy(name, tmp);
+  name = ft_strcat(name, ".cor");
+  fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+  env->fd = fd;
 }
 
 int main (int argc, char **argv)
@@ -203,24 +277,19 @@ int main (int argc, char **argv)
   line = NULL;
   while (get_next_line(fd, &line))
   {
-    parse(&env, line, 1);
+    parse(&env, line, 0);
     ft_memdel((void*)&line);
   }
   printf("\n\nFinal bytes number = %d\n\n", env.bytes);
   print_labs_lst(env.labs);
-
-/*  while (env.labs && env.labs->label)
-  {
-    printf("%s\n", env.labs->label);
-    env.labs = env.labs->next;
-  }*/
-/*  fd2 = open(argv[1], O_RDONLY);
+  create_file(&env, argv[1]);
+  fd2 = open(argv[1], O_RDONLY);
   line = NULL;
   while (get_next_line(fd2, &line))
   {
-    printf("line = %s\n", line);
-    parse(&env, line, 0);
+//    printf("line = '%s'\n", line);
+    parse(&env, line, 1);
     ft_memdel((void*)&line);
-  }*/
+  }
   return (0);
 }

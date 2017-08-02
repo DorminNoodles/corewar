@@ -167,6 +167,7 @@ typedef struct s_asm_env
 {
   struct s_tab_labs *labs;
   int              bytes;
+  int              fd;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
@@ -177,7 +178,7 @@ typedef struct s_tab_labs
 }                   t_tab_labs;
 
 void print_labs_lst(t_tab_labs *lst);
-
+void create_label(t_tab_labs **labels, int bytes, char *line);
 extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
