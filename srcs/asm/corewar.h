@@ -163,13 +163,20 @@ typedef struct s_vm
 	t_proc	*proc;
 }	t_vm;
 
-typedef struct s_asm
+typedef struct s_asm_env
 {
-  char          *label;
-  int           nb_oct;
-  struct s_asm  *next;
-}               t_asm;
+  struct s_tab_labs *labs;
+  int              bytes;
+}                  t_asm_env;
 
+typedef struct s_tab_labs
+{
+  char              *label;
+  int               nb_oct;
+  struct s_tab_labs  *next;
+}                   t_tab_labs;
+
+void print_labs_lst(t_tab_labs *lst);
 
 extern t_optab op_tab[17];
 
