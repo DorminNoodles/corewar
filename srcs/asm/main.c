@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
+/*   Updated: 2017/08/03 06:58:25 by rfulop           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "corewar.h"
 
 char *take_word(char *str)
@@ -85,7 +97,7 @@ int  goto_nextarg(char *line)
     ++a;
   if (line[a] == SEPARATOR_CHAR)
     ++a;
-  while(line[a] && line[a] == ' ' || line[a] == '\t')
+  while(line[a] && (line[a] == ' ' || line[a] == '\t'))
     ++a;
   return (a);
 }
@@ -342,8 +354,7 @@ void parse(t_asm_env *env, char *line, int printmode)
       return ;
     word = take_word(line + a);
     if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
-//    printf("is head\n");
-      ;
+      write_header(env, line, printmode);
       else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
       {
 //    bullshit pour tester si le compteur d'octets fonctionne
@@ -397,7 +408,7 @@ int main (int argc, char **argv)
   env.bytes = 1;
   while (get_next_line(fd, &line))
   {
-    printf("%s\n", line);
+   // printf("%s\n", line);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
   }
@@ -409,7 +420,7 @@ int main (int argc, char **argv)
   env.bytes = 1;
   while (get_next_line(fd2, &line))
   {
-//    printf("line = '%s'\n", line);
+  //  printf("line = '%s'\n", line);
     parse(&env, line, 1);
     ft_memdel((void*)&line);
   }

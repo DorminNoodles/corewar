@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/31 11:21:13 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/08/03 06:46:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ typedef struct s_vm
 	t_proc	*proc;
 }	t_vm;
 
+extern t_optab op_tab[17];
+
 typedef struct s_asm_env
 {
   struct s_tab_labs *labs;
@@ -179,7 +181,8 @@ typedef struct s_tab_labs
 
 void print_labs_lst(t_tab_labs *lst);
 void create_label(t_tab_labs **labels, int bytes, char *line);
-extern t_optab op_tab[17];
+
+void write_header(t_asm_env *env, char *line, int printmode);
 
 void	init_vm(t_vm *vm);
 void	error(char *str);
