@@ -1,0 +1,136 @@
+cecl
+line = '.name           "42"'
+cecl
+line = '.comment        "Just a basic Winner Program"'
+cecl
+line = ''
+len line = 0
+cecl
+line = 'entree:	live	%42		# entree'
+line + a = 'live	%42		# entree'
+word 'live'
+ANALYSE - live	%42		# entree
+ ****** NB OCT 5 ******
+cecl
+line = '	ld	%0,r5'
+word 'ld'
+ANALYSE - ld	%0,r5
+ ****** NB OCT 7 ******
+cecl
+line = '	ld	%0,r5'
+word 'ld'
+ANALYSE - ld	%0,r5
+ ****** NB OCT 7 ******
+cecl
+line = '	zjmp	%:bite'
+word 'zjmp'
+ANALYSE - zjmp	%:bite
+ ****** NB OCT 3 ******
+cecl
+line = ''
+len line = 0
+cecl
+line = 'tir:	sti	r1,%:tirb,%1'
+line + a = 'sti	r1,%:tirb,%1'
+word 'sti'
+ANALYSE - sti	r1,%:tirb,%1
+ ****** NB OCT 7 ******
+cecl
+line = '	ld	%2304,r10'
+word 'ld'
+ANALYSE - ld	%2304,r10
+ ****** NB OCT 7 ******
+cecl
+line = '	ld	%1,r5'
+word 'ld'
+ANALYSE - ld	%1,r5
+ ****** NB OCT 7 ******
+cecl
+line = '	ld	%0,r11'
+word 'ld'
+ANALYSE - ld	%0,r11
+ ****** NB OCT 7 ******
+cecl
+line = ''
+len line = 0
+cecl
+line = '	ld	%4,r3'
+word 'ld'
+ANALYSE - ld	%4,r3
+ ****** NB OCT 7 ******
+cecl
+line = 'tirf:	live	%42'
+line + a = 'live	%42'
+word 'live'
+ANALYSE - live	%42
+ ****** NB OCT 5 ******
+cecl
+line = '	fork	%:tirop'
+word 'fork'
+ANALYSE - fork	%:tirop
+ ****** NB OCT 3 ******
+cecl
+line = '	live	%742'
+word 'live'
+ANALYSE - live	%742
+ ****** NB OCT 5 ******
+cecl
+line = '	sub	r3,r5,r3'
+word 'sub'
+ANALYSE - sub	r3,r5,r3
+ ****** NB OCT 5 ******
+cecl
+line = '	zjmp	%:top'
+word 'zjmp'
+ANALYSE - zjmp	%:top
+ ****** NB OCT 3 ******
+cecl
+line = '	ld	%0,r11'
+word 'ld'
+ANALYSE - ld	%0,r11
+ ****** NB OCT 7 ******
+cecl
+line = '	fork	%:tirvd'
+word 'fork'
+ANALYSE - fork	%:tirvd
+ ****** NB OCT 3 ******
+cecl
+line = '	live	%42'
+word 'live'
+ANALYSE - live	%42
+ ****** NB OCT 5 ******
+cecl
+line = '	sti	r10,%-510,%0'
+word 'sti'
+ANALYSE - sti	r10,%-510,%0
+ ****** NB OCT 7 ******
+cecl
+line = '	sti	r10,%-404,%0'
+word 'sti'
+ANALYSE - sti	r10,%-404,%0
+ ****** NB OCT 7 ******
+cecl
+line = '	sti	r10,%-303,%0'
+word 'sti'
+ANALYSE - sti	r10,%-303,%0
+ ****** NB OCT 7 ******
+cecl
+line = '	sti	r10,%-202,%0'
+word 'sti'
+ANALYSE - sti	r10,%-202,%0
+ ****** NB OCT 7 ******
+cecl
+line = '	ld	%0,r11'
+word 'ld'
+ANALYSE - ld	%0,r11
+ ****** NB OCT 7 ******
+cecl
+line = '	zjmp	%:tirf'
+word 'zjmp'
+ANALYSE - zjmp	%:tirf
+ ****** NB OCT 3 ******
+cecl
+line = '	zjmp	%:tirf'
+word 'zjmp'
+ANALYSE - zjmp	%:tirf
+ ****** NB OCT 3 ******
