@@ -2,6 +2,7 @@ VM_NAME = corewar
 SRC =		main.c						\
 			init.c						\
 			error.c						\
+			check_arg.c					\
 			debug.c						\
 			sti.c						\
 			ld.c						\
@@ -32,3 +33,8 @@ $(VM_NAME) : $(OBJ)
 clean :
 	make -C libft/ clean
 	rm -f $(OBJ)
+
+fclean : clean
+	rm -f build/corewar
+
+re : fclean $(VM_NAME)

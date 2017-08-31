@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 04:32:56 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/07/29 10:53:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	live(t_vm *vm, t_op *op, int player)
+void	live(t_vm *vm, t_proc *proc)
 {
 	printf(">>>>>ENTER_LIVE<<<<<\n");
 

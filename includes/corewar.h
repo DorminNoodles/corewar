@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 04:26:14 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/08/31 11:53:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_op
 	int		ar_typ[3];
 	int		loadtime;
 	int		pos_opcode;
+	int		countdown;
 }	t_op;
 
 typedef struct s_proc
@@ -146,6 +147,7 @@ typedef struct s_optab
 	char	*name;
 	int		need_ocp;
 	int		une_heure_de_perdue; 	// nombre d'octect d'encodage. 2 ou 4;
+	//changez ce nom de variable de merde :)
 }	t_optab;
 
 typedef struct s_vm
@@ -168,16 +170,22 @@ extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
 void	error(char *str);
+void	write_player(t_vm *vm);
+int		check_arg(int argc, char **argv);
+
+
+
+/*--------INSTRUCTIONS----------*/
 void	and(t_vm *vm, t_proc *proc);
 void	ld(t_vm *vm, t_proc *proc);
 void	sti(t_vm *vm, t_proc *proc);
-void	live(t_vm *vm, t_op *op, int player);
+void	live(t_vm *vm, t_proc *proc);
 void	add(t_vm *vm, t_proc *proc);
 void	or(t_vm *vm, t_proc *proc);
 void	xor(t_vm *vm, t_proc *proc);
-void	sub(t_vm *vm, t_proc *proc);
-void	write_player(t_vm *vm);
 void	st(t_vm *vm, t_proc *proc);
+void	sub(t_vm *vm, t_proc *proc);
+
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);

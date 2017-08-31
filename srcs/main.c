@@ -6,17 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 05:51:45 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/08/31 11:58:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-void	check_param(int argc, char **argv)
-{
-
-
-}
 
 //
 // int		shrt_value(char *tab)
@@ -468,16 +462,24 @@ int		burial(t_proc *proc, int i)
 
 //WINNER EXIST TWEAKED BUT NOT TESTED.
 
+void	champ_burial(t_proc *proc, int i)
+{
+
+
+}
+
 
 int		winner_exist(t_vm *vm)
 {
 	t_proc	*lst;
 	int		tmp;
 	int		i;
+	int		n;
 
 	lst = vm->proc;
 	tmp = 0;
 	i = 0;
+	n = 0;
 	//  I SHOULD EDIT CYCLE TO DIE WOULD BE EASIER TO SEE RESULTS
 
 	if (vm->countdown == CYCLE_TO_DIE)
@@ -493,27 +495,13 @@ int		winner_exist(t_vm *vm)
 		if (n == 0)
 			// no winner  ? ?
 		if (n == 1)
-			return 0
+			return (1);
 	}
-/*	while (lst)
-	{
-		if (lst->live)
-			tmp = lst->id * -1;
-		printf("PLAYER ID => %d\n", tmp);
-		while (lst && tmp)
-		{
-			if (lst->live && (lst->id * -1) != tmp)
-				return (0);
-			lst = lst->next;
-		}
-		if (lst != NULL)
-			lst = lst->next;
-	}*/
-	return (1);
+	// printf("return 0 ??????\n");
+	return (0);
 }
 
 // J AI COMMENTE LA PARTIE DE LCHETY LCHETY LCHETY
-
 
 void	run(t_vm *vm)
 {
@@ -525,7 +513,8 @@ void	run(t_vm *vm)
 	proc = vm->proc;
 	proc->op = NULL;
 
-	while (i < 400 && !winner_exist(vm)) // main while stop if winner_exist
+	printf("winner exist => %d\n", winner_exist(vm));
+	while (!winner_exist(vm)) // main while stop if winner_exist
 	{
 		proc = vm->proc;
 		while (proc != NULL)
@@ -546,7 +535,6 @@ void	run(t_vm *vm)
 				if (proc->op->loadtime <= 0)
 				{
 					fill_cur_op(vm, proc);
-					printf("SEGFAULT %d\n", proc->op->code - 1);
 
 					if (op_tab[proc->op->code - 1].func != NULL)
 					{
@@ -563,13 +551,15 @@ void	run(t_vm *vm)
 		vm->countdown++;			// added to reach cycle to die   <<<<<<< ??? ??  ?  ?? ? ? ?? >>>>>
 		i++;
 	}
+	printf("SEGFAULT\n");
 }
 
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
-	check_param(argc, argv);//check des parametres
+	if(check_arg(argc, argv))//check des parametres
+		error("Error\n");
 	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat
 	show_mem(&vm);
