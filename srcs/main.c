@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/01 09:57:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/01 10:12:52 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -558,7 +558,7 @@ int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
-	if(check_arg(argc, argv))//check des parametres
+	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
 	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat

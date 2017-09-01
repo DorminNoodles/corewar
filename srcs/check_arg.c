@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/08/31 22:55:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/01 10:49:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		srch_nb_player(int argc, char **argv, int arg_num)
 		if (ft_strstr(argv[arg_num - 2], "-n"))
 			return (1);
 	return (0);
+	//si "pouet-npouet" a corriger
 }
 
 int		get_nb_player(int argc, char **argv, int arg_num)
@@ -65,37 +66,35 @@ int		get_nb_player(int argc, char **argv, int arg_num)
 	return (0);
 }
 
-int		srch_players(int argc, char **argv)
+int		srch_players(t_vm *vm, int argc, char **argv)
 {
 	int i;
-	int find;
+	int nb_p;
 	char *tmp;
 
 	i = 1;
-	find = 0;
-	while (i < argc)
+	nb_p = 0;
+	while (i < argc && nb_p < 4)
 	{
 		if ((tmp = ft_strstr(argv[i], ".cor")) && !tmp[4])
 		{
-			find = 1;
+			nb_p++;
 			printf("Find Player %d !\n", get_nb_player(argc, argv, i));
+			vm->files_name[get_nb_player(argc, argv, i)] = argv[i];
 		}
 		i++;
 	}
-	if (find)
+	if (nb_p)
 		return (0);
 	else
 		return (1);
 }
 
-
-int		check_arg(int argc, char **argv)
+int		check_arg(t_vm *vm, int argc, char **argv)
 {
 	srch_nb_dump(argc, argv);
-	if(srch_players(argc, argv))
+	if(srch_players(vm, argc, argv))
 		return(1);
 
-
-	exit(0);
 	return (0);
 }
