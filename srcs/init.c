@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 17:27:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/04 22:33:03 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,14 @@
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
 
+// pourquoi je malloc la mem ?
 	if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
 		error("error : malloc failed\n");
 
+//nouvelle mem on the stack
+	ft_bzero(&vm->mem_2, MEM_SIZE);
 
 }
-
-// void	init_p_bag(t_vm *vm, int nb)
-// {//ca c est les donnes propre a un joueur son "sac"
-// 	int i;
-//
-// 	i = 0;
-// 	if(!(vm->p_bag = (t_bag*)ft_memalloc(sizeof(t_bag) * vm->nb_player)))
-// 		error("error : malloc failed\n");
-//
-// 	vm->p_bag->id = nb;
-// 	vm->p_bag->pc = 0;
-// 	vm->p_bag->state = 1;
-// 	vm->p_bag->cur_op = NULL;
-//
-// 	while (i < vm->nb_player)
-// 	{
-// 		vm->p_bag[i].reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER);
-// 		vm->p_bag[i].reg[1] = (i + 1) * -1;
-// //reg1 prend le num du player mais en negatif.....
-// 		i++;
-// 	}
-// }
 
 void	init_nb_player(t_vm *vm)
 {//init le nombre de players
@@ -189,7 +170,7 @@ void	init_vm(t_vm *vm)
 	int i;
 
 	i = 0;
-	vm->nb_player = 1; // FOR DEBBUG
+	// vm->nb_player = 1; // FOR DEBBUG
 	init_mem(vm);
 	while (i < vm->nb_player)
 	{

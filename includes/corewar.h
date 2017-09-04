@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 17:26:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/04 22:37:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ typedef struct s_vm
 	int		ctd;
 	int		cycle;
 	int		countdown;
-	char	*mem;
+	// char	*mem;
+	char	mem[MEM_SIZE];
 	int		life_signal[4];			// tab pour les vies.
 	char	*files_name[5];
 	t_player	player[5];
@@ -198,5 +199,6 @@ void	sub(t_vm *vm, t_proc *proc);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
+void	show_mem_2(t_vm *vm);
 
 #endif
