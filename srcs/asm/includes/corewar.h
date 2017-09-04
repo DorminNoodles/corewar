@@ -153,7 +153,7 @@ typedef struct s_optab
 
 typedef struct s_vm
 {
-	int		p_nb;
+	int		nb_player;
 	int		cycle;
 	int		countdown;
 	char	*mem;
