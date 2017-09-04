@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/01 10:49:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/04 15:57:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,41 +50,92 @@ int		srch_nb_player(int argc, char **argv, int arg_num)
 	//si "pouet-npouet" a corriger
 }
 
-int		get_nb_player(int argc, char **argv, int arg_num)
+int		is_free_nb_player(t_vm *vm, int nb)
+{
+	if (!vm->nb_player)
+		return (1);
+	if (vm->player[nb].active)
+		return (0);
+	printf("is free !\n");
+	return (1);
+}
+
+int		first_free_nb_player(t_vm *vm)
+{
+	int i;
+
+	i = 1;
+	while (i < MAX_PLAYERS + 2)
+	{
+		if (!vm->player[i].active)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+int		get_nb_player(t_vm *vm, int argc, char **argv, int arg_num)
 {
 	int ret;
 
 	ret = 0;
 	if (srch_nb_player(argc, argv, arg_num))
 	{
-		// printf("here\n");
 		ret = ft_atoi(argv[arg_num - 1]);
-		if (ret > 0 && ret < 5)//add if num already takes
+		if (ret > 0 && ret < 5 && is_free_nb_player(vm, ret))
 			return (ret);
+		else
+			return (first_free_nb_player(vm));
 	}
-	//return le premier num disponible
+	else
+		return (first_free_nb_player(vm));
 	return (0);
+}
+
+void	init_player(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+	while (i <= MAX_PLAYERS + 1)
+	{
+		vm->player[i].active = 0;
+		vm->player[i].life_signal = 0;
+		vm->player[i].file_name = NULL;
+		i++;
+	}
+}
+
+void	new_player(t_vm *vm, int nb, char *str)
+{
+	if (!vm->nb_player)
+		init_player(vm);
+	vm->player[nb].active = 1;
+	vm->player[nb].life_signal = 0;
+	vm->player[nb].file_name = str;
+
+	printf("Debug : New Player %d !\n", nb);
 }
 
 int		srch_players(t_vm *vm, int argc, char **argv)
 {
 	int i;
-	int nb_p;
 	char *tmp;
 
 	i = 1;
-	nb_p = 0;
-	while (i < argc && nb_p < 4)
+	vm->nb_player = 0;
+	while (i < argc)
 	{
 		if ((tmp = ft_strstr(argv[i], ".cor")) && !tmp[4])
 		{
-			nb_p++;
-			printf("Find Player %d !\n", get_nb_player(argc, argv, i));
-			vm->files_name[get_nb_player(argc, argv, i)] = argv[i];
+			vm->nb_player++;
+			if (vm->nb_player > 4)
+				error("Too many champs\n");
+			new_player(vm, get_nb_player(vm, argc, argv, i), argv[i]);
 		}
 		i++;
 	}
-	if (nb_p)
+	if (vm->nb_player)
 		return (0);
 	else
 		return (1);
@@ -95,6 +146,5 @@ int		check_arg(t_vm *vm, int argc, char **argv)
 	srch_nb_dump(argc, argv);
 	if(srch_players(vm, argc, argv))
 		return(1);
-
 	return (0);
 }

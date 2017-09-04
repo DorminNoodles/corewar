@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/01 10:13:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/04 17:26:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,14 @@ typedef struct s_op
 	int		countdown;
 }	t_op;
 
+typedef struct s_player
+{
+	int		active;
+	// int		id;
+	int		life_signal;
+	char	*file_name;
+}	t_player;
+
 typedef struct s_proc
 {
 	int		id;//Num du programme/player a fournir dans r1 (registre 1)
@@ -152,13 +160,15 @@ typedef struct s_optab
 
 typedef struct s_vm
 {
-	int		p_nb;
+	int		nb_player;
+	int		ctd;
 	int		cycle;
 	int		countdown;
 	char	*mem;
 	int		life_signal[4];			// tab pour les vies.
-	char	files_name[4];
-
+	char	*files_name[5];
+	t_player	player[5];
+	t_player	*last_one;
 
 	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
 
@@ -172,7 +182,6 @@ void	init_vm(t_vm *vm);
 void	error(char *str);
 void	write_player(t_vm *vm);
 int		check_arg(t_vm *vm, int argc, char **argv);
-
 
 
 /*--------INSTRUCTIONS----------*/

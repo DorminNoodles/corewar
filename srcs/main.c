@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/01 10:12:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/04 17:29:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@
 // 	while (test)// si il n y a plus qu un seul player en vie stop :)
 // 	{
 // 		player = 0;
-// 		while (player < vm->p_nb)
+// 		while (player < vm->nb_player)
 // 		{
 // 			p_cur = &vm->p_bag[player];
 // 			if (p_cur->cur_op) //si une instruction est deja en buffer
@@ -368,19 +368,19 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	i = 0;
 	get_ocp(vm, proc);
 
-	printf("OCP ===== %x\n", proc->op->ocp);
-	printf("nb arg %d\n", op_tab[proc->op->code - 1].nb_arg);
+	// printf("OCP ===== %x\n", proc->op->ocp);
+	// printf("nb arg %d\n", op_tab[proc->op->code - 1].nb_arg);
 	while (i < op_tab[proc->op->code - 1].nb_arg)
 	{
 		find_args(vm, proc, i);
-		printf("Nature Arg %d\n", proc->op->ar[i]);
+		// printf("Nature Arg %d\n", proc->op->ar[i]);
 		i++;
 	}
-	printf("0 %x\n", proc->op->ar[0]);
-	printf("1 %x\n", proc->op->ar[1]);
-	printf("2 %x\n", proc->op->ar[2]);
+	// printf("0 %x\n", proc->op->ar[0]);
+	// printf("1 %x\n", proc->op->ar[1]);
+	// printf("2 %x\n", proc->op->ar[2]);
 
-	printf("%s\n", "OURS ");
+	// printf("%s\n", "OURS ");
 	proc->pc++;
 }
 
@@ -468,91 +468,243 @@ void	champ_burial(t_proc *proc, int i)
 
 }
 
+//LE WINNER_EXIST DE MIKE avec son champ_burial....
+// int		winner_exist(t_vm *vm)
+// {
+// 	t_proc	*lst;
+// 	int		tmp;
+// 	int		i;
+// 	int		n;
+//
+// 	lst = vm->proc;
+// 	tmp = 0;
+// 	i = 0;
+// 	n = 0;
+// 	//  I SHOULD EDIT CYCLE TO DIE WOULD BE EASIER TO SEE RESULTS
+// 	if (vm->countdown / CYCLE_TO_DIE >= 1 && vm->countdown % CYCLE_TO_DIE == 0)
+// 	{
+// 		printf("Cycle to die => %d\n", CYCLE_TO_DIE);
+// 		printf("    debug : cycle to die hit !\n");
+// 		while (vm->life_signal[i] && vm->life_signal[i] != -1)
+// 		{
+// 			if (vm->life_signal[i] != 1)
+// 				champ_burial(vm->proc, i + 1);
+// 			else
+// 				n++;
+// 			i++;
+// 		}
+// 		if (n == 0)
+// 			// no winner  ? ?
+// 		if (n == 1)
+// 			return (1);
+// 	}
+// 	// printf("return 0 ??????\n");
+// 	return (0);
+// }
 
-int		winner_exist(t_vm *vm)
+// J AI COMMENTE LA PARTIE DE LCHETY LCHETY LCHETY
+//lchety: arrete de crier lchety
+
+//lchety : bon je vais faire une nouvelle version de winner_exist :D
+
+void	reset_life_signal(t_vm *vm)
 {
-	t_proc	*lst;
-	int		tmp;
-	int		i;
-	int		n;
+	int i;
 
-	lst = vm->proc;
-	tmp = 0;
-	i = 0;
-	n = 0;
-	//  I SHOULD EDIT CYCLE TO DIE WOULD BE EASIER TO SEE RESULTS
-
-	if (vm->countdown == CYCLE_TO_DIE)
+	i = 1;
+	while (i <= MAX_PLAYERS + 1)
 	{
-		while (vm->life_signal[i] && vm->life_signal[i] != -1)
+		vm->player[i].life_signal = 0;
+		i++;
+	}
+}
+
+void	undertaker(t_vm *vm)
+{
+	int i;
+
+	i = 1;
+	while (i <= MAX_PLAYERS + 1 && vm->player[i].active)
+	{
+		if (!vm->player[i].life_signal)
+			vm->player[i].active = 0;
+		i++;
+	}
+}
+
+t_player	*get_last_one(t_vm *vm)
+{
+	int i;
+
+	i  = 1;
+	while (i <= MAX_PLAYERS)
+	{
+		if (vm->player[i].active)
+			return (&vm->player[i]);
+	}
+	return (vm->last_one);
+}
+
+int		all_died(t_vm *vm) //ca commence bien
+{//hum je vais me mettre un peu de musique... vla
+
+	//bon que dois je faire.... regarder si il y a eu des live pour chaque
+	//player bon sauf si ils sont deja mort avant
+	//donc on va pendre un petit tableau de 4 (max_player) tiens je vais faire cette macro..... ok elle existe deja....
+
+	//Ha on a une variable dans le proc pour savoir si il a fait appel a live...
+	//Mais ! Moi les lives sont pas la pour kill les prcess mais pour tuer le player les process eux font leur vies et ils peuvent crever mais pour d autres raisons....
+
+	//Mais peut etre que le live dans proc sert a autre chose donc je le touche pas
+	//et j ai trouve life_signal dans s_vm le tab que je vais utiliser
+	// je veux que life signal s incremente de +1 a l index du player correspondant si on il y a un appel de live... Mais du coup je dois savoir si ils ne sont pas deja mort...
+
+	//du coup trois solutions soit refaire un autre tab pour stocker cette info
+	//soit je met life signal a -1 et du coup les lives verifieront si c est pas -1 avant d incrementer
+	//Ou alors je fais une struct pour deux variable life_signal et in_live ou quelque chose comme ca...
+	//Une struct pour deux variables ca peut sembler exagere mais on a pas encore de struct pour les players... garder son numero, le nom du fichier tout ca... Donc ca peut etre utile...
+	//je vais surement faire ca
+	//retour du cafe :)
+	//bon
+	//
+	// int i;
+	//
+	// i = 1;
+	//
+	// while (i < MAX_PLAYERS && vm->player[i].active)
+	// {
+	// 	if (vm->player)
+	// 	i++;
+	// }
+	int i;
+	int cnt;
+
+	i = 0;
+	cnt = 0;
+	// printf("HERE\n");
+	if (vm->countdown % vm->ctd == 0 && vm->countdown / vm->ctd > 0)
+	{
+		undertaker(vm);
+		vm->last_one = get_last_one(vm);
+		reset_life_signal(vm);
+		while (i <= MAX_PLAYERS + 1 && cnt == 0)
 		{
-			if (vm->life_signal[i] != 1)
-				champ_burial(vm->proc, i + 1);
-			else
-				n++;
+			if (vm->player[i].active)
+				cnt++;
 			i++;
 		}
-		if (n == 0)
-			// no winner  ? ?
-		if (n == 1)
+		if (!cnt)
 			return (1);
 	}
-	// printf("return 0 ??????\n");
+	// printf("CNT %d\n", cnt);
 	return (0);
 }
 
-// J AI COMMENTE LA PARTIE DE LCHETY LCHETY LCHETY
+
+// void	run(t_vm *vm)
+// {
+// 	int		i;
+// 	int		player;
+// 	t_proc	*proc;
+//
+// 	i = 0;
+// 	proc->op = NULL;
+//
+// 	// printf("winner exist => %d\n", winner_exist(vm));
+// 	while (!winner_exist(vm)) // main while stop if winner_exist
+// 	{
+// 		proc = vm->proc;
+// 		while (proc != NULL)
+// 		{
+// 			if (proc->state == IDLE)
+// 			{
+// 				//printf("IDLE\n");
+// 				if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
+// 					proc->state = WAIT;
+// 				else
+// 					proc->pc = (proc->pc + 1) % MEM_SIZE;
+// 			}
+// 			else if (proc->state == WAIT)
+// 			{
+// 				// op_tab[1].func(vm, proc);
+// 				//printf("WAIT  %d\n", proc->op->loadtime);
+// 				proc->op->loadtime--;
+// 				if (proc->op->loadtime <= 0)
+// 				{
+// 					fill_cur_op(vm, proc);
+//
+// 					if (op_tab[proc->op->code - 1].func != NULL)
+// 					{
+// 						printf("ENTER IF FUNC \n");
+// 						op_tab[proc->op->code - 1].func(vm, proc);
+// 					}
+// 					printf("%s\n", " MAIS, NON ");
+// 					// op_tab[1].func(vm, proc);
+// 					proc->state = IDLE;
+// 				}
+// 			}
+// 			proc = proc->next;
+// 		}
+// 		vm->countdown++;			// added to reach cycle to die   <<<<<<< ??? ??  ?  ?? ? ? ?? >>>>> >>>>>halo reach ?
+// 		i++;
+// 	}
+// 	printf("SEGFAULT\n");
+// }
+
+void	idle_state(t_vm *vm, t_proc *proc)
+{
+	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
+		proc->state = WAIT;
+	else
+		proc->pc = (proc->pc + 1) % MEM_SIZE;
+}
+
+void	wait_state(t_vm *vm, t_proc *proc)
+{
+	proc->op->loadtime--;
+	if (proc->op->loadtime <= 0)
+	{
+		fill_cur_op(vm, proc);
+		if (op_tab[proc->op->code - 1].func != NULL)
+			op_tab[proc->op->code - 1].func(vm, proc);
+		proc->state = IDLE;
+	}
+}
+
+void	animate_proc(t_vm *vm, t_proc *proc)
+{
+	if (proc->state == IDLE)
+		idle_state(vm, proc);
+	else if (proc->state == WAIT)
+		wait_state(vm, proc);
+}
 
 void	run(t_vm *vm)
 {
-	int		i;
-	int		player;
 	t_proc	*proc;
 
-	i = 0;
-	proc = vm->proc;
-	proc->op = NULL;
-
-	printf("winner exist => %d\n", winner_exist(vm));
-	while (!winner_exist(vm)) // main while stop if winner_exist
+	while (!all_died(vm))
 	{
+		// printf("Here\n");
 		proc = vm->proc;
 		while (proc != NULL)
 		{
-			if (proc->state == IDLE)
-			{
-				//printf("IDLE\n");
-				if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
-					proc->state = WAIT;
-				else
-					proc->pc = (proc->pc + 1) % MEM_SIZE;
-			}
-			else if (proc->state == WAIT)
-			{
-				// op_tab[1].func(vm, proc);
-				//printf("WAIT  %d\n", proc->op->loadtime);
-				proc->op->loadtime--;
-				if (proc->op->loadtime <= 0)
-				{
-					fill_cur_op(vm, proc);
-
-					if (op_tab[proc->op->code - 1].func != NULL)
-					{
-						printf("ENTER IF FUNC \n");
-						op_tab[proc->op->code - 1].func(vm, proc);
-					}
-					printf("%s\n", " MAIS, NON ");
-					// op_tab[1].func(vm, proc);
-					proc->state = IDLE;
-				}
-			}
+			animate_proc(vm, proc);
 			proc = proc->next;
 		}
-		vm->countdown++;			// added to reach cycle to die   <<<<<<< ??? ??  ?  ?? ? ? ?? >>>>> >>>>>halo reach ?
-		i++;
+		vm->countdown++;
+//-------------------------Debug
+		if (vm->countdown > 1500)
+		{
+			error("Error : pouet \n");
+		}
+		// printf("\n\n");
+		// show_mem(vm);
+//-------------------------Debug
 	}
-	printf("SEGFAULT\n");
 }
+
+
 
 int		main(int argc, char **argv)
 {
@@ -560,9 +712,15 @@ int		main(int argc, char **argv)
 
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
+//-------------Debug
+	printf("Debug : active -> %d\n", vm.player[1].active);
+//-------------Debug
+
+
 	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat
-	show_mem(&vm);
+	// exit (0);
+	// show_mem(&vm);
 
 	return (0);
 }
