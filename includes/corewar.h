@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 17:26:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/05 14:50:13 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,13 @@ typedef struct		header_s
 #define	WAIT 2
 #define	READY 3
 
+#define	MAGIC_NB 4
+#define PROG_NAME 128 + 4
+#define PROG_COMS 2048 + 4
+#define	PROG_SIZE 4;
+
+#define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
+
 // #define T_REG 1
 // #define T_DIR 2
 // #define T_IND 3
@@ -164,7 +171,8 @@ typedef struct s_vm
 	int		ctd;
 	int		cycle;
 	int		countdown;
-	char	*mem;
+	// char	*mem;
+	char	mem[MEM_SIZE];
 	int		life_signal[4];			// tab pour les vies.
 	char	*files_name[5];
 	t_player	player[5];
@@ -180,7 +188,8 @@ extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
 void	error(char *str);
-void	write_player(t_vm *vm);
+// void	write_player(t_vm *vm);
+void	write_player(t_vm *vm, int nb, int num);
 int		check_arg(t_vm *vm, int argc, char **argv);
 
 
@@ -198,5 +207,6 @@ void	sub(t_vm *vm, t_proc *proc);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
+void	show_mem_2(t_vm *vm);
 
 #endif

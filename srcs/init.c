@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/05 10:56:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/05 14:56:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,15 @@
 
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
-	if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
-		error("error : malloc failed\n");
+
+// pourquoi je malloc la mem ?
+	// if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
+	// 	error("error : malloc failed\n");
+
+//nouvelle mem on the stack
+	ft_bzero(&vm->mem, MEM_SIZE);
 
 }
-
-// void	init_p_bag(t_vm *vm, int nb)
-// {//ca c est les donnes propre a un joueur son "sac"
-// 	int i;
-//
-// 	i = 0;
-// 	if(!(vm->p_bag = (t_bag*)ft_memalloc(sizeof(t_bag) * vm->nb_player)))
-// 		error("error : malloc failed\n");
-//
-// 	vm->p_bag->id = nb;
-// 	vm->p_bag->pc = 0;
-// 	vm->p_bag->state = 1;
-// 	vm->p_bag->cur_op = NULL;
-//
-// 	while (i < vm->nb_player)
-// 	{
-// 		vm->p_bag[i].reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER);
-// 		vm->p_bag[i].reg[1] = (i + 1) * -1;
-// //reg1 prend le num du player mais en negatif.....
-// 		i++;
-// 	}
-// }
 
 void	init_nb_player(t_vm *vm)
 {//init le nombre de players
@@ -81,8 +64,9 @@ int		get_prog_size(char *data)
 {
 	int ret;
 
+	data += 4; //magic
+	data += 128 + 4; //prog_name
 	ret = 0x0;
-
 	ret = ret | *data;
 	ret = ret << 8;
 	ret = ret | data[1];
@@ -95,34 +79,70 @@ int		get_prog_size(char *data)
 }
 
 //c est un fill_mem, on remplit la memoire du code du player
-void	write_player(t_vm *vm)
+// void	write_player(t_vm *vm)
+// {
+// 	char *data;
+// 	int i;
+// 	int j;
+// 	int prog_size;
+//
+// 	j = 0;
+// 	prog_size = 0;
+// 	i = 0;
+// 	i += 4; //magic
+// 	i += 128 + 4; //prog_name
+//
+// 	data = get_data("resources/corewar/champs/ex.cor");
+//
+// 	prog_size = get_prog_size(data + i);
+//
+// 	printf("\n\n prog_size : %d\n", prog_size);
+//
+// 	i += 2048 + 4; //prog_comments
+// 	i += 4; //prog size
+// 	while (j < prog_size)
+// 	{
+// 		((char*)vm->mem)[j] = (unsigned char)data[i];
+// 		// printf("%02x ", (unsigned char)data[i]);
+// 		i++;
+// 		j++;
+// 	}
+// }
+
+void	get_src_begin()
 {
-	char *data;
-	int i;
-	int j;
-	int prog_size;
 
-	j = 0;
-	prog_size = 0;
-	i = 0;
-	i += 4; //magic
-	i += 128 + 4; //prog_name
 
-	data = get_data("resources/corewar/champs/ex.cor");
+}
 
-	prog_size = get_prog_size(data + i);
+void	write_player(t_vm *vm, int nb, int num)
+{
+	printf("Write Player\n");
+	int		i;
+	char	*data;
+	char	*data_tmp;
+	int		prog_size;
 
-	printf("\n\n prog_size : %d\n", prog_size);
+	i = (MEM_SIZE / vm->nb_player) * num;
 
-	i += 2048 + 4; //prog_comments
-	i += 4; //prog size
-	while (j < prog_size)
+	// printf("NB =======> %d\n", nb);
+	// printf("File Name %s\n", vm->player[nb].file_name);
+	data = get_data(vm->player[nb].file_name);
+	prog_size = get_prog_size(data);
+	data_tmp = data + SRC_BEGIN;
+
+	// printf("I => %d\n", i);
+	prog_size += i;
+	while (i < prog_size)
 	{
-		((char*)vm->mem)[j] = (unsigned char)data[i];
-		// printf("%02x ", (unsigned char)data[i]);
+		// printf("Here\n");
+		vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
+		data_tmp++;
 		i++;
-		j++;
 	}
+
+	show_mem(vm);
+
 }
 
 int		*init_registre()
@@ -132,7 +152,7 @@ int		*init_registre()
 
 	i = 0;
 
-	if(!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
+	if (!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
 		error("error : MALLOC\n");
 	return (reg);
 }
@@ -185,13 +205,20 @@ void	init_each_players(t_vm *vm)
 void	init_vm(t_vm *vm)
 {//appel de toutes les fonctions d init
 	int i;
+	int j;
 
-	i = 0;
-	vm->nb_player = 1; // FOR DEBBUG
+	i = 1;
+	j = 0;
+	printf("Debug : init_vm nb_player %d\n", vm->nb_player);
+
 	init_mem(vm);
-	while (i < vm->nb_player)
+	while (i <= MAX_PLAYERS)
 	{
-		write_player(vm);
+		if (vm->player[i].active)
+		{
+			write_player(vm, i, j);
+			j++;
+		}
 		i++;
 	}
 	init_process(vm);

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 17:29:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/05 11:23:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,8 +524,10 @@ void	undertaker(t_vm *vm)
 	int i;
 
 	i = 1;
-	while (i <= MAX_PLAYERS + 1 && vm->player[i].active)
+	while (i <= MAX_PLAYERS + 1)
 	{
+		// printf("pute\n");
+		// printf("player %d        life_signal %d\n", i, vm->player[i].life_signal);
 		if (!vm->player[i].life_signal)
 			vm->player[i].active = 0;
 		i++;
@@ -541,41 +543,13 @@ t_player	*get_last_one(t_vm *vm)
 	{
 		if (vm->player[i].active)
 			return (&vm->player[i]);
+		i++;
 	}
 	return (vm->last_one);
 }
 
 int		all_died(t_vm *vm) //ca commence bien
-{//hum je vais me mettre un peu de musique... vla
-
-	//bon que dois je faire.... regarder si il y a eu des live pour chaque
-	//player bon sauf si ils sont deja mort avant
-	//donc on va pendre un petit tableau de 4 (max_player) tiens je vais faire cette macro..... ok elle existe deja....
-
-	//Ha on a une variable dans le proc pour savoir si il a fait appel a live...
-	//Mais ! Moi les lives sont pas la pour kill les prcess mais pour tuer le player les process eux font leur vies et ils peuvent crever mais pour d autres raisons....
-
-	//Mais peut etre que le live dans proc sert a autre chose donc je le touche pas
-	//et j ai trouve life_signal dans s_vm le tab que je vais utiliser
-	// je veux que life signal s incremente de +1 a l index du player correspondant si on il y a un appel de live... Mais du coup je dois savoir si ils ne sont pas deja mort...
-
-	//du coup trois solutions soit refaire un autre tab pour stocker cette info
-	//soit je met life signal a -1 et du coup les lives verifieront si c est pas -1 avant d incrementer
-	//Ou alors je fais une struct pour deux variable life_signal et in_live ou quelque chose comme ca...
-	//Une struct pour deux variables ca peut sembler exagere mais on a pas encore de struct pour les players... garder son numero, le nom du fichier tout ca... Donc ca peut etre utile...
-	//je vais surement faire ca
-	//retour du cafe :)
-	//bon
-	//
-	// int i;
-	//
-	// i = 1;
-	//
-	// while (i < MAX_PLAYERS && vm->player[i].active)
-	// {
-	// 	if (vm->player)
-	// 	i++;
-	// }
+{
 	int i;
 	int cnt;
 
@@ -584,17 +558,26 @@ int		all_died(t_vm *vm) //ca commence bien
 	// printf("HERE\n");
 	if (vm->countdown % vm->ctd == 0 && vm->countdown / vm->ctd > 0)
 	{
+		//printf("Debug : All died ?\n");
 		undertaker(vm);
 		vm->last_one = get_last_one(vm);
 		reset_life_signal(vm);
 		while (i <= MAX_PLAYERS + 1 && cnt == 0)
 		{
+			printf("Player %d   active %d\n", i, vm->player[i].active);
 			if (vm->player[i].active)
+			{
+				// printf("cnt++\n");
 				cnt++;
+			}
 			i++;
 		}
 		if (!cnt)
+		{
+			// printf("return 1\n");
 			return (1);
+		}
+		// exit(1);
 	}
 	// printf("CNT %d\n", cnt);
 	return (0);
@@ -685,20 +668,22 @@ void	run(t_vm *vm)
 
 	while (!all_died(vm))
 	{
-		// printf("Here\n");
-		proc = vm->proc;
-		while (proc != NULL)
-		{
-			animate_proc(vm, proc);
-			proc = proc->next;
-		}
+		// proc = vm->proc;
+		// while (proc != NULL)
+		// {
+		// 	animate_proc(vm, proc);
+		// 	proc = proc->next;
+		// }
 		vm->countdown++;
+
 //-------------------------Debug
-		if (vm->countdown > 1500)
-		{
-			error("Error : pouet \n");
-		}
+		// if (vm->countdown > 1500)
+		// {
+		// 	error("Error : pouet \n");
+		// }
+		// sleep(1);
 		// printf("\n\n");
+		// printf("Countdown : %d\n", vm->countdown);
 		// show_mem(vm);
 //-------------------------Debug
 	}
@@ -715,7 +700,6 @@ int		main(int argc, char **argv)
 //-------------Debug
 	printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
-
 
 	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat
