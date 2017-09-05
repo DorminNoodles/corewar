@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 17:27:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/05 10:56:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
-
 	if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
 		error("error : malloc failed\n");
-
 
 }
 
