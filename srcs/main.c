@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 15:42:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/06 16:51:35 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,32 +373,37 @@ t_optab		*get_optab_entry(int code)
 void	fill_cur_op(t_vm *vm, t_proc *proc)
 {
 	int i;
-	t_optab *ref;
+	t_optab *optab_ref;
 
 	i = 0;
 
 	printf("OCP CODE >>>> %d\n", proc->op->code);
 
-	ref = get_optab_entry(proc->op->code);
+	optab_ref = get_optab_entry(proc->op->code);
 
 	// printf("direct_size => %d\n", ref->direct_size);
 
-	if (ref->need_ocp)
+	if (optab_ref->need_ocp)
 	{
 		printf("                                               NEED OCP !\n");
 		get_ocp(vm, proc);
+		while (i < op_tab[proc->op->code - 1].nb_arg)
+		{
+			find_args(vm, proc, i);
+			i++;
+		}
 	}
 	else
 	{
+		get_dir(vm, proc, 0);
 		printf("                                            DONT NEED OCP !\n");
 	}
 
+	//if no ocp get_dir
 
-	while (i < op_tab[proc->op->code - 1].nb_arg)
-	{
-		find_args(vm, proc, i);
-		i++;
-	}
+
+
+
 	// printf("0 %x\n", proc->op->ar[0]);
 	// printf("1 %x\n", proc->op->ar[1]);
 	// printf("2 %x\n", proc->op->ar[2]);

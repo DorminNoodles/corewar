@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 15:46:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/06 16:45:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,11 @@ typedef struct		header_s
 // #define T_IND 3
 
 typedef struct s_vm t_vm;
+typedef struct s_optab t_optab;
 
 typedef struct s_op
 {
-	t_optab			optab_ref;
+	t_optab			*optab_ref;
 	char			code;
 	unsigned char	ocp;
 	int				ar[3];
