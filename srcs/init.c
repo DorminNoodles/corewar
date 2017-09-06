@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/05 14:56:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/06 14:07:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,7 @@ void	write_player(t_vm *vm, int nb, int num)
 		data_tmp++;
 		i++;
 	}
-
-	show_mem(vm);
-
+	// show_mem(vm);
 }
 
 int		*init_registre()
@@ -157,21 +155,12 @@ int		*init_registre()
 	return (reg);
 }
 
-void	create_process(t_vm *vm, int num)
+t_proc	*create_process(t_vm *vm, int num)
 {
 	t_proc	*tmp;
 
-	if (!vm->proc)
-	{
-		vm->proc = (t_proc*)ft_memalloc(sizeof(t_proc));
-		tmp = vm->proc;
-	}
-	else
-	{
-		vm->proc->next = (t_proc*)ft_memalloc(sizeof(t_proc));
-		tmp = vm->proc->next;
-	}
-
+	if(!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
+		error("error : malloc\n");
 	tmp->id = (num * -1) + (-1);
 	tmp->pc = (MEM_SIZE / vm->nb_player) * num;
 	tmp->op = NULL;
@@ -179,6 +168,27 @@ void	create_process(t_vm *vm, int num)
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->live = 1;
+	return (tmp);
+	// printf("FUCK %d\n", vm->proc->state);
+}
+
+void	add_process(t_vm *vm, t_proc *proc)
+{
+	t_proc	*tmp;
+
+	tmp = vm->proc;
+
+	// printf("                        ######     %p\n", *tmp);
+	if ((tmp = vm->proc))
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = proc;
+	}
+	else
+	{
+		vm->proc = proc;
+	}
 }
 
 void	init_process(t_vm *vm)
@@ -186,9 +196,10 @@ void	init_process(t_vm *vm)
 	int i;
 
 	i = 0;
-	while (i < vm->nb_player)
+	while (i < MAX_PLAYERS)
 	{
-		create_process(vm, i);
+		if (vm->player[i].active)
+			add_process(vm, create_process(vm, i));
 		i++;
 	}
 }
@@ -202,28 +213,34 @@ void	init_each_players(t_vm *vm)
 	init_process(vm);
 }
 
-void	init_vm(t_vm *vm)
+void	create_players(t_vm *vm)
 {//appel de toutes les fonctions d init
 	int i;
 	int j;
 
 	i = 1;
 	j = 0;
-	printf("Debug : init_vm nb_player %d\n", vm->nb_player);
+	// printf("Debug : init_vm nb_player %d\n", vm->nb_player);
 
 	init_mem(vm);
 	while (i <= MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
 		{
+			// printf("SEGV\n");
 			write_player(vm, i, j);
 			j++;
 		}
 		i++;
 	}
 	init_process(vm);
+	// exit(1);
+
+
 	// init_each_players(vm);
 	// init_optab(vm);
-	vm->cycle = 0;
-	vm->ctd = CYCLE_TO_DIE;
+	// vm->cycle = 0;
+	// vm->ctd = CYCLE_TO_DIE;
+	// printf("SEGV\n");
+
 }

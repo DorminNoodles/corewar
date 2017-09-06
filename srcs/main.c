@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/05 11:23:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/06 15:42:29 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,17 +251,18 @@
 
 void	get_ocp(t_vm *vm, t_proc *proc)
 {
-	printf("MEM BEFORE   %x\n", (unsigned char)vm->mem[proc->pc]);
+	// printf("MEM BEFORE   %x\n", (unsigned char)vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].need_ocp)
 	{
 		proc->pc++;
 		proc->op->ocp = vm->mem[proc->pc];
 	}
-	printf("MEM AFTER   %x\n", (unsigned char)vm->mem[proc->pc]);
+	// printf("MEM AFTER   %x\n", (unsigned char)vm->mem[proc->pc]);
 }
 
 void	get_dir(t_vm *vm, t_proc *proc, int num)
 {
+	printf(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
 	unsigned int value;
 
 	value = 0;
@@ -275,7 +276,7 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value | (unsigned char)vm->mem[proc->pc];
 
 	printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
-	if (op_tab[proc->op->code - 1].une_heure_de_perdue)
+	if (op_tab[proc->op->code - 1].direct_size)
 	{
 		proc->op->ar[num] = value;
 		printf("deux octets value %x\n", value);
@@ -295,6 +296,7 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 void	get_reg(t_vm *vm, t_proc *proc, int num)
 {
+	printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
 	unsigned char value;
 
 	proc->pc++;
@@ -342,6 +344,7 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	unsigned char	mask;
 
 	type = proc->op->ocp;
+	printf("OCP => %d\n", type);
 	mask = 0xC0;
 	mask = mask >> (2 * num);
 	type = type & mask;
@@ -357,23 +360,43 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 
 	// if (mask )
 
+	printf("EXIT FUNC : FIND_ARGS\n");
+}
 
+// ref = get_optab_entry();
 
+t_optab		*get_optab_entry(int code)
+{
+	return (&op_tab[code - 1]);
 }
 
 void	fill_cur_op(t_vm *vm, t_proc *proc)
 {
 	int i;
+	t_optab *ref;
 
 	i = 0;
-	get_ocp(vm, proc);
 
-	// printf("OCP ===== %x\n", proc->op->ocp);
-	// printf("nb arg %d\n", op_tab[proc->op->code - 1].nb_arg);
+	printf("OCP CODE >>>> %d\n", proc->op->code);
+
+	ref = get_optab_entry(proc->op->code);
+
+	// printf("direct_size => %d\n", ref->direct_size);
+
+	if (ref->need_ocp)
+	{
+		printf("                                               NEED OCP !\n");
+		get_ocp(vm, proc);
+	}
+	else
+	{
+		printf("                                            DONT NEED OCP !\n");
+	}
+
+
 	while (i < op_tab[proc->op->code - 1].nb_arg)
 	{
 		find_args(vm, proc, i);
-		// printf("Nature Arg %d\n", proc->op->ar[i]);
 		i++;
 	}
 	// printf("0 %x\n", proc->op->ar[0]);
@@ -668,12 +691,13 @@ void	run(t_vm *vm)
 
 	while (!all_died(vm))
 	{
-		// proc = vm->proc;
-		// while (proc != NULL)
-		// {
-		// 	animate_proc(vm, proc);
-		// 	proc = proc->next;
-		// }
+		proc = vm->proc;
+		// printf("HIHIHI =>>>>> %d\n", vm->proc->state);
+		while (proc != NULL)
+		{
+			animate_proc(vm, proc);
+			proc = proc->next;
+		}
 		vm->countdown++;
 
 //-------------------------Debug
@@ -690,18 +714,29 @@ void	run(t_vm *vm)
 }
 
 
+void	init_vm(t_vm *vm)
+{
+	vm->nb_player = 0;
+	vm->ctd = CYCLE_TO_DIE;
+	vm->cycle = 0;
+	vm->countdown = 0;
+	vm->proc = NULL;
+
+}
 
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
+
+	init_vm(&vm);
 
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
 //-------------Debug
 	printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
+	create_players(&vm);//initialisation de la machine virtuelle
 
-	init_vm(&vm);//initialisation de la machine virtuelle
 	run(&vm);//lancement du combat
 	// exit (0);
 	// show_mem(&vm);

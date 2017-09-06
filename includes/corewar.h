@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/05 14:50:13 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/06 15:46:18 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,9 @@ typedef struct		header_s
 #define PROG_COMS 2048 + 4
 #define	PROG_SIZE 4;
 
+#define D4 0
+#define D2 1
+
 #define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
 
 // #define T_REG 1
@@ -113,13 +116,14 @@ typedef struct s_vm t_vm;
 
 typedef struct s_op
 {
-	char	code;
+	t_optab			optab_ref;
+	char			code;
 	unsigned char	ocp;
-	int		ar[3];
-	int		ar_typ[3];
-	int		loadtime;
-	int		pos_opcode;
-	int		countdown;
+	int				ar[3];
+	int				ar_typ[3];
+	int				loadtime;
+	int				pos_opcode;
+	int				countdown;
 }	t_op;
 
 typedef struct s_player
@@ -161,7 +165,7 @@ typedef struct s_optab
 	int		loadtime;
 	char	*name;
 	int		need_ocp;
-	int		une_heure_de_perdue; 	// nombre d'octect d'encodage. 2 ou 4;
+	int		direct_size; 	// nombre d'octect d'encodage. 2 ou 4;
 	//changez ce nom de variable de merde :)
 }	t_optab;
 
@@ -187,6 +191,7 @@ typedef struct s_vm
 extern t_optab op_tab[17];
 
 void	init_vm(t_vm *vm);
+void	create_players(t_vm *vm);
 void	error(char *str);
 // void	write_player(t_vm *vm);
 void	write_player(t_vm *vm, int nb, int num);

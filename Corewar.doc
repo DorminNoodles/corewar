@@ -68,3 +68,6 @@ Chaque instruction est encode par
 - Un nombre indirect est aussi sur 2 octets en fait tous les nombres sont sur 2 octets
 
 - loadtime sur les fonctions
+
+Important : Si une instruction est appellée avec un registre inexistant,
+l'instruction est invalide et le processus appelant crash.
