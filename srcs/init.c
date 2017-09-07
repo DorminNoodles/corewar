@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 15:02:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 16:34:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ void	init_mem(t_vm *vm)
 
 }
 
-void	init_nb_player(t_vm *vm)
-{//init le nombre de players
-	vm->nb_player = 1;
-
-	vm->life_signal[0] = 0;
-
-	// ugly, i know.
-
-	vm->life_signal[1] = -1;
-	vm->life_signal[2] = -1;
-	vm->life_signal[3] = -1;
-	// vm->life_signal initialisation based on it.
-
-}
+// void	init_nb_player(t_vm *vm)
+// {//init le nombre de players
+// 	vm->nb_player = 1;
+//
+// 	vm->life_signal[0] = 0;
+//
+// 	// ugly, i know.
+//
+// 	vm->life_signal[1] = -1;
+// 	vm->life_signal[2] = -1;
+// 	vm->life_signal[3] = -1;
+// 	// vm->life_signal initialisation based on it.
+//
+// }
 
 char	*get_data(char *filename)
 {
@@ -163,6 +163,8 @@ t_proc	*create_process(t_vm *vm, int num)
 	if(!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
 		error("error : malloc\n");
 	tmp->id = (num * -1) + (-1);
+	printf("NOMBRE => %d\n", num * (-1));
+	tmp->num = num * (-1);
 	tmp->pc = (MEM_SIZE / vm->nb_player) * (num - 1);
 	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
@@ -171,6 +173,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->live = 1;
+	printf("tmp->id => %d\n", tmp->id);
 	return (tmp);
 	// printf("FUCK %d\n", vm->proc->state);
 }
@@ -207,14 +210,14 @@ void	init_process(t_vm *vm)
 	}
 }
 
-void	init_each_players(t_vm *vm)
-{
-	int nb;
-
-	nb = 0;
-	init_nb_player(vm);
-	init_process(vm);
-}
+// void	init_each_players(t_vm *vm)
+// {
+// 	int nb;
+//
+// 	nb = 0;
+// 	init_nb_player(vm);
+// 	init_process(vm);
+// }
 
 void	create_players(t_vm *vm)
 {//appel de toutes les fonctions d init

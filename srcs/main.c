@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 15:11:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 16:49:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,6 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 	// proc->pc++;
 	// value = value << 8;
 	// value = value | (unsigned char)vm->mem[proc->pc];
-	//
 	// proc->pc++;
 	// value = value << 8;
 	// value = value | (unsigned char)vm->mem[proc->pc];
@@ -376,13 +375,8 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	t_optab *optab_ref;
 
 	i = 0;
-
 	printf("OCP CODE >>>> %d\n", proc->op->code);
-
 	optab_ref = get_optab_entry(proc->op->code);
-
-	// printf("direct_size => %d\n", ref->direct_size);
-
 	if (optab_ref->need_ocp)
 	{
 		printf("                                               NEED OCP !\n");
@@ -399,16 +393,6 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 		printf("                                            DONT NEED OCP !\n");
 	}
 
-	//if no ocp get_dir
-
-
-
-
-	// printf("0 %x\n", proc->op->ar[0]);
-	// printf("1 %x\n", proc->op->ar[1]);
-	// printf("2 %x\n", proc->op->ar[2]);
-
-	// printf("%s\n", "OURS ");
 	proc->pc++;
 }
 
@@ -433,13 +417,11 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 
 	i = 0;
 	op = NULL;
-	// printf("TEST %d\n", (char)data);
 	if (!is_opcode(data))
 		return (NULL);
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
 	op->code = data;
-	// printf("FILL OP CODE %d\n", op->code);
 	op->loadtime = op_tab[data - 1].loadtime;
 	op->pos_opcode = proc->pc;
 	return (op);
@@ -554,11 +536,9 @@ void	undertaker(t_vm *vm)
 	i = 1;
 	while (i <= MAX_PLAYERS)
 	{
-		// printf("pute\n");
-		// printf("player %d        life_signal %d\n", i, vm->player[i].life_signal);
 		if (!vm->player[i].life_signal && vm->player[i].active)
 		{
-			printf("Player %d died !\n", i);
+			// printf("Player %d died !\n", i);
 			vm->player[i].active = 0;
 		}
 		i++;
@@ -579,6 +559,13 @@ t_player	*get_last_one(t_vm *vm)
 	return (vm->last_one);
 }
 
+int		cycle_to_die(t_vm *vm)
+{
+	if (vm->countdown % vm->ctd == 0 && vm->countdown / vm->ctd > 0)
+		return (1);
+	return (0);
+}
+
 int		all_died(t_vm *vm)
 {
 	int i;
@@ -586,84 +573,22 @@ int		all_died(t_vm *vm)
 
 	i = 0;
 	cnt = 0;
-	// printf("HERE\n");
-	if (vm->countdown % vm->ctd == 0 && vm->countdown / vm->ctd > 0)
+	if (cycle_to_die(vm))
 	{
-		//printf("Debug : All died ?\n");
 		undertaker(vm);
 		vm->last_one = get_last_one(vm);
 		reset_life_signal(vm);
 		while (i <= MAX_PLAYERS && cnt == 0)
 		{
-			// printf("Player %d   active %d\n", i, vm->player[i].active);
 			if (vm->player[i].active)
-			{
-				// printf("cnt++\n");
 				cnt++;
-			}
 			i++;
 		}
 		if (!cnt)
-		{
-			// printf("return 1\n");
 			return (1);
-		}
-		// exit(1);
 	}
-	// printf("CNT %d\n", cnt);
 	return (0);
 }
-
-
-// void	run(t_vm *vm)
-// {
-// 	int		i;
-// 	int		player;
-// 	t_proc	*proc;
-//
-// 	i = 0;
-// 	proc->op = NULL;
-//
-// 	// printf("winner exist => %d\n", winner_exist(vm));
-// 	while (!winner_exist(vm)) // main while stop if winner_exist
-// 	{
-// 		proc = vm->proc;
-// 		while (proc != NULL)
-// 		{
-// 			if (proc->state == IDLE)
-// 			{
-// 				//printf("IDLE\n");
-// 				if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
-// 					proc->state = WAIT;
-// 				else
-// 					proc->pc = (proc->pc + 1) % MEM_SIZE;
-// 			}
-// 			else if (proc->state == WAIT)
-// 			{
-// 				// op_tab[1].func(vm, proc);
-// 				//printf("WAIT  %d\n", proc->op->loadtime);
-// 				proc->op->loadtime--;
-// 				if (proc->op->loadtime <= 0)
-// 				{
-// 					fill_cur_op(vm, proc);
-//
-// 					if (op_tab[proc->op->code - 1].func != NULL)
-// 					{
-// 						printf("ENTER IF FUNC \n");
-// 						op_tab[proc->op->code - 1].func(vm, proc);
-// 					}
-// 					printf("%s\n", " MAIS, NON ");
-// 					// op_tab[1].func(vm, proc);
-// 					proc->state = IDLE;
-// 				}
-// 			}
-// 			proc = proc->next;
-// 		}
-// 		vm->countdown++;			// added to reach cycle to die   <<<<<<< ??? ??  ?  ?? ? ? ?? >>>>> >>>>>halo reach ?
-// 		i++;
-// 	}
-// 	printf("SEGFAULT\n");
-// }
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
@@ -702,7 +627,6 @@ void	run(t_vm *vm)
 	while (!all_died(vm))
 	{
 		proc = vm->proc;
-		// printf("HIHIHI =>>>>> %d\n", vm->proc->state);
 		while (proc != NULL)
 		{
 			animate_proc(vm, proc);
@@ -710,23 +634,20 @@ void	run(t_vm *vm)
 		}
 		vm->countdown++;
 
-		// show_mem(vm);
 //-------------------------Debug
 		printf(">>>> %d\n", vm->countdown);
-		if (vm->countdown > 200)
+		if (vm->countdown > 1200)
 		{
 			show_mem(vm);
 			exit(1);
 		}
-		// sleep(1);
-		// printf("\n\n");
-		// printf("Countdown : %d\n", vm->countdown);
-		// show_mem(vm);
+		show_proc_nb(vm);
 //-------------------------Debug
 	}
 	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
+
 }
 
 void	init_vm(t_vm *vm)

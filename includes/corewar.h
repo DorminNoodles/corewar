@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 15:11:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 16:31:47 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,8 @@ typedef struct s_player
 
 typedef struct s_proc
 {
-	int		id;//Num du programme/player a fournir dans r1 (registre 1)
+	int		id;
+	int		num;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
 	char	carry;// Mystere //edit : plus maintenant;
@@ -198,6 +199,7 @@ void	error(char *str);
 void	write_player(t_vm *vm, int nb, int num);
 int		check_arg(t_vm *vm, int argc, char **argv);
 t_proc	*create_process(t_vm *vm, int num);
+void	add_process(t_vm *vm, t_proc *proc);
 
 
 /*--------INSTRUCTIONS----------*/
@@ -216,5 +218,6 @@ void	ft_fork(t_vm *vm, t_proc *proc);
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
 void	show_mem_2(t_vm *vm);
+void	show_proc_nb(t_vm *vm);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/05 14:44:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 16:29:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,19 @@ void	show_mem(t_vm *vm)
 		i++;
 	}
 	printf("\n\n");
+}
+
+void	show_proc_nb(t_vm *vm)
+{
+	t_proc *tmp;
+	int i;
+
+	i = 0;
+	tmp = vm->proc;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	printf("NB_PROC => %d\n", i);
 }
