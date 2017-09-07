@@ -9,6 +9,7 @@ SRC =		main.c						\
 			live.c						\
 			add.c						\
 			and.c						\
+			fork.c						\
 			op.c						\
 			or.c						\
 			xor.c						\

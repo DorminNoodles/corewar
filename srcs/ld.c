@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 04:04:02 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/09/07 14:48:41 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ld(t_vm *vm, t_proc *proc)
 	else
 		proc->reg[reg_nb] = proc->op->ar[0];
 	proc->carry = (proc->reg[reg_nb] == 0) ? 1 : 0;
+
+	printf("##LD registre %d == %d\n", proc->op->ar[1], proc->op->ar[0]);
 	/*proc->carry = 0;
 	if (proc->reg[reg_nb] == 0)
 		proc->carry = 1*/

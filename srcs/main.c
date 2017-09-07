@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 13:50:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:11:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -710,12 +710,12 @@ void	run(t_vm *vm)
 		}
 		vm->countdown++;
 
-
 		// show_mem(vm);
 //-------------------------Debug
 		printf(">>>> %d\n", vm->countdown);
-		if (vm->countdown > 30)
+		if (vm->countdown > 200)
 		{
+			show_mem(vm);
 			exit(1);
 		}
 		// sleep(1);
@@ -727,9 +727,7 @@ void	run(t_vm *vm)
 	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
-
 }
-
 
 void	init_vm(t_vm *vm)
 {

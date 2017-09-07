@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 16:45:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:11:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ void	error(char *str);
 // void	write_player(t_vm *vm);
 void	write_player(t_vm *vm, int nb, int num);
 int		check_arg(t_vm *vm, int argc, char **argv);
+t_proc	*create_process(t_vm *vm, int num);
 
 
 /*--------INSTRUCTIONS----------*/
@@ -209,6 +210,7 @@ void	or(t_vm *vm, t_proc *proc);
 void	xor(t_vm *vm, t_proc *proc);
 void	st(t_vm *vm, t_proc *proc);
 void	sub(t_vm *vm, t_proc *proc);
+void	ft_fork(t_vm *vm, t_proc *proc);
 
 
 /*-------DEBUG-------*/

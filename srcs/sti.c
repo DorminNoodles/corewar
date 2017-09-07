@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 13:50:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:06:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	sti(t_vm *vm, t_proc *proc)
 	// printf("Registre Number = %d\n", op->ar1);
 	// printf("Reg = %x\n", bag->reg[reg]);
 	//
-	show_mem(vm);
+	// show_mem(vm);
 
 	vm->mem[(proc->op->pos_opcode + addr) % MEM_SIZE] = proc->reg[reg] >>24;
 	vm->mem[(proc->op->pos_opcode + addr + 1) % MEM_SIZE] = proc->reg[reg] >>16;
 	vm->mem[(proc->op->pos_opcode + addr + 2) % MEM_SIZE] = proc->reg[reg] >>8;
 	vm->mem[(proc->op->pos_opcode + addr + 3) % MEM_SIZE] = proc->reg[reg];
 
-	show_mem(vm);
+	// show_mem(vm);
 }
