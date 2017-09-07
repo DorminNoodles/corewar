@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 16:51:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 13:50:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,7 +540,7 @@ void	reset_life_signal(t_vm *vm)
 	int i;
 
 	i = 1;
-	while (i <= MAX_PLAYERS + 1)
+	while (i <= MAX_PLAYERS)
 	{
 		vm->player[i].life_signal = 0;
 		i++;
@@ -552,12 +552,15 @@ void	undertaker(t_vm *vm)
 	int i;
 
 	i = 1;
-	while (i <= MAX_PLAYERS + 1)
+	while (i <= MAX_PLAYERS)
 	{
 		// printf("pute\n");
 		// printf("player %d        life_signal %d\n", i, vm->player[i].life_signal);
-		if (!vm->player[i].life_signal)
+		if (!vm->player[i].life_signal && vm->player[i].active)
+		{
+			printf("Player %d died !\n", i);
 			vm->player[i].active = 0;
+		}
 		i++;
 	}
 }
@@ -576,7 +579,7 @@ t_player	*get_last_one(t_vm *vm)
 	return (vm->last_one);
 }
 
-int		all_died(t_vm *vm) //ca commence bien
+int		all_died(t_vm *vm)
 {
 	int i;
 	int cnt;
@@ -590,9 +593,9 @@ int		all_died(t_vm *vm) //ca commence bien
 		undertaker(vm);
 		vm->last_one = get_last_one(vm);
 		reset_life_signal(vm);
-		while (i <= MAX_PLAYERS + 1 && cnt == 0)
+		while (i <= MAX_PLAYERS && cnt == 0)
 		{
-			printf("Player %d   active %d\n", i, vm->player[i].active);
+			// printf("Player %d   active %d\n", i, vm->player[i].active);
 			if (vm->player[i].active)
 			{
 				// printf("cnt++\n");
@@ -664,6 +667,7 @@ int		all_died(t_vm *vm) //ca commence bien
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
+	printf("------------IDLE_STATE------------\n");
 	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
 		proc->state = WAIT;
 	else
@@ -672,6 +676,7 @@ void	idle_state(t_vm *vm, t_proc *proc)
 
 void	wait_state(t_vm *vm, t_proc *proc)
 {
+	printf("------------WAIT_STATE------------\n");
 	proc->op->loadtime--;
 	if (proc->op->loadtime <= 0)
 	{
@@ -705,17 +710,24 @@ void	run(t_vm *vm)
 		}
 		vm->countdown++;
 
+
+		// show_mem(vm);
 //-------------------------Debug
-		// if (vm->countdown > 1500)
-		// {
-		// 	error("Error : pouet \n");
-		// }
+		printf(">>>> %d\n", vm->countdown);
+		if (vm->countdown > 30)
+		{
+			exit(1);
+		}
 		// sleep(1);
 		// printf("\n\n");
 		// printf("Countdown : %d\n", vm->countdown);
 		// show_mem(vm);
 //-------------------------Debug
 	}
+	printf("END\n");
+	if (vm->last_one)
+		printf("Last_one => %s\n", vm->last_one->file_name);
+
 }
 
 
@@ -726,6 +738,7 @@ void	init_vm(t_vm *vm)
 	vm->cycle = 0;
 	vm->countdown = 0;
 	vm->proc = NULL;
+	vm->last_one = NULL;
 
 }
 

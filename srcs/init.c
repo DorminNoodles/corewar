@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 14:07:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 13:43:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	write_player(t_vm *vm, int nb, int num)
 	// show_mem(vm);
 }
 
-int		*init_registre()
+int		*init_registre(int id)
 {
 	int i;
 	int	*reg;
@@ -152,6 +152,7 @@ int		*init_registre()
 
 	if (!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
 		error("error : MALLOC\n");
+	reg[0] = id;
 	return (reg);
 }
 
@@ -162,9 +163,11 @@ t_proc	*create_process(t_vm *vm, int num)
 	if(!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
 		error("error : malloc\n");
 	tmp->id = (num * -1) + (-1);
-	tmp->pc = (MEM_SIZE / vm->nb_player) * num;
+	tmp->pc = (MEM_SIZE / vm->nb_player) * (num - 1);
+	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
-	tmp->reg = init_registre();
+	tmp->reg = init_registre(num * -1);
+	printf("INIT REG 1 >>> %x\n", num * -1);
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->live = 1;

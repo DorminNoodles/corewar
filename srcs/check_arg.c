@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/04 20:43:43 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 13:04:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		first_free_nb_player(t_vm *vm)
 	int i;
 
 	i = 1;
-	while (i < MAX_PLAYERS + 2)
+	while (i <= MAX_PLAYERS)
 	{
 		if (!vm->player[i].active)
 			return (i);
@@ -97,7 +97,7 @@ void	init_player(t_vm *vm)
 	int i;
 
 	i = 0;
-	while (i <= MAX_PLAYERS + 1)
+	while (i <= MAX_PLAYERS)
 	{
 		vm->player[i].active = 0;
 		vm->player[i].life_signal = 0;

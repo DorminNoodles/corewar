@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/06 16:47:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/07 11:05:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 void	live(t_vm *vm, t_proc *proc)
 {
 	printf(">>>>>ENTER_LIVE<<<<<\n");
+	int		num;
 
+	num = 0;
 	printf("NUM player => %d\n", proc->op->ar[0]);
 
-	if (proc->op->ar[0] >= 1 && proc->op->ar[0] <= vm->nb_player)
-		vm->life_signal[proc->op->ar[0] - 1] = 1;
+	num = proc->op->ar[0] * -1;
+
+	if (num >= 1 && num <= vm->nb_player)
+		vm->player[num].life_signal++;
 	else
 	{
 		printf("Live for Unknown Player... \n");
