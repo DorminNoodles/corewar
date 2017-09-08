@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 16:29:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 14:41:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	show_proc_nb(t_vm *vm)
 		i++;
 		tmp = tmp->next;
 	}
-	printf("NB_PROC => %d\n", i);
+	// printf("NB_PROC => %d\n", i);
 }

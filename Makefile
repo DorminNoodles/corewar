@@ -26,7 +26,7 @@ all : $(VM_NAME)
 $(VM_NAME) : $(OBJ)
 	@echo "fuck"
 	make -C libft/
-	$(CC) -g $(OBJ) $(INC) libft/libft.a -o build/$(VM_NAME)
+	$(CC) -g $(OBJ) $(INC) libft/libft.a -lncurses -o build/$(VM_NAME)
 
 %.o : srcs/%.c
 	$(CC) -g -c $< $(FLAGS) $(INC) -o $@

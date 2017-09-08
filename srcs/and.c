@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/24 00:02:58 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/09/08 14:44:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	and(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>>>ENTER_AND<<<<<<<\n");
+	// printf(">>>>>>>ENTER_AND<<<<<<<\n");
 	unsigned int	ar1;
 	unsigned int	ar2;
 

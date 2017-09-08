@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 15:06:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 14:43:50 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	sti(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>>ENTER STI<<<<<<\n");
+	// printf(">>>>>>ENTER STI<<<<<<\n");
 
 	int addr;
 	int reg;
 
-	printf("valeur au registre 1 %x\n", proc->reg[0]);
-	printf("Arg1 %d\n", proc->op->ar[0]);
-	printf("Arg2 %d\n", proc->op->ar[1]);
-	printf("Arg3 %d\n", proc->op->ar[2]);
+	// printf("valeur au registre 1 %x\n", proc->reg[0]);
+	// printf("Arg1 %d\n", proc->op->ar[0]);
+	// printf("Arg2 %d\n", proc->op->ar[1]);
+	// printf("Arg3 %d\n", proc->op->ar[2]);
 
 	addr = proc->op->ar[1] + proc->op->ar[2];
 	reg = proc->op->ar[0] - 1;
 
-	printf("Registre %d index %d\n", proc->op->ar[0], reg);
+	// printf("Registre %d index %d\n", proc->op->ar[0], reg);
 
-	printf("addr -> %d\n", proc->op->ar[1]);
+	// printf("addr -> %d\n", proc->op->ar[1]);
 
 	//int reg;
 	// t_bag *bag;

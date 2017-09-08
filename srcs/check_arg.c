@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 13:04:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 14:44:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	srch_nb_dump(int argc, char **argv)
 	{
 		if (ret + 1 < argc)
 			nb = ft_atoi(argv[ret + 1]);
-		printf("dump => %d\n", nb);
+		// printf("dump => %d\n", nb);
 	}
 }
 
@@ -56,7 +56,7 @@ int		is_free_nb_player(t_vm *vm, int nb)
 		return (1);
 	if (vm->player[nb].active)
 		return (0);
-	printf("is free !\n");
+	// printf("is free !\n");
 	return (1);
 }
 
@@ -114,7 +114,7 @@ void	new_player(t_vm *vm, int nb, char *str)
 	vm->player[nb].life_signal = 0;
 	vm->player[nb].file_name = str;
 
-	printf("Debug : New Player %d !\n", nb);
+	// printf("Debug : New Player %d !\n", nb);
 }
 
 int		srch_players(t_vm *vm, int argc, char **argv)

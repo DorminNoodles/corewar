@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/07 16:49:02 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 15:57:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	get_ocp(t_vm *vm, t_proc *proc)
 
 void	get_dir(t_vm *vm, t_proc *proc, int num)
 {
-	printf(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
+	// printf(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
 	unsigned int value;
 
 	value = 0;
@@ -275,11 +275,11 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value << 8;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
-	printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
+	// printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
 		proc->op->ar[num] = value;
-		printf("deux octets value %x\n", value);
+		// printf("deux octets value %x\n", value);
 		return ;
 	}
 	proc->pc++;
@@ -290,32 +290,32 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = value << 8;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
-	printf("4 octets value %x\n", value);
+	// printf("4 octets value %x\n", value);
 	proc->op->ar[num] = value;
 }
 
 void	get_reg(t_vm *vm, t_proc *proc, int num)
 {
-	printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
+	// printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
 	unsigned char value;
 
 	proc->pc++;
 	value = (unsigned char)vm->mem[proc->pc];
 
-	printf("reg value %d\n", value);
+	// printf("reg value %d\n", value);
 
 	proc->op->ar[num] = value;
 }
 
 void	get_ind(t_vm *vm, t_proc *proc, int num)
 {
-	printf(">>>>>>>>>>GET_IND<<<<<<<<<<<\n");
+	// printf(">>>>>>>>>>GET_IND<<<<<<<<<<<\n");
 
 	unsigned int value;
 
 	value = 0;
 
-	printf("FUCK >>>>> %d\n", vm->mem[proc->pc]);
+	// printf("FUCK >>>>> %d\n", vm->mem[proc->pc]);
 	proc->pc++;
 	value = value | (unsigned char)vm->mem[proc->pc];
 
@@ -338,12 +338,12 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 
 void	find_args(t_vm *vm, t_proc *proc, int num)
 {
-	printf("ENTER FUNC : FIND_ARGS\n");
+	// printf("ENTER FUNC : FIND_ARGS\n");
 	unsigned char	type;
 	unsigned char	mask;
 
 	type = proc->op->ocp;
-	printf("OCP => %d\n", type);
+	// printf("OCP => %d\n", type);
 	mask = 0xC0;
 	mask = mask >> (2 * num);
 	type = type & mask;
@@ -359,7 +359,7 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 
 	// if (mask )
 
-	printf("EXIT FUNC : FIND_ARGS\n");
+	// printf("EXIT FUNC : FIND_ARGS\n");
 }
 
 // ref = get_optab_entry();
@@ -375,11 +375,11 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	t_optab *optab_ref;
 
 	i = 0;
-	printf("OCP CODE >>>> %d\n", proc->op->code);
+	// printf("OCP CODE >>>> %d\n", proc->op->code);
 	optab_ref = get_optab_entry(proc->op->code);
 	if (optab_ref->need_ocp)
 	{
-		printf("                                               NEED OCP !\n");
+		// printf("                                               NEED OCP !\n");
 		get_ocp(vm, proc);
 		while (i < op_tab[proc->op->code - 1].nb_arg)
 		{
@@ -390,7 +390,7 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	else
 	{
 		get_dir(vm, proc, 0);
-		printf("                                            DONT NEED OCP !\n");
+		// printf("                                            DONT NEED OCP !\n");
 	}
 
 	proc->pc++;
@@ -568,31 +568,31 @@ int		cycle_to_die(t_vm *vm)
 
 int		all_died(t_vm *vm)
 {
-	int i;
-	int cnt;
-
-	i = 0;
-	cnt = 0;
-	if (cycle_to_die(vm))
-	{
-		undertaker(vm);
-		vm->last_one = get_last_one(vm);
-		reset_life_signal(vm);
-		while (i <= MAX_PLAYERS && cnt == 0)
-		{
-			if (vm->player[i].active)
-				cnt++;
-			i++;
-		}
-		if (!cnt)
-			return (1);
-	}
+	// int i;
+	// int cnt;
+	//
+	// i = 0;
+	// cnt = 0;
+	// if (cycle_to_die(vm))
+	// {
+	// 	undertaker(vm);
+	// 	vm->last_one = get_last_one(vm);
+	// 	reset_life_signal(vm);
+	// 	while (i <= MAX_PLAYERS && cnt == 0)
+	// 	{
+	// 		if (vm->player[i].active)
+	// 			cnt++;
+	// 		i++;
+	// 	}
+	// 	if (!cnt)
+	// 		return (1);
+	// }
 	return (0);
 }
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
-	printf("------------IDLE_STATE------------\n");
+	// printf("------------IDLE_STATE------------\n");
 	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
 		proc->state = WAIT;
 	else
@@ -601,7 +601,7 @@ void	idle_state(t_vm *vm, t_proc *proc)
 
 void	wait_state(t_vm *vm, t_proc *proc)
 {
-	printf("------------WAIT_STATE------------\n");
+	// printf("------------WAIT_STATE------------\n");
 	proc->op->loadtime--;
 	if (proc->op->loadtime <= 0)
 	{
@@ -620,6 +620,30 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		wait_state(vm, proc);
 }
 
+void	call_ncurses(t_vm *vm)
+{
+	int i;
+
+	i = 0;
+
+	attron(COLOR_PAIR(1));
+	move(0,0);
+	while (i < MEM_SIZE)
+	{
+		move(i / 64, (i % 64) * 3);
+		// if (i == 30)
+		// 	attron(A_STANDOUT);
+		printw("%02x", (unsigned char)vm->mem[i]);
+			// attroff(A_STANDOUT);
+		i++;
+	}
+	move(10, 200);
+	printw("Cycles : %d", vm->countdown);
+	// printw("hello world");
+	refresh();
+
+}
+
 void	run(t_vm *vm)
 {
 	t_proc	*proc;
@@ -635,18 +659,24 @@ void	run(t_vm *vm)
 		vm->countdown++;
 
 //-------------------------Debug
-		printf(">>>> %d\n", vm->countdown);
-		if (vm->countdown > 1200)
-		{
-			show_mem(vm);
-			exit(1);
-		}
-		show_proc_nb(vm);
+		// printf(">>>> %d\n", vm->countdown);
+		// if (vm->countdown > 1200)
+		// {
+		// 	// show_mem(vm);
+		// 	exit(1);
+		// }
+		// show_proc_nb(vm);
 //-------------------------Debug
+//-------------------NCURSES
+		if (1)
+			call_ncurses(vm);
+//-------------------NCURSES
+		usleep(100000);
 	}
 	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
+
 
 }
 
@@ -661,23 +691,61 @@ void	init_vm(t_vm *vm)
 
 }
 
+// #include <ncurses.h>
+// #include <string.h>
+
+// void main(void)
+// {
+// 	initscr();
+//
+// 	int c;
+// 	printw("NCRUSES");
+// 	while ((c=getch()) != 27)
+// 	{
+// 		move(10,0);
+// 		printw("Keycode : %d, char : %c", c, c);
+// 		move(0,0);
+// 		printw("press (ESC) for quit");
+// 		refresh();
+// 	}
+// 	// printf("Kefgdngjk %d, eghdthio %c", c, c);
+// 	endwin();
+// }
+
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
+
+	initscr();
+
+
+	// initscr();              // Initialise la structure WINDOW et autres paramètres
+	// printw("Hello World");  // Écrit Hello World à l'endroit où le curseur logique est positionné
+	// refresh();              // Rafraîchit la fenêtre courante afin de voir le message apparaître
+	// getch();                // On attend que l'utilisateur appui sur une touche pour quitter
+	// endwin();
+	//
+	// exit(1);
+
+	// char ch;
+	// ch = getch();
+	// printf("Input Char Is :%c",ch);
+
+
 
 	init_vm(&vm);
 
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
 //-------------Debug
-	printf("Debug : active -> %d\n", vm.player[1].active);
+	// printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
 	run(&vm);//lancement du combat
-	// exit (0);
-	// show_mem(&vm);
 
+
+	endwin();
 	return (0);
 }
 
