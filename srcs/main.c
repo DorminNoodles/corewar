@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 15:57:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 22:38:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -626,22 +626,45 @@ void	call_ncurses(t_vm *vm)
 
 	i = 0;
 
-	attron(COLOR_PAIR(1));
+
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+
 	move(0,0);
 	while (i < MEM_SIZE)
 	{
 		move(i / 64, (i % 64) * 3);
-		// if (i == 30)
-		// 	attron(A_STANDOUT);
+		if (i == 30)
+		{
+			attron(COLOR_PAIR(1));
+			attron(A_STANDOUT);
+		}
 		printw("%02x", (unsigned char)vm->mem[i]);
-			// attroff(A_STANDOUT);
+		attroff(A_STANDOUT);
+		attroff(COLOR_PAIR(1));
 		i++;
 	}
 	move(10, 200);
 	printw("Cycles : %d", vm->countdown);
+	move(12, 200);
+	printw("Keycode : %d", vm->keycode);
 	// printw("hello world");
 	refresh();
 
+}
+
+void	controller(t_vm *vm)
+{
+	// vm->keycode = getch();
+	if (getch() == ' ')
+		vm->pause = 1;
+	while (vm->pause)
+	{
+		if (getch() == ' ')
+		{
+			vm->pause = 0;
+			break;
+		}
+	}
 }
 
 void	run(t_vm *vm)
@@ -671,6 +694,7 @@ void	run(t_vm *vm)
 		if (1)
 			call_ncurses(vm);
 //-------------------NCURSES
+		controller(vm);
 		usleep(100000);
 	}
 	printf("END\n");
@@ -680,16 +704,7 @@ void	run(t_vm *vm)
 
 }
 
-void	init_vm(t_vm *vm)
-{
-	vm->nb_player = 0;
-	vm->ctd = CYCLE_TO_DIE;
-	vm->cycle = 0;
-	vm->countdown = 0;
-	vm->proc = NULL;
-	vm->last_one = NULL;
 
-}
 
 // #include <ncurses.h>
 // #include <string.h>
@@ -715,8 +730,12 @@ void	init_vm(t_vm *vm)
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
+	WINDOW *w;
 
-	initscr();
+	w = initscr();
+	start_color();			/* Start color 			*/
+	cbreak(); //getch() no block
+	nodelay(w, TRUE);
 
 
 	// initscr();              // Initialise la structure WINDOW et autres paramètres

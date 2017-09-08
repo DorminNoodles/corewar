@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 14:44:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/08 22:30:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ int		get_prog_size(char *data)
 	ret = ret | data[3];
 
 	return (ret);
+}
+
+void	init_vm(t_vm *vm)
+{
+	vm->nb_player = 0;
+	vm->ctd = CYCLE_TO_DIE;
+	vm->cycle = 0;
+	vm->countdown = 0;
+	vm->proc = NULL;
+	vm->last_one = NULL;
+	vm->keycode = 0;
+	vm->pause = 1;
 }
 
 //c est un fill_mem, on remplit la memoire du code du player
