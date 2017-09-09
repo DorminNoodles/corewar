@@ -14,7 +14,8 @@ SRC =		main.c						\
 			or.c						\
 			xor.c						\
 			sub.c						\
-			st.c
+			st.c						\
+			zjmp.c
 
 SRCS = $(addprefix srcs/, $(SRC))
 INC = -I includes -I libft/includes

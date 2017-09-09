@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 16:37:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 21:10:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -748,14 +748,10 @@ void	run(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
-			printf("%d\n", proc->pc);
-			// printf("SEGV_1\n");
 			animate_proc(vm, proc);
-			// printf("SEGV_2\n");
 			proc = proc->next;
 		}
 		vm->countdown++;
-		// printf("SEGV_2\n");
 //-------------------------Debug
 		// printf(">>>> %d\n", vm->countdown);
 		// if (vm->countdown > 1200)
@@ -773,7 +769,7 @@ void	run(t_vm *vm)
 			controller(vm);
 		}
 //-------------------NCURSES
-		usleep(10000);
+		usleep(100000);
 	}
 
 	printf("END\n");

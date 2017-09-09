@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 14:09:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 21:08:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void	xor(t_vm *vm, t_proc *proc);
 void	st(t_vm *vm, t_proc *proc);
 void	sub(t_vm *vm, t_proc *proc);
 void	ft_fork(t_vm *vm, t_proc *proc);
+void	zjmp(t_vm *vm, t_proc *proc);
 
 
 /*-------DEBUG-------*/
