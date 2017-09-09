@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 22:38:59 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 16:37:52 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,13 +417,17 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 
 	i = 0;
 	op = NULL;
+	// printf("SEGV_1.5\n");
 	if (!is_opcode(data))
 		return (NULL);
 	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
 		error("error : malloc\n");
+	// printf("SEGV_3\n");
 	op->code = data;
 	op->loadtime = op_tab[data - 1].loadtime;
 	op->pos_opcode = proc->pc;
+	// printf("SEGV_4\n");
+	// printf("SEGV_2\n");
 	return (op);
 }
 
@@ -519,21 +523,30 @@ void	champ_burial(t_proc *proc, int i)
 
 void	reset_life_signal(t_vm *vm)
 {
-	int i;
+	int		i;
+	t_proc	*tmp;
 
 	i = 1;
+	tmp = vm->proc;
 	while (i <= MAX_PLAYERS)
 	{
 		vm->player[i].life_signal = 0;
 		i++;
+	}
+	while (tmp)
+	{
+		tmp->live = 0;
+		tmp = tmp->next;
 	}
 }
 
 void	undertaker(t_vm *vm)
 {
 	int i;
+	t_proc	*tmp;
 
 	i = 1;
+	tmp = vm->proc;
 	while (i <= MAX_PLAYERS)
 	{
 		if (!vm->player[i].life_signal && vm->player[i].active)
@@ -543,6 +556,29 @@ void	undertaker(t_vm *vm)
 		}
 		i++;
 	}
+
+	// printf("SEGV\n");
+	// while (!vm->proc->live)
+	// 	vm->proc = vm->proc->next;
+	// while (tmp && tmp->next)
+	// {
+	// 	if (!tmp->next->live)
+	// 		tmp->next = tmp->next->next;
+	// 	else
+	// 		tmp = tmp->next;
+	// }
+	// while (!vm->proc->live)
+	// {//LEAAAAAAKS
+	// 	vm->proc = vm->proc->next;
+	// }
+	// while (tmp)
+	// {
+	// 	while (!tmp->next->live)
+	// 	{
+	// 		tmp->next = tmp->next->next;
+	// 	}
+	// 	tmp = tmp->next;
+	// }
 }
 
 t_player	*get_last_one(t_vm *vm)
@@ -568,41 +604,55 @@ int		cycle_to_die(t_vm *vm)
 
 int		all_died(t_vm *vm)
 {
-	// int i;
-	// int cnt;
-	//
-	// i = 0;
-	// cnt = 0;
-	// if (cycle_to_die(vm))
-	// {
-	// 	undertaker(vm);
-	// 	vm->last_one = get_last_one(vm);
-	// 	reset_life_signal(vm);
-	// 	while (i <= MAX_PLAYERS && cnt == 0)
-	// 	{
-	// 		if (vm->player[i].active)
-	// 			cnt++;
-	// 		i++;
-	// 	}
-	// 	if (!cnt)
-	// 		return (1);
-	// }
+	int i;
+	int cnt;
+
+	i = 0;
+	cnt = 0;
+
+	if (cycle_to_die(vm))
+	{
+		// printf("SEGV_1\n");
+		undertaker(vm);
+		vm->last_one = get_last_one(vm);
+		reset_life_signal(vm);
+		// printf("SEGV_2\n");
+		while (i <= MAX_PLAYERS && cnt == 0)
+		{
+			if (vm->player[i].active)
+				cnt++;
+			i++;
+		}
+		if (!cnt)
+			return (1);
+	}
+
 	return (0);
 }
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
+	// printf("SEGV_1\n");
+
 	// printf("------------IDLE_STATE------------\n");
-	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc])))
+	// printf("SEGV_1\n");
+	// printf("proc->pc = %d\n", proc->pc);
+	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc % MEM_SIZE])))
+	{
+		// printf("SEGV_2\n");
 		proc->state = WAIT;
+	}
 	else
 		proc->pc = (proc->pc + 1) % MEM_SIZE;
+
 }
 
 void	wait_state(t_vm *vm, t_proc *proc)
 {
 	// printf("------------WAIT_STATE------------\n");
 	proc->op->loadtime--;
+	// printf("SEGV_1\n");
+
 	if (proc->op->loadtime <= 0)
 	{
 		fill_cur_op(vm, proc);
@@ -610,14 +660,34 @@ void	wait_state(t_vm *vm, t_proc *proc)
 			op_tab[proc->op->code - 1].func(vm, proc);
 		proc->state = IDLE;
 	}
+	// printf("SEGV_2\n");
 }
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	if (proc->state == IDLE)
+	{
+		// printf("SEGV_1\n");
 		idle_state(vm, proc);
+		// printf("SEGV_2\n");
+	}
 	else if (proc->state == WAIT)
 		wait_state(vm, proc);
+}
+
+int		is_pc(t_vm *vm, int nb)
+{
+	t_proc *tmp;
+
+	tmp = vm->proc;
+
+	while (tmp)
+	{
+		if (tmp->pc == nb)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 void	call_ncurses(t_vm *vm)
@@ -626,19 +696,20 @@ void	call_ncurses(t_vm *vm)
 
 	i = 0;
 
-
 	init_pair(1, COLOR_RED, COLOR_BLACK);
+	// init_pair(1, COLOR_RED, COLOR_WHITE);
 
 	move(0,0);
 	while (i < MEM_SIZE)
 	{
 		move(i / 64, (i % 64) * 3);
-		if (i == 30)
+		if (is_pc(vm, i))
 		{
 			attron(COLOR_PAIR(1));
 			attron(A_STANDOUT);
 		}
 		printw("%02x", (unsigned char)vm->mem[i]);
+		// printf("Pouet\n");
 		attroff(A_STANDOUT);
 		attroff(COLOR_PAIR(1));
 		i++;
@@ -673,14 +744,18 @@ void	run(t_vm *vm)
 
 	while (!all_died(vm))
 	{
+		// printf("SEGV_1\n");
 		proc = vm->proc;
 		while (proc != NULL)
 		{
+			printf("%d\n", proc->pc);
+			// printf("SEGV_1\n");
 			animate_proc(vm, proc);
+			// printf("SEGV_2\n");
 			proc = proc->next;
 		}
 		vm->countdown++;
-
+		// printf("SEGV_2\n");
 //-------------------------Debug
 		// printf(">>>> %d\n", vm->countdown);
 		// if (vm->countdown > 1200)
@@ -691,16 +766,19 @@ void	run(t_vm *vm)
 		// show_proc_nb(vm);
 //-------------------------Debug
 //-------------------NCURSES
-		if (1)
+		if (vm->ncurses)
+		{
+			// printf("BORDEL\n");
 			call_ncurses(vm);
+			controller(vm);
+		}
 //-------------------NCURSES
-		controller(vm);
-		usleep(100000);
+		usleep(10000);
 	}
+
 	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
-
 
 }
 
@@ -727,44 +805,40 @@ void	run(t_vm *vm)
 // 	endwin();
 // }
 
+void	init_ncurses(WINDOW **w)
+{
+	*w = initscr();
+	start_color();			/* Start color 			*/
+	cbreak(); //getch() no block
+	nodelay(*w, TRUE);
+}
+
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
+
 	WINDOW *w;
 
-	w = initscr();
-	start_color();			/* Start color 			*/
-	cbreak(); //getch() no block
-	nodelay(w, TRUE);
-
-
-	// initscr();              // Initialise la structure WINDOW et autres paramètres
-	// printw("Hello World");  // Écrit Hello World à l'endroit où le curseur logique est positionné
-	// refresh();              // Rafraîchit la fenêtre courante afin de voir le message apparaître
-	// getch();                // On attend que l'utilisateur appui sur une touche pour quitter
-	// endwin();
-	//
-	// exit(1);
-
-	// char ch;
-	// ch = getch();
-	// printf("Input Char Is :%c",ch);
-
-
-
 	init_vm(&vm);
-
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
+
+	show_mem(&vm);
+
+	if (vm.ncurses)
+		init_ncurses(&w);
+
 //-------------Debug
 	// printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
+
 	run(&vm);//lancement du combat
 
 
-	endwin();
+	if (vm.ncurses)
+		endwin();
 	return (0);
 }
 

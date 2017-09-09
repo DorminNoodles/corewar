@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 14:43:50 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 12:04:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	sti(t_vm *vm, t_proc *proc)
 	//
 	// show_mem(vm);
 
-	vm->mem[(proc->op->pos_opcode + addr) % MEM_SIZE] = proc->reg[reg] >>24;
-	vm->mem[(proc->op->pos_opcode + addr + 1) % MEM_SIZE] = proc->reg[reg] >>16;
-	vm->mem[(proc->op->pos_opcode + addr + 2) % MEM_SIZE] = proc->reg[reg] >>8;
-	vm->mem[(proc->op->pos_opcode + addr + 3) % MEM_SIZE] = proc->reg[reg];
+	vm->mem[(proc->op->pos_opcode + addr) % IDX_MOD] = proc->reg[reg] >>24;
+	vm->mem[(proc->op->pos_opcode + addr + 1) % IDX_MOD] = proc->reg[reg] >>16;
+	vm->mem[(proc->op->pos_opcode + addr + 2) % IDX_MOD] = proc->reg[reg] >>8;
+	vm->mem[(proc->op->pos_opcode + addr + 3) % IDX_MOD] = proc->reg[reg];
 
 	// show_mem(vm);
 }

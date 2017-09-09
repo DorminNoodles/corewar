@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
-/*   Updated: 2017/07/28 04:11:06 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/09/09 14:28:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	add(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>ENTER_ADD<<<<\n");
+	// printf(">>>>ENTER_ADD<<<<\n");
 	int		sum;
 
 	sum = proc->reg[proc->op->ar[0] -1] + proc->reg[proc->op->ar[1] -1];

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 22:30:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 15:02:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	init_vm(t_vm *vm)
 	vm->last_one = NULL;
 	vm->keycode = 0;
 	vm->pause = 1;
+	vm->ncurses = 0;
 }
 
 //c est un fill_mem, on remplit la memoire du code du player

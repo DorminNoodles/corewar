@@ -1,8 +1,8 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		sti r1, %20, %0
-		sti r1, %10, %0
+		fork %-1
+#		sti r1, %4000, %0
 #		fork %2
 #		fork %2
 #		fork %2

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 22:25:36 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 14:09:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_player
 typedef struct s_proc
 {
 	int		id;
+	int		active;
 	int		num;//Num du programme/player a fournir dans r1 (registre 1)
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
@@ -180,6 +181,7 @@ typedef struct s_vm
 	int		countdown;
 	int		keycode;
 	int		pause;
+	int		ncurses;
 	// char	*mem;
 	char	mem[MEM_SIZE];
 	int		life_signal[4];			// tab pour les vies.

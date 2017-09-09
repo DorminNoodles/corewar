@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 14:44:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/09 14:14:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_strargv(int argc, char **argv, char *str)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_strstr(argv[i], "-dump"))
+		if (ft_strstr(argv[i], str))
 			return (i);
 		i++;
 	}
@@ -39,6 +39,17 @@ void	srch_nb_dump(int argc, char **argv)
 			nb = ft_atoi(argv[ret + 1]);
 		// printf("dump => %d\n", nb);
 	}
+}
+
+int		srch_ncurses(int argc, char **argv)
+{
+	int ret;
+
+	ret = 0;
+	if ((ret = ft_strargv(argc, argv, "-n")))
+		return (1);
+	return (0);
+		// printf("dump => %d\n", nb);
 }
 
 int		srch_nb_player(int argc, char **argv, int arg_num)
@@ -144,6 +155,7 @@ int		srch_players(t_vm *vm, int argc, char **argv)
 int		check_arg(t_vm *vm, int argc, char **argv)
 {
 	srch_nb_dump(argc, argv);
+	vm->ncurses = srch_ncurses(argc, argv);
 	if(srch_players(vm, argc, argv))
 		return(1);
 	return (0);
