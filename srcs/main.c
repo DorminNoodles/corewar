@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 21:10:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/10 12:13:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,6 +540,20 @@ void	reset_life_signal(t_vm *vm)
 	}
 }
 
+void	kill_proc(t_vm *vm)
+{
+	t_proc *tmp;
+
+	tmp = vm->proc;
+	while (tmp)
+	{
+		if (!tmp->live)
+			tmp->active = 0;
+		tmp = tmp->next;
+	}
+
+}
+
 void	undertaker(t_vm *vm)
 {
 	int i;
@@ -557,6 +571,7 @@ void	undertaker(t_vm *vm)
 		i++;
 	}
 
+	kill_proc(vm);
 	// printf("SEGV\n");
 	// while (!vm->proc->live)
 	// 	vm->proc = vm->proc->next;
@@ -683,7 +698,7 @@ int		is_pc(t_vm *vm, int nb)
 
 	while (tmp)
 	{
-		if (tmp->pc == nb)
+		if (tmp->pc == nb && tmp->active)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -746,9 +761,11 @@ void	run(t_vm *vm)
 	{
 		// printf("SEGV_1\n");
 		proc = vm->proc;
+		// printf("proc => %d\n", proc->active);
 		while (proc != NULL)
 		{
-			animate_proc(vm, proc);
+			if (proc->active)
+				animate_proc(vm, proc);
 			proc = proc->next;
 		}
 		vm->countdown++;
@@ -769,7 +786,7 @@ void	run(t_vm *vm)
 			controller(vm);
 		}
 //-------------------NCURSES
-		usleep(100000);
+		usleep(10000);
 	}
 
 	printf("END\n");
