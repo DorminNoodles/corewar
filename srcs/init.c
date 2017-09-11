@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 15:02:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/10 12:10:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->live = 1;
+	tmp->active = 1;
 	// printf("tmp->id => %d\n", tmp->id);
 	return (tmp);
 	// printf("FUCK %d\n", vm->proc->state);

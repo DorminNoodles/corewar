@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 10:57:43 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 10:59:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,6 +540,20 @@ void	reset_life_signal(t_vm *vm)
 	}
 }
 
+void	kill_proc(t_vm *vm)
+{
+	t_proc *tmp;
+
+	tmp = vm->proc;
+	while (tmp)
+	{
+		if (!tmp->live)
+			tmp->active = 0;
+		tmp = tmp->next;
+	}
+
+}
+
 void	undertaker(t_vm *vm)
 {
 	int i;
@@ -557,6 +571,7 @@ void	undertaker(t_vm *vm)
 		i++;
 	}
 
+	kill_proc(vm);
 	// printf("SEGV\n");
 	// while (!vm->proc->live)
 	// 	vm->proc = vm->proc->next;
@@ -683,7 +698,7 @@ int		is_pc(t_vm *vm, int nb)
 
 	while (tmp)
 	{
-		if (tmp->pc == nb)
+		if (tmp->pc == nb && tmp->active)
 			return (1);
 		tmp = tmp->next;
 	}
@@ -746,16 +761,14 @@ void	run(t_vm *vm)
 	{
 		// printf("SEGV_1\n");
 		proc = vm->proc;
+		// printf("proc => %d\n", proc->active);
 		while (proc != NULL)
 		{
-			printf("%d\n", proc->pc);
-			// printf("SEGV_1\n");
-			animate_proc(vm, proc);
-			// printf("SEGV_2\n");
+			if (proc->active)
+				animate_proc(vm, proc);
 			proc = proc->next;
 		}
 		vm->countdown++;
-		// printf("SEGV_2\n");
 //-------------------------Debug
 		// printf(">>>> %d\n", vm->countdown);
 		// if (vm->countdown > 1200)
