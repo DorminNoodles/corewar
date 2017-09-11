@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 21:08:14 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 12:00:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,12 @@ typedef struct s_proc
 // 	int		ocp;
 // }	t_optab;
 
+typedef struct s_mem
+{
+	char	mem;
+	int		num;
+}	t_mem;
+
 typedef struct s_optab
 {
 	char	*inst;
@@ -184,6 +190,7 @@ typedef struct s_vm
 	int		ncurses;
 	// char	*mem;
 	char	mem[MEM_SIZE];
+	t_mem	ram[MEM_SIZE];
 	int		life_signal[4];			// tab pour les vies.
 	char	*files_name[5];
 	t_player	player[5];

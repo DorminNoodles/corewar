@@ -1,15 +1,15 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		fork %2
-		live %-1
-		ld %1, r4
-		zjmp	%100
+		ld %-1, r2
+		st r2, -20
+
+#		zjmp	%100
 #		sti r1, %4000, %0
 #		fork %2
 #		fork %2
 #		fork %2
-		fork %2
+#		fork %2
 
 #		ld	%600,r1
 #		ld	1,r2

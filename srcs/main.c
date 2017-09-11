@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 10:59:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 18:13:08 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,83 +77,6 @@
 // 	ocp = vm->mem[vm->p_bag[player].pc];
 // 	return (ocp);
 // }
-
-// unsigned char		get_type_ocp(int pos, char ocp)
-// {
-// 	if (pos == 1)
-// 		return((unsigned char)ocp >> 6);
-// 	if (pos == 2)
-// 	{
-// 		ocp = ocp >> 4;
-// 		ocp = ocp & 0x3;
-// 		return ((unsigned char)ocp);
-// 	}
-// 	if (pos == 3)
-// 	{
-// 		ocp = ocp >> 2;
-// 		ocp = ocp & 0x3;
-// 		return ((unsigned char)ocp);
-// 	}
-// 	return (0);
-// }
-//
-// int			get_arg(t_vm *vm, int num, unsigned char type, int player)
-// {
-// 	t_bag	*bag;
-// 	t_op	*op;
-// 	int		ret;
-// 	int		direct;
-//
-// 	ret = 0;
-// 	bag = &vm->p_bag[player];
-// 	direct = vm->optab[bag->cur_op->code].direct;
-//
-// 	// printf("############### OP->direct : %d	\n", direct);
-//
-// 	printf("type of arg >> %d\n", type);
-//
-// 	if (type == T_REG)
-// 	{
-// 		bag->pc++;
-// 		ret = (int)vm->mem[bag->pc];
-// 		return (ret);
-// 	}
-// 	if (type == T_DIR && direct == 2)
-// 	{
-// 		bag->pc++;
-// 		ret = (unsigned char)vm->mem[bag->pc];
-// 		ret = ret << 8;
-//
-// 		bag->pc++;
-// 		ret = ret | (unsigned char)vm->mem[bag->pc];
-// 		// if ()
-// 		return(ret);
-// 	}
-// 	if (type == T_DIR && direct == 4)
-// 	{
-// 		printf("DIRECT == 4\n");
-// 		bag->pc++;
-// 		ret = (unsigned char)vm->mem[bag->pc];
-// 		ret = ret << 8;
-// 		bag->pc++;
-// 		ret = ret | (unsigned char)vm->mem[bag->pc];
-// 		ret = ret << 8;
-// 		bag->pc++;
-// 		ret = ret | (unsigned char)vm->mem[bag->pc];
-// 		ret = ret << 8;
-// 		bag->pc++;
-// 		ret = ret | (unsigned char)vm->mem[bag->pc];
-//
-// 		return(ret);
-// 	}
-// 	return (0);
-// }
-//
-// int			get_arg_num(t_vm *vm, int opcode)
-// {
-// 	return (vm->optab[opcode].nb_arg);
-// }
-
 
 // void		fill_cur_op(t_vm *vm, t_op *op, int player)
 // {
@@ -572,28 +495,6 @@ void	undertaker(t_vm *vm)
 	}
 
 	kill_proc(vm);
-	// printf("SEGV\n");
-	// while (!vm->proc->live)
-	// 	vm->proc = vm->proc->next;
-	// while (tmp && tmp->next)
-	// {
-	// 	if (!tmp->next->live)
-	// 		tmp->next = tmp->next->next;
-	// 	else
-	// 		tmp = tmp->next;
-	// }
-	// while (!vm->proc->live)
-	// {//LEAAAAAAKS
-	// 	vm->proc = vm->proc->next;
-	// }
-	// while (tmp)
-	// {
-	// 	while (!tmp->next->live)
-	// 	{
-	// 		tmp->next = tmp->next->next;
-	// 	}
-	// 	tmp = tmp->next;
-	// }
 }
 
 t_player	*get_last_one(t_vm *vm)
@@ -708,25 +609,60 @@ int		is_pc(t_vm *vm, int nb)
 void	call_ncurses(t_vm *vm)
 {
 	int i;
+	int ret;
 
 	i = 0;
+	ret = 0;
 
-	init_pair(1, COLOR_RED, COLOR_BLACK);
+	init_color(35, 500, 500, 500);//basic grey
+	init_pair(15, 35, COLOR_BLACK);//basic
+
+	init_pair(20, COLOR_GREEN, COLOR_BLACK);//player_1
+
+	init_color(36, 150, 1000, 150);//fluo_green
+	init_pair(21, COLOR_GREEN, 36);//player_1_highlight
+
+	init_pair(22, COLOR_BLUE, COLOR_BLACK);//player_2
+	init_color(COLOR_BLUE, 200, 200, 800);//blue change
+
+	init_color(37, 400, 400, 1000);//fluo_blue
+	init_pair(23, COLOR_BLUE, 37);//player_2_highlight
+
+	// init_color(20, 0, 350, 0);
+	// init_pair(21, 20, COLOR_GREEN);
+	// init_pair(1, COLOR_WHITE, COLOR_BLACK);
+    // init_color(COLOR_WHITE, 600, 600, 600);
+	// init_pair(31, 35, COLOR_BLACK);
+	// init_pair(31, 35, COLOR_BLACK);
 	// init_pair(1, COLOR_RED, COLOR_WHITE);
 
 	move(0,0);
 	while (i < MEM_SIZE)
 	{
+		attron(COLOR_PAIR(15));
 		move(i / 64, (i % 64) * 3);
-		if (is_pc(vm, i))
+		if ((is_pc(vm, i)))
 		{
-			attron(COLOR_PAIR(1));
+			if (vm->ram[i].num == -1)
+				attron(COLOR_PAIR(21));
+			else if (vm->ram[i].num == -2)
+				attron(COLOR_PAIR(23));
 			attron(A_STANDOUT);
 		}
-		printw("%02x", (unsigned char)vm->mem[i]);
+		else if (vm->ram[i].num == -1)
+		{
+			attron(COLOR_PAIR(20));
+		}
+		else if (vm->ram[i].num == -2)
+		{
+			attron(COLOR_PAIR(22));
+		}
+
+		printw("%02x", (unsigned char)vm->ram[i].mem);
 		// printf("Pouet\n");
 		attroff(A_STANDOUT);
-		attroff(COLOR_PAIR(1));
+		attroff(COLOR_PAIR(35));
+		// attroff(COLOR_PAIR(20));
 		i++;
 	}
 	move(10, 200);
@@ -786,7 +722,7 @@ void	run(t_vm *vm)
 			controller(vm);
 		}
 //-------------------NCURSES
-		usleep(10000);
+		usleep(5000);
 	}
 
 	printf("END\n");
@@ -794,7 +730,6 @@ void	run(t_vm *vm)
 		printf("Last_one => %s\n", vm->last_one->file_name);
 
 }
-
 
 
 // #include <ncurses.h>
@@ -846,9 +781,7 @@ int		main(int argc, char **argv)
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
-
 	run(&vm);//lancement du combat
-
 
 	if (vm.ncurses)
 		endwin();

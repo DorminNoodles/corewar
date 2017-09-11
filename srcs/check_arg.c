@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 14:14:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 17:38:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	init_player(t_vm *vm)
 	while (i <= MAX_PLAYERS)
 	{
 		vm->player[i].active = 0;
-		vm->player[i].life_signal = 0;
+		vm->player[i].life_signal = 1;
 		vm->player[i].file_name = NULL;
 		i++;
 	}
@@ -119,12 +119,11 @@ void	init_player(t_vm *vm)
 
 void	new_player(t_vm *vm, int nb, char *str)
 {
-	if (!vm->nb_player)
-		init_player(vm);
+	// if (!vm->nb_player) // ca sert a rien cette merde
+	// 	init_player(vm);
 	vm->player[nb].active = 1;
-	vm->player[nb].life_signal = 0;
+	vm->player[nb].life_signal = 1;
 	vm->player[nb].file_name = str;
-
 	// printf("Debug : New Player %d !\n", nb);
 }
 

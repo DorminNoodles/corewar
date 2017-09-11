@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 11:27:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 18:14:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ld(t_vm *vm, t_proc *proc)
 	if (proc->op->ar_typ[0] == IND_CODE)
 	{
 		proc->reg[reg_nb] = 0;
-		proc->reg[reg_nb] = vm->mem[proc->op->ar[0]];
+		proc->reg[reg_nb] = vm->ram[proc->op->ar[0]].mem;
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->mem[proc->op->ar[0] + 1];
+		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 1].mem;
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->mem[proc->op->ar[0] + 2];
+		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 2].mem;
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->mem[proc->op->ar[0] + 3];
+		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 3].mem;
 	//	printf("REG ==> %x\n", proc->reg[reg_nb]);
 	//	printf("REG => %d\n", proc->reg[reg_nb]);
 	//	printf("REGISTRE DE MERDE %d\n", reg_nb);

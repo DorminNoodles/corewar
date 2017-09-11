@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/10 12:10:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 17:31:25 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_mem(t_vm *vm)
 
 //nouvelle mem on the stack
 	ft_bzero(&vm->mem, MEM_SIZE);
+	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
 
 }
 
@@ -150,6 +151,9 @@ void	write_player(t_vm *vm, int nb, int num)
 	{
 		// printf("Here\n");
 		vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
+		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
+		// printf(">__&>>> %d\n", (num + 1) * -1);
+		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
 		data_tmp++;
 		i++;
 	}
@@ -178,6 +182,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->id = (num * -1) + (-1);
 	// printf("NOMBRE => %d\n", num * (-1));
 	tmp->num = num * (-1);
+	printf(">>>^^> %d\n", tmp->num);
 	tmp->pc = (MEM_SIZE / vm->nb_player) * (num - 1);
 	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
@@ -256,11 +261,9 @@ void	create_players(t_vm *vm)
 	init_process(vm);
 	// exit(1);
 
-
 	// init_each_players(vm);
 	// init_optab(vm);
 	// vm->cycle = 0;
 	// vm->ctd = CYCLE_TO_DIE;
 	// printf("SEGV\n");
-
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/10 12:09:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/11 11:55:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 
 	// printf("create_process id => %x\n", proc->num);
 
-	new->pc = proc->pc + proc->op->ar[0];
+	new->pc = proc->pc + (proc->op->ar[0] % IDX_MOD);
 	new->active = 1;
 
 	add_process(vm, new);
