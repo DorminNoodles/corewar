@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 18:01:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:26:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,24 @@ void	sti(t_vm *vm, t_proc *proc)
 	//
 	// show_mem(vm);
 
-	printf(">>** %d\n", proc->num);
-	printf(">>>### %d \n", proc->op->pos_opcode);
 
 	vm->ram[proc->pc + (addr % IDX_MOD) + 1].mem = proc->reg[reg] >>24;
 	vm->ram[proc->pc + (addr % IDX_MOD) + 1].num = proc->num;
+	vm->ram[proc->pc + (addr % IDX_MOD) + 1].blingbling = BLING_DELAY;
 
 	vm->ram[proc->pc + (addr % IDX_MOD) + 2].mem = proc->reg[reg] >>16;
 	vm->ram[proc->pc + (addr % IDX_MOD) + 2].num = proc->num;
+	vm->ram[proc->pc + (addr % IDX_MOD) + 2].blingbling = BLING_DELAY;
 
 
 	vm->ram[proc->pc + (addr % IDX_MOD) + 3].mem = proc->reg[reg] >>8;
 	vm->ram[proc->pc + (addr % IDX_MOD) + 3].num = proc->num;
+	vm->ram[proc->pc + (addr % IDX_MOD) + 3].blingbling = BLING_DELAY;
 
 
 	vm->ram[proc->pc + (addr % IDX_MOD) + 4].mem = proc->reg[reg];
 	vm->ram[proc->pc + (addr % IDX_MOD) + 4].num = proc->num;
+	vm->ram[proc->pc + (addr % IDX_MOD) + 4].blingbling = BLING_DELAY;
 
 	// show_mem(vm);
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/09 21:10:14 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:48:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	zjmp(t_vm *vm, t_proc *proc)
 	if (proc->carry)
 	{
 		proc->pc = proc->pc + proc->op->ar[0];
-
 	}
 
 

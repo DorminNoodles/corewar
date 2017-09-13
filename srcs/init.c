@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 17:31:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:41:43 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->id = (num * -1) + (-1);
 	// printf("NOMBRE => %d\n", num * (-1));
 	tmp->num = num * (-1);
-	printf(">>>^^> %d\n", tmp->num);
 	tmp->pc = (MEM_SIZE / vm->nb_player) * (num - 1);
 	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 18:14:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:49:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,6 @@ void	ld(t_vm *vm, t_proc *proc)
 	/*proc->carry = 0;
 	if (proc->reg[reg_nb] == 0)
 		proc->carry = 1*/
+
+
 }

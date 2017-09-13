@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/11 18:13:08 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/13 14:42:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -553,6 +553,7 @@ void	idle_state(t_vm *vm, t_proc *proc)
 	// printf("------------IDLE_STATE------------\n");
 	// printf("SEGV_1\n");
 	// printf("proc->pc = %d\n", proc->pc);
+
 	if ((proc->op = create_op(vm, proc, vm->mem[proc->pc % MEM_SIZE])))
 	{
 		// printf("SEGV_2\n");
@@ -567,7 +568,6 @@ void	wait_state(t_vm *vm, t_proc *proc)
 {
 	// printf("------------WAIT_STATE------------\n");
 	proc->op->loadtime--;
-	// printf("SEGV_1\n");
 
 	if (proc->op->loadtime <= 0)
 	{
@@ -576,17 +576,12 @@ void	wait_state(t_vm *vm, t_proc *proc)
 			op_tab[proc->op->code - 1].func(vm, proc);
 		proc->state = IDLE;
 	}
-	// printf("SEGV_2\n");
 }
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	if (proc->state == IDLE)
-	{
-		// printf("SEGV_1\n");
 		idle_state(vm, proc);
-		// printf("SEGV_2\n");
-	}
 	else if (proc->state == WAIT)
 		wait_state(vm, proc);
 }
@@ -620,13 +615,16 @@ void	call_ncurses(t_vm *vm)
 	init_pair(20, COLOR_GREEN, COLOR_BLACK);//player_1
 
 	init_color(36, 150, 1000, 150);//fluo_green
+	init_color(38, 500, 1000, 500);//blingbling_green
 	init_pair(21, COLOR_GREEN, 36);//player_1_highlight
+	init_pair(24, 38, COLOR_BLACK);//player_1_blingbling
 
 	init_pair(22, COLOR_BLUE, COLOR_BLACK);//player_2
 	init_color(COLOR_BLUE, 200, 200, 800);//blue change
 
 	init_color(37, 400, 400, 1000);//fluo_blue
 	init_pair(23, COLOR_BLUE, 37);//player_2_highlight
+	init_pair(25, 37, COLOR_BLACK);//player_2_blingbling
 
 	// init_color(20, 0, 350, 0);
 	// init_pair(21, 20, COLOR_GREEN);
@@ -658,9 +656,21 @@ void	call_ncurses(t_vm *vm)
 			attron(COLOR_PAIR(22));
 		}
 
+
+		if (vm->ram[i].blingbling)
+		{
+			attron(A_BOLD);
+			if (vm->ram[i].num == -1)
+				attron(COLOR_PAIR(24));
+			if (vm->ram[i].num == -2)
+				attron(COLOR_PAIR(25));
+			vm->ram[i].blingbling--;
+		}
+
 		printw("%02x", (unsigned char)vm->ram[i].mem);
 		// printf("Pouet\n");
 		attroff(A_STANDOUT);
+		attroff(A_BOLD);
 		attroff(COLOR_PAIR(35));
 		// attroff(COLOR_PAIR(20));
 		i++;
@@ -669,6 +679,8 @@ void	call_ncurses(t_vm *vm)
 	printw("Cycles : %d", vm->countdown);
 	move(12, 200);
 	printw("Keycode : %d", vm->keycode);
+	move(20, 200);
+	printw("fichtre");
 	// printw("hello world");
 	refresh();
 
@@ -701,7 +713,9 @@ void	run(t_vm *vm)
 		while (proc != NULL)
 		{
 			if (proc->active)
+			{
 				animate_proc(vm, proc);
+			}
 			proc = proc->next;
 		}
 		vm->countdown++;
@@ -715,6 +729,7 @@ void	run(t_vm *vm)
 		// show_proc_nb(vm);
 //-------------------------Debug
 //-------------------NCURSES
+
 		if (vm->ncurses)
 		{
 			// printf("BORDEL\n");
@@ -722,7 +737,7 @@ void	run(t_vm *vm)
 			controller(vm);
 		}
 //-------------------NCURSES
-		usleep(5000);
+		// usleep(20000);
 	}
 
 	printf("END\n");
@@ -781,6 +796,7 @@ int		main(int argc, char **argv)
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
+	// printf("SEGV\n");
 	run(&vm);//lancement du combat
 
 	if (vm.ncurses)
