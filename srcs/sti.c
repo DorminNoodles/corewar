@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/13 11:26:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/14 14:50:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	sti(t_vm *vm, t_proc *proc)
 	// printf("Arg2 %d\n", proc->op->ar[1]);
 	// printf("Arg3 %d\n", proc->op->ar[2]);
 
+	// printf("POS _ OPCODE %d\n", proc->op->pos_opcode);
+
+
 	addr = proc->op->ar[1] + proc->op->ar[2];
+	// addr += proc->op->pos_opcode;
 	reg = proc->op->ar[0] - 1;
 
 	// printf("Registre %d index %d\n", proc->op->ar[0], reg);
@@ -46,24 +50,23 @@ void	sti(t_vm *vm, t_proc *proc)
 	//
 	// show_mem(vm);
 
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD)].mem = proc->reg[reg] >>24;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD)].num = proc->num;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD)].blingbling = BLING_DELAY;
 
-	vm->ram[proc->pc + (addr % IDX_MOD) + 1].mem = proc->reg[reg] >>24;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 1].num = proc->num;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 1].blingbling = BLING_DELAY;
-
-	vm->ram[proc->pc + (addr % IDX_MOD) + 2].mem = proc->reg[reg] >>16;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 2].num = proc->num;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 2].blingbling = BLING_DELAY;
-
-
-	vm->ram[proc->pc + (addr % IDX_MOD) + 3].mem = proc->reg[reg] >>8;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 3].num = proc->num;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 3].blingbling = BLING_DELAY;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 1].mem = proc->reg[reg] >>16;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 1].num = proc->num;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 1].blingbling = BLING_DELAY;
 
 
-	vm->ram[proc->pc + (addr % IDX_MOD) + 4].mem = proc->reg[reg];
-	vm->ram[proc->pc + (addr % IDX_MOD) + 4].num = proc->num;
-	vm->ram[proc->pc + (addr % IDX_MOD) + 4].blingbling = BLING_DELAY;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 2].mem = proc->reg[reg] >>8;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 2].num = proc->num;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 2].blingbling = BLING_DELAY;
+
+
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 3].mem = proc->reg[reg];
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 3].num = proc->num;
+	vm->ram[proc->op->pos_opcode + (addr % IDX_MOD) + 3].blingbling = BLING_DELAY;
 
 	// show_mem(vm);
 }
