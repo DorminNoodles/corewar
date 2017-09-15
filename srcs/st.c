@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/09/14 11:39:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/15 13:53:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	st(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>>>ENTER ST<<<<<<<<<<\n");
+	// printf(">>>>>>>ENTER ST<<<<<<<<<<\n");
 	unsigned int	addr;
 
 	if (proc->op->ar_typ[1] == REG_CODE)

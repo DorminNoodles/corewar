@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/14 12:00:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/15 14:07:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -601,6 +601,22 @@ int		is_pc(t_vm *vm, int nb)
 	return (0);
 }
 
+int		count_proc(t_vm *vm)
+{
+	int i;
+	t_proc	*proc;
+
+	i = 0;
+	proc = vm->proc;
+	while (proc)
+	{
+		if (proc->active)
+			i++;
+		proc = proc->next;
+	}
+	return (i);
+}
+
 void	call_ncurses(t_vm *vm)
 {
 	int i;
@@ -679,6 +695,8 @@ void	call_ncurses(t_vm *vm)
 	printw("Cycles : %d", vm->countdown);
 	move(12, 200);
 	printw("Keycode : %d", vm->keycode);
+	move(14, 200);
+	printw("Proc Nb : %d", count_proc(vm));
 	move(20, 200);
 	printw("fichtre");
 	// printw("hello world");
@@ -691,6 +709,12 @@ void	controller(t_vm *vm)
 	// vm->keycode = getch();
 	if (getch() == ' ')
 		vm->pause = 1;
+	if (getch() == 'w')
+		vm->delay *= 1.2;
+		// vm->delay += 40000;
+	if (getch() == 'e')
+		vm->delay *= 0.8;
+		// vm->delay -= 40000;
 	while (vm->pause)
 	{
 		if (getch() == ' ')
@@ -699,6 +723,7 @@ void	controller(t_vm *vm)
 			break;
 		}
 	}
+
 }
 
 void	run(t_vm *vm)
@@ -737,7 +762,7 @@ void	run(t_vm *vm)
 			controller(vm);
 		}
 //-------------------NCURSES
-		usleep(100000);
+		usleep(vm->delay);
 	}
 
 	printf("END\n");
