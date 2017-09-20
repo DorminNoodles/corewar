@@ -2,7 +2,14 @@
 .comment "just a basic living prog"
 
 		ld %-1, r2
-		st r2, -20
+		fork %2
+		live %-1
+		fork %2
+		ld %-1, r2
+		ld %-1, r2
+		live %-1
+		live %-1
+#		st r2, -20
 
 #		zjmp	%100
 #		sti r1, %4000, %0

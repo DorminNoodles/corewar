@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/20 17:23:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/20 23:05:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct		header_s
 
 #define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
 
-#define BLING_DELAY 60
+#define BLING_DELAY 50
 #define NCURSES_DELAY 100000
 // #define T_REG 1
 // #define T_DIR 2
@@ -227,6 +227,10 @@ void	controller(t_vm *vm);
 int		is_pc(t_vm *vm, int nb);
 int		count_proc(t_vm *vm);
 int		all_died(t_vm *vm);
+int		is_opcode(char data);
+int		cycle_to_die(t_vm *vm);
+t_player	*get_survivor(t_vm *vm);
+
 
 
 /*--------INSTRUCTIONS----------*/

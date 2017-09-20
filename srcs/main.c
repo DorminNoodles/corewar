@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/20 17:22:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/20 23:05:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int		is_opcode(char data)
 
 
 
-t_player	*get_last_one(t_vm *vm)
+t_player	*get_survivor(t_vm *vm)
 {
 	int i;
 

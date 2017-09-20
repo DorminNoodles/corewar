@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/20 16:51:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/21 01:18:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	call_ncurses(t_vm *vm)
 		attroff(COLOR_PAIR(35));
 		i++;
 	}
+	move(5, 200);
+	printw("Delay : %d", vm->delay);
 	move(10, 200);
 	printw("Cycles : %d", vm->countdown);
 	move(12, 200);
@@ -93,6 +95,12 @@ void	call_ncurses(t_vm *vm)
 	printw("Proc Nb : %d", count_proc(vm));
 	move(20, 200);
 	printw("fichtre");
+	// move(22, 200);
+	// printw("Live P1 :                                 ", vm->player[1].life_signal);
+	move(22, 200);
+	printw("Live P1 : %d", vm->player[1].life_signal);
+	printf("live p1 : %d\n", vm->player[1].life_signal);
+	move(26, 210);
 	// printw("hello world");
 	refresh();
 
