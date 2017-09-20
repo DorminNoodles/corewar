@@ -3,18 +3,24 @@ SRC =		main.c						\
 			init.c						\
 			error.c						\
 			check_arg.c					\
+			controller.c				\
 			debug.c						\
 			sti.c						\
 			ld.c						\
 			live.c						\
 			add.c						\
 			and.c						\
+			ncurses.c					\
+			pars_op.c					\
+			players.c					\
+			processus.c					\
 			fork.c						\
 			op.c						\
 			or.c						\
 			xor.c						\
 			sub.c						\
 			st.c						\
+			state.c						\
 			zjmp.c
 
 SRCS = $(addprefix srcs/, $(SRC))

@@ -6,7 +6,7 @@
 /*   By: zaz <zaz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2017/09/11 18:35:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/20 17:18:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_optab	op_tab[17] =
 {
-	{"live", &live, 1, {T_DIR}, 1, 10, "alive", 0, 0},
-	{"ld", &ld, 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
+	{"live", &live, 1, T_DIR, 1, 10, "alive", 0, 0},
+	{"ld", &ld, 2, { T_DIR | T_IND, T_REG }, 2, 5, "load", 1, 0},
 	{"st", &st, 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0},
 	{"add", &add, 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0},
 	{"sub", &sub, 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0},
@@ -30,11 +30,11 @@ t_optab	op_tab[17] =
 		"load index", 1, 1},
 	{"sti", &sti, 3, {T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG}, 11, 25,
 		"store index", 1, 1},
-	{"fork", &ft_fork, 1, {T_DIR}, 12, 800, "fork", 0, 1},
+	{"fork", &ft_fork, 1, T_DIR, 12, 800, "fork", 0, 1},
 	{"lld", NULL, 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0},
 	{"lldi", NULL, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
 		"long load index", 1, 1},
-	{"lfork", NULL, 1, {T_DIR}, 15, 1000, "long fork", 0, 1},
-	{"aff", NULL, 1, {T_REG}, 16, 2, "aff", 1, 0},
-	{0, 0, {0}, 0, 0, 0, 0, 0}
+	{"lfork", NULL, 1, T_DIR, 15, 1000, "long fork", 0, 1},
+	{"aff", NULL, 1, T_REG, 16, 2, "aff", 1, 0},
+	{0, 0, 0, 0, 0, 0, 0, 0}
 };
