@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/20 23:05:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/21 22:57:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	get_ocp(t_vm *vm, t_proc *proc)
 	if (op_tab[proc->op->code - 1].need_ocp)
 	{
 		proc->pc++;
-		proc->op->ocp = vm->mem[proc->pc];
+		proc->op->ocp = vm->ram[proc->pc].mem;
 	}
 }
 
@@ -30,11 +30,25 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = 0;
 
 	proc->pc++;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
+
+	// printf("get dir 1 -> %x\n", (unsigned char)vm->ram[proc->pc].mem);
+	// printf("get dir pos 1 -> %d\n", proc->pc);
+	//
+	// printf("test -> %x\n", (unsigned char)vm->ram[109].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[110].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[111].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[112].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[113].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[114].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[115].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[116].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[117].mem);
+	// printf("test -> %x\n", (unsigned char)vm->ram[118].mem);
 
 	proc->pc++;
 	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
 
 	// printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].direct_size)
@@ -45,12 +59,14 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	}
 	proc->pc++;
 	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
+	// printf("get dir 2 -> %x\n", (unsigned char)vm->ram[proc->pc].mem);
 
 	proc->pc++;
 	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
 
+	// printf("get dir value -> %d\n", value);
 	proc->op->ar[num] = value;
 }
 
@@ -60,7 +76,7 @@ void	get_reg(t_vm *vm, t_proc *proc, int num)
 	unsigned char value;
 
 	proc->pc++;
-	value = (unsigned char)vm->mem[proc->pc];
+	value = (unsigned char)vm->ram[proc->pc].mem;
 
 	// printf("reg value %d\n", value);
 
@@ -77,11 +93,11 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 
 	// printf("FUCK >>>>> %d\n", vm->mem[proc->pc]);
 	proc->pc++;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
 
 	proc->pc++;
 	value = value << 8;
-	value = value | (unsigned char)vm->mem[proc->pc];
+	value = value | (unsigned char)vm->ram[proc->pc].mem;
 
 	// printf("deux octets value %x\n", value);
 
@@ -120,35 +136,10 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	// printf("EXIT FUNC : FIND_ARGS\n");
 }
 
-t_optab		*get_optab_entry(int code)
-{
-	return (&op_tab[code - 1]);
-}
-
-void	fill_cur_op(t_vm *vm, t_proc *proc)
-{
-	int i;
-	t_optab *optab_ref;
-
-	i = 0;
-	// printf("OCP CODE >>>> %d\n", proc->op->code);
-	optab_ref = get_optab_entry(proc->op->code);
-	if (optab_ref->need_ocp)
-	{
-		get_ocp(vm, proc);
-		while (i < op_tab[proc->op->code - 1].nb_arg)
-		{
-			find_args(vm, proc, i);
-			i++;
-		}
-	}
-	else
-	{
-		get_dir(vm, proc, 0);
-	}
-
-	proc->pc++;
-}
+// t_optab		*get_optab_entry(int code)
+// {
+// 	return (&op_tab[code - 1]);
+// }
 
 int		is_opcode(char data)
 {

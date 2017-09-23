@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/20 23:05:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/21 21:10:08 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,51 +208,57 @@ typedef struct s_vm
 
 extern t_optab op_tab[17];
 
-void	init_vm(t_vm *vm);
-void	create_players(t_vm *vm);
-void	error(char *str);
+void		init_vm(t_vm *vm);
+void		create_players(t_vm *vm);
+void		error(char *str);
 // void	write_player(t_vm *vm);
-void	write_player(t_vm *vm, int nb, int num);
-int		check_arg(t_vm *vm, int argc, char **argv);
-t_proc	*create_process(t_vm *vm, int num);
-void	add_process(t_vm *vm, t_proc *proc);
-void	wait_state(t_vm *vm, t_proc *proc);
-void	idle_state(t_vm *vm, t_proc *proc);
-t_op	*create_op(t_vm *vm, t_proc *proc, char data);
-void	call_ncurses(t_vm *vm);
-void	undertaker(t_vm *vm);
-void	kill_proc(t_vm *vm);
-void	fill_cur_op(t_vm *vm, t_proc *proc);
-void	controller(t_vm *vm);
-int		is_pc(t_vm *vm, int nb);
-int		count_proc(t_vm *vm);
-int		all_died(t_vm *vm);
-int		is_opcode(char data);
-int		cycle_to_die(t_vm *vm);
+void		write_player(t_vm *vm, int nb, int num);
+int			check_arg(t_vm *vm, int argc, char **argv);
+t_proc		*create_process(t_vm *vm, int num);
+void		add_process(t_vm *vm, t_proc *proc);
+void		wait_state(t_vm *vm, t_proc *proc);
+void		idle_state(t_vm *vm, t_proc *proc);
+t_op		*create_op(t_vm *vm, t_proc *proc, char data);
+void		call_ncurses(t_vm *vm);
+void		undertaker(t_vm *vm);
+void		kill_proc(t_vm *vm);
+void		fill_cur_op(t_vm *vm, t_proc *proc);
+void		controller(t_vm *vm);
+int			is_pc(t_vm *vm, int nb);
+int			count_proc(t_vm *vm);
+int			all_died(t_vm *vm);
+int			is_opcode(char data);
+int			cycle_to_die(t_vm *vm);
 t_player	*get_survivor(t_vm *vm);
+void		get_ocp(t_vm *vm, t_proc *proc);
+void		find_args(t_vm *vm, t_proc *proc, int num);
+void		get_dir(t_vm *vm, t_proc *proc, int num);
+
+
+
 
 
 
 /*--------INSTRUCTIONS----------*/
-void	and(t_vm *vm, t_proc *proc);
-void	ld(t_vm *vm, t_proc *proc);
-void	sti(t_vm *vm, t_proc *proc);
-void	live(t_vm *vm, t_proc *proc);
-void	add(t_vm *vm, t_proc *proc);
-void	or(t_vm *vm, t_proc *proc);
-void	xor(t_vm *vm, t_proc *proc);
-void	st(t_vm *vm, t_proc *proc);
-void	sub(t_vm *vm, t_proc *proc);
-void	ft_fork(t_vm *vm, t_proc *proc);
-void	zjmp(t_vm *vm, t_proc *proc);
+void		and(t_vm *vm, t_proc *proc);
+void		ld(t_vm *vm, t_proc *proc);
+void		sti(t_vm *vm, t_proc *proc);
+void		live(t_vm *vm, t_proc *proc);
+void		add(t_vm *vm, t_proc *proc);
+void		or(t_vm *vm, t_proc *proc);
+void		xor(t_vm *vm, t_proc *proc);
+void		st(t_vm *vm, t_proc *proc);
+void		sub(t_vm *vm, t_proc *proc);
+void		ft_fork(t_vm *vm, t_proc *proc);
+void		zjmp(t_vm *vm, t_proc *proc);
 
 /*--------NCURSES---------*/
-void	init_ncurses(WINDOW **w);
+void		init_ncurses(WINDOW **w);
 
 
 /*-------DEBUG-------*/
-void	show_mem(t_vm *vm);
-void	show_mem_2(t_vm *vm);
-void	show_proc_nb(t_vm *vm);
+void		show_mem(t_vm *vm);
+void		show_mem_2(t_vm *vm);
+void		show_proc_nb(t_vm *vm);
 
 #endif

@@ -1,14 +1,58 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		ld %-1, r2
-		fork %2
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
 		live %-1
-		fork %2
-		ld %-1, r2
-		ld %-1, r2
-		live %-1
-		live %-1
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %-1, r5
+		ld %1, r5
+		zjmp %-10
+		ld %1, r5
+		ld %1, r5
+		ld %1, r5
+#		fork %0
+#		live %-1
+#		fork %2
+#		ld %-1, r2
+#		ld %-1, r2
+#		live %-1
+#		live %-1
 #		st r2, -20
 
 #		zjmp	%100
