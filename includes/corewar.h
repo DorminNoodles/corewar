@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 12:27:28 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 22:31:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ typedef struct s_mem
 	char	mem;
 	int		num;
 	int		blingbling;
+	int		live;
 }	t_mem;
 
 typedef struct s_optab
@@ -238,8 +239,6 @@ void		get_dir(t_vm *vm, t_proc *proc, int num);
 
 
 
-
-
 /*--------INSTRUCTIONS----------*/
 void		and(t_vm *vm, t_proc *proc);
 void		ld(t_vm *vm, t_proc *proc);
@@ -261,5 +260,7 @@ void		init_ncurses(WINDOW **w);
 void		show_mem(t_vm *vm);
 void		show_mem_2(t_vm *vm);
 void		show_proc_nb(t_vm *vm);
+void		debug_display_proc(t_vm *vm);
+
 
 #endif

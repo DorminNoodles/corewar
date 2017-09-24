@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 21:08:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 22:04:48 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	t_optab *optab_ref;
 
 	i = 0;
-	// printf("OCP CODE >>>> %d\n", proc->op->code);
 	optab_ref = &op_tab[proc->op->code - 1];
 	if (optab_ref->need_ocp)
 	{
@@ -47,9 +46,6 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 		}
 	}
 	else
-	{
-		printf("NO OCP NEED code => %d\n", proc->op->code - 1);
 		get_dir(vm, proc, 0);
-	}
 	proc->pc++;
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 01:18:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 22:36:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	call_ncurses(t_vm *vm)
 	init_pair(23, COLOR_BLUE, 37);//player_2_highlight
 	init_pair(25, 37, COLOR_BLACK);//player_2_blingbling
 
+	init_pair(26, COLOR_GREEN, COLOR_RED);//life highlight
 
 	move(0,0);
 	while (i < MEM_SIZE)
@@ -79,6 +80,12 @@ void	call_ncurses(t_vm *vm)
 			vm->ram[i].blingbling--;
 		}
 
+		if (vm->ram[i].live)
+		{
+			attron(COLOR_PAIR(26));
+			vm->ram[i].live--;
+		}
+
 		printw("%02x", (unsigned char)vm->ram[i].mem);
 		attroff(A_STANDOUT);
 		attroff(A_BOLD);
@@ -99,8 +106,10 @@ void	call_ncurses(t_vm *vm)
 	// printw("Live P1 :                                 ", vm->player[1].life_signal);
 	move(22, 200);
 	printw("Live P1 : %d", vm->player[1].life_signal);
-	printf("live p1 : %d\n", vm->player[1].life_signal);
 	move(26, 210);
+
+	debug_display_proc(vm);
+
 	// printw("hello world");
 	refresh();
 

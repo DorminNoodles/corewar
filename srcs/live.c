@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 01:18:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 22:42:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	live(t_vm *vm, t_proc *proc)
 
 	if (num >= 1 && num <= vm->nb_player)
 	{
-		printf("LIVE HERE ##################################\n");
+		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
+		proc->live = 1;
+		vm->ram[proc->op->pos_opcode].live = 30;
 	}
 	else
 	{
