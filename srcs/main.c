@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 12:34:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 15:18:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,11 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	// printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
-		proc->op->ar[num] = value;
-
-		// printf(")))))))) > %x  ####\n", value);
 		if ((value & 0x8000) == 0x8000)
-		{
-			value = value - USHRT_MAX;
-			value -= 1;
-			printf(")))))))) > %d  ####\n", value);
-			// printf(")))))))) > %d  ####\n", USHRT_MAX);
-			// printf("#####################  (*&(&(*&^(**()    ZIZI\n\n\n");
-			// printf("##### > %d  ####\n", value);
-			// value = value * -1;
-			// value = value | 0x80000000;
-			// value = 0xFFFF7FFF & value;
-			// printf("%%%%%%%%%%%% > %d\n", value);
-		}
+			value = (value - USHRT_MAX) - 1;
 		// printf("deux octets value %x\n", value);
+		proc->op->ar[num] = value;
 		return ;
-		// FF FF FF FF
-		// FF FF 00 00
-//
-//
 		// 1000 0000 0011 0010
 		// 1000 0000 0000 0000
 		// 1000 0000 0000 0000
