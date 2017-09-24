@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/23 11:54:36 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/23 15:50:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	controller(t_vm *vm)
 	}
 	else if (vm->keycode == 'e')
 	{
-		if (vm->delay - 2000 > 0)
-			vm->delay -= 2000;
+		if (vm->delay - 4000 > 0)
+			vm->delay -= 4000;
 		else
 			vm->delay = 0;
 		// vm->delay -= 40000;

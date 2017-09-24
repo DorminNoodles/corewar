@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 22:57:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 12:34:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 	proc->pc++;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
-
-	// printf("get dir 1 -> %x\n", (unsigned char)vm->ram[proc->pc].mem);
-	// printf("get dir pos 1 -> %d\n", proc->pc);
-	//
-	// printf("test -> %x\n", (unsigned char)vm->ram[109].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[110].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[111].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[112].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[113].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[114].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[115].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[116].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[117].mem);
-	// printf("test -> %x\n", (unsigned char)vm->ram[118].mem);
-
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
@@ -54,8 +39,32 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
 		proc->op->ar[num] = value;
+
+		// printf(")))))))) > %x  ####\n", value);
+		if ((value & 0x8000) == 0x8000)
+		{
+			value = value - USHRT_MAX;
+			value -= 1;
+			printf(")))))))) > %d  ####\n", value);
+			// printf(")))))))) > %d  ####\n", USHRT_MAX);
+			// printf("#####################  (*&(&(*&^(**()    ZIZI\n\n\n");
+			// printf("##### > %d  ####\n", value);
+			// value = value * -1;
+			// value = value | 0x80000000;
+			// value = 0xFFFF7FFF & value;
+			// printf("%%%%%%%%%%%% > %d\n", value);
+		}
 		// printf("deux octets value %x\n", value);
 		return ;
+		// FF FF FF FF
+		// FF FF 00 00
+//
+//
+		// 1000 0000 0011 0010
+		// 1000 0000 0000 0000
+		// 1000 0000 0000 0000
+
+
 	}
 	proc->pc++;
 	value = value << 8;

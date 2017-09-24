@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 21:10:08 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/24 12:27:28 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
-#include "libft.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include "libft.h"
 
 //-------------------------
 

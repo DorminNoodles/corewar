@@ -42,7 +42,8 @@
 		ld %-1, r5
 		ld %-1, r5
 		ld %1, r5
-		zjmp %-10
+		ld %0, r6
+		zjmp %-50
 		ld %1, r5
 		ld %1, r5
 		ld %1, r5
