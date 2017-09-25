@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 22:08:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/25 15:29:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	controller(t_vm *vm)
 			vm->delay -= 8000;
 		else
 			vm->delay = 0;
-		// vm->delay -= 40000;
-		// vm->delay *= 0.8;
 	}
 
 	while (vm->pause)

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 15:18:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/25 16:56:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 		// printf("deux octets value %x\n", value);
 		proc->op->ar[num] = value;
 		return ;
-		// 1000 0000 0011 0010
-		// 1000 0000 0000 0000
-		// 1000 0000 0000 0000
-
-
 	}
 	proc->pc++;
 	value = value << 8;
@@ -90,15 +85,6 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
-
-	// printf("deux octets value %x\n", value);
-
-	// proc->pc++;
-	// value = value << 8;
-	// value = value | (unsigned char)vm->mem[proc->pc];
-	// proc->pc++;
-	// value = value << 8;
-	// value = value | (unsigned char)vm->mem[proc->pc];
 	proc->op->ar[num] = value;
 }
 
@@ -222,7 +208,6 @@ void	run(t_vm *vm)
 		}
 //-------------------NCURSES
 	}
-
 	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);

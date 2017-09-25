@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 22:31:55 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/25 17:08:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,6 @@ typedef struct		header_s
 
 #define BLING_DELAY 50
 #define NCURSES_DELAY 100000
-// #define T_REG 1
-// #define T_DIR 2
-// #define T_IND 3
 
 typedef struct s_vm t_vm;
 typedef struct s_optab t_optab;
