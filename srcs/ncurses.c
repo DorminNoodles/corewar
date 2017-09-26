@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 22:36:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 01:38:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	call_ncurses(t_vm *vm)
 	// move(22, 200);
 	// printw("Live P1 :                                 ", vm->player[1].life_signal);
 	move(22, 200);
-	printw("Live P1 : %d", vm->player[1].life_signal);
+	printw("Live P1 : %02d", vm->player[1].life_signal);
 	move(26, 210);
 
 	debug_display_proc(vm);
