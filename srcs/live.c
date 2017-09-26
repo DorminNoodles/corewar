@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/24 22:42:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 23:48:41 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	live(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>ENTER_LIVE<<<<<\n");
+	// printf(">>>>>ENTER_LIVE<<<<<\n");
 	int		num;
 
 	num = 0;
 	// printf("NUM player => %d\n", proc->op->ar[0]);
 
-	printf("fuck num %d\n", proc->op->ar[0]);
+	// printf("fuck num %d\n", proc->op->ar[0]);
 	num = proc->op->ar[0] * -1;
 
-	printf("fuck num %d\n", num);
+	// printf("fuck num %d\n", num);
 
 	if (num >= 1 && num <= vm->nb_player)
 	{

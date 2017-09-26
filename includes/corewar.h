@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/25 17:08:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 20:56:29 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ t_player	*get_survivor(t_vm *vm);
 void		get_ocp(t_vm *vm, t_proc *proc);
 void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
+int			modulo(int a, int b);
 
 
 

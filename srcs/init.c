@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/15 11:31:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 23:45:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,7 @@
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
 
-// pourquoi je malloc la mem ?
-	// if (!(vm->mem = (void*)ft_memalloc(MEM_SIZE)))
-	// 	error("error : malloc failed\n");
 
-//nouvelle mem on the stack
-	ft_bzero(&vm->mem, MEM_SIZE);
 	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
 
 }
@@ -68,14 +63,13 @@ int		get_prog_size(char *data)
 	data += 4; //magic
 	data += 128 + 4; //prog_name
 	ret = 0x0;
-	ret = ret | *data;
+	ret = ret | (unsigned char)*data;
 	ret = ret << 8;
-	ret = ret | data[1];
+	ret = ret | (unsigned char)data[1];
 	ret = ret << 8;
-	ret = ret | data[2];
+	ret = ret | (unsigned char)data[2];
 	ret = ret << 8;
-	ret = ret | data[3];
-
+	ret = ret | (unsigned char)data[3];
 	return (ret);
 }
 
@@ -93,37 +87,6 @@ void	init_vm(t_vm *vm)
 	vm->delay = NCURSES_DELAY;
 }
 
-//c est un fill_mem, on remplit la memoire du code du player
-// void	write_player(t_vm *vm)
-// {
-// 	char *data;
-// 	int i;
-// 	int j;
-// 	int prog_size;
-//
-// 	j = 0;
-// 	prog_size = 0;
-// 	i = 0;
-// 	i += 4; //magic
-// 	i += 128 + 4; //prog_name
-//
-// 	data = get_data("resources/corewar/champs/ex.cor");
-//
-// 	prog_size = get_prog_size(data + i);
-//
-// 	printf("\n\n prog_size : %d\n", prog_size);
-//
-// 	i += 2048 + 4; //prog_comments
-// 	i += 4; //prog size
-// 	while (j < prog_size)
-// 	{
-// 		((char*)vm->mem)[j] = (unsigned char)data[i];
-// 		// printf("%02x ", (unsigned char)data[i]);
-// 		i++;
-// 		j++;
-// 	}
-// }
-
 void	get_src_begin()
 {
 
@@ -132,7 +95,7 @@ void	get_src_begin()
 
 void	write_player(t_vm *vm, int nb, int num)
 {
-	// printf("Write Player\n");
+	printf("Write Player\n");
 	int		i;
 	char	*data;
 	char	*data_tmp;
@@ -140,18 +103,20 @@ void	write_player(t_vm *vm, int nb, int num)
 
 	i = (MEM_SIZE / vm->nb_player) * num;
 
-	// printf("NB =======> %d\n", nb);
 	// printf("File Name %s\n", vm->player[nb].file_name);
 	data = get_data(vm->player[nb].file_name);
+
+	// printf(">>>>>>$$> %s\n", data);
 	prog_size = get_prog_size(data);
+
+	// printf("prog_size => %d\n", prog_size);
 	data_tmp = data + SRC_BEGIN;
 
 	// printf("I => %d\n", i);
 	prog_size += i;
 	while (i < prog_size)
 	{
-		// printf("Here\n");
-		vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
+		//vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
 		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
 		// printf(">__&>>> %d\n", (num + 1) * -1);
 		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;

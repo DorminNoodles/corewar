@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/25 16:58:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 23:46:36 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 {
+	// printf("create_op\n");
 	int		i;
 	t_op	*op;
 

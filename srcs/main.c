@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/25 16:56:05 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 23:45:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 
 	value = 0;
 
-	// printf("FUCK >>>>> %d\n", vm->mem[proc->pc]);
 	proc->pc++;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
 
@@ -86,6 +85,8 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
 	proc->op->ar[num] = value;
+	if ((value & 0x8000) == 0x8000)
+	 	proc->op->ar[num] = (value - USHRT_MAX) - 1;
 }
 
 void	find_args(t_vm *vm, t_proc *proc, int num)
@@ -95,7 +96,6 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	unsigned char	mask;
 
 	type = proc->op->ocp;
-	// printf("OCP => %d\n", type);
 	mask = 0xC0;
 	mask = mask >> (2 * num);
 	type = type & mask;
@@ -109,15 +109,9 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	if (type == IND_CODE)
 		get_ind(vm, proc, num);
 
-	// if (mask )
 
-	// printf("EXIT FUNC : FIND_ARGS\n");
 }
 
-// t_optab		*get_optab_entry(int code)
-// {
-// 	return (&op_tab[code - 1]);
-// }
 
 int		is_opcode(char data)
 {
@@ -182,10 +176,12 @@ int		count_proc(t_vm *vm)
 
 void	run(t_vm *vm)
 {
+	printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->countdown);
 	t_proc	*proc;
 
 	while (!all_died(vm))
 	{
+		// printf("here\n");
 		proc = vm->proc;
 		while (proc != NULL)
 		{
@@ -213,17 +209,26 @@ void	run(t_vm *vm)
 		printf("Last_one => %s\n", vm->last_one->file_name);
 }
 
+int		modulo(int a, int b)
+{
+	if (a % b >= 0)
+		return (a % b);
+	else
+		return ((a % b) + b);
+	// return (a % b) >= 0 ? (a % b) : (a % b) + b;
+}
+
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
 
 	WINDOW *w;//ncurses
 
+	// show_mem(&vm);
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
 
-	show_mem(&vm);
 
 	if (vm.ncurses)
 		init_ncurses(&w);

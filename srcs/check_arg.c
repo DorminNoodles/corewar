@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/21 00:44:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/26 23:44:15 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	srch_nb_dump(int argc, char **argv)
 	{
 		if (ret + 1 < argc)
 			nb = ft_atoi(argv[ret + 1]);
-		// printf("dump => %d\n", nb);
 	}
 }
 
@@ -49,7 +48,6 @@ int		srch_ncurses(int argc, char **argv)
 	if ((ret = ft_strargv(argc, argv, "-n")))
 		return (1);
 	return (0);
-		// printf("dump => %d\n", nb);
 }
 
 int		srch_nb_player(int argc, char **argv, int arg_num)
