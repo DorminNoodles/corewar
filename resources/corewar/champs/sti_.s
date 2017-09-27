@@ -1,9 +1,9 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		ld %50, r5
-		st r5, -521
-#		sti r5, %-521, %0
+
+		ld %2147483647, r5
+		sti r5, %-521, %0
 #		sti r3, %-58, %0
 #		sti r3, %-57, %0
 #		sti r3, %-56, %0
