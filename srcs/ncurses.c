@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 01:38:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 01:29:03 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	call_ncurses(t_vm *vm)
 	move(0,0);
 	while (i < MEM_SIZE)
 	{
+		// printf("FOOOOOO\n");
 		attron(COLOR_PAIR(15));
 		move(i / 64, (i % 64) * 3);
 		if ((is_pc(vm, i)))

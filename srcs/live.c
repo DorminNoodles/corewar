@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 23:48:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 00:58:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	live(t_vm *vm, t_proc *proc)
 		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
 		proc->live = 1;
-		vm->ram[proc->op->pos_opcode].live = 30;
+		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 23:47:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 01:02:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	zjmp(t_vm *vm, t_proc *proc)
 {
-	printf(">>>>>>ENTER ZJMP<<<<<<\n");
+	// printf(">>>>>>ENTER ZJMP<<<<<<\n");
 
 	// printf("zjmp pos op => %d\n", proc->op->pos_opcode);
 	// printf("ZJMP VALUE => %d\n", proc->op->ar[0]);

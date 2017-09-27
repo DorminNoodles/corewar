@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 20:56:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 01:34:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ typedef struct		header_s
 
 #define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
 
-#define BLING_DELAY 50
+#define BLING_DELAY 55
+#define BLING_LIVE 45
 #define NCURSES_DELAY 100000
 
 typedef struct s_vm t_vm;
@@ -233,6 +234,7 @@ void		get_ocp(t_vm *vm, t_proc *proc);
 void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
+int			*init_registre(int id);
 
 
 

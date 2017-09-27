@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 22:35:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 01:30:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	debug_display_proc(t_vm *vm)
 	tmp = vm->proc;
 	while (tmp)
 	{
-		move (24 + i, 206);
-		printw("Proc n:%d on:%d live:%d", i, tmp->active, tmp->live);
+		move (24 + i, 198);
+		printw("Proc n:%d on:%d num:%d pc:%d live:%d", i, tmp->active, tmp->num, tmp->pc, tmp->live);
 		tmp = tmp->next;
 		i++;
 	}

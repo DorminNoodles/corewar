@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 23:45:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 01:18:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,11 +176,11 @@ int		count_proc(t_vm *vm)
 
 void	run(t_vm *vm)
 {
-	printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->countdown);
 	t_proc	*proc;
 
 	while (!all_died(vm))
 	{
+		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->countdown);
 		// printf("here\n");
 		proc = vm->proc;
 		while (proc != NULL)
