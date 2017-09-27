@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/14 12:01:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 18:06:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,30 @@ void	ld(t_vm *vm, t_proc *proc)
 {
 	// printf(">>>>ENTER LD<<<<\n");
 	int		reg_nb;
+	int		addr;
 
+	addr = 0;
 	reg_nb = proc->op->ar[1] - 1;
 	if (proc->op->ar_typ[0] == IND_CODE)
 	{
+		addr = proc->op->pos_opcode + proc->op->ar[0];
 		proc->reg[reg_nb] = 0;
-		proc->reg[reg_nb] = vm->ram[proc->op->ar[0]].mem;
+		proc->reg[reg_nb] = (unsigned char)vm->ram[modulo(addr % IDX_MOD, MEM_SIZE)].mem;
+		// printf("%x     \n", vm->ram[modulo(addr % IDX_MOD, MEM_SIZE)].mem);
+		// printf("%x     \n", proc->reg[reg_nb]);
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 1].mem;
+		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 1) % IDX_MOD, MEM_SIZE)].mem;
+		// printf("%x     \n", proc->reg[reg_nb]);
+
+
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 2].mem;
+		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 2) % IDX_MOD, MEM_SIZE)].mem;
+		// printf("%x     \n", proc->reg[reg_nb]);
+
+
 		proc->reg[reg_nb] <<= 8;
-		proc->reg[reg_nb] |= vm->ram[proc->op->ar[0]+ 3].mem;
-	//	printf("REG ==> %x\n", proc->reg[reg_nb]);
-	//	printf("REG => %d\n", proc->reg[reg_nb]);
-	//	printf("REGISTRE DE MERDE %d\n", reg_nb);
+		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 3) % IDX_MOD, MEM_SIZE)].mem;
+		// printf("%x     \n", proc->reg[reg_nb]);
 	}
 	else
 		proc->reg[reg_nb] = proc->op->ar[0];

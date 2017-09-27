@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 22:01:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/27 18:07:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	sti(t_vm *vm, t_proc *proc)
 	// show_mem(vm);
 
 	vm->ram[modulo(addr, MEM_SIZE)].mem = proc->reg[reg] >>24;
+	printf("%x     \n", proc->reg[reg] >> 16);
 	vm->ram[modulo(addr, MEM_SIZE)].num = proc->num;
 	vm->ram[modulo(addr, MEM_SIZE)].blingbling = BLING_DELAY;
 

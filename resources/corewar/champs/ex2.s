@@ -1,7 +1,26 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		st r2, -3
+		ld %3289650, r3
+#		ld -100, r1
+		sti r3, %-60, %0
+		sti r3, %-62, %0
+		sti r3, %-64, %0
+		sti r3, %-66, %0
+		sti r3, %-68, %0
+		sti r3, %-70, %0
+		sti r3, %-72, %0
+		sti r3, %-74, %0
+		sti r3, %-76, %0
+
+		ld -55, r4
+		sti r4, %10, %0
+
+#		sti r3, %-58, %0
+#		sti r3, %-57, %0
+#		sti r3, %-56, %0
+#		zjmp %-71
+#		st r2, -3
 #		ld %0, r2
 #		sti	r2,%5000,%0
 #		sti	r2,%-200,%0
