@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/23 17:41:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/28 14:23:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		all_died(t_vm *vm)
 
 	if (cycle_to_die(vm))
 	{
+		vm->ctd -= CYCLE_DELTA;
 		undertaker(vm);
 		vm->last_one = get_survivor(vm);
 		reset_life_signal(vm);

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 01:18:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/28 16:19:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ void	run(t_vm *vm)
 			usleep(vm->delay);
 		}
 //-------------------NCURSES
+		// printf(">>> %d\n", vm->countdown);
+		// show_mem(vm);
 	}
 	printf("END\n");
 	if (vm->last_one)
@@ -228,7 +230,6 @@ int		main(int argc, char **argv)
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
-
 
 	if (vm.ncurses)
 		init_ncurses(&w);

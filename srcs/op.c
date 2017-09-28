@@ -6,13 +6,11 @@
 /*   By: zaz <zaz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2017/09/20 23:07:49 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/28 17:28:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-//T_DIR | T_IND, T_REG
 
 t_optab	op_tab[17] =
 {
@@ -21,12 +19,10 @@ t_optab	op_tab[17] =
 	{"st", &st, 2, {T_REG, T_IND | T_REG}, 3, 5, "store", 1, 0},
 	{"add", &add, 3, {T_REG, T_REG, T_REG}, 4, 10, "addition", 1, 0},
 	{"sub", &sub, 3, {T_REG, T_REG, T_REG}, 5, 10, "soustraction", 1, 0},
-	{"and", &and, 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6,
-		"et (and  r1, r2, r3   r1&r2 -> r3", 1, 0},
+	{"and", &and, 3, {T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG}, 6, 6, "et (and  r1, r2, r3   r1&r2 -> r3", 1, 0},
 	{"or", &or, 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 7, 6,
 		"ou  (or   r1, r2, r3   r1 | r2 -> r3", 1, 0},
-	{"xor", &xor, 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6,
-		"ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0},
+	{"xor", &xor, 3, {T_REG | T_IND | T_DIR, T_REG | T_IND | T_DIR, T_REG}, 8, 6, "ou (xor  r1, r2, r3   r1^r2 -> r3", 1, 0},
 	{"zjmp", &zjmp, 1, {T_DIR}, 9, 20, "jump if zero", 0, 1},
 	{"ldi", NULL, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 10, 25,
 		"load index", 1, 1},

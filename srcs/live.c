@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 00:58:05 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/28 16:21:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	live(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>ENTER_LIVE<<<<<\n");
+	// printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->countdown);
 	int		num;
 
 	num = 0;

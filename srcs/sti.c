@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 23:54:48 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/28 16:20:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,9 @@
 
 void	sti(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>>ENTER STI<<<<<<\n");
-
+	// printf(">>>>>>>ENTER STI<<<<<<<<<<\n  : Cycle > %d\n", vm->countdown);
 	int addr;
 	int reg;
-
-	// printf("valeur au registre 1 %x\n", proc->reg[0]);
-	// printf("Arg1 %d\n", proc->op->ar[0]);
-	// printf("Arg2 %d\n", proc->op->ar[1]);
-	// printf("Arg3 %d\n", proc->op->ar[2]);
-
-	// printf("POS _ OPCODE %d\n", proc->op->pos_opcode);
-
 
 	addr = (proc->op->ar[1] + proc->op->ar[2]) % IDX_MOD;
 	addr = proc->op->pos_opcode + addr;
