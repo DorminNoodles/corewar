@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 16:20:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 02:42:08 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	sti(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>>>ENTER STI<<<<<<<<<<\n  : Cycle > %d\n", vm->countdown);
+	if (!vm->ncurses)
+		printf(">>>>>>>ENTER STI<<<<<<<<<<\n  : Cycle > %d\n", vm->countdown);
 	int addr;
 	int reg;
 

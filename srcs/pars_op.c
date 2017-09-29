@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 23:46:36 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 02:33:48 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 {
-	// printf("create_op\n");
 	int		i;
 	t_op	*op;
 
@@ -27,6 +26,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	op->code = data;
 	op->loadtime = op_tab[data - 1].loadtime - 1;
 	op->pos_opcode = proc->pc;
+	// printf("create_op  name : %s   delay : %d\n", op_tab[data - 1].name, op_tab[data - 1].loadtime);
 	return (op);
 }
 

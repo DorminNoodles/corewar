@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/09/28 16:19:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 02:41:47 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 void	st(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>>>ENTER ST<<<<<<<<<<\n  : Cycle > %d  : Pos > %d\n", vm->countdown, proc->op->pos_opcode);
+	if (!vm->ncurses)
+		printf(">>>>>>>ENTER ST<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->countdown, proc->op->pos_opcode, proc->id);
 	unsigned int	addr;
 
 	if (proc->op->ar_typ[1] == REG_CODE)
 	{
+		if (!vm->ncurses)
+			printf("ST in REG\n");
 		proc->reg[proc->op->ar[1] - 1] = proc->reg[proc->op->ar[0] - 1];
 	}
 	else
 	{
+		if (!vm->ncurses)
+			printf("ST in IND\n");
 		// addr = (proc->op->pos_opcode + (proc->op->ar[1] % IDX_MOD)) % MEM_SIZE;
-
 		// addr = proc->pc + (proc->op->ar[1]);
 		// printf("fuck > %d\n", proc->op->pos_opcode);
 		// printf("fuck > %d\n", (int)proc->op->ar[1]);

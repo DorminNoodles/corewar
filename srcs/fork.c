@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 16:19:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 02:42:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d\n", vm->countdown);
+	if (!vm->ncurses)
+		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->countdown, proc->op->pos_opcode, proc->id);
 
 	t_proc	*new;
 	new = create_process(vm, proc->num);
@@ -27,6 +28,7 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	// 	new->pc = proc->op->pos_opcode;
 	// new->pc -= 26;
 	new->active = 1;
+	new->state = START;
 
 	add_process(vm, new);
 

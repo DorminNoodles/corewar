@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 16:19:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 02:38:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 
 	proc->pc++;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
-
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
@@ -156,6 +155,8 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		idle_state(vm, proc);
 	else if (proc->state == WAIT)
 		wait_state(vm, proc);
+	else if (proc->state == START)
+		proc->state = IDLE;
 }
 
 int		count_proc(t_vm *vm)

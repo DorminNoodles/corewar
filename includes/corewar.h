@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 00:37:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/29 03:01:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct		header_s
 #define	IDLE 1
 #define	WAIT 2
 #define	READY 3
+#define START 4
 
 #define	MAGIC_NB 4
 #define PROG_NAME 128 + 4
