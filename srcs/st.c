@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/09/29 02:41:47 by lchety           ###   ########.fr       */
+/*   Updated: 2017/09/30 23:31:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ void	st(t_vm *vm, t_proc *proc)
 	{
 		if (!vm->ncurses)
 			printf("ST in IND\n");
-		// addr = (proc->op->pos_opcode + (proc->op->ar[1] % IDX_MOD)) % MEM_SIZE;
-		// addr = proc->pc + (proc->op->ar[1]);
-		// printf("fuck > %d\n", proc->op->pos_opcode);
-		// printf("fuck > %d\n", (int)proc->op->ar[1]);
+
 		addr = (proc->op->pos_opcode + (proc->op->ar[1] % IDX_MOD));
 
 		addr = modulo(addr, MEM_SIZE);
@@ -43,21 +40,35 @@ void	st(t_vm *vm, t_proc *proc)
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
+		if (!vm->ncurses)
+			printf("> : %x  ", vm->ram[addr].mem);
+
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1] >> 16;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
+
+		if (!vm->ncurses)
+			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1] >> 8;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
+		if (!vm->ncurses)
+			printf("> : %x  ", vm->ram[addr].mem);
+
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1];
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
-		// proc->carry = (proc->op->ar[0] == 0) ? 1 : 0;
+
+		if (!vm->ncurses)
+		{
+			printf("> : %x  ", vm->ram[addr].mem);
+			printf("\n");
+		}
 	}
 	proc->carry = (proc->reg[proc->op->ar[0] - 1] == 0) ? 1 : 0;
 
