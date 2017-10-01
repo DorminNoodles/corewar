@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 01:32:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/01 13:07:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,14 +143,11 @@ void	add_process(t_vm *vm, t_proc *proc)
 {
 	t_proc	*tmp;
 
-	tmp = vm->proc;
-
-	// printf("                        ######     %p\n", *tmp);
-	if ((tmp = vm->proc))
+	// tmp = vm->proc;
+	if (vm->proc)
 	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = proc;
+		proc->next = vm->proc;
+		vm->proc = proc;
 	}
 	else
 	{

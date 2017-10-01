@@ -6,11 +6,25 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/29 02:42:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/01 13:09:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+static void registre_cpy(t_proc *proc, t_proc *new)
+{
+	int i;
+
+	i = 0;
+	while (i < REG_NUMBER)
+	{
+		new->reg[i] = proc->reg[i];
+		// printf("%d", proc->reg[i]);
+		i++;
+	}
+
+}
 
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
@@ -28,10 +42,6 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	// 	new->pc = proc->op->pos_opcode;
 	// new->pc -= 26;
 	new->active = 1;
-	new->state = START;
-
+	registre_cpy(proc, new);
 	add_process(vm, new);
-
-
-
 }
