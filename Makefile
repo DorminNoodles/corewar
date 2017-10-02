@@ -7,6 +7,7 @@ SRC =		main.c						\
 			debug.c						\
 			sti.c						\
 			ld.c						\
+			ldi.c						\
 			live.c						\
 			add.c						\
 			and.c						\
