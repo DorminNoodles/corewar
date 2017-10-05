@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 23:55:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/05 11:56:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void	call_ncurses(t_vm *vm)
 	move(14, 200);
 	printw("Proc Nb : %d", count_proc(vm));
 	move(20, 200);
-	printw("fichtre");
+	printw("Cycle to die : %d", vm->ctd);
+	// move(20, 200);
+	// printw("fichtre");
 	// move(22, 200);
 	// printw("Live P1 :                                 ", vm->player[1].life_signal);
 	move(22, 200);

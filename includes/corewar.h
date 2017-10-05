@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/29 03:01:02 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/05 14:45:25 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct		header_s
 
 #define SRC_BEGIN MAGIC_NB + PROG_NAME + PROG_COMS + PROG_SIZE
 
-#define BLING_DELAY 60
+#define BLING_DELAY 65
 #define BLING_LIVE 45
 #define NCURSES_DELAY 100000
 
@@ -193,6 +193,7 @@ typedef struct s_vm
 	int		pause;
 	int		ncurses;
 	int		delay;
+	int		ctd_check;
 	// char	*mem;
 	char	mem[MEM_SIZE];
 	t_mem	ram[MEM_SIZE];

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 14:23:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/05 14:45:08 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,33 @@ void	reset_life_signal(t_vm *vm)
 	}
 }
 
+int		total_lives(t_vm *vm)
+{
+	int	i;
+	int	sum;
+
+	i = 0;
+	sum = 0;
+	while (i < vm->nb_player)
+	{
+		sum += vm->player[i].life_signal;
+		i++;
+	}
+	return (sum);
+}
+
+void	reduce_ctd(t_vm *vm)
+{
+
+	if (total_lives(vm) >= NBR_LIVE || vm->ctd_check == MAX_CHECKS)
+	{
+		vm->ctd -= CYCLE_DELTA;
+		vm->ctd_check = 0;
+	}
+	else
+		vm->ctd_check++;
+}
+
 int		all_died(t_vm *vm)
 {
 	int i;
@@ -41,7 +68,8 @@ int		all_died(t_vm *vm)
 
 	if (cycle_to_die(vm))
 	{
-		vm->ctd -= CYCLE_DELTA;
+		reduce_ctd(vm);
+		// vm->ctd -= CYCLE_DELTA;
 		undertaker(vm);
 		vm->last_one = get_survivor(vm);
 		reset_life_signal(vm);
