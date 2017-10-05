@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/05 14:45:08 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/05 23:41:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		total_lives(t_vm *vm)
 
 	i = 0;
 	sum = 0;
-	while (i < vm->nb_player)
+	while (i <= vm->nb_player)
 	{
 		sum += vm->player[i].life_signal;
 		i++;
@@ -48,9 +48,10 @@ int		total_lives(t_vm *vm)
 
 void	reduce_ctd(t_vm *vm)
 {
-
+	// printf("BORDEL  %d\n", total_lives(vm));
 	if (total_lives(vm) >= NBR_LIVE || vm->ctd_check == MAX_CHECKS)
 	{
+		// printf("BORDEL\n");
 		vm->ctd -= CYCLE_DELTA;
 		vm->ctd_check = 0;
 	}
