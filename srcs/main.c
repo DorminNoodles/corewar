@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/30 22:54:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 00:24:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,14 @@ void	run(t_vm *vm)
 
 	while (!all_died(vm))
 	{
+		//-------------------NCURSES
+		if (vm->ncurses)
+		{
+			call_ncurses(vm);
+			controller(vm);
+			usleep(vm->delay);
+		}
+		//-------------------NCURSES
 		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->countdown);
 		// printf("here\n");
 		proc = vm->proc;
@@ -196,14 +204,6 @@ void	run(t_vm *vm)
 //-------------------------Debug
 
 //-------------------------Debug
-//-------------------NCURSES
-		if (vm->ncurses)
-		{
-			call_ncurses(vm);
-			controller(vm);
-			usleep(vm->delay);
-		}
-//-------------------NCURSES
 
 		if (!vm->ncurses)
 		{
