@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 00:24:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 19:46:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,12 @@ t_player	*get_survivor(t_vm *vm)
 	return (vm->last_one);
 }
 
-int		cycle_to_die(t_vm *vm)
-{
-	if (vm->countdown % vm->ctd == 0 && vm->countdown / vm->ctd > 0)
-		return (1);
-	return (0);
-}
+// int		cycle_to_die(t_vm *vm)
+// {
+// 	if (vm->cycle % vm->ctd == 0 && vm->cycle / vm->ctd > 0)
+// 		return (1);
+// 	return (0);
+// }
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
@@ -189,7 +189,7 @@ void	run(t_vm *vm)
 			usleep(vm->delay);
 		}
 		//-------------------NCURSES
-		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->countdown);
+		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->cycle);
 		// printf("here\n");
 		proc = vm->proc;
 		while (proc != NULL)
@@ -200,14 +200,14 @@ void	run(t_vm *vm)
 			}
 			proc = proc->next;
 		}
-		vm->countdown++;
+		vm->cycle++;
 //-------------------------Debug
 
 //-------------------------Debug
 
 		if (!vm->ncurses)
 		{
-			printf(">>> %d\n", vm->countdown);
+			printf(">>> %d\n", vm->cycle);
 			show_mem(vm);
 		}
 	}

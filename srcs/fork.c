@@ -29,7 +29,7 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
 	if (!vm->ncurses)
-		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->countdown, proc->op->pos_opcode, proc->id);
+		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
 
 	t_proc	*new;
 	new = create_process(vm, proc->num);

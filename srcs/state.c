@@ -14,7 +14,7 @@
 
 // void	idle_state(t_vm *vm, t_proc *proc)
 // {
-// 	// printf("IDLE %d\n", vm->countdown);
+// 	// printf("IDLE %d\n", vm->cycle);
 //
 // 	// printf("------------IDLE_STATE------------\n");
 // 	// printf("SEGV_1\n");

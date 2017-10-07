@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/05 23:58:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 19:55:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	call_ncurses(t_vm *vm)
 			attron(COLOR_PAIR(22));
 		}
 
-
 		if (vm->ram[i].blingbling)
 		{
 			attron(A_BOLD);
@@ -96,7 +95,7 @@ void	call_ncurses(t_vm *vm)
 	move(5, 200);
 	printw("Delay : %d", vm->delay);
 	move(10, 200);
-	printw("Cycles : %d", vm->countdown);
+	printw("Cycles : %d", vm->cycle);
 	move(12, 200);
 	printw("Keycode : %d", vm->keycode);
 	move(14, 200);

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/05 14:45:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 19:54:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,11 @@ typedef struct s_vm
 	int		nb_player;
 	int		ctd;
 	int		cycle;
-	int		countdown;
 	int		keycode;
 	int		pause;
 	int		ncurses;
 	int		delay;
+	int		next_ctd;
 	int		ctd_check;
 	// char	*mem;
 	char	mem[MEM_SIZE];

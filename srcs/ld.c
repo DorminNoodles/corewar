@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/28 16:19:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 19:46:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ld(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>ENTER LD<<<<  : Cycle > %d\n", vm->countdown);
+	// printf(">>>>ENTER LD<<<<  : Cycle > %d\n", vm->cycle);
 	int		reg_nb;
 	int		addr;
 

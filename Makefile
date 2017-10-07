@@ -31,13 +31,16 @@ FLAGS = #-Wall -Wextra -Werror
 
 all : $(VM_NAME)
 
-$(VM_NAME) : $(OBJ)
+$(VM_NAME) : CREATE_BUILD $(OBJ)
 	@echo "fuck"
 	make -C libft/
 	$(CC) -g $(OBJ) $(INC) libft/libft.a -lncurses -o build/$(VM_NAME)
 
 %.o : srcs/%.c
 	$(CC) -g -c $< $(FLAGS) $(INC) -o $@
+
+CREATE_BUILD :
+	mkdir -p build
 
 clean :
 	make -C libft/ clean

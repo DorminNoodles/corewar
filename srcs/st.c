@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/09/30 23:31:05 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/07 19:46:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	st(t_vm *vm, t_proc *proc)
 {
 	if (!vm->ncurses)
-		printf(">>>>>>>ENTER ST<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->countdown, proc->op->pos_opcode, proc->id);
+		printf(">>>>>>>ENTER ST<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
 	unsigned int	addr;
 
 	if (proc->op->ar_typ[1] == REG_CODE)
@@ -79,7 +79,7 @@ void	st(t_vm *vm, t_proc *proc)
 		// printf("SEGV_1\n");
 		// printf(" FFFFFFFFFFFFFF %d\n", proc->carry);
 		// move(20, 200);
-		// printw("Cycles : %d", vm->countdown);
+		// printw("Cycles : %d", vm->cycle);
 		// printw("CARRY       au bal du diable %d", proc->carry);
 		// printf("SEGV_2\n");
 	}

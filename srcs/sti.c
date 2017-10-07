@@ -15,7 +15,7 @@
 void	sti(t_vm *vm, t_proc *proc)
 {
 	if (!vm->ncurses)
-		printf(">>>>>>>ENTER STI<<<<<<<<<<\n  : Cycle > %d\n", vm->countdown);
+		printf(">>>>>>>ENTER STI<<<<<<<<<<\n  : Cycle > %d\n", vm->cycle);
 	int addr;
 	int reg;
 
