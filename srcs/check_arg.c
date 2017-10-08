@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/26 23:44:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 02:00:16 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		ft_strargv(int argc, char **argv, char *str)
 	return (0);
 }
 
-void	srch_nb_dump(int argc, char **argv)
+int		srch_nb_dump(int argc, char **argv)
 {
 	int ret;
 	int nb;
@@ -35,9 +35,12 @@ void	srch_nb_dump(int argc, char **argv)
 	nb = 0;
 	if ((ret = ft_strargv(argc, argv, "-dump")))
 	{
-		if (ret + 1 < argc)
-			nb = ft_atoi(argv[ret + 1]);
+			if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
+				return (ft_atoi(argv[ret + 1]));
+			else
+				error("error : dump bad number\n");
 	}
+	return (-1);
 }
 
 int		srch_ncurses(int argc, char **argv)
@@ -151,7 +154,8 @@ int		srch_players(t_vm *vm, int argc, char **argv)
 
 int		check_arg(t_vm *vm, int argc, char **argv)
 {
-	srch_nb_dump(argc, argv);
+	vm->dump = srch_nb_dump(argc, argv);
+	vm->debug = ft_strargv(argc, argv, "-debug");
 	vm->ncurses = srch_ncurses(argc, argv);
 	if(srch_players(vm, argc, argv))
 		return(1);

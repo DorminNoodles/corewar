@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:46:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 01:30:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	init_vm(t_vm *vm)
 	vm->delay = NCURSES_DELAY;
 	vm->ctd_check = 0;
 	vm->next_ctd = CYCLE_TO_DIE;
+	vm->dump = -1;
+	vm->debug = 0;
 }
 
 void	get_src_begin()

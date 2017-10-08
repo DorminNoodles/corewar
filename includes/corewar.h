@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:54:37 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 01:30:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ typedef struct s_vm
 	int		delay;
 	int		next_ctd;
 	int		ctd_check;
+	int		dump;
+	int		debug;
 	// char	*mem;
 	char	mem[MEM_SIZE];
 	t_mem	ram[MEM_SIZE];

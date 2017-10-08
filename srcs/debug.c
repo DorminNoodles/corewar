@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/27 01:30:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 01:48:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	show_mem(t_vm *vm)
 {
 	printf(">>>>>>>>SHOW MEM<<<<<<<<\n");
+	printf("Cycle : %d\n", vm->cycle);
 	int i;
 	i = 0;
 

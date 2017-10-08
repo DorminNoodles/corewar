@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:46:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 01:42:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,12 @@ int		count_proc(t_vm *vm)
 	return (i);
 }
 
+void	dump(t_vm *vm)
+{
+	if (!(vm->cycle % vm->dump))
+		show_mem(vm);
+}
+
 void	run(t_vm *vm)
 {
 	t_proc	*proc;
@@ -204,12 +210,9 @@ void	run(t_vm *vm)
 //-------------------------Debug
 
 //-------------------------Debug
-
-		if (!vm->ncurses)
-		{
-			printf(">>> %d\n", vm->cycle);
-			show_mem(vm);
-		}
+		// printf("%d\n", vm->dump);
+		if (vm->dump != -1 && !vm->ncurses)
+			dump(vm);
 	}
 	printf("END\n");
 	if (vm->last_one)

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/01 13:09:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 01:45:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
-	if (!vm->ncurses)
+	if (!vm->ncurses && vm->debug)
 		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
 
 	t_proc	*new;
