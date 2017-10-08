@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/29 01:34:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/08 20:15:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	// printf("INIT REG 1 >>> %x\n", num * -1);
 	tmp->state = IDLE;
 	tmp->carry = 0;
-	tmp->live = 1;
+	tmp->live = 0;
 	tmp->active = 1;
 	return (tmp);
 }

@@ -1,40 +1,8 @@
 .name "zork"
 .comment "just a basic living prog"
 
-#		fork %1600
+		fork %120
 		live %-1
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		ld %1, r4
-		zjmp	%100
-#		sti r1, %4000, %0
-#		fork %2
-#		fork %2
-#		fork %2
-		fork %2
-		live %-1
-		live %-1
-		live %-1
-		live %-1
-		live %-1
-		live %-1
-		live %-1
-		fork %30
-
 #		ld	%600,r1
 #		ld	1,r2
 #		zjmp %:test
