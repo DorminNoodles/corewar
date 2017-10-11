@@ -1,8 +1,11 @@
 .name "zork"
 .comment "just a basic living prog"
 
-		fork %120
 		live %-1
+		live %-1
+		live %-1
+		live %-1
+		fork %120
 #		ld	%600,r1
 #		ld	1,r2
 #		zjmp %:test

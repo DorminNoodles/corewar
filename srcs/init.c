@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 01:30:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:38:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_mem(t_vm *vm)
 {//init la memoire 4096 * un octet
-
 
 	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
 
@@ -130,18 +129,18 @@ void	write_player(t_vm *vm, int nb, int num)
 	// show_mem(vm);
 }
 
-int		*init_registre(int id)
-{
-	int i;
-	int	*reg;
-
-	i = 0;
-
-	if (!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
-		error("error : MALLOC\n");
-	reg[0] = id;
-	return (reg);
-}
+// int		*init_registre(int id)
+// {
+// 	int i;
+// 	int	*reg;
+//
+// 	i = 0;
+//
+// 	if (!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
+// 		error("error : MALLOC\n");
+// 	reg[0] = id;
+// 	return (reg);
+// }
 
 void	add_process(t_vm *vm, t_proc *proc)
 {
@@ -189,21 +188,17 @@ void	create_players(t_vm *vm)
 	i = 1;
 	j = 0;
 	// printf("Debug : init_vm nb_player %d\n", vm->nb_player);
-
 	init_mem(vm);
 	while (i <= MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
 		{
-			// printf("SEGV\n");
 			write_player(vm, i, j);
 			j++;
 		}
 		i++;
 	}
 	init_process(vm);
-	// exit(1);
-
 	// init_each_players(vm);
 	// init_optab(vm);
 	// vm->cycle = 0;

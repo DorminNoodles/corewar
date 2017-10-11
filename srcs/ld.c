@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:46:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:58:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ld(t_vm *vm, t_proc *proc)
 	int		addr;
 
 	addr = 0;
-	reg_nb = proc->op->ar[1] - 1;
+	reg_nb = proc->op->ar[1];
 	if (proc->op->ar_typ[0] == IND_CODE)
 	{
 		addr = proc->op->pos_opcode + proc->op->ar[0];

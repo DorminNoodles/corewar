@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 01:30:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:18:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ typedef struct s_proc
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
 	char	carry;// Mystere //edit : plus maintenant;
-	int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
+	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
+	int		reg[17];
 	int		loadtime;
 	int		live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
@@ -238,7 +239,7 @@ void		get_ocp(t_vm *vm, t_proc *proc);
 void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
-int			*init_registre(int id);
+// int			*init_registre(int id);
 
 
 
@@ -246,6 +247,7 @@ int			*init_registre(int id);
 /*--------INSTRUCTIONS----------*/
 void		and(t_vm *vm, t_proc *proc);
 void		ld(t_vm *vm, t_proc *proc);
+void		ldi(t_vm *vm, t_proc *proc);
 void		sti(t_vm *vm, t_proc *proc);
 void		live(t_vm *vm, t_proc *proc);
 void		add(t_vm *vm, t_proc *proc);

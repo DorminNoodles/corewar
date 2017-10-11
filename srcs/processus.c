@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 20:15:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:29:43 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) -1));
 	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
-	tmp->reg = init_registre(num);
+	// tmp->reg = init_registre(num);
+	ft_bzero(tmp->reg, sizeof(int) * (REG_NUMBER + 1));
 	// printf("INIT REG 1 >>> %x\n", num * -1);
+	tmp->reg[1] = num;
 	tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->live = 0;
@@ -75,7 +77,6 @@ void	undertaker(t_vm *vm)
 	{
 		if (!vm->player[i].life_signal && vm->player[i].active)
 		{
-			// printf("Player %d died !\n", i);
 			vm->player[i].active = 0;
 		}
 		i++;
@@ -87,7 +88,6 @@ int		is_pc(t_vm *vm, int nb)
 {
 	t_proc *tmp;
 
-	//return (1);
 	tmp = vm->proc;
 	while (tmp)
 	{

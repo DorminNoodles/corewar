@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 02:01:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:13:08 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ void	sti(t_vm *vm, t_proc *proc)
 
 	addr = (proc->op->ar[1] + proc->op->ar[2]) % IDX_MOD;
 	addr = proc->op->pos_opcode + addr;
+
+	if (!vm->ncurses && vm->debug)
+		printf(">> %d\n", vm->cycle);
+
+
+
 	// addr += proc->op->pos_opcode;
-	reg = proc->op->ar[0] - 1;
+	reg = proc->op->ar[0];
 
 	// printf("Registre %d index %d\n", proc->op->ar[0], reg);
 

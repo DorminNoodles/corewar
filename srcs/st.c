@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/08 01:45:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:11:48 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	st(t_vm *vm, t_proc *proc)
 	{
 		if (!vm->ncurses && vm->debug)
 			printf("ST in REG\n");
-		proc->reg[proc->op->ar[1] - 1] = proc->reg[proc->op->ar[0] - 1];
+		proc->reg[proc->op->ar[1] - 1] = proc->reg[proc->op->ar[0]];
 	}
 	else
 	{
@@ -36,7 +36,7 @@ void	st(t_vm *vm, t_proc *proc)
 		// addr = addr + proc->op->pos_opcode;
 
 		// printf("ADDR %d\n", addr);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1] >> 24;
+		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 24;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
@@ -44,7 +44,7 @@ void	st(t_vm *vm, t_proc *proc)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1] >> 16;
+		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 16;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
@@ -52,7 +52,7 @@ void	st(t_vm *vm, t_proc *proc)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1] >> 8;
+		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 8;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
@@ -60,7 +60,7 @@ void	st(t_vm *vm, t_proc *proc)
 			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
-		vm->ram[addr].mem = proc->reg[proc->op->ar[0] - 1];
+		vm->ram[addr].mem = proc->reg[proc->op->ar[0]];
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
@@ -70,7 +70,7 @@ void	st(t_vm *vm, t_proc *proc)
 			printf("\n");
 		}
 	}
-	proc->carry = (proc->reg[proc->op->ar[0] - 1] == 0) ? 1 : 0;
+	proc->carry = (proc->reg[proc->op->ar[0]] == 0) ? 1 : 0;
 
 
 

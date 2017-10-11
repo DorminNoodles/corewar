@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 20:15:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/11 17:11:15 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 	int i;
 
 	i = 0;
-	while (i < REG_NUMBER)
+	while (i < (REG_NUMBER + 1))
 	{
 		new->reg[i] = proc->reg[i];
 		// printf("%d", proc->reg[i]);
@@ -41,7 +41,9 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	// if (!proc->op->ar[0])
 	// 	new->pc = proc->op->pos_opcode;
 	// new->pc -= 26;
-	new->active = 1;
+	// new->active = 1;
+	if (proc->live)
+		new->live = 1;
 	registre_cpy(proc, new);
 	add_process(vm, new);
 }
