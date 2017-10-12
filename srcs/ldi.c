@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/11 17:26:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/13 00:02:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,31 @@ void		ldi(t_vm *vm, t_proc *proc)
 	printf("here ->%d\n", proc->reg[1]);
 	printf(">>>  %d\n", proc->op->ar_typ[0]);
 
-	if (proc->op->ar_typ[0])
+	if (proc->op->ar_typ[0] == REG_CODE)
 	{
 		printf("reg %d\n", proc->op->ar_typ[0]);
-		ar1 = proc->reg[proc->op->ar[0]];
+		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
 		printf("reg %d\n", proc->reg[0]);
+	}
+	else if (proc->op->ar_typ[0] == DIR_CODE)
+	{
+		printf("direct ==> %d\n", proc->op->ar[0]);
+	}
+	else
+	{
 
+	}
+
+
+	if (proc->op->ar_typ[1] == REG_CODE)
+	{
+		printf("reg %d\n", proc->op->ar_typ[0]);
+		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
+		printf("reg %d\n", proc->reg[0]);
+	}
+	else if (proc->op->ar_typ[0] == DIR_CODE)
+	{
+		printf("direct ==> %d\n", proc->op->ar[0]);
 	}
 	else
 	{
