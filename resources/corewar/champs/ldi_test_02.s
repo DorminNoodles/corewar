@@ -4,9 +4,14 @@
 #		ld %300, r10
 		ld %4, r2
 		ld %5, r3
+		ld 5, r7
+		ld 5, r8
 		ldi r2, r3, r5
+		sti r5, %20, %20
+		ldi %6, %7, r5
 		sti r5, %40, %40
-		live %-1
+		ldi -15, %0, r5
+		sti r5, %50, %50
 		live %-1
 		live %-1
 		live %-1

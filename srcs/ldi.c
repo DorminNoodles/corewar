@@ -6,11 +6,26 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/13 00:02:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/13 19:11:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+
+static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
+{
+	int	value;
+	int	pos;
+
+	value = 0x0;
+	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
+	pos = modulo(pos, MEM_SIZE);
+	printf("POS LDI %d\n", pos);
+	value |= vm->ram[pos].mem;
+
+	return (0);
+}
 
 void		ldi(t_vm *vm, t_proc *proc)
 {
@@ -20,42 +35,47 @@ void		ldi(t_vm *vm, t_proc *proc)
 	unsigned int		reg_nb;
 	int ar1;
 	int ar2;
+	int value;
 
-
-	printf("here ->%d\n", proc->reg[1]);
-	printf(">>>  %d\n", proc->op->ar_typ[0]);
+	value = 0x0;
+	addr = 0;
 
 	if (proc->op->ar_typ[0] == REG_CODE)
 	{
-		printf("reg %d\n", proc->op->ar_typ[0]);
+		// printf("reg %d\n", proc->op->ar[0]);
 		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
-		printf("reg %d\n", proc->reg[0]);
 	}
-	else if (proc->op->ar_typ[0] == DIR_CODE)
+	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
 	{
-		printf("direct ==> %d\n", proc->op->ar[0]);
+		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
+		// ar1 = vm->ram[].mem         proc->op->pos_opcode
 	}
-	else
-	{
-
-	}
-
 
 	if (proc->op->ar_typ[1] == REG_CODE)
 	{
-		printf("reg %d\n", proc->op->ar_typ[0]);
-		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
-		printf("reg %d\n", proc->reg[0]);
+		// printf("reg %d\n", proc->op->ar[1]);
+		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
 	}
-	else if (proc->op->ar_typ[0] == DIR_CODE)
+	else // IMPLICIT DIR_CODE
 	{
-		printf("direct ==> %d\n", proc->op->ar[0]);
-	}
-	else
-	{
-
+		printf("direct ==> %d\n", proc->op->ar[1]);
 	}
 
+	printf("proc->op->ar[0] : %d\n", proc->op->ar[0]);
+	printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
+
+
+	addr = (proc->op->ap[0] + proc->op->ap[1]) % IDX_MOD;
+
+	value |= vm->ram[modulo(addr)].mem;
+	value = value << 4;
+	value |= vm->ram[modulo(addr + 1)].mem;
+	value = value << 4;
+	value |= vm->ram[modulo(addr + 2)].mem;
+	value = value << 4;
+	value |= vm->ram[modulo(addr + 4)].mem;
+
+	proc->reg[proc->op->ar[2]] = value;
 
 
 
