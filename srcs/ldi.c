@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/13 19:11:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/13 22:24:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,19 @@ void		ldi(t_vm *vm, t_proc *proc)
 	printf("proc->op->ar[0] : %d\n", proc->op->ar[0]);
 	printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
 
+	addr = (proc->op->ar[0] + proc->op->ar[1]) % IDX_MOD;
+	printf("addr : %d\n", addr);
+	addr = addr + proc->op->pos_opcode;
+	printf("addr : %d\n", addr);
 
-	addr = (proc->op->ap[0] + proc->op->ap[1]) % IDX_MOD;
-
-	value |= vm->ram[modulo(addr)].mem;
-	value = value << 4;
-	value |= vm->ram[modulo(addr + 1)].mem;
-	value = value << 4;
-	value |= vm->ram[modulo(addr + 2)].mem;
-	value = value << 4;
-	value |= vm->ram[modulo(addr + 4)].mem;
+	value |= (unsigned char)vm->ram[modulo(addr, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(addr + 1, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(addr + 2, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(addr + 3, MEM_SIZE)].mem;
+	printf("value : %x\n", value);
 
 	proc->reg[proc->op->ar[2]] = value;
 

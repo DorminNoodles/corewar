@@ -2,9 +2,9 @@
 .comment "just a basic living prog"
 
 #		ld %300, r10
-		ld %-4, r2
-		ld %-4, r3
-		ldi r2, r3, r5
+		ld %-516, r2
+		ld %-514, r3
+		ldi %-514, r3, r5
 		sti r5, %20, %20
 		live %-1
 		live %-1
