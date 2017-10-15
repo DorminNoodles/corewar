@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/13 14:56:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 02:27:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,37 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 	value = 0;
 
 	proc->pc++;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
+
+
+	if (vm->debug)
+	{
+		printf("- start -\n");
+		printf("%x\n", (unsigned char)vm->ram[proc->pc - 2].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc - 1].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 1].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 2].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 3].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 4].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 5].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 6].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 7].mem);
+		printf("%x\n", (unsigned char)vm->ram[proc->pc + 8].mem);
+
+		printf("- end -\n");
+	}
+	value = (unsigned char)vm->ram[proc->pc].mem;
+	if (vm->debug)
+		printf("Value => %x\n", value);
+	if (vm->debug)
+	printf("Pc => %d\n", proc->pc);
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
+	if (vm->debug)
+	printf("Value => %x\n", value);
+	if (vm->debug)
+	printf("Pc => %d\n", proc->pc);
 
 	// printf(" hexa dans mem %x\n", vm->mem[proc->pc]);
 	if (op_tab[proc->op->code - 1].direct_size)
@@ -44,6 +71,9 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 		proc->op->ar[num] = value;
 		return ;
 	}
+
+	if (proc->op->code == 1 && proc->id == 5 && vm->debug)
+		printf("GET DIR 4\n");
 	proc->pc++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[proc->pc].mem;
@@ -55,6 +85,9 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 	// printf("get dir value -> %d\n", value);
 	proc->op->ar[num] = value;
+
+	if (proc->op->code == 1 && proc->id == 5 && vm->debug)
+		printf("live value => %d   arg_num => %d\n", value, num);
 }
 
 void	get_reg(t_vm *vm, t_proc *proc, int num)
@@ -101,13 +134,15 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 	type = type >> (6 - 2 * num);
 	proc->op->ar_typ[num] = type;
 
+	if (proc->op->code == 1)
+		printf("LIVE OP CODE\n");
+
 	if (type == REG_CODE)
 		get_reg(vm, proc, num);
 	if (type == DIR_CODE)
 		get_dir(vm, proc, num);
 	if (type == IND_CODE)
 		get_ind(vm, proc, num);
-
 
 }
 
@@ -208,6 +243,20 @@ void	run(t_vm *vm)
 		}
 		vm->cycle++;
 //-------------------------Debug
+
+
+	t_proc *tmp;
+	tmp = vm->proc;
+	if (!vm->ncurses && vm->debug)
+	{
+		printf("proc lst ->>\n");
+		while (tmp)
+		{
+			printf("proc %d  : live %d : pc : %d\n", tmp->id, tmp->live, tmp->pc);
+			tmp = tmp->next;
+		}
+	}
+
 
 //-------------------------Debug
 		// printf("%d\n", vm->dump);

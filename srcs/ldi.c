@@ -6,11 +6,17 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/13 22:24:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/14 14:29:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+int		get_ind_in_ram()
+{
+
+	
+}
 
 
 static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
@@ -20,11 +26,16 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 
 	value = 0x0;
 	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
-	pos = modulo(pos, MEM_SIZE);
-	printf("POS LDI %d\n", pos);
-	value |= vm->ram[pos].mem;
+	// printf("POS LDI %d\n", pos);
+	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 2, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 3, MEM_SIZE)].mem;
 
-	return (0);
+	return (value);
 }
 
 void		ldi(t_vm *vm, t_proc *proc)
@@ -48,6 +59,7 @@ void		ldi(t_vm *vm, t_proc *proc)
 	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
 	{
 		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
+		printf("ar1 IND => %d\n", proc->op->ar[0]);
 		// ar1 = vm->ram[].mem         proc->op->pos_opcode
 	}
 
@@ -56,13 +68,9 @@ void		ldi(t_vm *vm, t_proc *proc)
 		// printf("reg %d\n", proc->op->ar[1]);
 		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
 	}
-	else // IMPLICIT DIR_CODE
-	{
-		printf("direct ==> %d\n", proc->op->ar[1]);
-	}
 
-	printf("proc->op->ar[0] : %d\n", proc->op->ar[0]);
-	printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
+	// printf("proc->op->ar[0] : %d\n", proc->op->ar[0]);
+	// printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
 
 	addr = (proc->op->ar[0] + proc->op->ar[1]) % IDX_MOD;
 	printf("addr : %d\n", addr);

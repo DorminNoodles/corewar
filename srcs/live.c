@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:46:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 02:15:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 void	live(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
+	if (!vm->ncurses && vm->debug)
+		printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
 	int		num;
 
 	num = 0;
 	// printf("NUM player => %d\n", proc->op->ar[0]);
 
-	// printf("fuck num %d\n", proc->op->ar[0]);
+	if (!vm->ncurses && vm->debug)
+	{
+		printf("opcode pos : %d\n", proc->op->pos_opcode);
+		printf("fuck num %d\n", (int)proc->op->ar[0]);
+		printf("fuck num %x\n", (int)proc->op->ar[0]);
+	}
 	num = proc->op->ar[0] * -1;
 
 	// printf("fuck num %d\n", num);
@@ -36,4 +42,7 @@ void	live(t_vm *vm, t_proc *proc)
 	{
 		// printf("Live for Unknown Player... \n");
 	}
+
+	if (proc->id == 5)
+		printf("LIVE ON PROC 5\n");
 }

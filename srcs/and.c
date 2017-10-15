@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/08 14:44:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/14 20:48:11 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	and(t_vm *vm, t_proc *proc)
 	else
 		ar2 = proc->op->ar[1];
 	 proc->reg[proc->op->ar[2]] = ar1 & ar2;
+	 proc->carry = ((ar1 & ar2) == 0) ? 1 : 0;
 }
