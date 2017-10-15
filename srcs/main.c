@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/15 02:27:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 22:32:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,10 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	if (proc->state == IDLE)
 		idle_state(vm, proc);
-	else if (proc->state == WAIT)
-		wait_state(vm, proc);
-	else if (proc->state == START)
-		proc->state = IDLE;
+	// else if (proc->state == WAIT)
+	// 	wait_state(vm, proc);
+	// else if (proc->state == START)
+	// 	proc->state = IDLE;
 }
 
 int		count_proc(t_vm *vm)
@@ -243,19 +243,6 @@ void	run(t_vm *vm)
 		}
 		vm->cycle++;
 //-------------------------Debug
-
-
-	t_proc *tmp;
-	tmp = vm->proc;
-	if (!vm->ncurses && vm->debug)
-	{
-		printf("proc lst ->>\n");
-		while (tmp)
-		{
-			printf("proc %d  : live %d : pc : %d\n", tmp->id, tmp->live, tmp->pc);
-			tmp = tmp->next;
-		}
-	}
 
 
 //-------------------------Debug

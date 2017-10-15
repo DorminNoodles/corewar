@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/08 01:48:44 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 22:56:16 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,31 @@ void	debug_display_proc(t_vm *vm)
 	}
 
 
+}
+
+static void	display_args(t_vm *vm, t_proc *proc, int n)
+{
+	if (proc->op->ar_typ[n] == REG_CODE)
+		printf("r");
+	printf("%d", proc->op->ar[n]);
+}
+
+void	show_operations(t_vm *vm, t_proc *proc)
+{
+	int	nb_arg;
+	int i;
+
+	i = 0;
+	nb_arg = op_tab[proc->op->code - 1].nb_arg;
+	if ((0x4 & vm->verbosity))
+	{
+		printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
+		while (i < nb_arg)
+		{
+			printf(" ");
+			display_args(vm, proc, i);
+			i++;
+		}
+	}
+	printf("\n");
 }

@@ -6,17 +6,17 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/14 14:29:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 22:26:15 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		get_ind_in_ram()
-{
-
-	
-}
+// int		get_ind_in_ram()
+// {
+//
+//
+// }
 
 
 static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)

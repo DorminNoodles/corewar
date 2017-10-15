@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/14 22:08:13 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 21:12:42 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	undertaker(t_vm *vm)
 		}
 		i++;
 	}
-	// kill_proc(vm);
+	kill_proc(vm);
 }
 
 int		is_pc(t_vm *vm, int nb)

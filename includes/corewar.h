@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/11 17:18:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 22:25:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ typedef struct s_vm
 	int		ctd_check;
 	int		dump;
 	int		debug;
+	int		verbosity;
 	// char	*mem;
 	char	mem[MEM_SIZE];
 	t_mem	ram[MEM_SIZE];
@@ -239,6 +240,7 @@ void		get_ocp(t_vm *vm, t_proc *proc);
 void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
+void		show_operations(t_vm *vm, t_proc *proc);
 // int			*init_registre(int id);
 
 

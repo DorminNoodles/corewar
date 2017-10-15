@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/09/29 02:37:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/15 22:36:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,29 @@ void	idle_state(t_vm *vm, t_proc *proc)
 		{
 			fill_cur_op(vm, proc);
 			if (op_tab[proc->op->code - 1].func != NULL)
+			{
+				show_operations(vm, proc);			
 				op_tab[proc->op->code - 1].func(vm, proc);
+			}
 			proc->op = NULL;
 		}
 	}
 }
-
-void	wait_state(t_vm *vm, t_proc *proc)
-{
-	// printf("------------WAIT_STATE------------\n");
-	proc->op->loadtime--;
-
-	if (proc->op->loadtime <= 0)
-	{
-		fill_cur_op(vm, proc);
-		if (op_tab[proc->op->code - 1].func != NULL)
-			op_tab[proc->op->code - 1].func(vm, proc);
-		proc->state = IDLE;
-	}
-}
+//
+// void	wait_state(t_vm *vm, t_proc *proc)
+// {
+// 	printf("------------WAIT_STATE------------\n");
+// 	proc->op->loadtime--;
+//
+// 	if (proc->op->loadtime <= 0)
+// 	{
+// 		fill_cur_op(vm, proc);
+// 		if (op_tab[proc->op->code - 1].func != NULL)
+// 		{
+// 			// printf()
+// 			show_operations(vm, proc);
+// 			op_tab[proc->op->code - 1].func(vm, proc);
+// 		}
+// 		proc->state = IDLE;
+// 	}
+// }
