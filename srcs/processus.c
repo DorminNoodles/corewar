@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/15 21:12:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 18:39:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ void	kill_proc(t_vm *vm)
 	tmp = vm->proc;
 	while (tmp)
 	{
-		if (!tmp->live)
+		if ((vm->cycle - tmp->last_live) < vm->ctd)
+		{
 			tmp->active = 0;
+			if (0x8 & vm->verbosity)
+				printf("Process %d hasn't lived for %d cycles (CTD %d)\n", tmp->id + 1, vm->cycle - tmp->last_live, vm->ctd);
+		}
 		tmp = tmp->next;
 	}
 }
@@ -61,7 +65,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->reg[1] = num;
 	tmp->state = IDLE;
 	tmp->carry = 0;
-	tmp->live = 0;
+	tmp->last_live = 0;
 	tmp->active = 1;
 	return (tmp);
 }

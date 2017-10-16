@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/15 13:49:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 18:35:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	live(t_vm *vm, t_proc *proc)
 	{
 		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
-		proc->live = 1;
+		proc->last_live = vm->cycle + 1;
 		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
 	}
 	else
@@ -43,6 +43,9 @@ void	live(t_vm *vm, t_proc *proc)
 		// printf("Live for Unknown Player... \n");
 	}
 
-	if (proc->id == 5)
-		printf("LIVE ON PROC 5\n");
+	if (0x4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		printf("\n");
+	}
 }

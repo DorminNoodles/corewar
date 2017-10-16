@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/14 20:43:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 18:05:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ static void	clone_proc(t_proc *proc, t_proc *new)
 
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
+	// 	printf("po");
+
 	if (!vm->ncurses && vm->debug)
 		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
+
+	// if (vm->verbosity)
 
 	t_proc	*new;
 	new = create_process(vm, proc->num);
@@ -43,4 +47,10 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	new->pc = modulo(proc->op->pos_opcode + (proc->op->ar[0] % IDX_MOD), MEM_SIZE);
 	clone_proc(proc, new);
 	add_process(vm, new);
+
+	if (0x4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		printf(" (%d)\n", new->pc);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/15 22:25:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 18:34:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ typedef struct s_proc
 	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		reg[17];
 	int		loadtime;
-	int		live; // si le processus a fait appel a live durant CYCLE_TO_DIE
+	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_proc	*next;
 }	t_proc;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/11 17:58:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 18:05:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,11 @@ void	ld(t_vm *vm, t_proc *proc)
 	if (proc->reg[reg_nb] == 0)
 		proc->carry = 1*/
 
+
+		if (0x4 & vm->verbosity)
+		{
+			show_operations(vm, proc);
+			printf("\n");
+		}
 
 }

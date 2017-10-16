@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/15 22:56:16 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/16 17:00:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,12 @@ void	show_operations(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	nb_arg = op_tab[proc->op->code - 1].nb_arg;
-	if ((0x4 & vm->verbosity))
+	printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
+	while (i < nb_arg)
 	{
-		printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
-		while (i < nb_arg)
-		{
-			printf(" ");
-			display_args(vm, proc, i);
-			i++;
-		}
+		printf(" ");
+		display_args(vm, proc, i);
+		i++;
 	}
-	printf("\n");
+	// printf("\n");
 }
