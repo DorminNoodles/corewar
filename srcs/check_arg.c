@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:03:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/17 01:50:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		srch_nb_dump(int argc, char **argv)
 			if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
 				return (ft_atoi(argv[ret + 1]));
 			else
-				error("error : dump bad number\n");
+				error("error : verbosity bad number\n");
 	}
 	return (-1);
 }
@@ -57,7 +57,7 @@ int		srch_verbose(int argc, char **argv)
 			else
 				error("error : dump bad number\n");
 	}
-	return (-1);
+	return (0);
 }
 
 int		srch_ncurses(int argc, char **argv)

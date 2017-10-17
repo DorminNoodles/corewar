@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:55:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/17 01:20:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	reset_life_signal(t_vm *vm)
 	}
 	while (tmp)
 	{
-		tmp->live = 0;
+		tmp->last_live = 0;
 		tmp = tmp->next;
 	}
 }

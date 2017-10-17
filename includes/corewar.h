@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:34:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/17 01:46:16 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct s_proc
 	int		id;
 	int		active;
 	int		num;//Num du programme/player a fournir dans r1 (registre 1)
+	int		last_pc;
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
 	int		state;
 	char	carry;// Mystere //edit : plus maintenant;
@@ -241,6 +242,7 @@ void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_proc *proc);
+void	show_pc_move(t_vm *vm, t_proc *proc);
 // int			*init_registre(int id);
 
 

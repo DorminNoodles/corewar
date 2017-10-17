@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:39:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/17 01:55:16 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	kill_proc(t_vm *vm)
 	tmp = vm->proc;
 	while (tmp)
 	{
-		if ((vm->cycle - tmp->last_live) < vm->ctd)
+		if ((vm->cycle - tmp->last_live) > vm->ctd)
 		{
 			tmp->active = 0;
 			if (0x8 & vm->verbosity)
@@ -57,6 +57,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	// printf("NUM > %d\n", num);
 	tmp->num = num;
 	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) -1));
+	tmp->last_pc = 0;
 	// printf(">>>> %d   num %d\n", tmp->pc, num);
 	tmp->op = NULL;
 	// tmp->reg = init_registre(num);

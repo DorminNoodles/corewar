@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:10:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/17 02:04:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	run(t_vm *vm)
 
 	while (!all_died(vm))
 	{
-		if (0x2 & vm->verbosity)
+		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
 		//-------------------NCURSES
 		if (vm->ncurses)
@@ -241,6 +241,9 @@ void	run(t_vm *vm)
 			{
 				animate_proc(vm, proc);
 			}
+			if (16 & vm->verbosity)
+				show_pc_move(vm, proc);
+			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}
 		vm->cycle++;
