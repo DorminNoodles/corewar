@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/05 18:00:55 by lchety            #+#    #+#             */
-/*   Updated: 2016/11/28 11:48:39 by lchety           ###   ########.fr       */
+/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
+/*   Updated: 2016/06/03 21:48:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char		*src_temp;
+	unsigned char	*temp;
 
-	src_temp = (char *)ft_memalloc(n + 1);
-	if (src_temp != NULL)
-	{
-		ft_memcpy(src_temp, src, n);
-		ft_memcpy(dest, src_temp, n);
-		free(src_temp);
-	}
+	temp = (unsigned char *)ft_strsub(src, 0, n);
+	ft_memcpy(dest, temp, n);
+	free(temp);
 	return (dest);
 }

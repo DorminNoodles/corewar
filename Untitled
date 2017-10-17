@@ -1,5 +1,0 @@
-sti r1,%10,%10
-add  r2
-
-add %:sti, %0, r1
-sti r1,%10,%10

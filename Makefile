@@ -1,52 +1,115 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
+#    Updated: 2017/10/17 15:17:31 by rfulop           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+.PHONY: all, clean, fclean, re
+
+CC = clang
+CFLAGS = -g -Wbraced-scalar-init
 VM_NAME = corewar
-SRC =		main.c						\
-			init.c						\
-			error.c						\
-			check_arg.c					\
-			controller.c				\
-			debug.c						\
-			sti.c						\
-			ld.c						\
-			ldi.c						\
-			live.c						\
-			add.c						\
-			and.c						\
-			ncurses.c					\
-			pars_op.c					\
-			players.c					\
-			processus.c					\
-			fork.c						\
-			op.c						\
-			or.c						\
-			xor.c						\
-			sub.c						\
-			st.c						\
-			state.c						\
-			zjmp.c
+ASM_NAME = asm
 
-SRCS = $(addprefix srcs/, $(SRC))
-INC = -I includes -I libft/includes
-OBJ = $(SRC:.c=.o)
-FLAGS = #-Wall -Wextra -Werror
+SRC_PATH_VM = ./srcs/vm/
+SRC_PATH_ASM = ./srcs/asm/
+OBJ_PATH = ./obj/
+OBJ_PATH_VM = ./obj/vm/
+OBJ_PATH_ASM = ./obj/asm/
+INC_PATH = ./includes/
+LIB_PATH = ./libft/
 
-all : $(VM_NAME)
+SRC_FILES_VM = main.c \
+								init.c	\
+								error.c	\
+								check_arg.c	\
+								controller.c	\
+								debug.c	\
+								sti.c	\
+								ld.c	\
+								ldi.c	\
+								live.c	\
+								add.c	\
+								and.c	\
+								ncurses.c	\
+								pars_op.c	\
+								players.c	\
+								processus.c	\
+								fork.c \
+								op.c \
+								or.c \
+								xor.c \
+								sub.c \
+								st.c \
+								state.c	\
+								zjmp.c
 
-$(VM_NAME) : CREATE_BUILD $(OBJ)
-	@echo "fuck"
-	make -C libft/
-	$(CC) -g $(OBJ) $(INC) libft/libft.a -lncurses -o build/$(VM_NAME)
+SRC_FILES_ASM = main.c \
+								error.c \
+								labels.c \
+								header.c \
+								op.c \
+								debug.c
 
-%.o : srcs/%.c
-	$(CC) -g -c $< $(FLAGS) $(INC) -o $@
+INC_FILES = corewar.h
+LIB_FILES = libft.a
+LIB = $(addprefix $(LIB_PATH), $(LIB_FILES))
 
-CREATE_BUILD :
-	mkdir -p build
+OBJ_FILES_VM = $(SRC_FILES_VM:.c=.o)
+OBJ_FILES_ASM = $(SRC_FILES_ASM:.c=.o)
+OBJ_EXEC_VM = $(addprefix $(OBJ_PATH_VM), $(OBJ_FILES_VM))
+OBJ_EXEC_ASM = $(addprefix $(OBJ_PATH_ASM), $(OBJ_FILES_ASM))
 
-clean :
-	make -C libft/ clean
-	rm -f $(OBJ)
+all: $(VM_NAME) #$(ASM_NAME)
 
-fclean : clean
-	rm -f build/corewar
+$(OBJ_PATH_VM):
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH_VM) 2> /dev/null || true
 
-re : fclean $(VM_NAME)
+$(OBJ_PATH_ASM):
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@mkdir $(OBJ_PATH_ASM) 2> /dev/null || true
+
+
+$(OBJ_PATH_VM)%.o: $(SRC_PATH_VM)%.c
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
+	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
+
+$(OBJ_PATH_ASM)%.o: $(SRC_PATH_ASM)%.c
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
+	@echo "\033[34mCompilation of \033[36m$(notdir $<)\033[34m done.\033[0m"
+
+CREATE_BUILD:
+	@mkdir -p build
+
+$(VM_NAME): CREATE_BUILD $(OBJ_PATH_VM) $(OBJ_EXEC_VM)
+	@make -C $(LIB_PATH)
+	$(CC) $(CFLAGS) $(OBJ_EXEC_VM) $(LIB) -o build/$(VM_NAME) -I $(INC_PATH) -I $(LIB_PATH)includes -lncurses
+	@echo "\033[32mBinary \033[1;32m$(VM_NAME)\033[1;0m\033[32m created.\033[0m"
+
+$(ASM_NAME): $(OBJ_PATH_ASM) $(OBJ_EXEC_ASM)
+	@make -C $(LIB_PATH)
+	$(CC) $(CFLAGS) $(OBJ_EXEC_ASM) $(LIB) -o $@ -I $(INC_PATH) -I $(LIB_PATH)includes
+	@echo "\033[32mBinary \033[1;32m$(ASM_NAME)\033[1;0m\033[32m created.\033[0m"
+
+clean:
+	@rm -rf $(OBJ_PATH)
+	@rm -rf $(OBJ_PATH_VM)
+	@rm -rf $(OBJ_PATH_ASM)
+	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_VM)\033[1;0m\033[31m removed.\033[0m"
+	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_ASM)\033[1;0m\033[31m removed.\033[0m"
+	@make -C $(LIB_PATH) clean
+
+fclean: clean
+	@rm -f $(VM_NAME)
+	@rm -f $(ASM_NAME)
+	@make -C $(LIB_PATH) fclean
+	@echo "\033[31mLib \033[1;31m$(VM_NAME)\033[1;0m\033[31m removed.\033[0m"
+	@echo "\033[31mLib \033[1;31m$(ASM_NAME)\033[1;0m\033[31m removed.\033[0m"
+
+re: fclean all

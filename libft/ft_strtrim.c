@@ -3,35 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/08 11:03:04 by lchety            #+#    #+#             */
-/*   Updated: 2016/11/29 19:05:58 by lchety           ###   ########.fr       */
+/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
+/*   Updated: 2016/06/02 18:44:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s)
+static size_t		ft_spacechar(char const *s)
 {
-	char			*str;
-	unsigned int	go;
-	size_t			i;
+	int		a;
+	size_t	b;
 
-	i = 0;
-	go = 0;
-	str = NULL;
-	while (s[go] == ' ' || s[go] == '\n' || s[go] == '\t')
+	a = 0;
+	while (s[a] == ' ' || s[a] == '\n' || s[a] == '\t')
+		++a;
+	if ((size_t)a == ft_strlen(s))
+		return (a);
+	else
 	{
-		go++;
+		b = a;
+		a = ft_strlen(s) - 1;
+		while (s[a] == ' ' || s[a] == '\n' || s[a] == '\t')
+		{
+			--a;
+			++b;
+		}
+		return (b);
 	}
-	while (s[go + i])
-		i++;
-	while ((s[go + i] == ' ' || s[go + i] == '\n' ||
-		s[go + i] == '\t' || s[go + i] == '\0') && i)
+}
+
+char				*ft_strtrim(char const *s)
+{
+	int		a;
+	int		b;
+	int		len;
+	char	*res;
+
+	res = NULL;
+	if (s)
 	{
-		i--;
+		if (ft_spacechar(s) == ft_strlen(s))
+			return (ft_strnew(1));
+		len = ft_strlen(s) - ft_spacechar(s) + 1;
+		if (!(res = (char*)malloc(sizeof(char) * len)))
+			return (NULL);
+		a = 0;
+		while (s[a] == ' ' || s[a] == '\n' || s[a] == '\t')
+			++a;
+		b = 0;
+		len = len + a - 1;
+		while (a < len)
+			res[b++] = s[a++];
+		res[b] = '\0';
 	}
-	str = ft_strsub(s, go, i + 1);
-	return (str);
+	return (res);
 }

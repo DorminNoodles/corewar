@@ -3,16 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/06 16:43:35 by lchety            #+#    #+#             */
-/*   Updated: 2017/03/15 11:48:46 by lchety           ###   ########.fr       */
+/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
+/*   Updated: 2016/06/01 19:42:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *haystack, const char *needle)
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	return (ft_strnstr(haystack, needle, ft_strlen(haystack) + 1));
+	if (*s2 == '\0')
+		return ((char *)s1);
+	while (*s1)
+	{
+		if (ft_strncmp(s1, s2, ft_strlen(s2)) == 0)
+			return ((char *)s1);
+		++s1;
+	}
+	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/06 00:13:35 by lchety            #+#    #+#             */
-/*   Updated: 2016/11/26 15:52:26 by lchety           ###   ########.fr       */
+/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
+/*   Updated: 2016/06/05 19:36:32 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,14 @@
 
 char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	size_t i;
+	size_t	a;
 
-	i = 0;
-	while (i < n && *(src + i))
+	ft_memset(dest, '\0', n);
+	a = 0;
+	while (a < n && src[a])
 	{
-		*(dest + i) = *(src + i);
-		i++;
-	}
-	if (i < n)
-	{
-		*(dest + i) = '\0';
-		while (i < n)
-		{
-			*(dest + i) = '\0';
-			i++;
-		}
+		dest[a] = src[a];
+		a++;
 	}
 	return (dest);
 }

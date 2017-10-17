@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*   add.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
-/*   Updated: 2016/06/28 14:52:09 by rfulop           ###   ########.fr       */
+/*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
+/*   Updated: 2017/10/17 13:08:37 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "corewar.h"
 
-void	ft_striteri(char *s, void (*f)(unsigned int, char *))
+void	add(t_vm *vm, t_proc *proc)
 {
-	unsigned int a;
+	// printf(">>>>ENTER_ADD<<<<\n");
+	int		sum;
 
-	if (!s || !f)
-		return ;
-	a = 0;
-	while (s[a])
-	{
-		f(a, &s[a]);
-		++a;
-	}
+	sum = proc->reg[proc->op->ar[0]] + proc->reg[proc->op->ar[1]];
+	proc->reg[proc->op->ar[2]] = sum;
+	proc->carry = (sum == 0) ? 1 : 0;
 }

@@ -3,109 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/11 13:40:16 by lchety            #+#    #+#             */
-/*   Updated: 2017/01/05 10:59:15 by lchety           ###   ########.fr       */
+/*   Created: 2016/06/28 10:19:47 by rfulop            #+#    #+#             */
+/*   Updated: 2017/05/23 04:08:16 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "get_next_line.h"
 
-int			my_read(t_fd_lst *lst)
+static t_list	*ft_check_fd(const int fd, t_list **list)
 {
-	char		*tmp;
-	ssize_t		ret;
-	char		buff[BUFF_SIZE + 1];
+	t_list	*tmp;
 
-	while ((ret = read(lst->fd, buff, BUFF_SIZE)) > 0)
-	{
-		buff[ret] = '\0';
-		tmp = lst->content;
-		if (lst->content)
-		{
-			if (!(lst->content = ft_strjoin(lst->content, buff)))
-				return (-1);
-			free(tmp);
-		}
-		else
-		{
-			lst->content = ft_strnew(ft_strlen(buff));
-			ft_strcpy(lst->content, buff);
-		}
-		if (ft_strchr(lst->content, '\n'))
-			return (1);
-	}
-	return (ret);
-}
-
-int			punchline(t_fd_lst *lst, char **line)
-{
-	char	*tmp;
-	char	*cut;
-	int		size;
-
-	if ((cut = ft_strchr(lst->content, '\n')))
-	{
-		tmp = lst->content;
-		size = cut - lst->content;
-		if (!(*line = ft_strnew(sizeof(char) * size)))
-			return (-1);
-		ft_memcpy((void*)*line, (void*)lst->content, size);
-		if (!(lst->content = ft_strsub(lst->content, size + 1, ft_strlen(cut))))
-			return (-1);
-		free(tmp);
-		return (1);
-	}
-	else if (*(lst->content) != 0)
-	{
-		if (!(*line = ft_strnew(sizeof(char) * ft_strlen(lst->content))))
-			return (-1);
-		ft_memcpy((void*)*line, (void*)lst->content, ft_strlen(lst->content));
-		ft_memdel((void**)&lst->content);
-		return (1);
-	}
-	return (0);
-}
-
-t_fd_lst	*check_fd(t_fd_lst **lst, int fd)
-{
-	t_fd_lst	*tmp;
-
-	if (fd < 0)
-		return (NULL);
-	tmp = *lst;
+	tmp = *list;
 	while (tmp)
 	{
-		if (tmp->fd == fd)
+		if (fd == (int)tmp->content_size)
 			return (tmp);
 		tmp = tmp->next;
 	}
-	if (!(tmp = (t_fd_lst*)ft_memalloc(sizeof(t_fd_lst))))
-		return (NULL);
-	tmp->fd = fd;
-	if (lst)
-		tmp->next = *lst;
-	*lst = tmp;
+	tmp = ft_lstnew("", fd);
+	tmp->next = *list;
+	*list = tmp;
 	return (tmp);
 }
 
-int			get_next_line(int fd, char **line)
+static int		ft_make_line(char *str, char **line)
 {
-	int					ret;
-	static t_fd_lst		*lst = NULL;
-	t_fd_lst			*tmp;
+	int i;
 
-	ret = 1;
-	if (!line)
+	i = 0;
+	if (ft_strchr(str, '\n'))
+	{
+		while (str[i] && str[i] != '\n')
+			++i;
+	}
+	else
+		i = ft_strlen(str);
+	if (i)
+		*line = ft_strndup(str, i);
+	if (str[i] == '\n')
+		return (++i);
+	return (i);
+}
+
+int				get_next_line(const int fd, char **line)
+{
+	int				len;
+	char			*str;
+	char			buf[BUFF_SIZE];
+	t_list			*begin_list;
+	static t_list	*list;
+
+	if (fd < 0 || read(fd, buf, 0))
 		return (-1);
-	if (!(tmp = check_fd(&lst, fd)))
-		return (-1);
-	if ((ret = my_read(tmp)) < 1 && !tmp->content)
-		return (ret);
-	ret = punchline(tmp, line);
-	if (ret == 0)
-		ft_memdel((void**)&tmp->content);
-	return (ret);
+	begin_list = list;
+	list = ft_check_fd(fd, &begin_list);
+	len = 0;
+	while (!ft_strchr(list->content, '\n') && (len = read(fd, buf, BUFF_SIZE)))
+		list->content = ft_strnjoin(list->content, buf, len);
+	len = ft_make_line((char*)list->content, line);
+	if (*(char*)list->content == '\0')
+	{
+		ft_memdel((void**)list);
+		return (0);
+	}
+	str = list->content;
+	list->content = ft_strdup(list->content + len);
+	free(str);
+	list = begin_list;
+	return (1);
 }

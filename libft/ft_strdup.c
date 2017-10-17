@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/05 22:48:53 by lchety            #+#    #+#             */
-/*   Updated: 2016/11/13 16:38:25 by lchety           ###   ########.fr       */
+/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
+/*   Updated: 2017/03/17 00:16:16 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 char	*ft_strdup(const char *s)
 {
-	char *ptr;
+	char *d;
 
-	ptr = ft_strnew(ft_strlen(s));
-	if (ptr == NULL)
+	if (!(d = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
 		return (NULL);
-	ft_memcpy((void *)ptr, (void *)s, ft_strlen(s));
-	return (ptr);
+	return (ft_strcpy(d, s));
 }
