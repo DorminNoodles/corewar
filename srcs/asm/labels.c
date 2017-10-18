@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/08/03 07:14:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/18 22:08:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_tab_labs    *new_label(char *line, int bytes)
   if (!(new = (t_tab_labs*)malloc(sizeof(t_tab_labs))))
       error("Error : Malloc failed\n");
   new->label = ft_strdup(name);
-  printf("label name = '%s'\n", new->label);
+//  printf("label name = '%s'\n", new->label);
   new->nb_oct = bytes;
   new->next = NULL;
   return (new);

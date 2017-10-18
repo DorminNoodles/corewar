@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 15:12:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/18 23:05:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@
 #define MAX_CHECKS				10
 
 /*
-**
-*/
+ **
+ */
 
 // typedef char	t_arg_type;
 
@@ -71,19 +71,20 @@
 #define T_LAB					8
 
 /*
-**
-*/
+ **
+ */
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
+
 typedef struct		header_s
 {
-  unsigned int		magic;
-  char				prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
+	unsigned int		magic;
+	char				prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int		prog_size;
+	char				comment[COMMENT_LENGTH + 1];
 }					header_t;
 
 
@@ -129,6 +130,7 @@ typedef struct s_op
 	int				pos_opcode;
 	int				countdown;
 }	t_op;
+
 
 typedef struct s_player
 {
@@ -185,6 +187,9 @@ typedef struct s_optab
 	//changez ce nom de variable de merde :)
 }	t_optab;
 
+extern t_optab op_tab[];
+
+
 typedef struct s_vm
 {
 	int		nb_player;
@@ -213,7 +218,6 @@ typedef struct s_vm
 	t_proc	*proc;
 }	t_vm;
 
-extern t_optab op_tab[17];
 
 void		init_vm(t_vm *vm);
 void		create_players(t_vm *vm);
@@ -272,21 +276,22 @@ void		show_proc_nb(t_vm *vm);
 void		debug_display_proc(t_vm *vm);
 
 /*
-** ------- ASM -----------
-*/
+ ** ------- ASM -----------
+ */
 
 typedef struct s_asm_env
 {
-  struct s_tab_labs *labs;
-  int              bytes;
-  int              fd;
+	struct s_tab_labs *labs;
+	int              bytes;
+	int							 size;
+	int              fd;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
 {
-  char              *label;
-  int               nb_oct;
-  struct s_tab_labs  *next;
+	char              *label;
+	int               nb_oct;
+	struct s_tab_labs  *next;
 }                   t_tab_labs;
 
 void print_labs_lst(t_tab_labs *lst);

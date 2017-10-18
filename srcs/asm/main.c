@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/08/03 06:58:25 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/18 23:05:58 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,8 +412,9 @@ int main (int argc, char **argv)
     parse(&env, line, 0);
     ft_memdel((void*)&line);
   }
-  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
-  print_labs_lst(env.labs);
+
+//  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
+  env.size = env.bytes - 1;
   create_file(&env, argv[1]);
   fd2 = open(argv[1], O_RDONLY);
   line = NULL;
