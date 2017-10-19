@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/19 04:09:21 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/19 04:59:42 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char *concat_opcode(char *ocp, int arg)
   if (!ocp)
   {
     if (!(ocp = ft_strnew(0)))
-      error("Error : Malloc failed");
+      asm_error(MALLOC_ERR, NULL);
   }
     if (arg == REG_CODE)
       ft_strcat(ocp, "01");
@@ -406,7 +406,9 @@ int main (int argc, char **argv)
   char  *line;
   t_asm_env env;
 
-  fd = open(argv[1], O_RDONLY);
+  if ((fd = open(argv[1], O_RDONLY)) == -1)
+    asm_error(SOURCE_ERR, argv[1]);
+  printf("fd = %d\n", fd);
   line = NULL;
   env.bytes = 1;
   while (get_next_line(fd, &line))
