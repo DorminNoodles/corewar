@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/18 23:05:29 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/19 04:00:09 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include "libft.h"
-
+#include "ft_printf.h"
 //-------------------------
 
 #define IND_SIZE				2
