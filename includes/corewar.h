@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/19 04:50:31 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/20 00:29:03 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ typedef struct s_proc
 	char	carry;// Mystere //edit : plus maintenant;
 	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		reg[17];
-	int		loadtime;
+	// int		loadtime;
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_proc	*next;
@@ -246,7 +246,9 @@ void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_proc *proc);
-void	show_pc_move(t_vm *vm, t_proc *proc);
+void		show_pc_move(t_vm *vm, t_proc *proc);
+void		reduce_ctd(t_vm *vm);
+int			total_lives(t_vm *vm);
 // int			*init_registre(int id);
 
 

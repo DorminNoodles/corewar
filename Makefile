@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/10/19 23:23:57 by lchety           ###   ########.fr        #
+#    Updated: 2017/10/20 00:05:20 by lchety           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -30,6 +30,7 @@ SRC_FILES_VM = main.c \
 								error.c	\
 								check_arg.c	\
 								controller.c	\
+								cycle_to_die.c	\
 								debug.c	\
 								sti.c	\
 								ld.c	\

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 01:20:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/20 00:01:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ int		total_lives(t_vm *vm)
 		i++;
 	}
 	return (sum);
-}
-
-void	reduce_ctd(t_vm *vm)
-{
-	// printf("BORDEL  %d\n", total_lives(vm));
-	if (total_lives(vm) >= NBR_LIVE || vm->ctd_check == MAX_CHECKS)
-	{
-		// printf("BORDEL\n");
-		vm->ctd -= CYCLE_DELTA;
-		vm->ctd_check = 0;
-	}
-	else
-		vm->ctd_check++;
 }
 
 int		all_died(t_vm *vm)
