@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/19 22:02:18 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/20 11:06:02 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,8 @@ typedef struct s_tab_labs
 typedef struct s_dasm_env
 {
 	int								fd;
-}
+	unsigned char 		*file;
+}										t_dasm_env;
 
 void print_labs_lst(t_tab_labs *lst);
 void create_label(t_tab_labs **labels, int bytes, char *line);
