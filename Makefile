@@ -60,7 +60,8 @@ SRC_FILES_ASM = main.c \
 								debug.c \
 								op.c \
 
-SRC_FILES_DASM = main.c
+SRC_FILES_DASM = main.c \
+				op.c
 
 INC_FILES = corewar.h
 LIB_FILES = libft.a
