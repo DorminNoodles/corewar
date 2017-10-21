@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 12:19:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 12:56:13 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,8 @@ t_player	*get_survivor(t_vm *vm)
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
-	if (proc->state == IDLE)
-		idle_state(vm, proc);
+	// if (proc->state == IDLE)
+	idle_state(vm, proc);
 	// else if (proc->state == WAIT)
 	// 	wait_state(vm, proc);
 	// else if (proc->state == START)
@@ -206,6 +206,7 @@ void	run(t_vm *vm)
 	{
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
+
 		//-------------------NCURSES
 		if (vm->ncurses)
 		{
@@ -219,6 +220,16 @@ void	run(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
+			// if (proc->id == 5)
+			// {
+			// 	printf("proc->5   pc = %d\n", proc->pc);
+			// 	if (proc->op)
+			// 	{
+			// 		printf("proc->5 opcode = %d\n", proc->op->code);
+			// 		printf("proc->5 loadtime : %d\n", proc->op->loadtime);
+			// 	}
+			// 	printf("proc 5  active : %d\n", proc->active);
+			// }
 			if (proc->active)
 			{
 				animate_proc(vm, proc);

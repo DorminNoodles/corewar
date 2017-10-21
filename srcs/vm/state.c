@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 17:26:34 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/20 00:49:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
+	// if (proc->id == 5)
+	// 	printf("IDLE_STATE\n");
 	// printf("------------WAIT_STATE------------\n");
 	if(!proc->op)
 	{
+		// if (proc->id == 5)
+		// 	printf("NO opcode\n");
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 		{
 			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
@@ -46,6 +50,8 @@ void	idle_state(t_vm *vm, t_proc *proc)
 	}
 	else
 	{
+		// if (proc->id == 5)
+		// 	printf("reduce lifetime\n");
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{

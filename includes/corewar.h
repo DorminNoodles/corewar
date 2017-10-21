@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 15:12:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/21 03:19:47 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include "libft.h"
-
+#include "ft_printf.h"
 //-------------------------
 
 #define IND_SIZE				2
-#define REG_SIZE				4
-#define DIR_SIZE				REG_SIZE
+#define REG_SIZE				1
+#define DIR_SIZE				4
 
 
 # define REG_CODE				1
@@ -60,8 +60,8 @@
 #define MAX_CHECKS				10
 
 /*
-**
-*/
+ **
+ */
 
 // typedef char	t_arg_type;
 
@@ -71,19 +71,20 @@
 #define T_LAB					8
 
 /*
-**
-*/
+ **
+ */
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
+
 typedef struct		header_s
 {
-  unsigned int		magic;
-  char				prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
+	unsigned int		magic;
+	char				prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int		prog_size;
+	char				comment[COMMENT_LENGTH + 1];
 }					header_t;
 
 
@@ -104,7 +105,7 @@ typedef struct		header_s
 #define	MAGIC_NB 4
 #define PROG_NAME 128 + 4
 #define PROG_COMS 2048 + 4
-#define	PROG_SIZE 4;
+#define	PROG_SIZE 4
 
 #define D4 0
 #define D2 1
@@ -130,6 +131,7 @@ typedef struct s_op
 	int				countdown;
 }	t_op;
 
+
 typedef struct s_player
 {
 	int		active;
@@ -149,7 +151,7 @@ typedef struct s_proc
 	char	carry;// Mystere //edit : plus maintenant;
 	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
 	int		reg[17];
-	int		loadtime;
+	// int		loadtime;
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
 	t_op	*op;
 	struct	s_proc	*next;
@@ -185,6 +187,9 @@ typedef struct s_optab
 	//changez ce nom de variable de merde :)
 }	t_optab;
 
+extern t_optab op_tab[];
+
+
 typedef struct s_vm
 {
 	int		nb_player;
@@ -213,7 +218,6 @@ typedef struct s_vm
 	t_proc	*proc;
 }	t_vm;
 
-extern t_optab op_tab[17];
 
 void		init_vm(t_vm *vm);
 void		create_players(t_vm *vm);
@@ -242,7 +246,9 @@ void		find_args(t_vm *vm, t_proc *proc, int num);
 void		get_dir(t_vm *vm, t_proc *proc, int num);
 int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_proc *proc);
-void	show_pc_move(t_vm *vm, t_proc *proc);
+void		show_pc_move(t_vm *vm, t_proc *proc);
+void		reduce_ctd(t_vm *vm);
+int			total_lives(t_vm *vm);
 // int			*init_registre(int id);
 
 
@@ -272,22 +278,35 @@ void		show_proc_nb(t_vm *vm);
 void		debug_display_proc(t_vm *vm);
 
 /*
-** ------- ASM -----------
-*/
+ ** ------- ASM -----------
+ */
+
+#define SOURCE_ERR 1
+#define MALLOC_ERR 2
+#define SIZE_ERROR 3
+#define OPEN_ERROR 4
 
 typedef struct s_asm_env
 {
-  struct s_tab_labs *labs;
-  int              bytes;
-  int              fd;
+	struct s_tab_labs *labs;
+	int              bytes;
+	int							 size;
+	int              fd;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
 {
-  char              *label;
-  int               nb_oct;
-  struct s_tab_labs  *next;
+	char              *label;
+	int               nb_oct;
+	struct s_tab_labs  *next;
 }                   t_tab_labs;
+
+typedef struct s_dasm_env
+{
+	int								fd;
+	int								sizeFile;
+	unsigned char 		*file;
+}										t_dasm_env;
 
 void print_labs_lst(t_tab_labs *lst);
 void create_label(t_tab_labs **labels, int bytes, char *line);
@@ -295,7 +314,7 @@ void create_label(t_tab_labs **labels, int bytes, char *line);
 void write_header(t_asm_env *env, char *line, int printmode);
 
 void	init_vm(t_vm *vm);
-void	error(char *str);
+void	asm_error(int err, char *str);
 
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);

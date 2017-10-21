@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:35:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/20 21:39:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ void	live(t_vm *vm, t_proc *proc)
 	}
 	else
 	{
+		return ;
 		// printf("Live for Unknown Player... \n");
 	}
 
-	if (0x4 & vm->verbosity)
+	if (4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
 		printf("\n");
 	}
+	if (5 & vm->verbosity)
+		printf("Player %d (helltrain) is said to be alive\n", num);
 }
