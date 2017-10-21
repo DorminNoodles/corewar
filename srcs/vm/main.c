@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 02:04:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 12:19:42 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 	proc->pc++;
 
-
-	if (vm->debug)
-	{
-		printf("- start -\n");
-		printf("%x\n", (unsigned char)vm->ram[proc->pc - 2].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc - 1].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 1].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 2].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 3].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 4].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 5].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 6].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 7].mem);
-		printf("%x\n", (unsigned char)vm->ram[proc->pc + 8].mem);
-
-		printf("- end -\n");
-	}
 	value = (unsigned char)vm->ram[proc->pc].mem;
 	if (vm->debug)
 		printf("Value => %x\n", value);
@@ -220,7 +202,7 @@ void	run(t_vm *vm)
 {
 	t_proc	*proc;
 
-	while (!all_died(vm))
+	while (!process_living(vm))
 	{
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);

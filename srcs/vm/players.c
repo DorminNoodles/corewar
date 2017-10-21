@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 01:20:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 12:54:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,52 @@ void	reduce_ctd(t_vm *vm)
 		// printf("BORDEL\n");
 		vm->ctd -= CYCLE_DELTA;
 		vm->ctd_check = 0;
+		if (2 & vm->verbosity)
+			printf("Cycle to die is now %d\n", vm->ctd);
 	}
 	else
 		vm->ctd_check++;
 }
 
-int		all_died(t_vm *vm)
+// int		process_living(t_vm *vm)
+// {
+// 	int i;
+// 	int cnt;
+//
+// 	i = 0;
+// 	cnt = 0;
+// 	if (vm->cycle == vm->next_ctd)
+// 	{
+// 		reduce_ctd(vm);
+// 		vm->next_ctd += vm->ctd;
+// 		undertaker(vm);
+// 		vm->last_one = get_survivor(vm);
+// 		reset_life_signal(vm);
+//
+// 	}
+// 	return (0);
+// }
+
+int		process_living(t_vm *vm)
 {
-	int i;
-	int cnt;
+	int		i;
+	t_proc	*tmp;
 
 	i = 0;
-	cnt = 0;
-	if (vm->cycle == vm->next_ctd)
+
+	if (vm->cycle != vm->next_ctd)
+		return (1);
+	while (i <= MAX_PLAYERS)
 	{
-		reduce_ctd(vm);
-		vm->next_ctd += vm->ctd;
-		undertaker(vm);
-		vm->last_one = get_survivor(vm);
-		reset_life_signal(vm);
-		while (i <= MAX_PLAYERS && cnt == 0)
+		if (vm->player[i].active)
 		{
-			if (vm->player[i].active)
-				cnt++;
-			i++;
+			tmp = vm->player[i].proc;
+			while (tmp)
+			{
+				printf("One proc\n");
+				tmp = tmp->next;
+			}
 		}
-		if (!cnt)
-			return (1);
 	}
-	return (0);
+
 }
