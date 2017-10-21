@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 15:30:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 17:37:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_player
 	int		active;
 	// int		id;
 	int		life_signal;
+	int		last_live;
 	char	*file_name;
 }	t_player;
 
