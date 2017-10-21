@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 03:19:47 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/21 15:30:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct s_vm
 	int		dump;
 	int		debug;
 	int		verbosity;
+	int		lives_in_cycle;
 	// char	*mem;
 	char	mem[MEM_SIZE];
 	t_mem	ram[MEM_SIZE];
@@ -248,7 +249,8 @@ int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_proc *proc);
 void		show_pc_move(t_vm *vm, t_proc *proc);
 void		reduce_ctd(t_vm *vm);
-int			total_lives(t_vm *vm);
+int			process_living(t_vm *vm);
+void		set_ctd(t_vm *vm);
 // int			*init_registre(int id);
 
 

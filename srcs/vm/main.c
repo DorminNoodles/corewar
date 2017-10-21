@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 12:56:13 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 15:03:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	run(t_vm *vm)
 {
 	t_proc	*proc;
 
-	while (!process_living(vm))
+	while (process_living(vm))
 	{
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);

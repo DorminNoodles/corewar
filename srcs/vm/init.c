@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/11 17:38:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 15:24:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		get_prog_size(char *data)
 void	init_vm(t_vm *vm)
 {
 	vm->nb_player = 0;
+	vm->lives_in_cycle = 0;
 	vm->ctd = CYCLE_TO_DIE;
 	vm->cycle = 0;
 	vm->cycle = 0;

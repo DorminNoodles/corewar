@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 01:55:16 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 15:41:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,26 @@ int		is_pc(t_vm *vm, int nb)
 	while (tmp)
 	{
 		if (tmp->pc == nb && tmp->active)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int		process_living(t_vm *vm)
+{
+	int		i;
+	t_proc	*tmp;
+
+	i = 0;
+	tmp = vm->proc;
+	if (vm->cycle != vm->next_ctd)
+		return (1);
+	set_ctd(vm);
+	kill_proc(vm);
+	while (tmp)
+	{
+		if (tmp->active)
 			return (1);
 		tmp = tmp->next;
 	}
