@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/20 21:27:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 03:19:47 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 //-------------------------
 
 #define IND_SIZE				2
-#define REG_SIZE				4
-#define DIR_SIZE				REG_SIZE
+#define REG_SIZE				1
+#define DIR_SIZE				4
 
 
 # define REG_CODE				1
@@ -105,7 +105,7 @@ typedef struct		header_s
 #define	MAGIC_NB 4
 #define PROG_NAME 128 + 4
 #define PROG_COMS 2048 + 4
-#define	PROG_SIZE 4;
+#define	PROG_SIZE 4
 
 #define D4 0
 #define D2 1
@@ -283,6 +283,8 @@ void		debug_display_proc(t_vm *vm);
 
 #define SOURCE_ERR 1
 #define MALLOC_ERR 2
+#define SIZE_ERROR 3
+#define OPEN_ERROR 4
 
 typedef struct s_asm_env
 {
