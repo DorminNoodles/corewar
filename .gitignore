@@ -1,7 +1,6 @@
 *.o
 obj/
 build/
-corewar
 asm
 output
 diff
