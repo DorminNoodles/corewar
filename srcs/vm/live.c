@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/20 21:39:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 17:37:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	live(t_vm *vm, t_proc *proc)
 	if (!vm->ncurses && vm->debug)
 		printf(">>>>>ENTER_LIVE<<<<< : Cycle > %d\n", vm->cycle);
 	int		num;
+
+	vm->lives_in_cycle++;
+	proc->last_live = vm->cycle + 1;
 
 	num = 0;
 	// printf("NUM player => %d\n", proc->op->ar[0]);
@@ -35,7 +38,7 @@ void	live(t_vm *vm, t_proc *proc)
 	{
 		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
-		proc->last_live = vm->cycle + 1;
+		vm->player[num].last_live = vm->cycle;
 		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
 	}
 	else

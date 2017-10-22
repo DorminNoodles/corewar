@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/17 01:50:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/21 17:37:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ void	init_player(t_vm *vm)
 	{
 		vm->player[i].active = 0;
 		vm->player[i].life_signal = 0;
+		vm->player[i].last_live = 0;
 		vm->player[i].file_name = NULL;
 		i++;
 	}
