@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 17:37:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 00:30:18 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ typedef struct s_optab
 	char	*inst;
 	void	(*func)(t_vm *vm, t_proc *proc);
 	int		nb_arg;
-	int		ocp;
+	int		ocp[3];
 	int		code;
 	int		loadtime;
 	char	*name;
