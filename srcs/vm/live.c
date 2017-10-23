@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 17:37:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 00:46:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	live(t_vm *vm, t_proc *proc)
 	num = proc->op->ar[0] * -1;
 
 	// printf("fuck num %d\n", num);
+	if (4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		printf("\n");
+	}
 
 	if (num >= 1 && num <= vm->nb_player)
 	{
@@ -40,18 +45,8 @@ void	live(t_vm *vm, t_proc *proc)
 		vm->player[num].life_signal++;
 		vm->player[num].last_live = vm->cycle;
 		vm->ram[proc->op->pos_opcode].live = BLING_LIVE;
-	}
-	else
-	{
-		return ;
-		// printf("Live for Unknown Player... \n");
+		if (5 & vm->verbosity)
+			printf("Player %d (helltrain) is said to be alive\n", num);
 	}
 
-	if (4 & vm->verbosity)
-	{
-		show_operations(vm, proc);
-		printf("\n");
-	}
-	if (5 & vm->verbosity)
-		printf("Player %d (helltrain) is said to be alive\n", num);
 }

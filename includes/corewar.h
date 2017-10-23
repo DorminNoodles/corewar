@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 00:30:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 01:21:35 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,9 +254,9 @@ int			process_living(t_vm *vm);
 void		set_ctd(t_vm *vm);
 // int			*init_registre(int id);
 
-
-
-/*--------INSTRUCTIONS----------*/
+/*
+ ** --------INSTRUCTIONS----------
+ */
 void		and(t_vm *vm, t_proc *proc);
 void		ld(t_vm *vm, t_proc *proc);
 void		ldi(t_vm *vm, t_proc *proc);
@@ -269,6 +269,7 @@ void		st(t_vm *vm, t_proc *proc);
 void		sub(t_vm *vm, t_proc *proc);
 void		ft_fork(t_vm *vm, t_proc *proc);
 void		zjmp(t_vm *vm, t_proc *proc);
+void		lld(t_vm *vm, t_proc *proc);
 
 /*--------NCURSES---------*/
 void		init_ncurses(WINDOW **w);
