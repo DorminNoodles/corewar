@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 01:21:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 08:23:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,7 @@ void write_header(t_asm_env *env, char *line, int printmode);
 void	init_vm(t_vm *vm);
 void	asm_error(int err, char *str);
 
+int reverse_int(int nb);
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
 
