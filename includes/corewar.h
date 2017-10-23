@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 08:23:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 22:52:21 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,11 +317,43 @@ void create_label(t_tab_labs **labels, int bytes, char *line);
 
 void write_header(t_asm_env *env, char *line, int printmode);
 
+
 void	init_vm(t_vm *vm);
 void	asm_error(int err, char *str);
-
 int reverse_int(int nb);
 /*-------DEBUG-------*/
 void	show_mem(t_vm *vm);
+
+
+/* ------------------- DECOMPILER ------------------
+ **
+*/
+
+/*
+ ** ------ Display instructions ---------
+*/
+int print_dir4(int fd, unsigned char *str);
+int print_dir2(int fd, unsigned char *str);
+int print_reg(int fd, int reg);
+int print_ind(int fd, unsigned char *str);
+int print_args(int fd, int inst, unsigned char *str);
+
+/*
+ ** ------ Error -------
+*/
+void dasm_error(int err, char *str);
+
+/*
+ ** ----- Create file -----
+*/
+int ft_bin_len(unsigned char *str);
+unsigned char *open_bin(t_dasm_env *env, int fd);
+void create_file_cor(t_dasm_env *env, char *str);
+
+/*
+ ** ----- Get types ---
+*/
+int get_uint32(unsigned char *buff);
+short get_uint16(unsigned char *buff);
 
 #endif
