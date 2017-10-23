@@ -6,10 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 01:19:08 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 01:20:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/10/23 22:46:11 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "corewar.h"
 
 void	lld(t_vm *vm, t_proc *proc)
 {

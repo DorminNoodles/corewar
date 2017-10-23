@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/10/20 21:27:22 by lchety           ###   ########.fr        #
+#    Updated: 2017/10/23 22:47:16 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -53,6 +53,7 @@ SRC_FILES_VM = main.c \
 								state.c	\
 								zjmp.c \
 								op.c \
+								lld.c
 
 SRC_FILES_ASM = main.c \
 								error.c \
@@ -62,7 +63,12 @@ SRC_FILES_ASM = main.c \
 								op.c \
 
 SRC_FILES_DASM = main.c \
-				op.c
+				op.c \
+				error.c \
+				file.c \
+				get.c \
+				display_args.c
+
 
 INC_FILES = corewar.h
 LIB_FILES = libft.a
