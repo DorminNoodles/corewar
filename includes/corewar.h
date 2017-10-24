@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/24 17:38:37 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 18:11:26 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,7 @@ void op_ocp(t_asm_env *env, int i, char *line);
 */
 void write_reg(t_asm_env *env, char *line);
 void write_dir(t_asm_env *env, char *line, int i);
+void write_dir_short();
 void write_ind(t_asm_env *env, char *line);
 void write_args(t_asm_env *env, char *line, int i);
 
@@ -360,7 +361,7 @@ int reverse_int(int nb);
  ** ------- Error -------
 */
 void asm_error(int err, char *str);
-void syntax_error(char *line, int nb);
+void error(char *line, int nb);
 
 /* ------------------- DECOMPILER ------------------
  **
