@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 17:58:39 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 18:13:01 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@ void	write_reg(t_asm_env *env, char *line)
 	ft_putchar_fd(reg, env->fd);
 }
 
+void	write_dir_short()
+{
+	if (line[a] == LABEL_CHAR)
+	{
+		label = take_word(line + 1);
+		dir2o = dist_label(env, label);
+	}
+	else
+		dir2o = nb;
+	dir2o = reverse_short(dir2o);
+	write(env->fd, &dir2o, 2);s
+
+}
+
 void	write_dir(t_asm_env *env, char *line, int i)
 {
 	int		a;
@@ -45,7 +59,6 @@ void	write_dir(t_asm_env *env, char *line, int i)
 			++a;
 		str = ft_strndup(line, a);
 	}
-
 	if (i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14)
 	{
 		if (line[a] == LABEL_CHAR)
