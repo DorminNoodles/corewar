@@ -6,11 +6,22 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/19 05:00:02 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 14:01:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+int  dist_label(t_asm_env *env, char *label)
+{
+  t_tab_labs *tmp;
+
+  tmp = env->labs;
+  while (ft_strcmp(label, tmp->label))
+    tmp = tmp->next;
+//  printf("label find = '%s' with pos = %d\n", tmp->label, tmp->nb_oct);
+  return (tmp->nb_oct - env->bytes);
+}
 
 t_tab_labs    *new_label(char *line, int bytes)
 {

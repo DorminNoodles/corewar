@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/19 04:59:42 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 15:08:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,6 @@ char *take_word(char *str)
   }
   word[a] = '\0';
   return (word);
-}
-
-char  *moove_on_line(char *line)
-{
-  int a;
-
-  a = 0;
-  while (ft_isalpha(line[a]) || ft_isdigit(line[a]))
-    ++a;
-  while(line[a] == ' ' || line[a] == '\t')
-    ++a;
-  return (line + a);
 }
 
 int   detect_arg(char *line)
@@ -100,214 +88,6 @@ int  goto_nextarg(char *line)
   while(line[a] && (line[a] == ' ' || line[a] == '\t'))
     ++a;
   return (a);
-}
-
-void  write_reg(t_asm_env *env, char *line)
-{
-  int a;
-  char reg;
-  char *str;
-
-  a = 0;
-  line++;
-  while (line[a] && ft_isdigit(line[a]))
-    ++a;
-  str = ft_strndup(line, a);
-  reg = ft_atoi(str);
-  ft_putchar_fd(reg, env->fd);
-}
-
-int  reverse_int(int nb)
-{
-return (nb & 0x000000FFU) << 24 | (nb & 0x0000FF00U) << 8 |
-       (nb & 0x00FF0000U) >> 8 | (nb & 0xFF000000U) >> 24;
-}
-
-short reverse_short(short nb)
-{
-    return ((nb & 0xFFU) << 8 | (nb & 0xFF00U) >> 8);
-}
-
-int  dist_label(t_asm_env *env, char *label)
-{
-  t_tab_labs *tmp;
-
-  tmp = env->labs;
-  while (ft_strcmp(label, tmp->label))
-    tmp = tmp->next;
-//  printf("label find = '%s' with pos = %d\n", tmp->label, tmp->nb_oct);
-  return (tmp->nb_oct - env->bytes);
-}
-
-void  write_dir(t_asm_env *env, char *line, int i)
-{
-  int a;
-  int dir4o;
-  short dir2o;
-  char  *str;
-  char *label;
-  int nb;
-
-  a = 0;
-  line++;
-  nb = ft_atoi(line);
-   if (line[a] != LABEL_CHAR)
-   {
-     while (line[a] && ft_isdigit(line[a]))
-       ++a;
-     str = ft_strndup(line, a);
-   }
-
-  if (i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14)
-  {
-    if (line[a] == LABEL_CHAR)
-    {
-      label = take_word(line + 1);
-      dir4o = dist_label(env, label);
-    }
-    else
-      dir4o = nb;
-    dir4o = reverse_int(dir4o);
-    write(env->fd, &dir4o, 4);
-  }
-  else
-  {
-    if (line[a] == LABEL_CHAR)
-    {
-      label = take_word(line + 1);
-      dir2o = dist_label(env, label);
-    }
-    else
-      dir2o = nb;
-    dir2o = reverse_short(dir2o);
-    write(env->fd, &dir2o, 2);
-  }
-}
-
-void  write_ind(t_asm_env *env, char *line)
-{
-  int a;
-  short ind;
-  char *str;
-
-  a = 0;
-  if (ft_isdigit(*line))
-  {
-    while (line[a] && ft_isdigit(line[a]))
-      ++a;
-    str = ft_strndup(line, a);
-    ind = ft_atoi(str);
-  }
-  else
-  {
-    str = take_word(line + 1);
-    ind = dist_label(env, str);
-  }
-  ind = reverse_short(ind);
-  write(env->fd, &ind, 2);
-//  print_labs_lst(env->labs);
-}
-
-void  write_args(t_asm_env *env, char *line, int i)
-{
-  int a;
-  int res;
-
-  res = 0;
-  a = 0;
-  while (line[a])
-  {
-    res = detect_arg(line + a);
-    if (res == REG_CODE)
-      write_reg(env, line + a);
-    else if (res == DIR_CODE)
-      write_dir(env, line + a, i);
-    else if (res == IND_CODE)
-      write_ind(env, line + a);
-    a += goto_nextarg(line + a);
-  }
-
-}
-
-void  op_ocp(t_asm_env *env, int i, char *line)
-{
-  int  a;
-  int res;
-  char *ocp;
-
-  a = 0;
-  res = 0;
-  ocp = NULL;
-  ft_putchar_fd(i + 1, env->fd);
-  line = moove_on_line(line);
-  while (line[a])
-  {
-    res = detect_arg(line + a);
-    ocp = concat_opcode(ocp, res);
-    a += goto_nextarg(line + a);
-  }
-  write_ocp(env, ocp);
-  write_args(env, line, i + 1);
-}
-
-void  op_no_ocp(t_asm_env *env, int i, char *line)
-{
-  int  a;
-  int res;
-
-  a = 0;
-  res = 0;
-  ft_putchar_fd(i + 1, env->fd);
-  line = moove_on_line(line);
-  while (line[a])
-  {
-    res = detect_arg(line + a);
-    a += goto_nextarg(line + a);
-  }
-  write_args(env, line, i + 1);
-}
-
-int analyse_args(int oct, char *line, int i)
-{
-  if (*line == 'r')
-    oct += 1;
-  else if (*line == '%')
-  {
-    if ((i == 0 || i == 1 || i == 5 || i == 6 || i == 7 || i == 13))
-      oct += 4;
-    else
-      oct += 2;
-  }
-  else if (*line == ':' || ft_isdigit(*line))
-    oct += 2;
-  return (oct);
-}
-
-int  analyse(int oct, char *line, int i)
-{
-  int a;
-
-  a = 0;
-//  printf("'%s'\n", line);
-  while (line[a] && line[a] != '\n')
-  {
-    while (line[a] == ':')
-      ++a;
-    while (line[a] && (line[a] == '-' || ft_isalpha(line[a]) || ft_isdigit(line[a])))
-      ++a;
-    while (line[a] && (line[a] == ' ' || line[a] == '\t'))
-      ++a;
-    if (line[a] == ',')
-      ++a;
-    oct = analyse_args(oct, line + a, i);
-    if (line[a] == ',')
-      a++; // pour la vrigule tmts
-    if (line[a] == '%')
-      a++;
-    if (line[a] == '#')
-      return (oct);
-  }
-    return (oct);
 }
 
 int find_op(t_asm_env *env, char *word, char *line, int printmode)
@@ -408,7 +188,6 @@ int main (int argc, char **argv)
 
   if ((fd = open(argv[1], O_RDONLY)) == -1)
     asm_error(SOURCE_ERR, argv[1]);
-  printf("fd = %d\n", fd);
   line = NULL;
   env.bytes = 1;
   while (get_next_line(fd, &line))

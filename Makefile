@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/10/23 22:47:16 by rfulop           ###   ########.fr        #
+#    Updated: 2017/10/24 15:51:17 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -61,13 +61,16 @@ SRC_FILES_ASM = main.c \
 								header.c \
 								debug.c \
 								op.c \
+								reverse.c \
+								analyse.c \
+								display.c
 
 SRC_FILES_DASM = main.c \
 				op.c \
 				error.c \
 				file.c \
 				get.c \
-				display_args.c
+				display_args.c \
 
 
 INC_FILES = corewar.h

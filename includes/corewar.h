@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 22:52:21 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 15:43:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,67 @@ typedef struct s_tab_labs
 	struct s_tab_labs  *next;
 }                   t_tab_labs;
 
+void print_labs_lst(t_tab_labs *lst);
+void create_label(t_tab_labs **labels, int bytes, char *line);
+
+void write_header(t_asm_env *env, char *line, int printmode);
+
+int detect_arg(char *line);
+char *concat_opcode(char *ocp, int arg);
+int goto_nextarg(char *line);
+void write_ocp(t_asm_env *env, char *ocp);
+char *take_word(char *str);
+
+/*
+ ** -------- Analyse -------------
+*/
+int analyse(int oct, char *line, int i);
+int analyse_args(int oct, char *line, int i);
+void op_no_ocp(t_asm_env *env, int i, char *line);
+void op_ocp(t_asm_env *env, int i, char *line);
+
+/*
+ ** ---------- Display ------------
+*/
+void write_reg(t_asm_env *env, char *line);
+void write_dir(t_asm_env *env, char *line, int i);
+void write_ind(t_asm_env *env, char *line);
+void write_args(t_asm_env *env, char *line, int i);
+
+/*
+ ** -------- Reverse types ----------
+*/
+int reverse_int(int nb);
+short reverse_short(short nb);
+
+/*
+ ** -------- Header -------------
+*/
+void write_comment(t_asm_env *env, char *line);
+void write_name(t_asm_env *env, char *line);
+void write_headr(t_asm_env *env, char *line, int printmode);
+
+/*
+ ** --------- Labels ------------
+*/
+t_tab_labs *new_label(char *line, int bytes);
+void create_label(t_tab_labs **labels, int bytes, char *line);
+int dist_label(t_asm_env *env, char *label);
+
+void	init_vm(t_vm *vm);
+void	asm_error(int err, char *str);
+int reverse_int(int nb);
+
+/*
+ ** ------- Error -------
+*/
+void asm_error(int err, char *str);
+
+
+/* ------------------- DECOMPILER ------------------
+ **
+*/
+
 typedef struct s_dasm_env
 {
 	int								fd;
@@ -312,22 +373,6 @@ typedef struct s_dasm_env
 	unsigned char 		*file;
 }										t_dasm_env;
 
-void print_labs_lst(t_tab_labs *lst);
-void create_label(t_tab_labs **labels, int bytes, char *line);
-
-void write_header(t_asm_env *env, char *line, int printmode);
-
-
-void	init_vm(t_vm *vm);
-void	asm_error(int err, char *str);
-int reverse_int(int nb);
-/*-------DEBUG-------*/
-void	show_mem(t_vm *vm);
-
-
-/* ------------------- DECOMPILER ------------------
- **
-*/
 
 /*
  ** ------ Display instructions ---------
