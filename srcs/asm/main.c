@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 15:08:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 17:37:27 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,17 +184,21 @@ int main (int argc, char **argv)
   int   fd;
   int   fd2;
   char  *line;
+  int nLine;
   t_asm_env env;
 
   if ((fd = open(argv[1], O_RDONLY)) == -1)
     asm_error(SOURCE_ERR, argv[1]);
   line = NULL;
   env.bytes = 1;
+  nLine = 0;
   while (get_next_line(fd, &line))
   {
    // printf("%s\n", line);
+   syntax_error(line, nLine);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
+    ++nLine;
   }
 
 //  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);

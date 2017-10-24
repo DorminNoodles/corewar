@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/24 15:43:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/24 17:38:37 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,7 +360,7 @@ int reverse_int(int nb);
  ** ------- Error -------
 */
 void asm_error(int err, char *str);
-
+void syntax_error(char *line, int nb);
 
 /* ------------------- DECOMPILER ------------------
  **
