@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/24 17:44:00 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/26 03:22:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	asm_error(int err, char *str)
 	exit(EXIT_FAILURE);
 }
 
-void error(char *line, int nb)
+void line_error(char *line, int nb)
 {
 	printf("line = %s\n", line);
 }

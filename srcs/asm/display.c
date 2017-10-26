@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 18:13:01 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/26 04:01:38 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	write_reg(t_asm_env *env, char *line)
 	ft_putchar_fd(reg, env->fd);
 }
 
-void	write_dir_short()
+void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
 {
+	char *label;
+	short dir2o;
+
 	if (line[a] == LABEL_CHAR)
 	{
 		label = take_word(line + 1);
@@ -37,17 +40,28 @@ void	write_dir_short()
 	else
 		dir2o = nb;
 	dir2o = reverse_short(dir2o);
-	write(env->fd, &dir2o, 2);s
+	write(env->fd, &dir2o, 2);
+}
 
+void write_dir_int(t_asm_env *env, char *line, int nb, int a)
+{
+	int dir4o;
+	char *label;
+
+	if (line[a] == LABEL_CHAR)
+	{
+		label = take_word(line + 1);
+		dir4o = dist_label(env, label);
+	}
+	else
+		dir4o = nb;
+	dir4o = reverse_int(dir4o);
+	write(env->fd, &dir4o, 4);
 }
 
 void	write_dir(t_asm_env *env, char *line, int i)
 {
 	int		a;
-	int		dir4o;
-	short	dir2o;
-	char	*str;
-	char	*label;
 	int		nb;
 
 	a = 0;
@@ -57,32 +71,11 @@ void	write_dir(t_asm_env *env, char *line, int i)
 	{
 		while (line[a] && ft_isdigit(line[a]))
 			++a;
-		str = ft_strndup(line, a);
 	}
 	if (i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14)
-	{
-		if (line[a] == LABEL_CHAR)
-		{
-			label = take_word(line + 1);
-			dir4o = dist_label(env, label);
-		}
-		else
-			dir4o = nb;
-		dir4o = reverse_int(dir4o);
-		write(env->fd, &dir4o, 4);
-	}
+		write_dir_int(env, line, nb, a);
 	else
-	{
-		if (line[a] == LABEL_CHAR)
-		{
-			label = take_word(line + 1);
-			dir2o = dist_label(env, label);
-		}
-		else
-			dir2o = nb;
-		dir2o = reverse_short(dir2o);
-		write(env->fd, &dir2o, 2);
-	}
+		write_dir_short(env, line, nb, a);
 }
 
 void	write_ind(t_asm_env *env, char *line)

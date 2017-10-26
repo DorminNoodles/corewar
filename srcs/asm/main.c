@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 17:44:39 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/26 03:23:53 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int main (int argc, char **argv)
   while (get_next_line(fd, &line))
   {
    // printf("%s\n", line);
-    error(line, nLine);
+    line_error(line, nLine);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
     ++nLine;
