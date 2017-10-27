@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/26 04:01:38 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/27 02:58:46 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	write_reg(t_asm_env *env, char *line)
 
 void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
 {
-	char *label;
-	short dir2o;
+	char	*label;
+	short	dir2o;
 
 	if (line[a] == LABEL_CHAR)
 	{
@@ -43,10 +43,10 @@ void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
 	write(env->fd, &dir2o, 2);
 }
 
-void write_dir_int(t_asm_env *env, char *line, int nb, int a)
+void	write_dir_int(t_asm_env *env, char *line, int nb, int a)
 {
-	int dir4o;
-	char *label;
+	int		dir4o;
+	char	*label;
 
 	if (line[a] == LABEL_CHAR)
 	{
@@ -99,24 +99,4 @@ void	write_ind(t_asm_env *env, char *line)
 	}
 	ind = reverse_short(ind);
 	write(env->fd, &ind, 2);
-}
-
-void	write_args(t_asm_env *env, char *line, int i)
-{
-	int	a;
-	int	res;
-
-	res = 0;
-	a = 0;
-	while (line[a])
-	{
-		res = detect_arg(line + a);
-		if (res == REG_CODE)
-			write_reg(env, line + a);
-		else if (res == DIR_CODE)
-			write_dir(env, line + a, i);
-		else if (res == IND_CODE)
-			write_ind(env, line + a);
-		a += goto_nextarg(line + a);
-	}
 }

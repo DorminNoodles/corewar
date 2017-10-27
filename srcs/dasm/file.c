@@ -6,23 +6,23 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/23 21:57:43 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/27 03:48:25 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int ft_bin_len(unsigned char *str)
+int				ft_bin_len(unsigned char *str)
 {
-	int i;
+	int		i;
 
-	i  = 0;
+	i = 0;
 	while (str[i])
 		++i;
 	return (i);
 }
 
-unsigned char *open_bin(t_dasm_env *env, int fd)
+unsigned char	*open_bin(t_dasm_env *env, int fd)
 {
 	unsigned char *ret;
 
@@ -34,12 +34,12 @@ unsigned char *open_bin(t_dasm_env *env, int fd)
 	return (ret);
 }
 
-void create_file_cor(t_dasm_env *env, char *str)
+void			create_file_cor(t_dasm_env *env, char *str)
 {
-	int fd;
-	int len;
-	char *tmp;
-	char *name;
+	int		fd;
+	int		len;
+	char	*tmp;
+	char	*name;
 
 	len = ft_strlen(str) - 4;
 	tmp = ft_strndup(str, len);

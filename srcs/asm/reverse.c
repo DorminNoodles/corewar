@@ -6,19 +6,19 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 13:44:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/27 03:42:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int  reverse_int(int nb)
+int		reverse_int(int nb)
 {
-return (nb & 0x000000FFU) << 24 | (nb & 0x0000FF00U) << 8 |
-       (nb & 0x00FF0000U) >> 8 | (nb & 0xFF000000U) >> 24;
+	return (nb & 0x000000FFU) << 24 | (nb & 0x0000FF00U) << 8 |
+	(nb & 0x00FF0000U) >> 8 | (nb & 0xFF000000U) >> 24;
 }
 
-short reverse_short(short nb)
+short	reverse_short(short nb)
 {
-    return ((nb & 0xFFU) << 8 | (nb & 0xFF00U) >> 8);
+	return ((nb & 0xFFU) << 8 | (nb & 0xFF00U) >> 8);
 }
