@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/26 03:23:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/28 11:06:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char *take_word(char *str)
     word[a] = str[a];
     ++a;
   }
-  word[a] = '\0';
   return (word);
 }
 
@@ -53,7 +52,7 @@ char *concat_opcode(char *ocp, int arg)
   if (!ocp)
   {
     if (!(ocp = ft_strnew(0)))
-      asm_error(MALLOC_ERR, NULL);
+      asm_error(MALLOC_ERR, NULL, 0, 0);
   }
     if (arg == REG_CODE)
       ft_strcat(ocp, "01");
@@ -179,6 +178,16 @@ void  create_file(t_asm_env *env, char *str)
   env->fd = fd;
 }
 
+int check_name(char *str)
+{
+  int size;
+
+  size = ft_strlen(str);
+  if (size < 2)
+    return 0;
+  return (str[size - 2] == '.' && str[size - 1] == 's' ? 1 : 0);
+}
+
 int main (int argc, char **argv)
 {
   int   fd;
@@ -188,7 +197,9 @@ int main (int argc, char **argv)
   t_asm_env env;
 
   if ((fd = open(argv[1], O_RDONLY)) == -1)
-    asm_error(SOURCE_ERR, argv[1]);
+    asm_error(SOURCE_ERR, argv[1], 0, 0);
+  if (!check_name(argv[1]))
+    asm_error(FILE_ERROR, argv[1], 0, 0);
   line = NULL;
   env.bytes = 1;
   nLine = 0;
@@ -200,7 +211,6 @@ int main (int argc, char **argv)
     ft_memdel((void*)&line);
     ++nLine;
   }
-
 //  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
   env.size = env.bytes - 1;
   create_file(&env, argv[1]);

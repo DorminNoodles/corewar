@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/26 03:22:21 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/28 10:59:10 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,11 +284,15 @@ void		debug_display_proc(t_vm *vm);
 /*
  ** ------- ASM -----------
  */
-
+// asm_error(int ERROR, char *str, int line, int column)
 #define SOURCE_ERR 1
 #define MALLOC_ERR 2
 #define SIZE_ERROR 3
 #define OPEN_ERROR 4
+#define FILE_ERROR 5
+#define INST_ERROR 6
+#define LEX_ERROR 7
+
 
 typedef struct s_asm_env
 {
@@ -354,13 +358,12 @@ void create_label(t_tab_labs **labels, int bytes, char *line);
 int dist_label(t_asm_env *env, char *label);
 
 void	init_vm(t_vm *vm);
-void	asm_error(int err, char *str);
 int reverse_int(int nb);
 
 /*
  ** ------- Error -------
 */
-void asm_error(int err, char *str);
+void asm_error(int err, char *str, int line, int column);
 void line_error(char *line, int nb);
 
 /* ------------------- DECOMPILER ------------------
