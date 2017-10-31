@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/27 02:57:09 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/31 14:05:02 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	write_args(t_asm_env *env, char *line, int i)
 		res = detect_arg(line + a);
 		if (res == REG_CODE)
 			write_reg(env, line + a);
-		else if (res == DIR_CODE)
+    else if (res == DIR_CODE)
 			write_dir(env, line + a, i);
 		else if (res == IND_CODE)
 			write_ind(env, line + a);
@@ -105,20 +105,20 @@ int  analyse(int oct, char *line, int i)
   a = 0;
   while (line[a] && line[a] != '\n')
   {
-    while (line[a] == ':')
+    while (line[a] == LABEL_CHAR)
       ++a;
     while (line[a] && (line[a] == '-' || ft_isalpha(line[a]) || ft_isdigit(line[a])))
       ++a;
     while (line[a] && (line[a] == ' ' || line[a] == '\t'))
       ++a;
-    if (line[a] == ',')
+    if (line[a] == SEPARATOR_CHAR)
       ++a;
     oct = analyse_args(oct, line + a, i);
-    if (line[a] == ',')
+    if (line[a] == SEPARATOR_CHAR)
       a++; // pour la vrigule tmts
-    if (line[a] == '%')
+    if (line[a] == DIRECT_CHAR)
       a++;
-    if (line[a] == '#')
+    if (line[a] == COMMENT_CHAR)
       return (oct);
   }
     return (oct);

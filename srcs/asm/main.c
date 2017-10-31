@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/28 11:06:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/31 14:04:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ char *take_word(char *str)
 
   a = 0;
   len = 0;
-  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR)
+  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR && str[len] != LABEL_CHAR)
+    ++len;
+  if (str[len] == LABEL_CHAR)
     ++len;
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
     exit (0);
+  if (str[len] == LABEL_CHAR)
+    word[len -1] = LABEL_CHAR;
   word[len] = '\0';
   while (a != len)
   {
@@ -130,33 +134,32 @@ void parse(t_asm_env *env, char *line, int printmode)
   if (line && line[0] != '#')
   {
     a = 0;
-    while (line[a] == ' ' || line[a] == '\t')
+    while (line[a] && (line[a] == ' ' || line[a] == '\t'))
       ++a;
     if (!line[a] || line[a] == '#')
       return ;
     word = take_word(line + a);
     if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
       write_header(env, line, printmode);
-      else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
-      {
+    else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
+    {
 //    bullshit pour tester si le compteur d'octets fonctionne
 //    on recuperera les label et leur postition soon
         if (!printmode)
           create_label(&env->labs , env->bytes, line + a);
         //  env->labs = create_label(&env->labs , env->bytes, line + a);
-        while(ft_isalpha(line[a]) || ft_isdigit(line[a]))
+
+        while(line[a] && (ft_isalpha(line[a]) || ft_isdigit(line[a])))
           ++a;
-        while (line[a] == ' ' || line[a] == '\t' || line[a] == ':')
+        while (line[a] && (line[a] == ' ' || line[a] == '\t' || line[a] == ':'))
           ++a;
         free(word);
         word = take_word(line + a);
         if (*word)
           env->bytes += find_op(env, word, line + a, printmode);
-        }
-      else
-      {
-        env->bytes += find_op(env, word, line + a, printmode);
       }
+    else
+      env->bytes += find_op(env, word, line + a, printmode);
       free(word);
     }
 //    printf("bytes = %d\n", env->bytes);
@@ -202,11 +205,11 @@ int main (int argc, char **argv)
     asm_error(FILE_ERROR, argv[1], 0, 0);
   line = NULL;
   env.bytes = 1;
+  env.labs = NULL;
   nLine = 0;
   while (get_next_line(fd, &line))
   {
-   // printf("%s\n", line);
-    line_error(line, nLine);
+//    line_error(line, nLine);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
     ++nLine;
@@ -219,7 +222,6 @@ int main (int argc, char **argv)
   env.bytes = 1;
   while (get_next_line(fd2, &line))
   {
-  //  printf("line = '%s'\n", line);
     parse(&env, line, 1);
     ft_memdel((void*)&line);
   }

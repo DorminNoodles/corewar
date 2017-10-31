@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/28 14:25:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/31 14:05:34 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	check_instr(char *instr)
 	return (ret);
 }
 
-//int check_header()
-//{
-
-//}
+int check_header()
+{
+	return 0;
+}
 
 int	len_is_label(char *line)
 {
@@ -69,7 +69,8 @@ int	len_is_label(char *line)
 
 void check_parse_arg(char *str)
 {
-	ft_printf("check parse arg = %s\n", str);
+	ft_printf("check parse arg = ");
+	ft_printf("%s\n", str);
 }
 
 void	line_error(char *line, int nb)
@@ -83,13 +84,14 @@ void	line_error(char *line, int nb)
 	inst = 0;
 	if (!line)
 		return ;
+	int test = ft_strlen(line);
 	if (*line == '.')
 	{
 		// check_header();
 	}
 	else
 	{
-		while (line[i])
+		while (i < test && line[i])
 		{
 			while (line[i] && is_space(line[i]))
 					++i;
@@ -119,5 +121,4 @@ void	line_error(char *line, int nb)
 	//	ft_printf("i = %d line = %s word = %s\n", i, line + i, word);
 		}
 	}
-//	printf("line = %s\n", line);
 }
