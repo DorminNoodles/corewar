@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/31 14:04:22 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/10/31 15:54:38 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ char *take_word(char *str)
 
   a = 0;
   len = 0;
-  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR && str[len] != LABEL_CHAR)
+  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR/* && str[len] != LABEL_CHAR*/)
     ++len;
-  if (str[len] == LABEL_CHAR)
-    ++len;
+/*
+**   if (str[len] == LABEL_CHAR)
+**     ++len;
+*/
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
     exit (0);
-  if (str[len] == LABEL_CHAR)
-    word[len -1] = LABEL_CHAR;
+/*
+**   if (str[len] == LABEL_CHAR)
+**     word[len -1] = LABEL_CHAR;
+*/
   word[len] = '\0';
   while (a != len)
   {
@@ -126,9 +130,28 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode)
   return (oct);
 }
 
+char *red_label_name(char *word, int len)
+{
+  int i;
+  char *label;
+
+  if (!(label = (char*)malloc(sizeof(char) * len + 1 + 1)))
+    exit(0);
+  label[len] = '\0';
+  i = 0;
+  while (i < len + 1)
+  {
+    label[i] = word[i];
+    ++i;
+  }
+  free(word);
+  return label;
+}
+
 void parse(t_asm_env *env, char *line, int printmode)
 {
   int   a;
+  int len;
   char  *word;
 
   if (line && line[0] != '#')
@@ -139,6 +162,11 @@ void parse(t_asm_env *env, char *line, int printmode)
     if (!line[a] || line[a] == '#')
       return ;
     word = take_word(line + a);
+    len = len_is_label(word);
+    if (word[len] == LABEL_CHAR && len + 1 != ft_strlen(word))
+    {
+      word = red_label_name(word, len);
+    }
     if (!ft_strcmp(word, NAME_CMD_STRING) || !ft_strcmp(word, COMMENT_CMD_STRING))
       write_header(env, line, printmode);
     else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
@@ -209,7 +237,7 @@ int main (int argc, char **argv)
   nLine = 0;
   while (get_next_line(fd, &line))
   {
-//    line_error(line, nLine);
+    line_error(line, nLine);
     parse(&env, line, 0);
     ft_memdel((void*)&line);
     ++nLine;
