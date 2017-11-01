@@ -6,11 +6,16 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/31 14:05:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:55:31 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+int is_dir_int(int i)
+{
+	return ((i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14) ? 1 : 0);
+}
 
 void	write_reg(t_asm_env *env, char *line)
 {
@@ -72,7 +77,7 @@ void	write_dir(t_asm_env *env, char *line, int i)
 		while (line[a] && ft_isdigit(line[a]))
 			++a;
 	}
-	if (i == 1 || i == 2 || i == 6 || i == 7 || i == 8 || i == 14)
+	if (is_dir_int(i))
 		write_dir_int(env, line, nb, a);
 	else
 		write_dir_short(env, line, nb, a);

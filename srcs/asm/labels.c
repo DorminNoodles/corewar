@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/31 15:55:12 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:50:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_tab_labs	*new_label(char *line, int bytes)
 	t_tab_labs	*new;
 
 	len = 0;
-	while (line[len] != ':')
+	while (line[len] != LABEL_CHAR)
 		++len;
 	if (!(name = ft_strnew(len)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);

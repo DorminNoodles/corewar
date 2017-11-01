@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/01 17:59:47 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:52:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char *take_word(char *str)
 
   a = 0;
   len = 0;
-  while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR/* && str[len] != LABEL_CHAR*/)
+  while (str[len] && is_space(str[len]) && str[len] != SEPARATOR_CHAR)
     ++len;
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
     asm_error(MALLOC_ERR, NULL, 0, 0);
@@ -30,7 +30,6 @@ char *take_word(char *str)
     word[a] = str[a];
     ++a;
   }
-//  printf("word = '%s'\n", word);
   return (word);
 }
 
@@ -85,7 +84,7 @@ int  goto_nextarg(char *line)
     ++a;
   if (line[a] == SEPARATOR_CHAR)
     ++a;
-  while(line[a] && (line[a] == ' ' || line[a] == '\t'))
+  while(line[a] && is_space(line[a]))
     ++a;
   return (a);
 }

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:13:29 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 17:56:30 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:49:37 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	write_comment(t_asm_env *env, char *line)
 		ft_putchar_fd(line[tmp + a], env->fd);
 		++a;
 	}
-	while (a != COMMENT_LENGTH + 4)
+	while (a != PROG_COMS)
 	{
 		ft_putchar_fd(c, env->fd);
 		a++;
@@ -63,7 +63,7 @@ void	write_name(t_asm_env *env, char *line)
 		ft_putchar_fd(line[tmp + a], env->fd);
 		++a;
 	}
-	while (a != PROG_NAME_LENGTH + 4)
+	while (a != PROG_NAME)
 	{
 		ft_putchar_fd(c, env->fd);
 		a++;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 14:22:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:54:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
 #define SEPARATOR_CHAR			','
+#define REG_CHAR			'r'
+#define SPACE ' '
+#define TAB '\t'
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
@@ -359,6 +362,8 @@ int dist_label(t_asm_env *env, char *label);
 
 void	init_vm(t_vm *vm);
 int reverse_int(int nb);
+int is_space(char c);
+int is_dir_int(int n);
 
 /*
  ** ------- Error -------

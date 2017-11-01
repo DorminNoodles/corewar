@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/31 14:05:02 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 00:55:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char  *moove_on_line(char *line)
   a = 0;
   while (ft_isalpha(line[a]) || ft_isdigit(line[a]))
     ++a;
-  while(line[a] == ' ' || line[a] == '\t')
+  while (is_space(line[a]))
     ++a;
   return (line + a);
 }
@@ -64,17 +64,17 @@ void  op_no_ocp(t_asm_env *env, int i, char *line)
 
 int analyse_args(int oct, char *line, int i)
 {
-  if (*line == 'r')
-    oct += 1;
-  else if (*line == '%')
+  if (*line == REG_CHAR)
+    oct += REG_SIZE;
+  else if (*line == DIRECT_CHAR)
   {
-    if ((i == 0 || i == 1 || i == 5 || i == 6 || i == 7 || i == 13))
-      oct += 4;
+    if (is_dir_int(i + 1))
+      oct += DIR_SIZE;
     else
-      oct += 2;
+      oct += IND_SIZE;
   }
-  else if (*line == ':' || ft_isdigit(*line))
-    oct += 2;
+  else if (*line == LABEL_CHAR || ft_isdigit(*line))
+    oct += IND_SIZE;
   return (oct);
 }
 
@@ -107,9 +107,9 @@ int  analyse(int oct, char *line, int i)
   {
     while (line[a] == LABEL_CHAR)
       ++a;
-    while (line[a] && (line[a] == '-' || ft_isalpha(line[a]) || ft_isdigit(line[a])))
+    while (line[a] && (line[a] == '-' || ft_isalnum(line[a])))
       ++a;
-    while (line[a] && (line[a] == ' ' || line[a] == '\t'))
+    while (line[a] && is_space(line[a]))
       ++a;
     if (line[a] == SEPARATOR_CHAR)
       ++a;
@@ -121,5 +121,5 @@ int  analyse(int oct, char *line, int i)
     if (line[a] == COMMENT_CHAR)
       return (oct);
   }
-    return (oct);
+  return (oct);
 }
