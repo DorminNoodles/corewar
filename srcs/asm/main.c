@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/31 15:54:38 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/01 17:59:47 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,15 @@ char *take_word(char *str)
   len = 0;
   while (str[len] && str[len] != ' ' && str[len] != '\t' && str[len] != SEPARATOR_CHAR/* && str[len] != LABEL_CHAR*/)
     ++len;
-/*
-**   if (str[len] == LABEL_CHAR)
-**     ++len;
-*/
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
-    exit (0);
-/*
-**   if (str[len] == LABEL_CHAR)
-**     word[len -1] = LABEL_CHAR;
-*/
+    asm_error(MALLOC_ERR, NULL, 0, 0);
   word[len] = '\0';
   while (a != len)
   {
     word[a] = str[a];
     ++a;
   }
+//  printf("word = '%s'\n", word);
   return (word);
 }
 
