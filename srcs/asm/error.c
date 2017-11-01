@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/31 17:02:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/01 16:54:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int is_space(char c)
 
 void	asm_error(int err, char *str, int line, int column)
 {
-	printf("str = %s\n", str);
 	if (err == SOURCE_ERR)
 		ft_printf("Can't read source file %s\n", str);
 	else if (err == MALLOC_ERR)
@@ -31,7 +30,7 @@ void	asm_error(int err, char *str, int line, int column)
 	else if (err == LEX_ERROR)
 		ft_printf("Error: Lexical error at [%d:%d]\n", line, column);
 	else if (err == 0)
-		ft_printf("TODO\n");
+		ft_printf("ERREUR : todo\n");
 	exit (EXIT_FAILURE);
 }
 
@@ -54,6 +53,31 @@ int	check_instr(char *instr)
 	return (ret);
 }
 
+int until_is_not_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && is_space(str[i]))
+		++i;
+	return (i);
+}
+
+int until_next_arg(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && is_space(str[i]))
+		++i;
+	if (str[i] != SEPARATOR_CHAR)
+		asm_error(0, NULL, 0, 0);
+	++i;
+	while (str[i] && is_space(str[i]))
+		++i;
+	return (i);
+}
+
 int check_header()
 {
 	return 0;
@@ -69,30 +93,32 @@ int	len_is_label(char *line)
 	return i;
 }
 
-int is_dir(char *str)
+int is_label_char(char c)
 {
 	int i;
-	int check;
 
 	i = 0;
-	check = 0;
-	if (str[i] != DIRECT_CHAR)
-			return (0);
-	++i;
-	if (str[i] == '-')
-		++i;
-	else if (str[i] == LABEL_CHAR)
-		++i;
-	while (str[i] && (str[i] != ' ' || str[i] != '\t' || str[i] != SEPARATOR_CHAR))
+	while (LABEL_CHARS[i])
 	{
-		++check;
-		if (!ft_isdigit(str[i]))
-			return (0);
+		if (c == LABEL_CHARS[i])
+			return (1);
 		++i;
 	}
-	if (!check)
-			return (0);
-	return (i);
+	return (0);
+}
+
+int is_label_str(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != LABEL_CHAR)
+	{
+		if (!is_label_char(str[i]))
+			return 0;
+		++i;
+	}
+	return (str[i] == LABEL_CHAR ? 1 : 0);
 }
 
 int is_ind(char *str)
@@ -102,90 +128,293 @@ int is_ind(char *str)
 
 	i = 0;
 	check = 0;
+	if (str[i] == LABEL_CHAR)
+	{
+		++i;
+		while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
+		{
+			if (!is_label_char(str[i]))
+				return (0);
+			++i;
+		}
+		return (i);
+	}
 	if (str[i] == '-')
 		++i;
-	while (str[i] && (str[i] != ' ' || str[i] != '\t' || str[i] != SEPARATOR_CHAR))
+	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
 	{
 		++check;
 		if (!ft_isdigit(str[i]))
 			return (0);
 		++i;
 	}
-	if (!check)
-			return (0);
-	return (i);
+	return (check ? i : 0);
+}
 
+int is_dir(char *str)
+{
+	int i;
+	int check;
+
+	i = 0;
+	if (str[i] != DIRECT_CHAR)
+			return (0);
+	++i;
+	check = is_ind(str + i);
+	return (check ? check + 1 : 0);
 }
 
 int is_reg(char *str)
 {
 	int i;
 	int tmp;
-	int check;
 
 	i = 0;
 	if (str[i] != 'r')
-			return (0);
-		asm_error(0, NULL, 0, 0);
+		return (0);
 	++i;
 	tmp = i;
-	while (str[i] && (str[i] != ' ' || str[i] != '\t' || str[i] != SEPARATOR_CHAR))
+	while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
 	{
-		++check;
 		if (!ft_isdigit(str[i]))
-			return (0);
-			asm_error(0, NULL, 0, 0);
+				return (0);
 		++i;
 	}
-	if (!check || check > 2)
-		return (0);
-	if (check == 2 && (str[tmp] != '1' || str[tmp] < '0' || str[tmp] > '9'))
-		return (0);
-	if (check == 1 && str[tmp] >= '0' && str[tmp] <= '9')
+	if (ft_atoi(str + tmp) < 1 || ft_atoi(str + tmp) > 16)
 		return (0);
 	return (i);
 }
 
 void check_instr_1_9_12_15(char *str)
 {
+	// printf("check live, zjump, fork, lfork\n");
 	int i;
+	int a;
 
-	i = 0;
-	while (str[i] && is_space(str[i]))
-		++i;
-	i = is_reg(str + i);
-	if (!i)
+	i = until_is_not_space(str);
+	a = is_dir(str + i);
+	if (!a)
 		asm_error(0, NULL, 0, 0);
-	while (str[i] && is_space(str[i]))
-		++i;
-	if (str[i] != '\n' || str[i] != '\0')
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
 		asm_error(0, NULL, 0, 0);
 }
 
-void check_instr_2_14(char *str)
+void check_instr_2_13(char *str)
 {
+	// printf("check ld, lld str = %s\n", str);
 	int i;
+	int a;
+	int b;
 
-	i = 0;
-	while (str[i] && is_space(str[i]))
-		++i;
-	i
+	i = until_is_not_space(str);
+	a = is_dir(str + i);
+	b = is_ind(str + i);
+	if (!a && !b)
+		asm_error(0, NULL, 0, 0);
+	i += a + b;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
 }
-void check_instr_3(char *str) {}
-void check_instr_4_5(char *str) {}
-void check_instr_6_7_8(char *str) {}
-void check_instr_10(char *str) {}
-void check_instr_11(char *str) {}
-void check_instr_13(char *str) {}
-void check_instr_16(char *str) {}
+
+void check_instr_3(char *str)
+{
+	// printf("check st\n");
+	int i;
+	int a;
+	int b;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_next_arg(str + i);
+	a = is_ind(str +  i);
+	b = is_reg(str + i);
+	if (!a && !b)
+		asm_error(0, NULL, 0, 0);
+	i += a + b;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_4_5(char *str)
+{
+	// printf("check add sub\n");
+	int i;
+	int a;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_6_7_8(char *str)
+{
+	// printf("check and or xor\n");
+	int i;
+	int a;
+	int b;
+	int c;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	c = is_ind(str + i);
+	if (!a && !b && !c)
+		asm_error(0, NULL, 0, 0);
+	i += a + b + c;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	c = is_ind(str + i);
+	if (!a && !b && !c)
+		asm_error(0, NULL, 0, 0);
+	i += a + b + c;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_10(char *str)
+{
+	// printf("check ldi\n");
+	int i;
+	int a;
+	int b;
+	int c;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	c = is_ind(str + i);
+	if (!a && !b && !c)
+		asm_error(0, NULL, 0, 0);
+	i += a + b + c;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	if (!a && !b)
+		asm_error(0, NULL, 0, 0);
+	i += a + b;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_11(char *str)
+{
+	// printf("check sti\n");
+	int i;
+	int a;
+	int b;
+	int c;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	c = is_ind(str + i);
+	if (!a && !b && !c)
+		asm_error(0, NULL, 0, 0);
+	i += a + b + c;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	if (!a && !b)
+		asm_error(0, NULL, 0, 0);
+	i += a + b;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_14(char *str)
+{
+	// printf("check lldi\n");
+	int i;
+	int a;
+	int b;
+	int c;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	c = is_ind(str + i);
+	if (!a && !b && !c)
+		asm_error(0, NULL, 0, 0);
+	i += a + b + c;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	b = is_dir(str + i);
+	if (!a && !b)
+		asm_error(0, NULL, 0, 0);
+	i += a + b;
+	i += until_next_arg(str + i);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
+void check_instr_16(char *str)
+{
+	// printf("check aff\n");
+	int i;
+	int a;
+
+	i = until_is_not_space(str);
+	a = is_reg(str + i);
+	if (!a)
+		asm_error(0, NULL, 0, 0);
+	i += a;
+	i += until_is_not_space(str + i);
+	if (str[i] != '#' && str[i] != '\0')
+		asm_error(0, NULL, 0, 0);
+}
 
 void check_parse_arg(char *str, int instr)
 {
-	ft_printf("check parse arg = %s instr = %d\n", str, instr);
+//	ft_printf("check parse arg = %s instr = %d\n", str, instr);
 	if (instr == 1 || instr == 9 || instr == 12 || instr == 15)
 		check_instr_1_9_12_15(str);
-	else if (instr == 2 || instr == 14)
-		check_instr_2_14(str);
+	else if (instr == 2 || instr == 13)
+		check_instr_2_13(str);
 	else if (instr == 3)
 		check_instr_3(str);
 	else if (instr == 4 || instr == 5)
@@ -196,8 +425,8 @@ void check_parse_arg(char *str, int instr)
 		check_instr_10(str);
 	else if (instr == 11)
 		check_instr_11(str);
-	else if (instr == 13)
-		check_instr_13(str);
+	else if (instr == 14)
+		check_instr_14(str);
 	else if (instr == 16)
 		check_instr_16(str);
 }
@@ -205,32 +434,27 @@ void check_parse_arg(char *str, int instr)
 void	line_error(char *line, int nb)
 {
 	int i;
-	int len;
 	char *word;
 	int inst;
+	int label;
 
-	printf("line = %s\n", line);
+//	printf("line = %s\n", line);
 	i = 0;
+	label = 0;
 	inst = -1;
 	if (!line)
 		return ;
-	int test = ft_strlen(line);
 	if (*line == '.')
-	{
+	;
 		// check_header();
-	}
 	else
 	{
-		while (i < test && line[i])
+		while (line[i])
 		{
-			while (line[i] && is_space(line[i]))
-					++i;
+			i += until_is_not_space(line + i);
 			word = take_word(line + i);
-			len = len_is_label(word);
-			if (word[len] == LABEL_CHAR)
-			{
-				++i;
-			}
+			if (!label && is_label_str(word))
+				++label;
 			else if (inst == -1)
 			{
 				if ((inst = check_instr(word)) == -1)
@@ -238,15 +462,11 @@ void	line_error(char *line, int nb)
 			}
 			else
 			{
-				check_parse_arg(line + i, inst);
-				while (line[i] && is_space(line[i]))
-					++i;
-				if (line[i] == SEPARATOR_CHAR)
-					++i;
+				check_parse_arg(line + i, inst + 1);
+				break;
 			}
+			i += ft_strlen(word);
 			free(word);
-		i += len;
-	//	ft_printf("i = %d line = %s word = %s\n", i, line + i, word);
 		}
 	}
 }
