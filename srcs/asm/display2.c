@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:22:16 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 23:57:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void write_ocp(t_asm_env *env, char *ocp)
     ft_strcat(ocp, "00");
   str = ft_convert_base(ocp, "01", "0123456789");
   res = ft_atoi(str);
+  if (env->verbose)
+    verbose_ocp(res);
   ft_putchar_fd(res, env->fd);
 }
 
@@ -33,7 +35,7 @@ void	write_args(t_asm_env *env, char *line, int i)
 	a = 0;
 	while (line[a])
 	{
-		res = detect_arg(line + a);
+		res = detect_arg(env, line + a);
 		if (res == REG_CODE)
 			write_reg(env, line + a);
     else if (res == DIR_CODE)

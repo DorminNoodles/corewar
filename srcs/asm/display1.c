@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   display1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 00:57:11 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 23:34:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	write_reg(t_asm_env *env, char *line)
 	char	reg;
 	char	*str;
 
+	if (env->verbose)
+		verbose_arg(line, 0);
 	a = 0;
 	line++;
 	while (line[a] && ft_isdigit(line[a]))
@@ -32,6 +34,8 @@ void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
 	char	*label;
 	short	dir2o;
 
+	if (env->verbose)
+		verbose_arg(line, 1);
 	if (line[a] == LABEL_CHAR)
 	{
 		label = take_word(line + 1);
@@ -48,6 +52,8 @@ void	write_dir_int(t_asm_env *env, char *line, int nb, int a)
 	int		dir4o;
 	char	*label;
 
+	if (env->verbose)
+		verbose_arg(line, 1);
 	if (line[a] == LABEL_CHAR)
 	{
 		label = take_word(line + 1);
@@ -87,6 +93,8 @@ void	write_ind(t_asm_env *env, char *line)
 	a = 0;
 	if (ft_isdigit(*line))
 	{
+		if (env->verbose)
+			verbose_arg(line, 0);
 		while (line[a] && ft_isdigit(line[a]))
 			++a;
 		str = ft_strndup(line, a);
@@ -94,6 +102,8 @@ void	write_ind(t_asm_env *env, char *line)
 	}
 	else
 	{
+		if (env->verbose)
+			verbose_arg(line, 1);
 		str = take_word(line + 1);
 		ind = dist_label(env, str);
 	}

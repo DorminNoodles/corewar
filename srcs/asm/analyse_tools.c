@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:23:40 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 23:47:44 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ char  *moove_on_line(char *line)
   return (line + a);
 }
 
-int   detect_arg(char *line)
+int   detect_arg(t_asm_env *env, char *line)
 {
   int a;
 
+  a = 0;
   a = 0;
   if (line[a] == 'r')
     return (REG_CODE);

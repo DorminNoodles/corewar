@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 21:41:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 23:58:19 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ void		debug_display_proc(t_vm *vm);
 #define C_GREEN "32"
 #define C_BLUE "34"
 #define C_MAGENTA "35"
+#define C_CYAN "36"
 #define C_RESET "0"
 
 #define CHECK_MODE 0
@@ -334,7 +335,9 @@ typedef struct s_asm_env
 	int								name;
 	int								comment;
 	int 							debug;
+	int 							verbose;
 	int								ko;
+	int								print;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
@@ -358,7 +361,7 @@ int analyse_args(int oct, char *line, int i);
 void op_no_ocp(t_asm_env *env, int i, char *line);
 void op_ocp(t_asm_env *env, int i, char *line);
 char *moove_on_line(char *line);
-int detect_arg(char *line);
+int detect_arg(t_asm_env *env, char *line);
 char *concat_opcode(char *ocp, int arg);
 
 /*
@@ -459,6 +462,11 @@ char *take_word(char *str);
 void asm_error(int err, char *str, t_asm_env *env, int column);
 void asm_error2(int err, char *str, t_asm_env *env, int column);
 
+void verbose_inst(char *ins);
+void verbose_arg(char *line, int add);
+void verbose_lab(char *lab, int pos);
+void verbose_dist_lab(int dist);
+void verbose_ocp(char ocp);
 /* ------------------- DECOMPILER ------------------
  **
 */

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 02:51:18 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 00:01:34 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void parse_label(t_asm_env *env, char *line, char *label, int printmode)
   a = 0;
   if (!printmode)
     create_label(&env->labs , env->bytes, line);
+  if (env->verbose && printmode == PRINT_MODE)
+    verbose_lab(label, env->bytes);
   while (line[a] && (ft_isalnum(line[a])))
     ++a;
   while (line[a] && (is_space(line[a]) || line[a] == LABEL_CHAR))
@@ -37,6 +39,8 @@ void parse(t_asm_env *env, char *line, int printmode)
 
   if (line && line[0] != '#')
   {
+    if (env->verbose && printmode == PRINT_MODE)
+      ft_printf("Line %d: '%s'\n", env->line, line);
     a = 0;
     while (line[a] && is_space(line[a]))
       ++a;
@@ -53,6 +57,7 @@ void parse(t_asm_env *env, char *line, int printmode)
     else
       env->bytes += find_op(env, word, line + a, printmode);
       free(word);
+    if (env->verbose && printmode == PRINT_MODE)
+      ft_printf(" - Current bytes = %d\n", env->bytes);
     }
-//    printf("bytes = %d\n", env->bytes);
 }

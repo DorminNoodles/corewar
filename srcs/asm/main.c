@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 22:03:34 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 00:13:46 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void check_mode(t_asm_env *env, int fd)
 {
   char *line;
 
+  env->print = 0;
   env->name = 0;
   env->comment = 0;
   env->bytes = 1;
@@ -31,7 +32,6 @@ void check_mode(t_asm_env *env, int fd)
     ++env->line;
   }
   env->size = env->bytes - 1;
-  //  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
 }
 
 void print_mode(t_asm_env *env, char *file)
@@ -42,11 +42,18 @@ void print_mode(t_asm_env *env, char *file)
   fd = open(file, O_RDONLY);
   line = NULL;
   env->bytes = 1;
+  env->print = 1;
+  env->line = 1;
   while (get_next_line(fd, &line))
   {
     parse(env, line, PRINT_MODE);
     ft_memdel((void*)&line);
+    if (env->verbose)
+      ft_printf("\n");
+    ++env->line;
   }
+  if (env->verbose)
+    ft_printf("\n\nFinal bytes number = %d\n\n", env->bytes - 1);
 }
 
 void print_help()
@@ -73,9 +80,9 @@ int parse_args(t_asm_env *env, char **argv)
       if (argv[a][b] == 'h')
         print_help();
       else if (argv[a][b] == 'v')
-        ft_printf("v : Verbose Mode\n");
+        env->verbose = 1;
       else if (argv[a][b] == 'd')
-        ++env->debug;
+        env->debug = 1;
       else
       {
         ft_printf("Invalid argument\n");
@@ -120,7 +127,7 @@ void debug_mode(t_asm_env *env, int fd)
     {
       ft_printf("This instruction is ");
       color(C_GREEN);
-      ft_printf("OK.\n");
+      ft_printf("OK.\n\n");
       color(C_RESET);
     }
     ft_memdel((void*)&line);
@@ -151,7 +158,7 @@ int main (int argc, char **argv)
   check_mode(&env, fd);
   create_file(&env, argv[arg]);
   print_mode(&env, argv[arg]);
-  argv[1][ft_strlen(argv[arg]) - 2] = '\0';
+  argv[arg][ft_strlen(argv[arg]) - 2] = '\0';
   ft_printf("Writting output program to %s.cor\n", argv[arg]);
   return (0);
 }
