@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 15:10:39 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 15:17:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	asm_error(int err, char *str, int line, int column)
 	else if (err == INST_ERROR)
 		ft_printf("Error: At [%d:%d], instruction '%s' does not exist.\n", line, column, str);
 	else if (err == LEX_ERROR)
-		ft_printf("Error: Lexical error at [%d:%d].\n", line, column);
-	else if (err == 0)
-		ft_printf("ERREUR : Todo.\n");
+		ft_printf("Error: Lexical error at [%d:%d]. Waiting for a ',' between instructions.\n", line, column - 1);
 	else if (err == BAD_ARG_DIR)
 		ft_printf("Error: At [%d:%d], instruction waiting a direct number.\n", line, column);
 	else if (err == BAD_ARG_REG)
