@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 15:04:10 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 15:13:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,7 +352,7 @@ char *red_label_name(char *word, int len);
  ** ---------- Parsing tools ---------
 */
 int until_is_not_space(char *str);
-int until_next_arg(char *str);
+int until_next_arg(char *str, int lin, int col);
 int len_is_label(char *line);
 
 /*
