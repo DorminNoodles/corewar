@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/10/24 15:51:17 by rfulop           ###   ########.fr        #
+#    Updated: 2017/11/02 01:26:45 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -56,14 +56,26 @@ SRC_FILES_VM = main.c \
 								lld.c
 
 SRC_FILES_ASM = main.c \
+								create_file.c \
 								error.c \
 								labels.c \
 								header.c \
 								debug.c \
 								op.c \
-								reverse.c \
+								find_op.c \
+								parsing_tools.c \
+								toolkit.c \
 								analyse.c \
-								display.c
+								analyse_tools.c \
+								display1.c \
+								display2.c \
+								check_line.c \
+								lex_ins1.c \
+								lex_ins2.c \
+								check_arg1.c \
+								check_arg2.c \
+								read_line.c \
+								read_tools.c
 
 SRC_FILES_DASM = main.c \
 				op.c \
