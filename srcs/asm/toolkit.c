@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse.c                                          :+:      :+:    :+:   */
+/*   toolkit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:15:08 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 02:07:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *take_word(char *str)
 
   a = 0;
   len = 0;
-  while (str[len] && is_space(str[len]) && str[len] != SEPARATOR_CHAR)
+  while (str[len] && !is_space(str[len]) && str[len] != SEPARATOR_CHAR)
     ++len;
   if (!(word = (char*)malloc(sizeof(char) * len + 1)))
     asm_error(MALLOC_ERR, NULL, 0, 0);

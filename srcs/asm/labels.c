@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:08:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 02:11:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ int			dist_label(t_asm_env *env, char *label)
 	t_tab_labs *tmp;
 
 	tmp = env->labs;
-	while (ft_strcmp(label, tmp->label))
+	while (tmp && ft_strcmp(label, tmp->label))
 		tmp = tmp->next;
+	if (!tmp)
+		asm_error(LABEL_ERROR, label, 0, 0);
 	return (tmp->nb_oct - env->bytes);
 }
 

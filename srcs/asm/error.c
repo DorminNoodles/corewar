@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 00:58:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 02:13:02 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void	asm_error(int err, char *str, int line, int column)
 		ft_printf("Error: Lexical error at [%d:%d]\n", line, column);
 	else if (err == 0)
 		ft_printf("ERREUR : todo\n");
+	else if (err == LABEL_ERROR)
+		ft_printf("Error: Label '%s' is not find\n", str);
 	exit (EXIT_FAILURE);
 }

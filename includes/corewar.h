@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 01:43:59 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 02:34:56 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,9 @@ void		debug_display_proc(t_vm *vm);
 /*
  ** ------- ASM -----------
  */
+
+#define CHECK_MODE 0
+#define PRINT_MODE 1
 // asm_error(int ERROR, char *str, int line, int column)
 #define SOURCE_ERR 1
 #define MALLOC_ERR 2
@@ -295,6 +298,7 @@ void		debug_display_proc(t_vm *vm);
 #define FILE_ERROR 5
 #define INST_ERROR 6
 #define LEX_ERROR 7
+#define LABEL_ERROR 8
 
 
 typedef struct s_asm_env
@@ -351,8 +355,9 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode);
 /*
  ** --------- Check line --------------
 */
-int check_instr(char *instr);
-int check_header();
+void check_instr(char *line, int nb);
+int check_op(char *instr, int line);
+void check_header();
 void check_parse_arg(char *str, int instr);
 void check_line(char *line, int nb);
 
