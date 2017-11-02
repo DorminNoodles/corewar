@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 18:37:24 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 22:02:35 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
+	if (env->ko)
+		return;
+	if (env->debug)
+		++env->ko;
 	display_error(err);
 	if (err == NO_FILE_ERR)
 	{
@@ -87,7 +91,8 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	else
 		asm_error2(err, str, env, column);
 	display_current_line(env, err, column);
-	exit (EXIT_FAILURE);
+	if (!env->debug)
+		exit (EXIT_FAILURE);
 }
 
 void asm_error2(int err, char *str, t_asm_env *env, int column)
@@ -117,6 +122,4 @@ void asm_error2(int err, char *str, t_asm_env *env, int column)
 		ft_printf("Line %d, comments are already defined.\n", line);
 	else if (err == COMMAND_ERR)
 		ft_printf("Line %d, command '%s' not found.\n", line, str);
-	display_current_line(env, err, column);
-	exit (EXIT_FAILURE);
 }

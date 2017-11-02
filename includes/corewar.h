@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 18:22:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 21:41:48 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,8 @@ typedef struct s_asm_env
 	char							*current_line;
 	int								name;
 	int								comment;
+	int 							debug;
+	int								ko;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
