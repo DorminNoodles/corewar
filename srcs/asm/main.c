@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 16:20:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 18:26:11 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void check_mode(t_asm_env *env, int fd)
 {
-  int nLine;
   char *line;
 
   env->name = 0;
   env->comment = 0;
   env->bytes = 1;
   env->labs = NULL;
-  nLine = 1;
+  env->line = 1;
   line = NULL;
   while (get_next_line(fd, &line))
   {
-    check_line(env, line, nLine);
+    env->current_line = line;
+    check_line(env, line);
     parse(env, line, CHECK_MODE);
     ft_memdel((void*)&line);
-    ++nLine;
+    ++env->line;
   }
   env->size = env->bytes - 1;
 //  printf("\n\nFinal bytes number = %d\n\n", env.bytes - 1);
@@ -54,6 +54,8 @@ int main (int argc, char **argv)
   int   fd;
   t_asm_env env;
 
+  if (argc == 1)
+    asm_error(NO_FILE_ERR, NULL, 0, 0);
   if ((fd = open(argv[1], O_RDONLY)) == -1)
     asm_error(SOURCE_ERR, argv[1], 0, 0);
   if (!check_name(argv[1]))

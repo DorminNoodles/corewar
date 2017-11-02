@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 15:13:38 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 17:28:12 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int until_is_not_space(char *str)
 	return (i);
 }
 
-int until_next_arg(char *str, int lin, int col)
+int until_next_arg(char *str, t_asm_env *env, int col)
 {
 	int i;
 
@@ -30,7 +30,7 @@ int until_next_arg(char *str, int lin, int col)
 	while (str[i] && is_space(str[i]))
 		++i;
 	if (str[i] != SEPARATOR_CHAR)
-		asm_error(LEX_ERROR, str, lin, col + i);
+		asm_error(LEX_ERROR, str, env, col + i);
 	++i;
 	while (str[i] && is_space(str[i]))
 		++i;

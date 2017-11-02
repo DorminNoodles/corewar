@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 16:40:10 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 18:22:20 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,10 +287,20 @@ void		debug_display_proc(t_vm *vm);
 /*
  ** ------- ASM -----------
  */
+#define color(param) ft_printf("\033[%sm",param)
+
+#define C_RED "31"
+#define C_GREEN "32"
+#define C_BLUE "34"
+#define C_MAGENTA "35"
+#define C_RESET "0"
 
 #define CHECK_MODE 0
 #define PRINT_MODE 1
 // asm_error(int ERROR, char *str, int line, int column)
+#define ERROR_MIN 0
+#define ERROR_MAX 21
+#define NO_FILE_ERR 0
 #define SOURCE_ERR 1
 #define MALLOC_ERR 2
 #define SIZE_ERROR 3
@@ -319,6 +329,8 @@ typedef struct s_asm_env
 	int              bytes;
 	int							 size;
 	int              fd;
+	int								line;
+	char							*current_line;
 	int								name;
 	int								comment;
 }                  t_asm_env;
@@ -358,7 +370,7 @@ char *red_label_name(char *word, int len);
  ** ---------- Parsing tools ---------
 */
 int until_is_not_space(char *str);
-int until_next_arg(char *str, int lin, int col);
+int until_next_arg(char *str, t_asm_env *env, int col);
 int len_is_label(char *line);
 
 /*
@@ -369,25 +381,25 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode);
 /*
  ** --------- Check line --------------
 */
-void check_instr(char *line, int lin);
-int check_op(char *instr, int lin, int col);
+void check_instr(char *line, t_asm_env *env);
+int check_op(char *instr, t_asm_env *env, int col);
 void check_header();
-void check_parse_arg(char *str, int instr, int lin, int col);
-void check_line(t_asm_env *env, char *line, int lin);
+void check_parse_arg(char *str, int instr, t_asm_env *env, int col);
+void check_line(t_asm_env *env, char *line);
 
 /*
  **---------- Lex instructions ---------
 */
-void check_instr_endline(char *str, int lin, int col);
-void check_instr_1_9_12_15(char *str, int lin, int col);
-void check_instr_2_13(char *str, int lin, int col);
-void check_instr_3(char *str, int lin, int col);
-void check_instr_4_5(char *str, int lin, int col);
-void check_instr_6_7_8(char *str, int lin, int col);
-void check_instr_10(char *str, int lin, int col);
-void check_instr_11(char *str, int lin, int col);
-void check_instr_14(char *str, int lin, int col);
-void check_instr_16(char *str, int lin, int col);
+void check_instr_endline(char *str, t_asm_env *env, int col);
+void check_instr_1_9_12_15(char *str, t_asm_env *env, int col);
+void check_instr_2_13(char *str, t_asm_env *env, int col);
+void check_instr_3(char *str, t_asm_env *env, int col);
+void check_instr_4_5(char *str, t_asm_env *env, int col);
+void check_instr_6_7_8(char *str, t_asm_env *env, int col);
+void check_instr_10(char *str, t_asm_env *env, int col);
+void check_instr_11(char *str ,t_asm_env *env, int col);
+void check_instr_14(char *str, t_asm_env *env, int col);
+void check_instr_16(char *str, t_asm_env *env, int col);
 
 /*
  ** ---------- Display ------------
@@ -406,10 +418,10 @@ void write_ocp(t_asm_env *env, char *ocp);
 int is_ind(char *str);
 int is_dir(char *str);
 int is_reg(char *str);
-int is_reg_or_ind(char *str, int lin, int col);
-int is_reg_or_dir(char *str, int lin, int col);
-int is_ind_or_dir(char *str, int lin, int col);
-int is_reg_or_ind_or_dir(char *str, int lin, int col);
+int is_reg_or_ind(char *str, t_asm_env *env, int col);
+int is_reg_or_dir(char *str, t_asm_env *env, int col);
+int is_ind_or_dir(char *str, t_asm_env *env, int col);
+int is_reg_or_ind_or_dir(char *str, t_asm_env *env, int col);
 
 
 /*
@@ -442,8 +454,8 @@ char *take_word(char *str);
 /*
  ** ------- Error -------
 */
-void asm_error(int err, char *str, int line, int column);
-void asm_error2(int err, char *str, int line, int column);
+void asm_error(int err, char *str, t_asm_env *env, int column);
+void asm_error2(int err, char *str, t_asm_env *env, int column);
 
 /* ------------------- DECOMPILER ------------------
  **
