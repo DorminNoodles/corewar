@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 02:34:56 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 15:04:10 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,14 @@ void		debug_display_proc(t_vm *vm);
 #define INST_ERROR 6
 #define LEX_ERROR 7
 #define LABEL_ERROR 8
+#define TOO_MUCH_ARG_ERR 9
+#define BAD_ARG_REG 10
+#define BAD_ARG_DIR 11
+#define BAD_ARG_IND 12
+#define BAD_ARG_REG_IND 13
+#define BAD_ARG_REG_DIR 14
+#define BAD_ARG_IND_DIR 15
+#define BAD_ARG_REG_DIR_IND 16
 
 
 typedef struct s_asm_env
@@ -355,25 +363,25 @@ int find_op(t_asm_env *env, char *word, char *line, int printmode);
 /*
  ** --------- Check line --------------
 */
-void check_instr(char *line, int nb);
-int check_op(char *instr, int line);
+void check_instr(char *line, int lin);
+int check_op(char *instr, int lin, int col);
 void check_header();
-void check_parse_arg(char *str, int instr);
-void check_line(char *line, int nb);
+void check_parse_arg(char *str, int instr, int lin, int col);
+void check_line(char *line, int lin);
 
 /*
  **---------- Lex instructions ---------
 */
-void check_instr_endline(char *str);
-void check_instr_1_9_12_15(char *str);
-void check_instr_2_13(char *str);
-void check_instr_3(char *str);
-void check_instr_4_5(char *str);
-void check_instr_6_7_8(char *str);
-void check_instr_10(char *str);
-void check_instr_11(char *str);
-void check_instr_14(char *str);
-void check_instr_16(char *str);
+void check_instr_endline(char *str, int lin, int col);
+void check_instr_1_9_12_15(char *str, int lin, int col);
+void check_instr_2_13(char *str, int lin, int col);
+void check_instr_3(char *str, int lin, int col);
+void check_instr_4_5(char *str, int lin, int col);
+void check_instr_6_7_8(char *str, int lin, int col);
+void check_instr_10(char *str, int lin, int col);
+void check_instr_11(char *str, int lin, int col);
+void check_instr_14(char *str, int lin, int col);
+void check_instr_16(char *str, int lin, int col);
 
 /*
  ** ---------- Display ------------
@@ -392,10 +400,10 @@ void write_ocp(t_asm_env *env, char *ocp);
 int is_ind(char *str);
 int is_dir(char *str);
 int is_reg(char *str);
-int is_reg_or_ind(char *str);
-int is_reg_or_dir(char *str);
-int is_ind_or_dir(char *str);
-int is_reg_or_ind_or_dir(char *str);
+int is_reg_or_ind(char *str, int lin, int col);
+int is_reg_or_dir(char *str, int lin, int col);
+int is_ind_or_dir(char *str, int lin, int col);
+int is_reg_or_ind_or_dir(char *str, int lin, int col);
 
 
 /*

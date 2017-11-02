@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 02:36:16 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 15:05:12 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int	check_op(char *instr, int line)
+int	check_op(char *instr, int lin, int col)
 {
 	int i;
 	int ret;
@@ -29,7 +29,7 @@ int	check_op(char *instr, int line)
 		++i;
 	}
 	if (ret == -1)
-		asm_error(INST_ERROR, instr, line, 0);
+		asm_error(INST_ERROR, instr, lin, col);
 	return (ret);
 }
 
@@ -37,30 +37,29 @@ void check_header()
 {
 }
 
-void check_parse_arg(char *str, int instr)
+void check_parse_arg(char *str, int instr, int lin, int col)
 {
-//	printf("check parse arg = %s instr = %d\n", str, instr);
 	if (instr == 1 || instr == 9 || instr == 12 || instr == 15)
-		check_instr_1_9_12_15(str);
+		check_instr_1_9_12_15(str, lin, col);
 	else if (instr == 2 || instr == 13)
-		check_instr_2_13(str);
+		check_instr_2_13(str, lin, col);
 	else if (instr == 3)
-		check_instr_3(str);
+		check_instr_3(str, lin, col);
 	else if (instr == 4 || instr == 5)
-		check_instr_4_5(str);
+		check_instr_4_5(str, lin, col);
 	else if (instr == 6 || instr == 7 || instr == 8)
-		check_instr_6_7_8(str);
+		check_instr_6_7_8(str, lin, col);
 	else if (instr == 10)
-		check_instr_10(str);
+		check_instr_10(str, lin, col);
 	else if (instr == 11)
-		check_instr_11(str);
+		check_instr_11(str, lin, col);
 	else if (instr == 14)
-		check_instr_14(str);
+		check_instr_14(str, lin, col);
 	else if (instr == 16)
-		check_instr_16(str);
+		check_instr_16(str, lin, col);
 }
 
-void check_instr(char *line, int nb)
+void check_instr(char *line, int lin)
 {
 	int i;
 	int inst;
@@ -77,10 +76,10 @@ void check_instr(char *line, int nb)
 		if (!label && inst == -1 && is_label_str(word))
 			++label;
 		else if (inst == -1)
-			inst = check_op(word, nb);
+			inst = check_op(word, lin, i);
 		else
 		{
-			check_parse_arg(line + i, inst + 1);
+			check_parse_arg(line + i, inst + 1, lin, i);
 			ft_memdel((void*)&word);
 			break;
 		}
@@ -89,12 +88,12 @@ void check_instr(char *line, int nb)
 	}
 }
 
-void	check_line(char *line, int nb)
+void	check_line(char *line, int lin)
 {
 	if (!line)
 		return ;
 	if (*line == '.')
 		 check_header();
 	else
-		check_instr(line, nb);
+		check_instr(line, lin);
 }

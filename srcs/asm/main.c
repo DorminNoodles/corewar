@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:59:28 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 13:37:19 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void check_mode(t_asm_env *env, int fd)
 
   env->bytes = 1;
   env->labs = NULL;
-  nLine = 0;
+  nLine = 1;
   line = NULL;
   while (get_next_line(fd, &line))
   {
