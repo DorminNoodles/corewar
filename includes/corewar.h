@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 15:13:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 16:40:10 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,11 @@ void		debug_display_proc(t_vm *vm);
 #define BAD_ARG_REG_DIR 14
 #define BAD_ARG_IND_DIR 15
 #define BAD_ARG_REG_DIR_IND 16
-
+#define NAME_SIZE_ERR 17
+#define COM_SIZE_ERR 18
+#define NAME_EXISTS 19
+#define COM_EXISTS 20
+#define COMMAND_ERR 21
 
 typedef struct s_asm_env
 {
@@ -315,6 +319,8 @@ typedef struct s_asm_env
 	int              bytes;
 	int							 size;
 	int              fd;
+	int								name;
+	int								comment;
 }                  t_asm_env;
 
 typedef struct s_tab_labs
@@ -367,7 +373,7 @@ void check_instr(char *line, int lin);
 int check_op(char *instr, int lin, int col);
 void check_header();
 void check_parse_arg(char *str, int instr, int lin, int col);
-void check_line(char *line, int lin);
+void check_line(t_asm_env *env, char *line, int lin);
 
 /*
  **---------- Lex instructions ---------
@@ -437,7 +443,7 @@ char *take_word(char *str);
  ** ------- Error -------
 */
 void asm_error(int err, char *str, int line, int column);
-void line_error(char *line, int nb);
+void asm_error2(int err, char *str, int line, int column);
 
 /* ------------------- DECOMPILER ------------------
  **

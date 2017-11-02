@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 15:05:12 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 16:34:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,31 @@ int	check_op(char *instr, int lin, int col)
 	return (ret);
 }
 
-void check_header()
+void check_header(t_asm_env *env, char *line, int lin)
 {
+	char *word;
+	int len;
+
+	word = take_word(line);
+	len = ft_strlen(line);
+	if (!ft_strcmp(word, NAME_CMD_STRING))
+	{
+		if (env->name)
+			asm_error(NAME_EXISTS, NULL, lin, 0);
+		else if (len - ft_strlen(NAME_CMD_STRING) > PROG_NAME_LENGTH)
+			asm_error(NAME_SIZE_ERR, NULL, lin, 0);
+		++env->name;
+	}
+	else if (!ft_strcmp(word, COMMENT_CMD_STRING))
+	{
+		if (env->comment)
+			asm_error(COM_EXISTS, NULL, lin, 0);
+		else if (len - ft_strlen(COMMENT_CMD_STRING) > COMMENT_LENGTH)
+			asm_error(COM_SIZE_ERR, NULL, lin, 0);
+		++env->comment;
+	}
+	else
+		asm_error(COMMAND_ERR, word, lin, 0);
 }
 
 void check_parse_arg(char *str, int instr, int lin, int col)
@@ -88,12 +111,13 @@ void check_instr(char *line, int lin)
 	}
 }
 
-void	check_line(char *line, int lin)
+void	check_line(t_asm_env *env, char *line, int lin)
 {
+
 	if (!line)
 		return ;
 	if (*line == '.')
-		 check_header();
+		 check_header(env, line, lin);
 	else
 		check_instr(line, lin);
 }
