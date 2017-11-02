@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/07 19:55:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/02 17:33:01 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ void	init_ncurses(WINDOW **w)
 void	call_ncurses(t_vm *vm)
 {
 	int i;
+	int	j;
 	int ret;
 
 	i = 0;
+	j = 0;
 	ret = 0;
 
 	init_color(35, 350, 350, 350);//basic grey
+	init_color(40, 1000, 1000, 1000);//basic white
 	init_pair(15, 35, COLOR_BLACK);//basic
-
+	init_pair(40, COLOR_BLACK, 40);//basic white on black
+	init_pair(41, 35, 35);//grey back
 	init_pair(20, COLOR_GREEN, COLOR_BLACK);//player_1
 
 	init_color(36, 150, 1000, 150);//fluo_green
@@ -52,7 +56,7 @@ void	call_ncurses(t_vm *vm)
 	{
 		// printf("FOOOOOO\n");
 		attron(COLOR_PAIR(15));
-		move(i / 64, (i % 64) * 3);
+		move(3 + i / 64, 3 + (i % 64) * 3);
 		if ((is_pc(vm, i)))
 		{
 			if (vm->ram[i].num == -1)
@@ -92,20 +96,47 @@ void	call_ncurses(t_vm *vm)
 		attroff(COLOR_PAIR(35));
 		i++;
 	}
-	move(5, 200);
-	printw("Delay : %d", vm->delay);
-	move(10, 200);
-	printw("Cycles : %d", vm->cycle);
-	move(12, 200);
-	printw("Keycode : %d", vm->keycode);
-	move(14, 200);
-	printw("Proc Nb : %d", count_proc(vm));
-	move(20, 200);
-	printw("Cycle to die : %d", vm->ctd);
-	move(22, 200);
-	printw("Live P1 : %08d", vm->player[1].life_signal);
-	move(26, 210);
-
+	i = -1;
+//	attron(A_STANDOUT);
+	attron(COLOR_PAIR(41));
+	attron(A_INVIS);
+	while (++i < MEM_SIZE / 64 + 6)
+	{
+		j = -1;
+		while (++j < 3 * (MEM_SIZE / 64) + 50)
+		{
+			if (i == 0 || j == 0 || i == MEM_SIZE / 64 + 5
+					|| j == 3 * (MEM_SIZE / 64) + 4 ||
+					j == 3 * (MEM_SIZE / 64) + 49)
+			{
+				mvprintw(i, j, "*");
+			}
+		}
+	}
+//	attroff(A_STANDOUT);
+	attroff(COLOR_PAIR(41));
+	attroff(A_INVIS);
+	attron(A_STANDOUT);
+	attron(COLOR_PAIR(40));
+	attron(A_BOLD);
+	if (vm->pause == 1)
+		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
+	if (vm->pause != 1)
+		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** RUNNING **");
+	mvprintw(5, 3 * (MEM_SIZE / 64) + 6, "Delay : %d", vm->delay);
+	mvprintw(10, 3 * (MEM_SIZE / 64) + 6, "Cycles : %d", vm->cycle);
+	mvprintw(12, 3 * (MEM_SIZE / 64) + 6, "Keycode : %d", vm->keycode);
+	mvprintw(14, 3 * (MEM_SIZE / 64) + 6, "Proc Nb : %d", count_proc(vm));
+	mvprintw(22, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
+	mvprintw(24, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
+	mvprintw(26, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);
+	mvprintw(28, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d", MAX_CHECKS);
+	mvprintw(30, 3 * (MEM_SIZE / 64) + 6, "Live P1 : %08d", vm->player[1].life_signal);
+	printw("%i", MEM_SIZE);
+	attroff(COLOR_PAIR(40));
+	//attron(A_BOLD);
+	attroff(A_BOLD);
+	attroff(A_STANDOUT);
 	// debug_display_proc(vm);
 
 	refresh();
