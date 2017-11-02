@@ -6,23 +6,11 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 00:55:08 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/02 01:23:45 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-char  *moove_on_line(char *line)
-{
-  int a;
-
-  a = 0;
-  while (ft_isalpha(line[a]) || ft_isdigit(line[a]))
-    ++a;
-  while (is_space(line[a]))
-    ++a;
-  return (line + a);
-}
 
 void  op_ocp(t_asm_env *env, int i, char *line)
 {
@@ -76,26 +64,6 @@ int analyse_args(int oct, char *line, int i)
   else if (*line == LABEL_CHAR || ft_isdigit(*line))
     oct += IND_SIZE;
   return (oct);
-}
-
-void	write_args(t_asm_env *env, char *line, int i)
-{
-	int	a;
-	int	res;
-
-	res = 0;
-	a = 0;
-	while (line[a])
-	{
-		res = detect_arg(line + a);
-		if (res == REG_CODE)
-			write_reg(env, line + a);
-    else if (res == DIR_CODE)
-			write_dir(env, line + a, i);
-		else if (res == IND_CODE)
-			write_ind(env, line + a);
-		a += goto_nextarg(line + a);
-	}
 }
 
 int  analyse(int oct, char *line, int i)
