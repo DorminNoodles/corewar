@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:20:28 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 18:26:58 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ char *red_label_name(char *word, int len)
     label[i] = word[i];
     ++i;
   }
-  free(word);
+  ft_memdel((void*)&word);
   return label;
 }

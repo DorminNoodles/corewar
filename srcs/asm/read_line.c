@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/03 00:01:34 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 18:41:15 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void parse_label(t_asm_env *env, char *line, char *label, int printmode)
     ++a;
   while (line[a] && (is_space(line[a]) || line[a] == LABEL_CHAR))
     ++a;
-  free(label);
   label = take_word(line + a);
   if (*label)
     env->bytes += find_op(env, label, line + a, printmode);
+  ft_memdel((void*)&label);
 }
 
 void parse(t_asm_env *env, char *line, int printmode)
@@ -56,7 +56,7 @@ void parse(t_asm_env *env, char *line, int printmode)
       parse_label(env, line + a, word, printmode);
     else
       env->bytes += find_op(env, word, line + a, printmode);
-      free(word);
+    ft_memdel((void*)&word);
     if (env->verbose && printmode == PRINT_MODE)
       ft_printf(" - Current bytes = %d\n", env->bytes);
     }

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 23:34:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 18:07:00 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	write_reg(t_asm_env *env, char *line)
 	str = ft_strndup(line, a);
 	reg = ft_atoi(str);
 	ft_putchar_fd(reg, env->fd);
+	ft_memdel((void*)&str);
 }
 
 void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
@@ -40,6 +41,7 @@ void	write_dir_short(t_asm_env *env, char *line, int nb, int a)
 	{
 		label = take_word(line + 1);
 		dir2o = dist_label(env, label);
+		ft_memdel((void*)&label);
 	}
 	else
 		dir2o = nb;
@@ -58,6 +60,7 @@ void	write_dir_int(t_asm_env *env, char *line, int nb, int a)
 	{
 		label = take_word(line + 1);
 		dir4o = dist_label(env, label);
+		ft_memdel((void*)&label);
 	}
 	else
 		dir4o = nb;
@@ -99,6 +102,7 @@ void	write_ind(t_asm_env *env, char *line)
 			++a;
 		str = ft_strndup(line, a);
 		ind = ft_atoi(str);
+		ft_memdel((void*)&str);
 	}
 	else
 	{
@@ -106,6 +110,7 @@ void	write_ind(t_asm_env *env, char *line)
 			verbose_arg(line, 1);
 		str = take_word(line + 1);
 		ind = dist_label(env, str);
+		ft_memdel((void*)&str);
 	}
 	ind = reverse_short(ind);
 	write(env->fd, &ind, 2);

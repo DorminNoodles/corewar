@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/03 00:13:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 17:48:11 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ int main (int argc, char **argv)
     print_help();
     asm_error(NO_FILE_ERR, NULL, 0, 0);
   }
+  env.ko = 0;
+  env.debug = 0;
+  env.verbose = 0;
   arg = parse_args(&env, argv);
   if (env.debug)
     debug_mode(&env, 0);
@@ -160,5 +163,6 @@ int main (int argc, char **argv)
   print_mode(&env, argv[arg]);
   argv[arg][ft_strlen(argv[arg]) - 2] = '\0';
   ft_printf("Writting output program to %s.cor\n", argv[arg]);
+  free_labels(&env);
   return (0);
 }

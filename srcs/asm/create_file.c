@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:13:07 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 18:35:09 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void  create_file(t_asm_env *env, char *str)
   name = ft_strcpy(name, tmp);
   name = ft_strcat(name, ".cor");
   fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+  ft_memdel((void*)&name);
+  ft_memdel((void*)&tmp);
   env->fd = fd;
 }
 

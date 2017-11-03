@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 23:57:45 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 18:33:07 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void  op_ocp(t_asm_env *env, int i, char *line)
   }
   write_ocp(env, ocp);
   write_args(env, line, i + 1);
+  ft_memdel((void*)&ocp);
 }
 
 void  op_no_ocp(t_asm_env *env, int i, char *line)
