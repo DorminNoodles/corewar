@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/03 17:18:59 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/03 21:42:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,6 @@ void	init_vm(t_vm *vm)
 	vm->next_ctd = CYCLE_TO_DIE;
 	vm->dump = -1;
 	vm->debug = 0;
-}
-
-void	get_src_begin()
-{
-
-
 }
 
 void	write_player(t_vm *vm, int nb, int num)

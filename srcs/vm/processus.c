@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 18:02:48 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/03 21:28:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,11 @@ int		process_living(t_vm *vm)
 
 	i = 0;
 	tmp = vm->proc;
-	if (vm->cycle != vm->next_ctd)
+	if (vm->cycle < vm->next_ctd)
 		return (1);
-	vm->next_ctd = vm->cycle + vm->ctd;
 	kill_proc(vm);
 	set_ctd(vm);
+	vm->next_ctd = vm->cycle + vm->ctd;
 	while (tmp)
 	{
 		if (tmp->active)

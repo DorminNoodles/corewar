@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 17:56:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/03 21:40:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,23 @@ int		modulo(int a, int b)
 	// return (a % b) >= 0 ? (a % b) : (a % b) + b;
 }
 
+int		get_winner(t_vm *vm)
+{
+	int i;
+	int best;
+
+
+	i = 1;
+	best = 1;
+	while (i < vm->nb_player)
+	{
+		if (vm->player[i].last_live < vm->player[best].last_live)
+			best = i;
+		i++;
+	}
+	return (i);
+}
+
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
@@ -285,5 +302,8 @@ int		main(int argc, char **argv)
 	run(&vm);//lancement du combat
 	if (vm.ncurses)
 		endwin();
+
+	printf("winner nb -> %d\n", get_winner(&vm));
+
 	return (0);
 }

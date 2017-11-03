@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/23 00:56:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/03 21:42:36 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	st(t_vm *vm, t_proc *proc)
 {
+	printf("fucking bitch -> %d\n", vm->debug);
 	if (!vm->ncurses && vm->debug)
 		printf(">>>>>>>ENTER ST<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
 	unsigned int	addr;
