@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/02 23:58:19 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/03 17:11:40 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ typedef struct s_vm
 	int		nb_player;
 	int		ctd;
 	int		cycle;
-	int		keycode;
+//	int		keycode;
 	int		pause;
 	int		ncurses;
 	int		delay;
