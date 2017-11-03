@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/21 15:24:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/03 17:18:59 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	init_vm(t_vm *vm)
 	vm->cycle = 0;
 	vm->proc = NULL;
 	vm->last_one = NULL;
-	vm->keycode = 0;
+//	vm->keycode = 0;
 	vm->pause = 1;
 	vm->ncurses = 0;
 	vm->delay = NCURSES_DELAY;
