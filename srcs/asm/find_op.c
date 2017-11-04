@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 19:08:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 21:31:05 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	find_op(t_asm_env *env, char *word, char *line, int printmode)
 				if (printmode == PRINT_MODE)
 					op_ocp(env, i, line);
 			}
-			if (!op_tab[i].need_ocp)
-				oct = analyse(oct, line, tmp);
+			oct = analyse(oct, line, tmp);
 		}
 		++i;
 	}
