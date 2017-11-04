@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 19:07:16 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 21:13:41 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	int line;
 
 	ft_printf("Enter error with == %d\n", err);
-	free_labels(env);
-	if (env->ko)
-		return ;
-	if (env->debug)
-		++env->ko;
 	display_error(err);
 	if (err == NO_FILE_ERR)
 	{
@@ -76,26 +71,25 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	}
 	else
 		line = env->line;
+	free_labels(env);
+	if (env->ko)
+		return ;
+	if (env->debug)
+		++env->ko;
 	if (err == MALLOC_ERR)
 		ft_printf("Malloc failed.\n");
 	else if (err == INST_ERROR)
-		ft_printf("At [%d:%d], instruction '%s' does not exist.\n",
-		line, column, str);
+		ft_printf("At [%d:%d], instruction '%s' does not exist.\n", line, column, str);
 	else if (err == LEX_ERROR)
-		ft_printf("Lexical error at [%d:%d]. Waiting for a ','
-		between arguments.\n", line, column - 1);
+		ft_printf("Lexical error at [%d:%d]. Waiting for a ',' between arguments.\n", line, column - 1);
 	else if (err == BAD_ARG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number.\n",
-		line, column);
+		ft_printf("At [%d:%d], this instruction expected a direct number.\n", line, column);
 	else if (err == BAD_ARG_REG)
-		ft_printf("At [%d:%d], this instruction expected a register.\n",
-		line, column, str);
+		ft_printf("At [%d:%d], this instruction expected a register.\n", line, column, str);
 	else if (err == BAD_ARG_IND)
-		ft_printf("At [%d:%d], this instruction expected an index.\n",
-		line, column);
+		ft_printf("At [%d:%d], this instruction expected an index.\n", line, column);
 	else if (err == BAD_ARG_REG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number or a
-		register.\n", line, column);
+		ft_printf("At [%d:%d], this instruction expected a direct number or a register.\n", line, column);
 	else
 		asm_error2(err, str, env, column);
 	display_current_line(env, err, column);
@@ -109,28 +103,21 @@ void	asm_error2(int err, char *str, t_asm_env *env, int column)
 
 	line = env->line;
 	if (err == BAD_ARG_REG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number or a
-		register.\n", line, column);
+		ft_printf("At [%d:%d], this instruction expected a direct number or a register.\n", line, column);
 	else if (err == BAD_ARG_REG_IND)
-		ft_printf("At [%d:%d], this instruction expected a register or an
-		index.\n", line, column);
+		ft_printf("At [%d:%d], this instruction expected a register or an index.\n", line, column);
 	else if (err == BAD_ARG_IND_DIR)
-		ft_printf("At [%d:%d], this instruction expected an index or a direct
-		number.\n", line, column);
+		ft_printf("At [%d:%d], this instruction expected an index or a direct number.\n", line, column);
 	else if (err == BAD_ARG_REG_DIR_IND)
-		ft_printf("At [%d:%d], this instruction expected a register, a direct
-		number or an index.\n", line, column);
+		ft_printf("At [%d:%d], this instruction expected a register, a direct number or an index.\n", line, column);
 	else if (err == LABEL_ERROR)
 		ft_printf("Label '%s' is not find.\n", str);
 	else if (err == TOO_MUCH_ARG_ERR)
-		ft_printf("Too much arguments at [%d:%d] : '%s'.\n", line, column,
-		str);
+		ft_printf("Too much arguments at [%d:%d] : '%s'.\n", line, column, str);
 	else if (err == NAME_SIZE_ERR)
-		ft_printf("Line %d, name size is too big. Must be < %d.\n", line,
-		PROG_NAME_LENGTH);
+		ft_printf("Line %d, name size is too big. Must be < %d.\n", line, PROG_NAME_LENGTH);
 	else if (err == COM_SIZE_ERR)
-		ft_printf("Line %d, comment is size too big. Must be < %d.\n", line,
-		COMMENT_LENGTH);
+		ft_printf("Line %d, comment is size too big. Must be < %d.\n", line, COMMENT_LENGTH);
 	else if (err == NAME_EXISTS)
 		ft_printf("Line %d, name is already defined.\n", line);
 	else if (err == COM_EXISTS)
