@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/03 21:40:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/04 10:57:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,9 @@ t_player	*get_survivor(t_vm *vm)
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	// if (proc->state == IDLE)
+
 	idle_state(vm, proc);
+
 	// else if (proc->state == WAIT)
 	// 	wait_state(vm, proc);
 	// else if (proc->state == START)
@@ -204,6 +206,7 @@ void	run(t_vm *vm)
 
 	while (process_living(vm))
 	{
+		// printf("SEGFFAULT\n");
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
 
@@ -220,20 +223,13 @@ void	run(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
-			// if (proc->id == 5)
-			// {
-			// 	printf("proc->5   pc = %d\n", proc->pc);
-			// 	if (proc->op)
-			// 	{
-			// 		printf("proc->5 opcode = %d\n", proc->op->code);
-			// 		printf("proc->5 loadtime : %d\n", proc->op->loadtime);
-			// 	}
-			// 	printf("proc 5  active : %d\n", proc->active);
-			// }
+			// printf("SEGFFAULT_2\n");
 			if (proc->active)
 			{
+				// printf("SEGFFAULT_3\n");
 				animate_proc(vm, proc);
 			}
+			// printf("SEGFFAULT_4\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->last_pc = proc->pc;
@@ -247,6 +243,7 @@ void	run(t_vm *vm)
 		// printf("%d\n", vm->dump);
 		if (vm->dump != -1 && !vm->ncurses)
 			dump(vm);
+		// printf("SEGFFAULT_5\n");
 	}
 	printf("END\n");
 	if (vm->last_one)

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 15:00:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/04 14:07:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	zjmp(t_vm *vm, t_proc *proc)
 		show_operations(vm, proc);
 		if (proc->carry)
 			printf(" OK");
+		else
+			printf(" FAILED");
 		printf("\n");
 	}
 }
