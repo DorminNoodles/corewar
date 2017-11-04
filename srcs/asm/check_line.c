@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/03 18:23:21 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 18:53:41 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int	check_op(char *instr, t_asm_env *env, int col)
+int		check_op(char *instr, t_asm_env *env, int col)
 {
 	int i;
 	int ret;
@@ -24,7 +24,7 @@ int	check_op(char *instr, t_asm_env *env, int col)
 		if (!(ft_strcmp(instr, op_tab[i].inst)))
 		{
 			ret = i;
-			break;
+			break ;
 		}
 		++i;
 	}
@@ -33,10 +33,10 @@ int	check_op(char *instr, t_asm_env *env, int col)
 	return (ret);
 }
 
-void check_header(t_asm_env *env, char *line)
+void	check_header(t_asm_env *env, char *line)
 {
-	char *word;
-	int len;
+	char	*word;
+	int		len;
 
 	word = take_word(line);
 	len = ft_strlen(line);
@@ -61,7 +61,7 @@ void check_header(t_asm_env *env, char *line)
 	ft_memdel((void*)&word);
 }
 
-void check_parse_arg(char *str, int instr, t_asm_env *env, int col)
+void	check_parse_arg(char *str, int instr, t_asm_env *env, int col)
 {
 	if (instr == 1 || instr == 9 || instr == 12 || instr == 15)
 		check_instr_1_9_12_15(str, env, col);
@@ -83,12 +83,12 @@ void check_parse_arg(char *str, int instr, t_asm_env *env, int col)
 		check_instr_16(str, env, col);
 }
 
-void check_instr(char *line, t_asm_env *env)
+void	check_instr(char *line, t_asm_env *env)
 {
-	int i;
-	int inst;
-	int label;
-	char *word;
+	int		i;
+	int		inst;
+	int		label;
+	char	*word;
 
 	i = 0;
 	inst = -1;
@@ -105,7 +105,7 @@ void check_instr(char *line, t_asm_env *env)
 		{
 			check_parse_arg(line + i, inst + 1, env, i);
 			ft_memdel((void*)&word);
-			break;
+			break ;
 		}
 		i += ft_strlen(word);
 		ft_memdel((void*)&word);
@@ -114,11 +114,10 @@ void check_instr(char *line, t_asm_env *env)
 
 void	check_line(t_asm_env *env, char *line)
 {
-
 	if (!line)
 		return ;
 	if (*line == '.')
-		 check_header(env, line);
+		check_header(env, line);
 	else
 		check_instr(line, env);
 }

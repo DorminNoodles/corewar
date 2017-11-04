@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/03 18:15:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 19:12:31 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int is_label_char(char c)
+int			is_label_char(char c)
 {
 	int i;
 
@@ -26,7 +26,7 @@ int is_label_char(char c)
 	return (0);
 }
 
-int is_label_str(char *str)
+int			is_label_str(char *str)
 {
 	int i;
 
@@ -34,7 +34,7 @@ int is_label_str(char *str)
 	while (str[i] && str[i] != LABEL_CHAR)
 	{
 		if (!is_label_char(str[i]))
-			return 0;
+			return (0);
 		++i;
 	}
 	return (str[i] == LABEL_CHAR ? 1 : 0);

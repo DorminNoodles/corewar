@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 17:32:00 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 18:52:03 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int is_reg_or_ind(char *str, t_asm_env *env, int col)
+int	is_reg_or_ind(char *str, t_asm_env *env, int col)
 {
 	int reg;
 	int ind;
@@ -24,7 +24,7 @@ int is_reg_or_ind(char *str, t_asm_env *env, int col)
 	return (reg + ind);
 }
 
-int is_reg_or_dir(char *str, t_asm_env *env, int col)
+int	is_reg_or_dir(char *str, t_asm_env *env, int col)
 {
 	int reg;
 	int dir;
@@ -36,7 +36,7 @@ int is_reg_or_dir(char *str, t_asm_env *env, int col)
 	return (reg + dir);
 }
 
-int is_ind_or_dir(char *str, t_asm_env *env, int col)
+int	is_ind_or_dir(char *str, t_asm_env *env, int col)
 {
 	int ind;
 	int dir;
@@ -48,7 +48,7 @@ int is_ind_or_dir(char *str, t_asm_env *env, int col)
 	return (ind + dir);
 }
 
-int is_reg_or_ind_or_dir(char *str, t_asm_env *env, int col)
+int	is_reg_or_ind_or_dir(char *str, t_asm_env *env, int col)
 {
 	int reg;
 	int ind;
