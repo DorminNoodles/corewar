@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 21:31:00 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 17:34:15 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	op_no_ocp(t_asm_env *env, int i, char *line)
 	int		res;
 
 	if (env->verbose && env->print)
-		verbose_ocp(0);
+		verbose_ocp(env, 0);
 	a = 0;
 	res = 0;
 	ft_putchar_fd(i + 1, env->fd);

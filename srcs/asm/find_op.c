@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 21:31:05 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 17:21:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	find_op(t_asm_env *env, char *word, char *line, int printmode)
 		if (!ft_strcmp(word, op_tab[i].inst))
 		{
 			if (env->verbose && printmode == PRINT_MODE)
-				verbose_inst(word);
+				verbose_inst(env, word, i);
 			if (!op_tab[i].need_ocp)
 			{
 				tmp = i;

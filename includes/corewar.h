@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/04 23:17:25 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 19:03:18 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,6 +291,7 @@ void		debug_display_proc(t_vm *vm);
 
 #define C_RED "31"
 #define C_GREEN "32"
+#define C_YELLOW "33"
 #define C_BLUE "34"
 #define C_MAGENTA "35"
 #define C_CYAN "36"
@@ -337,6 +338,7 @@ typedef struct s_asm_env
 	int              fd;
 	int								line;
 	char							*current_line;
+	char							*verbose_line;
 	int								name;
 	int								comment;
 	int 							debug;
@@ -469,11 +471,11 @@ char *take_word(char *str);
 void asm_error(int err, char *str, t_asm_env *env, int column);
 void asm_error2(int err, char *str, t_asm_env *env, int column);
 
-void verbose_inst(char *ins);
-void verbose_arg(char *line, int add);
+void verbose_inst(t_asm_env *env, char *ins, int hex);
+void verbose_arg(t_asm_env *env, char *line, int add, int hex);
 void verbose_lab(char *lab, int pos);
 void verbose_dist_lab(int dist);
-void verbose_ocp(char ocp);
+void verbose_ocp(t_asm_env *env, char ocp);
 /* ------------------- DECOMPILER ------------------
  **
 */

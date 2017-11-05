@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 16:53:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 18:57:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	check_mode(t_asm_env *env, int fd)
 	env->labs = NULL;
 	env->line = 1;
 	env->current_line = NULL;
+	env->verbose_line = NULL;
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
@@ -52,16 +53,28 @@ void	print_mode(t_asm_env *env, char *file)
 	env->bytes = 1;
 	env->print = 1;
 	env->line = 1;
+	env->verbose_line = NULL;
 	while (get_next_line(fd, &line))
 	{
 		parse(env, line, PRINT_MODE);
 		ft_memdel((void*)&line);
-		if (env->verbose)
-			ft_printf("\n");
+		if (env->verbose && env->verbose_line)
+		{
+			color(C_RED);
+			ft_printf("-> ");
+			color(C_RESET);
+			ft_printf("0%s\n\n", env->verbose_line);
+			ft_memdel((void*)&env->verbose_line);
+		}
 		++env->line;
 	}
 	if (env->verbose)
-		ft_printf("\n\nFinal bytes number = %d\n\n", env->bytes - 1);
+	{
+		color(C_GREEN);
+		ft_printf("Total bytes: ");
+		color(C_RESET);
+		ft_printf("%d\n\n", env->bytes - 1);
+	}
 }
 
 void	print_help(void)

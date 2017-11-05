@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 19:19:38 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 19:06:42 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ void	parse(t_asm_env *env, char *line, int printmode)
 	if (line && line[0] != '#')
 	{
 		if (env->verbose && printmode == PRINT_MODE)
-			ft_printf("Line %d: '%s'\n", env->line, line);
+		{
+			color(C_GREEN);
+			ft_printf("- Line %d ", env->line);
+			color(C_YELLOW);
+      ft_printf("(Actual byte: %d)", env->bytes);
+      color(C_RESET);
+			ft_printf(" : '%s'\n", line);
+		}
 		a = 0;
 		while (line[a] && is_space(line[a]))
 			++a;
@@ -59,6 +66,6 @@ void	parse(t_asm_env *env, char *line, int printmode)
 			env->bytes += find_op(env, word, line + a, printmode);
 		ft_memdel((void*)&word);
 		if (env->verbose && printmode == PRINT_MODE)
-			ft_printf(" - Current bytes = %d\n", env->bytes);
+			ft_printf("\n");
 	}
 }
