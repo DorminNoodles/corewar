@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 23:22:36 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 01:21:13 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,13 @@ int		check_op(char *instr, t_asm_env *env, int col)
 
 int check_header_form(t_asm_env *env, char *line)
 {
-	int flag;
 	int i;
 	int len;
 
 	i = 0;
-	flag = 0;
 	while (line[i] && !is_space(line[i]))
 		++i;
-	printf("i = %d\n", i);
 	i += until_is_not_space(line + i);
-	printf("i = %d\n", i);
 	if (line[i] != '\"')
 		asm_error(WRONG_FORM_COM, NULL, env, i);
 	len = 0;
@@ -53,16 +49,13 @@ int check_header_form(t_asm_env *env, char *line)
 	while (line[i + len] && line[i + len] != '\"')
 	{
 		if (line[i + len] == '\"')
-		{
-			flag = 1;
 			break ;
-		}
 		++len;
 	}
-	if (!flag)
+	if (line[i + len] == '\"')
+		return (len);
 		asm_error(WRONG_FORM_COM, NULL, env, i);
-	printf("len = %d\n", len);
-	return (len);
+	return (0);
 }
 
 void	check_header(t_asm_env *env, char *line)
@@ -70,7 +63,6 @@ void	check_header(t_asm_env *env, char *line)
 	char	*word;
 	int		len;
 
-	ft_printf("line = %s\n", line);
 	word = take_word(line);
 	len = ft_strlen(line);
 	check_header_form(env, line);
