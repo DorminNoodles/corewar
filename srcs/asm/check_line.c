@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 18:53:41 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 23:22:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,47 @@ int		check_op(char *instr, t_asm_env *env, int col)
 	return (ret);
 }
 
+int check_header_form(t_asm_env *env, char *line)
+{
+	int flag;
+	int i;
+	int len;
+
+	i = 0;
+	flag = 0;
+	while (line[i] && !is_space(line[i]))
+		++i;
+	printf("i = %d\n", i);
+	i += until_is_not_space(line + i);
+	printf("i = %d\n", i);
+	if (line[i] != '\"')
+		asm_error(WRONG_FORM_COM, NULL, env, i);
+	len = 0;
+	++i;
+	while (line[i + len] && line[i + len] != '\"')
+	{
+		if (line[i + len] == '\"')
+		{
+			flag = 1;
+			break ;
+		}
+		++len;
+	}
+	if (!flag)
+		asm_error(WRONG_FORM_COM, NULL, env, i);
+	printf("len = %d\n", len);
+	return (len);
+}
+
 void	check_header(t_asm_env *env, char *line)
 {
 	char	*word;
 	int		len;
 
+	ft_printf("line = %s\n", line);
 	word = take_word(line);
 	len = ft_strlen(line);
+	check_header_form(env, line);
 	if (!ft_strcmp(word, NAME_CMD_STRING))
 	{
 		if (env->name)
@@ -58,6 +92,7 @@ void	check_header(t_asm_env *env, char *line)
 	}
 	else
 		asm_error(COMMAND_ERR, word, env, 0);
+//	check_header_form(env, line);
 	ft_memdel((void*)&word);
 }
 
@@ -88,9 +123,11 @@ void	check_instr(char *line, t_asm_env *env)
 	int		i;
 	int		inst;
 	int		label;
+	int 	args;
 	char	*word;
 
 	i = 0;
+	args = 0;
 	inst = -1;
 	label = 0;
 	while (line[i])
@@ -105,11 +142,14 @@ void	check_instr(char *line, t_asm_env *env)
 		{
 			check_parse_arg(line + i, inst + 1, env, i);
 			ft_memdel((void*)&word);
+			++args;
 			break ;
 		}
 		i += ft_strlen(word);
 		ft_memdel((void*)&word);
 	}
+	if (inst != -1 && !args)
+		asm_error(NO_ARGUMENTS, line, env, i);
 }
 
 void	check_line(t_asm_env *env, char *line)
@@ -119,5 +159,15 @@ void	check_line(t_asm_env *env, char *line)
 	if (*line == '.')
 		check_header(env, line);
 	else
-		check_instr(line, env);
+	{
+		if (env->name && env->comment)
+			check_instr(line, env);
+		else if (!env->debug)
+		{
+			if (!env->name)
+				asm_error(NO_NAME, NULL, env, 0);
+			else
+				asm_error(NO_COMMENT, NULL, env, 0);
+		}
+	}
 }

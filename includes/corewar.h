@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/03 19:06:05 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 23:17:25 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ void		debug_display_proc(t_vm *vm);
 #define PRINT_MODE 1
 // asm_error(int ERROR, char *str, int line, int column)
 #define ERROR_MIN 0
-#define ERROR_MAX 21
+#define ERROR_MAX 26
 #define NO_FILE_ERR 0
 #define SOURCE_ERR 1
 #define MALLOC_ERR 2
@@ -323,6 +323,11 @@ void		debug_display_proc(t_vm *vm);
 #define NAME_EXISTS 19
 #define COM_EXISTS 20
 #define COMMAND_ERR 21
+#define NO_NAME 22
+#define NO_COMMENT 23
+#define NO_INSTRUCTIONS 24
+#define NO_ARGUMENTS 25
+#define WRONG_FORM_COM 26
 
 typedef struct s_asm_env
 {

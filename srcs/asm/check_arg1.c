@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 18:51:33 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 22:33:18 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ int	is_ind(char *str)
 		while (str[i] && str[i] != ' ' && str[i] != '\t' &&
 		str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
 		{
+			++check;
 			if (!is_label_char(str[i]))
 				return (0);
 			++i;
 		}
-		return (i);
+		return (check ? i : 0);
 	}
 	if (str[i] == '-')
 		++i;

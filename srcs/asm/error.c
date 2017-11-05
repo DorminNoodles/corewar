@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 21:13:41 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 23:18:41 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ void	display_current_line(t_asm_env *env, int err, int column)
 {
 	int i;
 
-	if (err < 6 && err > 16)
+	if ((err < 6 && err > 16) || !env || !env->current_line)
+	{
+		if (!env)
+			exit(EXIT_FAILURE);
 		return ;
+	}
 	if (err == TOO_MUCH_ARG_ERR || err == LEX_ERROR)
 		--column;
 	if (err >= ERROR_MIN && err <= ERROR_MAX)
@@ -69,12 +73,12 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 		ft_printf("'%s' is not a .s file.\n", str);
 		exit(EXIT_FAILURE);
 	}
-	else
+	else if (env)
 		line = env->line;
 	free_labels(env);
-	if (env->ko)
+	if (env && env->ko)
 		return ;
-	if (env->debug)
+	if (env && env->debug)
 		++env->ko;
 	if (err == MALLOC_ERR)
 		ft_printf("Malloc failed.\n");
@@ -101,7 +105,8 @@ void	asm_error2(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
-	line = env->line;
+	if (env)
+		line = env->line;
 	if (err == BAD_ARG_REG_DIR)
 		ft_printf("At [%d:%d], this instruction expected a direct number or a register.\n", line, column);
 	else if (err == BAD_ARG_REG_IND)
@@ -110,6 +115,8 @@ void	asm_error2(int err, char *str, t_asm_env *env, int column)
 		ft_printf("At [%d:%d], this instruction expected an index or a direct number.\n", line, column);
 	else if (err == BAD_ARG_REG_DIR_IND)
 		ft_printf("At [%d:%d], this instruction expected a register, a direct number or an index.\n", line, column);
+	else if (err == NO_ARGUMENTS)
+		ft_printf("At [%d:%d], instruction has no arguments\n", line, column);
 	else if (err == LABEL_ERROR)
 		ft_printf("Label '%s' is not find.\n", str);
 	else if (err == TOO_MUCH_ARG_ERR)
@@ -124,4 +131,12 @@ void	asm_error2(int err, char *str, t_asm_env *env, int column)
 		ft_printf("Line %d, comments are already defined.\n", line);
 	else if (err == COMMAND_ERR)
 		ft_printf("Line %d, command '%s' not found.\n", line, str);
+	else if (err == NO_NAME)
+		ft_printf("Line %d, Your champion needs a name before instructions\n", line);
+	else if (err == NO_COMMENT)
+		ft_printf("Line %d, Your champion needs a comment before instructions\n", line);
+	else if (err == NO_INSTRUCTIONS)
+		ft_printf("You need, at least, one instruction !\n");
+	else if (err == WRONG_FORM_COM)
+		ft_printf("At [%d:%d], wrong format. Name and comment need to begin and end by \"\n", line, column);
 }

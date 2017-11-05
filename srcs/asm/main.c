@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 21:13:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 22:56:45 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void	check_mode(t_asm_env *env, int fd)
 		ft_memdel((void*)&line);
 		++env->line;
 	}
+	if (env->bytes == 1)
+		asm_error(NO_INSTRUCTIONS, NULL, env, 0);
+	if (!env->name)
+		asm_error(NO_NAME, NULL, env, 0);
+	if (!env->comment)
+		asm_error(NO_COMMENT, NULL, env, 0);
 	env->size = env->bytes - 1;
 }
 
