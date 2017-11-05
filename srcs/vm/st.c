@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/23 00:56:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/04 21:08:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,12 @@ void	st(t_vm *vm, t_proc *proc)
 	unsigned int	addr;
 
 	if (proc->op->ar[0] < 1 || proc->op->ar[0] > 16)
-	{
 		return ;
-	}
 
 	if (proc->op->ar_typ[1] == REG_CODE)
 	{
-		if (!vm->ncurses && vm->debug)
-			printf("ST in REG\n");
-		proc->reg[proc->op->ar[1] - 1] = proc->reg[proc->op->ar[0]];
+		if (proc->op->ar[1] >= 1 && proc->op->ar[1] <= 16)
+			proc->reg[proc->op->ar[1]] = proc->reg[proc->op->ar[0]];
 	}
 	else
 	{
@@ -94,6 +91,10 @@ void	st(t_vm *vm, t_proc *proc)
 		show_operations(vm, proc);
 		printf("\n");
 	}
+
+	printf("r3 == %d\n", proc->reg[3]);
+	printf("carry == %d\n", proc->carry);
+
 }
 
 

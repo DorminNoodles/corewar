@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/03 15:30:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/05 14:15:17 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,17 @@ void	show_operations(t_vm *vm, t_proc *proc)
 void	show_pc_move(t_vm *vm, t_proc *proc)
 {
 	int	i;
-	i = proc->last_pc;
+	int	move_size;
 
-	if (proc->pc - proc->last_pc && (proc->pc - proc->last_pc) > 1)
+	i = 0;
+	move_size = proc->pc - proc->last_pc;
+	if (move_size > 1)
 	{
-		printf("ADV %d (0x%04x -> 0x%04x)", proc->pc - proc->last_pc, proc->last_pc, proc->pc);
-		while (i < (proc->pc - proc->last_pc))
+		printf("ADV %d (0x%04x -> 0x%04x)", move_size, proc->last_pc, proc->pc);
+		while (i < move_size)
 		{
-			printf(" %02x", (unsigned char)vm->ram[(i % MEM_SIZE)].mem);
+			// printf(">> %d \n", i);
+			printf(" %02x", (unsigned char)vm->ram[(proc->last_pc + i) % MEM_SIZE].mem);
 			i++;
 		}
 		printf("\n");

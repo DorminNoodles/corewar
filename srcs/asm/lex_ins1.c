@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 17:50:00 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 22:29:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void check_instr_endline(char *str, t_asm_env *env, int col)
+void	check_instr_endline(char *str, t_asm_env *env, int col)
 {
 	int i;
 
@@ -21,7 +21,7 @@ void check_instr_endline(char *str, t_asm_env *env, int col)
 		asm_error(TOO_MUCH_ARG_ERR, str, env, col + i);
 }
 
-void check_instr_1_9_12_15(char *str, t_asm_env *env, int col)
+void	check_instr_1_9_12_15(char *str, t_asm_env *env, int col)
 {
 	int i;
 	int arg;
@@ -34,7 +34,7 @@ void check_instr_1_9_12_15(char *str, t_asm_env *env, int col)
 	check_instr_endline(str + i, env, col + i);
 }
 
-void check_instr_2_13(char *str, t_asm_env *env, int col)
+void	check_instr_2_13(char *str, t_asm_env *env, int col)
 {
 	int i;
 	int arg;
@@ -50,7 +50,7 @@ void check_instr_2_13(char *str, t_asm_env *env, int col)
 	check_instr_endline(str + i, env, col + i);
 }
 
-void check_instr_3(char *str, t_asm_env *env, int col)
+void	check_instr_3(char *str, t_asm_env *env, int col)
 {
 	int i;
 	int arg;
@@ -61,11 +61,12 @@ void check_instr_3(char *str, t_asm_env *env, int col)
 		asm_error(BAD_ARG_REG, str + i, env, col + i);
 	i += arg;
 	i += until_next_arg(str + i, env, col + i);
-	arg = is_reg_or_ind(str +  i, env, col + i);
+	arg = is_reg_or_ind(str + i, env, col + i);
 	i += arg;
 	check_instr_endline(str + i, env, col + i);
 }
-void check_instr_4_5(char *str, t_asm_env *env, int col)
+
+void	check_instr_4_5(char *str, t_asm_env *env, int col)
 {
 	int i;
 	int arg;

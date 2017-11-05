@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/16 18:05:02 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/04 13:58:25 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ld(t_vm *vm, t_proc *proc)
 
 	addr = 0;
 	reg_nb = proc->op->ar[1];
+	if (reg_nb > 16 || reg_nb < 1)
+		return ;
 	if (proc->op->ar_typ[0] == IND_CODE)
 	{
 		addr = proc->op->pos_opcode + proc->op->ar[0];
@@ -51,10 +53,10 @@ void	ld(t_vm *vm, t_proc *proc)
 		proc->carry = 1*/
 
 
-		if (0x4 & vm->verbosity)
-		{
-			show_operations(vm, proc);
-			printf("\n");
-		}
+	if (0x4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		printf("\n");
+	}
 
 }

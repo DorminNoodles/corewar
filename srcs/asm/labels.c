@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 23:45:52 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 19:12:31 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int is_label_char(char c)
+int			is_label_char(char c)
 {
 	int i;
 
@@ -26,7 +26,7 @@ int is_label_char(char c)
 	return (0);
 }
 
-int is_label_str(char *str)
+int			is_label_str(char *str)
 {
 	int i;
 
@@ -34,7 +34,7 @@ int is_label_str(char *str)
 	while (str[i] && str[i] != LABEL_CHAR)
 	{
 		if (!is_label_char(str[i]))
-			return 0;
+			return (0);
 		++i;
 	}
 	return (str[i] == LABEL_CHAR ? 1 : 0);
@@ -76,6 +76,7 @@ t_tab_labs	*new_label(char *line, int bytes)
 	if (!(new = (t_tab_labs*)malloc(sizeof(t_tab_labs))))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
 	new->label = ft_strdup(name);
+	ft_memdel((void*)&name);
 	new->nb_oct = bytes;
 	new->next = NULL;
 	return (new);

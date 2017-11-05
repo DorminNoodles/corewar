@@ -6,34 +6,36 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 01:13:07 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/04 21:14:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void  create_file(t_asm_env *env, char *str)
+void	create_file(t_asm_env *env, char *str)
 {
-  int fd;
-  int len;
-  char *tmp;
-  char *name;
+	int		fd;
+	int		len;
+	char	*tmp;
+	char	*name;
 
-  len = ft_strlen(str) - 2;
-  tmp = ft_strndup(str, len);
-  name = ft_strnew(len + 2);
-  name = ft_strcpy(name, tmp);
-  name = ft_strcat(name, ".cor");
-  fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-  env->fd = fd;
+	len = ft_strlen(str) - 2;
+	tmp = ft_strndup(str, len);
+	name = ft_strnew(len + 2);
+	name = ft_strcpy(name, tmp);
+	name = ft_strcat(name, ".cor");
+	fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	ft_memdel((void*)&name);
+	ft_memdel((void*)&tmp);
+	env->fd = fd;
 }
 
-int check_name(char *str)
+int		check_name(char *str)
 {
-  int size;
+	int size;
 
-  size = ft_strlen(str);
-  if (size < 2)
-    return 0;
-  return (str[size - 2] == '.' && str[size - 1] == 's' ? 1 : 0);
+	size = ft_strlen(str);
+	if (size < 2)
+		return (0);
+	return (str[size - 2] == '.' && str[size - 1] == 's' ? 1 : 0);
 }
