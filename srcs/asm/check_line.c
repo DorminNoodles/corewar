@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 16:55:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 19:34:05 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int check_header_form(t_asm_env *env, char *line)
 		++i;
 	i += until_is_not_space(line + i);
 	if (line[i] != '\"')
+	{
 		asm_error(WRONG_FORM_COM, NULL, env, i);
+		return (0);
+	}
 	len = 0;
 	++i;
 	while (line[i + len] && line[i + len] != '\"')
@@ -54,9 +57,10 @@ int check_header_form(t_asm_env *env, char *line)
 	}
 	if (!len || line[i + len + 1] != '\0')
 		asm_error(WRONG_FORM_COM, NULL, env, i + len);
-	if (line[i + len] == '\"')
+	else if (line[i + len] == '\"')
 		return (len);
-	asm_error(WRONG_FORM_COM, NULL, env, i);
+	else
+		asm_error(WRONG_FORM_COM, NULL, env, i);
 	return (0);
 }
 
@@ -83,7 +87,7 @@ void	check_header(t_asm_env *env, char *line)
 			asm_error(COM_SIZE_ERR, NULL, env, 0);
 		++env->comment;
 	}
-	else
+	else if (len)
 		asm_error(COMMAND_ERR, word, env, 0);
 	ft_memdel((void*)&word);
 }
@@ -154,7 +158,7 @@ void	check_line(t_asm_env *env, char *line)
 	{
 		if (env->name && env->comment)
 			check_instr(line, env);
-		else if (!env->debug)
+		else
 		{
 			if (!env->name)
 				asm_error(NO_NAME, NULL, env, 0);

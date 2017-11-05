@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 16:53:52 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 19:20:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
+	printf("err = %d\n", err);
 	display_error(err);
 	if (err == NO_FILE_ERR)
 	{
