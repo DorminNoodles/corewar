@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 01:21:13 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 16:55:58 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int check_header_form(t_asm_env *env, char *line)
 			break ;
 		++len;
 	}
+	if (!len || line[i + len + 1] != '\0')
+		asm_error(WRONG_FORM_COM, NULL, env, i + len);
 	if (line[i + len] == '\"')
 		return (len);
-		asm_error(WRONG_FORM_COM, NULL, env, i);
+	asm_error(WRONG_FORM_COM, NULL, env, i);
 	return (0);
 }
 
@@ -64,13 +66,12 @@ void	check_header(t_asm_env *env, char *line)
 	int		len;
 
 	word = take_word(line);
-	len = ft_strlen(line);
-	check_header_form(env, line);
+	len = check_header_form(env, line);
 	if (!ft_strcmp(word, NAME_CMD_STRING))
 	{
 		if (env->name)
 			asm_error(NAME_EXISTS, NULL, env, 0);
-		else if (len - ft_strlen(NAME_CMD_STRING) > PROG_NAME_LENGTH)
+		else if (len > PROG_NAME_LENGTH)
 			asm_error(NAME_SIZE_ERR, NULL, env, 0);
 		++env->name;
 	}
@@ -78,13 +79,12 @@ void	check_header(t_asm_env *env, char *line)
 	{
 		if (env->comment)
 			asm_error(COM_EXISTS, NULL, env, 0);
-		else if (len - ft_strlen(COMMENT_CMD_STRING) > COMMENT_LENGTH)
+		else if (len > COMMENT_LENGTH)
 			asm_error(COM_SIZE_ERR, NULL, env, 0);
 		++env->comment;
 	}
 	else
 		asm_error(COMMAND_ERR, word, env, 0);
-//	check_header_form(env, line);
 	ft_memdel((void*)&word);
 }
 

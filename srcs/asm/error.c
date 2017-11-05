@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 01:21:30 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 16:53:52 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ void	display_current_line(t_asm_env *env, int err, int column)
 {
 	int i;
 
-	if ((err < 6 && err > 16) || !env || !env->current_line)
-	{
-		if (!env)
-			exit(EXIT_FAILURE);
-		return ;
-	}
+	if (!env || !env->current_line)
+		exit (EXIT_FAILURE);
 	if (err == TOO_MUCH_ARG_ERR || err == LEX_ERROR)
 		--column;
 	if (err >= ERROR_MIN && err <= ERROR_MAX)

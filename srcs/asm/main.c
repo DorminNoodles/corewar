@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 22:56:45 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/05 16:53:48 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	check_mode(t_asm_env *env, int fd)
 	env->bytes = 1;
 	env->labs = NULL;
 	env->line = 1;
+	env->current_line = NULL;
 	line = NULL;
 	while (get_next_line(fd, &line))
 	{
@@ -31,12 +32,13 @@ void	check_mode(t_asm_env *env, int fd)
 		ft_memdel((void*)&line);
 		++env->line;
 	}
-	if (env->bytes == 1)
-		asm_error(NO_INSTRUCTIONS, NULL, env, 0);
+	env->current_line = line;
 	if (!env->name)
 		asm_error(NO_NAME, NULL, env, 0);
 	if (!env->comment)
 		asm_error(NO_COMMENT, NULL, env, 0);
+	if (env->bytes == 1)
+		asm_error(NO_INSTRUCTIONS, NULL, env, 0);
 	env->size = env->bytes - 1;
 }
 
@@ -144,6 +146,7 @@ int		main(int argc, char **argv)
 {
 	int			fd;
 	int			arg;
+	char 		buf[1];
 	t_asm_env	env;
 
 	if (argc == 1)
@@ -161,6 +164,8 @@ int		main(int argc, char **argv)
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	if ((fd = open(argv[arg], O_RDONLY)) == -1)
 		asm_error(SOURCE_ERR, argv[arg], 0, 0);
+	// if (read(fd, buf, 1) <= 0)
+	// 	asm_error(SOURCE_ERR, argv[arg], 0, 0);
 	if (!check_name(argv[arg]))
 		asm_error(FILE_ERROR, argv[arg], 0, 0);
 	check_mode(&env, fd);
