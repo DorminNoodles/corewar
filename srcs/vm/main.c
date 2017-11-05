@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 17:56:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/02 15:04:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,7 @@ void	find_args(t_vm *vm, t_proc *proc, int num)
 		get_dir(vm, proc, num);
 	if (type == IND_CODE)
 		get_ind(vm, proc, num);
-
 }
-
 
 int		is_opcode(char data)
 {
@@ -241,7 +239,6 @@ void	run(t_vm *vm)
 		}
 		vm->cycle++;
 //-------------------------Debug
-
 
 //-------------------------Debug
 		// printf("%d\n", vm->dump);
