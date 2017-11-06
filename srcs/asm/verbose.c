@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 21:59:01 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 22:49:12 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 	}
 	color(C_RESET);
 	ft_printf("| ");
+//	tmp = ft_convert_base(ft_itoa(hex), DEC, HEX2);
 	tmp = ft_conv_hex(ft_itoa(hex), HEX2);
+	printf("tmp = %s hex = %x\n", tmp, hex);
 	env->verbose_line = ft_strcat(env->verbose_line, "0");
-	tmp[7] = '\0';
+//	tmp[7] = '\0';
 	env->verbose_line = ft_strcat(env->verbose_line, ft_strrev(tmp));
 	env->verbose_line = ft_strcat(env->verbose_line, " ");
 	ft_memdel((void*)&tmp);
@@ -66,7 +68,8 @@ void	verbose_inst(t_asm_env *env, char *ins, int hex)
 	color(C_RESET);
 	ft_printf("| ");
 	env->verbose_line = ft_strnew(30);
-	tmp = ft_conv_hex(ft_itoa(hex+1), HEX2);
+	tmp = ft_convert_base(ft_itoa(hex+1), DEC, HEX2);
+	// tmp = ft_conv_hex(ft_itoa(hex+1), HEX2);
 	env->verbose_line = ft_strcat(env->verbose_line, tmp);
 	ft_memdel((void*)&tmp);
 	env->verbose_line = ft_strcat(env->verbose_line, " ");
@@ -92,7 +95,8 @@ void	verbose_ocp(t_asm_env *env, char ocp)
 	if (ocp)
 	{
 		ft_printf("Ocp: %hb (%#hhx) ", ocp, ocp);
-		tmp = ft_conv_hex(ft_itoa((unsigned char)ocp), HEX2);
+		// tmp = ft_conv_hex(ft_itoa((unsigned char)ocp), HEX2);
+	tmp = ft_convert_base(ft_itoa((unsigned char)ocp), DEC, HEX2);
 		env->verbose_line =  ft_strcat(env->verbose_line, tmp);
 		ft_memdel((void*)&tmp);
 		env->verbose_line = ft_strcat(env->verbose_line, " ");

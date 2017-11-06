@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 21:58:28 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 22:20:18 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int		analyse(int oct, char *line, int i)
 	{
 		while (line[a] == LABEL_CHAR)
 			++a;
-		while (line[a] && (line[a] == '-' || ft_isalnum(line[a])))
+		while (line[a] && (line[a] == '-' || is_label_char(line[a])))
 			++a;
 		while (line[a] && is_space(line[a]))
 			++a;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 21:22:26 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 22:30:07 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,7 +356,7 @@ typedef struct s_tab_labs
 }                   t_tab_labs;
 
 void free_labels(t_asm_env *env);
-
+void print_labs_lst(t_tab_labs *lst);
 /*
  ** -------- Create file ---------
 */

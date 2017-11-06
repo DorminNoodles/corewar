@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 20:43:41 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 22:29:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	print_mode(t_asm_env *env, char *file)
 	env->print = 1;
 	env->line = 1;
 	env->verbose_line = NULL;
+	print_labs_lst(env->labs);
 	while (get_next_line(fd, &line))
 	{
 		parse(env, line, PRINT_MODE);
