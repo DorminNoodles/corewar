@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 17:34:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 21:59:58 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	write_args(t_asm_env *env, char *line, int i)
 
 	res = 0;
 	a = 0;
-	while (line[a])
+	while (line[a] && line[a] != COMMENT_CHAR)
 	{
 		res = detect_arg(env, line + a);
 		if (res == REG_CODE)

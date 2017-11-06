@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 17:34:15 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 21:58:28 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	op_ocp(t_asm_env *env, int i, char *line)
 	ocp = NULL;
 	ft_putchar_fd(i + 1, env->fd);
 	line = moove_on_line(line);
-	while (line[a])
+	while (line[a] && line[a] != COMMENT_CHAR)
 	{
 		res = detect_arg(env, line + a);
 		ocp = concat_opcode(ocp, res);
@@ -45,7 +45,7 @@ void	op_no_ocp(t_asm_env *env, int i, char *line)
 	res = 0;
 	ft_putchar_fd(i + 1, env->fd);
 	line = moove_on_line(line);
-	while (line[a])
+	while (line[a] && line[a] != COMMENT_CHAR)
 	{
 		res = detect_arg(env, line + a);
 		a += goto_nextarg(line + a);

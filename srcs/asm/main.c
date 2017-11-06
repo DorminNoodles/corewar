@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 19:33:50 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/06 20:43:41 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	check_mode(t_asm_env *env, int fd)
 	if (env->bytes == 1)
 		asm_error(NO_INSTRUCTIONS, NULL, env, 0);
 	env->size = env->bytes - 1;
+	if (env->size > CHAMP_MAX_SIZE)
+		asm_error(SIZE_MAX_ERR, NULL, env, 0);
 }
 
 void	print_mode(t_asm_env *env, char *file)
