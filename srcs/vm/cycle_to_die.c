@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 00:00:52 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/03 15:24:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/06 18:42:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 void	set_ctd(t_vm *vm)
 {
+	// printf("lives in cycle => %d\n", vm->lives_in_cycle);
 	if (vm->lives_in_cycle >= NBR_LIVE || vm->ctd_check >= MAX_CHECKS)
 	{
 		vm->ctd -= CYCLE_DELTA;
@@ -38,4 +39,5 @@ void	set_ctd(t_vm *vm)
 	}
 	else
 		vm->ctd_check++;
+	vm->lives_in_cycle = 0;
 }

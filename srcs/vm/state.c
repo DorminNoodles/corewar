@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/04 10:57:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/06 09:31:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
+	// ft_putstr("SEGV 1\n");
 	if(!proc->op)
 	{
 		// if (proc->id == 5)
@@ -47,6 +48,7 @@ void	idle_state(t_vm *vm, t_proc *proc)
 	}
 	else
 	{
+		// ft_putstr("SEGV 2\n");
 		// if (proc->id == 5)
 		// 	printf("reduce lifetime\n");
 		proc->op->loadtime--;
@@ -59,7 +61,9 @@ void	idle_state(t_vm *vm, t_proc *proc)
 			proc->op = NULL;
 			// printf("SEGFFAULT_3\n");
 		}
+		// ft_putstr("SEGV 3\n");
 	}
+	// ft_putstr("SEGV 4\n");
 	// printf("SEGFFAULT_4\n");
 
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/05 14:15:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/06 09:28:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,10 +203,11 @@ void	run(t_vm *vm)
 
 	while (process_living(vm))
 	{
-		// printf("SEGFFAULT\n");
+
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
 
+		// ft_putstr("SEGV 1\n");
 		//-------------------NCURSES
 		if (vm->ncurses)
 		{
@@ -220,11 +221,12 @@ void	run(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
-			// printf("SEGFFAULT_2\n");
 			if (proc->active)
 			{
 				// printf("SEGFFAULT_3\n");
+				// printf("SEGV 2\n");
 				animate_proc(vm, proc);
+				// printf("SEGV 3\n");
 			}
 			// printf("SEGFFAULT_4\n");
 			if (16 & vm->verbosity)
@@ -240,6 +242,8 @@ void	run(t_vm *vm)
 		if (vm->dump != -1 && !vm->ncurses)
 			dump(vm);
 		// printf("SEGFFAULT_5\n");
+		// printf("SEGV 4\n");
+		// ft_putstr("SEGV 4\n");
 	}
 	printf("END\n");
 	if (vm->last_one)
@@ -291,7 +295,6 @@ int		main(int argc, char **argv)
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
-	// printf("SEGV\n");
 	run(&vm);//lancement du combat
 	if (vm.ncurses)
 		endwin();
