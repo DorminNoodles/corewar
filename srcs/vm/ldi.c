@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/10/15 22:26:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/06 20:23:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ void		ldi(t_vm *vm, t_proc *proc)
 	// printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
 
 	addr = (proc->op->ar[0] + proc->op->ar[1]) % IDX_MOD;
-	printf("addr : %d\n", addr);
 	addr = addr + proc->op->pos_opcode;
-	printf("addr : %d\n", addr);
 
 	value |= (unsigned char)vm->ram[modulo(addr, MEM_SIZE)].mem;
 	value = value << 8;
@@ -84,22 +82,9 @@ void		ldi(t_vm *vm, t_proc *proc)
 	value |= (unsigned char)vm->ram[modulo(addr + 2, MEM_SIZE)].mem;
 	value = value << 8;
 	value |= (unsigned char)vm->ram[modulo(addr + 3, MEM_SIZE)].mem;
-	printf("value : %x\n", value);
 
 	proc->reg[proc->op->ar[2]] = value;
 
-
-
-
-
-
-
-
-
-
-
-	//
-	//
 	// addr = proc->op->ar[0];
 	// reg_nb = proc->op->ar[2] - 1;
 	// if (proc->op->ar_typ[0] == REG_CODE)
