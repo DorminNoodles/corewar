@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 10:43:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 16:07:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		ldi(t_vm *vm, t_proc *proc)
 	value = 0x0;
 	addr = 0;
 
-	if (proc->op->ar_typ[0] == REG_CODE && !check_reg(proc->op->ar[0]))
+	if (!check_params(proc->op))
 		return ;
 
 	if (proc->op->ar_typ[0] == REG_CODE)
@@ -64,9 +64,6 @@ void		ldi(t_vm *vm, t_proc *proc)
 		// printf("reg %d\n", proc->op->ar[1]);
 		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
 	}
-
-	// printf("proc->op->ar[0] : %d\n", proc->op->ar[0]);
-	// printf("proc->op->ar[0] : %d\n", proc->op->ar[1]);
 
 	addr = (proc->op->ar[0] + proc->op->ar[1]) % IDX_MOD;
 	addr = addr + proc->op->pos_opcode;
