@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 13:20:01 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 15:53:05 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	print_mode(t_asm_env *env, char *file)
 			color(C_RESET);
 			ft_printf("0%s\n\n", env->verbose_line);
 			ft_memdel((void*)&env->verbose_line);
-			printf("env verbose line = %s\n", env->verbose_line);
 		}
 		++env->line;
 	}

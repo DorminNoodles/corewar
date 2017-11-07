@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/05 18:10:56 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 15:36:28 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	write_reg(t_asm_env *env, char *line)
 	str = ft_strndup(line, a);
 	reg = ft_atoi(str);
 	if (env->verbose)
-		verbose_arg(env, line, 0, reg);
+		verbose_arg(env, line, 2, reg);
 	ft_putchar_fd(reg, env->fd);
 	ft_memdel((void*)&str);
 }
