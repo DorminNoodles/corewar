@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:41:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 18:07:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 18:14:18 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,9 @@
 
 void	idle_state(t_vm *vm, t_proc *proc)
 {
-	// ft_putstr("SEGV 1\n");
 	if(!proc->op)
 	{
-		// if (proc->id == 5)
-		// 	printf("NO opcode\n");
-		printf("Here  %d\n", vm->ram[proc->pc % MEM_SIZE].mem);
+		// printf("Here  %d\n", vm->ram[proc->pc % MEM_SIZE].mem);
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 		{
 			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);

@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 18:09:37 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 18:14:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	st(t_vm *vm, t_proc *proc)
 {
 	unsigned int	addr;
 
-	printf("ST\n");
 	if (!check_params(proc->op))
 		return ;
-	printf("ST\n");
-
 	if (proc->op->ar_typ[1] == REG_CODE)
 	{
 		if (proc->op->ar[1] >= 1 && proc->op->ar[1] <= 16)
@@ -28,9 +25,6 @@ void	st(t_vm *vm, t_proc *proc)
 	}
 	else
 	{
-		if (!vm->ncurses && vm->debug)
-			printf("ST in IND\n");
-
 		addr = (proc->op->pos_opcode + (proc->op->ar[1] % IDX_MOD));
 
 		addr = modulo(addr, MEM_SIZE);

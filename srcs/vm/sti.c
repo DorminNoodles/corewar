@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 15:58:53 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 18:15:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,8 @@ void	sti(t_vm *vm, t_proc *proc)
 	addr = (proc->op->ar[1] + proc->op->ar[2]) % IDX_MOD;
 	addr = proc->op->pos_opcode + addr;
 
-
-	if (!vm->ncurses && vm->debug)
-		printf(">> %d\n", vm->cycle);
-
 	reg = proc->op->ar[0];
 
-	printf("test  %d\n", reg);
 	vm->ram[modulo(addr, MEM_SIZE)].mem = proc->reg[reg] >>24;
 	vm->ram[modulo(addr, MEM_SIZE)].num = proc->num;
 	vm->ram[modulo(addr, MEM_SIZE)].blingbling = BLING_DELAY;
