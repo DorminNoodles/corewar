@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 16:09:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 16:11:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,10 @@ void	st(t_vm *vm, t_proc *proc)
 	}
 
 
-	if (proc->num == -1)
-	{
-		// printf("SEGV_1\n");
-		// printf(" FFFFFFFFFFFFFF %d\n", proc->carry);
-		// move(20, 200);
-		// printw("Cycles : %d", vm->cycle);
-		// printw("CARRY       au bal du diable %d", proc->carry);
-		// printf("SEGV_2\n");
-	}
+	// if (proc->num == -1)
+	// {
+	//
+	// }
 
 	if (0x4 & vm->verbosity)
 	{
