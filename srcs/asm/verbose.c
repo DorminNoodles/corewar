@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 13:15:59 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 13:38:48 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	verbose_ocp(t_asm_env *env, char ocp)
 	{
 		ft_printf("Ocp: %hb (%#hhx) ", ocp, ocp);
 		// tmp = ft_conv_hex(ft_itoa((unsigned char)ocp), HEX2);
-		tmp2 = ft_itoa((unsigned char)ocp);
+		if (!(tmp2 = ft_itoa((unsigned char)ocp)))
+			asm_error(MALLOC_ERR, NULL, 0, 0);
 		tmp = ft_convert_base(tmp2, DEC, HEX2);
 		env->verbose_line =  ft_strcat(env->verbose_line, tmp);
 		ft_memdel((void*)&tmp);

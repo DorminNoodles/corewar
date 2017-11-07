@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 13:16:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 13:20:01 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,6 @@ int		main(int argc, char **argv)
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	if ((fd = open(argv[arg], O_RDONLY)) == -1)
 		asm_error(SOURCE_ERR, argv[arg], 0, 0);
-	// if (read(fd, buf, 1) <= 0)
-	// 	asm_error(SOURCE_ERR, argv[arg], 0, 0);
 	if (!check_name(argv[arg]))
 		asm_error(FILE_ERROR, argv[arg], 0, 0);
 	check_mode(&env, fd);
