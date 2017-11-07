@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/06 17:12:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 16:13:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	st(t_vm *vm, t_proc *proc)
 {
-	if (!vm->ncurses && vm->debug)
-		printf(">>>>>>>ENTER ST<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
 	unsigned int	addr;
 
-	if (proc->op->ar[0] < 1 || proc->op->ar[0] > 16)
+	if (!check_params(proc->op))
 		return ;
 
 	if (proc->op->ar_typ[1] == REG_CODE)
@@ -70,26 +68,11 @@ void	st(t_vm *vm, t_proc *proc)
 		}
 	}
 
-
-	if (proc->num == -1)
-	{
-		// printf("SEGV_1\n");
-		// printf(" FFFFFFFFFFFFFF %d\n", proc->carry);
-		// move(20, 200);
-		// printw("Cycles : %d", vm->cycle);
-		// printw("CARRY       au bal du diable %d", proc->carry);
-		// printf("SEGV_2\n");
-	}
-
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
 		printf("\n");
 	}
-
-	// printf("r3 == %d\n", proc->reg[3]);
-	// printf("carry == %d\n", proc->carry);
-
 }
 
 
