@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 18:49:59 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 13:14:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*concat_opcode(char *ocp, int arg)
 {
 	if (!ocp)
 	{
-		if (!(ocp = ft_strnew(0)))
+		if (!(ocp = ft_strnew(8)))
 			asm_error(MALLOC_ERR, NULL, 0, 0);
 	}
 	if (arg == REG_CODE)
