@@ -6,18 +6,11 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/06 20:23:14 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 10:43:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-// int		get_ind_in_ram()
-// {
-//
-//
-// }
-
 
 static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 {
@@ -40,8 +33,6 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 
 void		ldi(t_vm *vm, t_proc *proc)
 {
-	if (!vm->ncurses)
-		printf(">>>>>>ENTER LDI<<<<<<\n");
 	unsigned int		addr;
 	unsigned int		reg_nb;
 	int ar1;
@@ -50,6 +41,9 @@ void		ldi(t_vm *vm, t_proc *proc)
 
 	value = 0x0;
 	addr = 0;
+
+	if (proc->op->ar_typ[0] == REG_CODE && !check_reg(proc->op->ar[0]))
+		return ;
 
 	if (proc->op->ar_typ[0] == REG_CODE)
 	{
@@ -63,6 +57,8 @@ void		ldi(t_vm *vm, t_proc *proc)
 		// ar1 = vm->ram[].mem         proc->op->pos_opcode
 	}
 
+	if (proc->op->ar_typ[1] == REG_CODE && !check_reg(proc->op->ar[1]))
+		return ;
 	if (proc->op->ar_typ[1] == REG_CODE)
 	{
 		// printf("reg %d\n", proc->op->ar[1]);
@@ -83,26 +79,15 @@ void		ldi(t_vm *vm, t_proc *proc)
 	value = value << 8;
 	value |= (unsigned char)vm->ram[modulo(addr + 3, MEM_SIZE)].mem;
 
+	if (proc->op->ar_typ[2] == REG_CODE && !check_reg(proc->op->ar[2]))
+		return ;
 	proc->reg[proc->op->ar[2]] = value;
 
-	// addr = proc->op->ar[0];
-	// reg_nb = proc->op->ar[2] - 1;
-	// if (proc->op->ar_typ[0] == REG_CODE)
-	// 	addr = proc->reg[proc->op->ar[0] - 1];
-	// if (proc->op->ar_typ[1] == REG_CODE)
-	// 	addr += proc->reg[proc->op->ar[1] - 1];
-	// else
-	// 	addr += proc->op->ar[1];
-	// proc->reg[reg_nb] = 0;
-	// proc->reg[reg_nb] |= vm->mem[addr];
-	// proc->reg[reg_nb] <<= 8;
-	// proc->reg[reg_nb] |= vm->mem[addr + 1];
-	// proc->reg[reg_nb] <<= 8;
-	// proc->reg[reg_nb] |= vm->mem[addr + 2];
-	// proc->reg[reg_nb] <<= 8;
-	// proc->reg[reg_nb] |= vm->mem[addr + 3];
-	// proc->carry = (proc->reg[reg_nb] == 0) ? 1 : 0;
-	/*proc->carry = 0;
-	if (proc->reg[reg_nb] == 0)
-		proc->carry = 1;*/
+	if (0x4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
+		printf("\n");
+	}
+
 }

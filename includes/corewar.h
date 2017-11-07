@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 22:30:07 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 11:53:52 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,8 @@ void		show_pc_move(t_vm *vm, t_proc *proc);
 void		reduce_ctd(t_vm *vm);
 int			process_living(t_vm *vm);
 void		set_ctd(t_vm *vm);
-// int			*init_registre(int id);
+int			check_reg(int nb);
+int			check_params(t_op *op);
 
 /*
  ** --------INSTRUCTIONS----------
@@ -274,11 +275,16 @@ void		ft_fork(t_vm *vm, t_proc *proc);
 void		zjmp(t_vm *vm, t_proc *proc);
 void		lld(t_vm *vm, t_proc *proc);
 
-/*--------NCURSES---------*/
+/*
+**--------NCURSES---------
+*/
 void		init_ncurses(WINDOW **w);
 
 
-/*-------DEBUG-------*/
+/*
+**
+-------DEBUG-------
+*/
 void		show_mem(t_vm *vm);
 void		show_mem_2(t_vm *vm);
 void		show_proc_nb(t_vm *vm);
