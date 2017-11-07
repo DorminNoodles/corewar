@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 16:12:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/07 16:13:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ void	st(t_vm *vm, t_proc *proc)
 		show_operations(vm, proc);
 		printf("\n");
 	}
-
-	// printf("r3 == %d\n", proc->reg[3]);
-	// printf("carry == %d\n", proc->carry);
-
 }
 
 
