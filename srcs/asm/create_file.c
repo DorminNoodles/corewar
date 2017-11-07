@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 21:14:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 15:04:27 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	create_file(t_asm_env *env, char *str)
 
 	len = ft_strlen(str) - 2;
 	tmp = ft_strndup(str, len);
-	name = ft_strnew(len + 2);
+	if (!(name = (char*)malloc(sizeof(char) * (len + 4 + 1))))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
+	name[len + 4] = '\0';
 	name = ft_strcpy(name, tmp);
 	name = ft_strcat(name, ".cor");
 	fd = open(name, O_WRONLY | O_TRUNC | O_CREAT, 0644);

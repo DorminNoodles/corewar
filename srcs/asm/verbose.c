@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 13:38:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 15:44:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 	char *tmp;
 	char *tmp2;
 
+	// printf("add = %d\n", add);
 	a = 0;
 	ft_printf("|");
 	color(C_BLUE);
-	if (add)
+	if (add == 1)
 		ft_printf("%c", DIRECT_CHAR);
+	else if (add == 2)
+		ft_printf("%c", REG_CHAR);
 	while (line[a] && !is_space(line[a]) && line[a] != SEPARATOR_CHAR)
 	{
 		ft_printf("%c", line[a]);
@@ -54,7 +57,7 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 	tmp = ft_conv_hex(tmp2, HEX2);
 	env->verbose_line = ft_strcat(env->verbose_line, "0");
 //	tmp[7] = '\0';
-	env->verbose_line = ft_strcat(env->verbose_line, ft_strrev(tmp));
+	env->verbose_line = ft_strncat(env->verbose_line, ft_strrev(tmp), 8);
 	env->verbose_line = ft_strcat(env->verbose_line, " ");
 	ft_memdel((void*)&tmp);
 	// free(tmp2);
@@ -72,10 +75,14 @@ void	verbose_inst(t_asm_env *env, char *ins, int hex)
 	color(C_RESET);
 	ft_printf("| ");
 //	env->verbose_line = ft_strnew(30);
-	if (!(env->verbose_line = (char*)malloc(sizeof(char) * 30)))
+	// if (!(env->verbose_line = (char*)malloc(sizeof(char) * 30 + 1)))
+	if (!(env->verbose_line = ft_strnew(30)))
+			asm_error(MALLOC_ERR, NULL, 0, 0);
+	// env->current_line[30] = '\0';
+	if (!(tmp2 = ft_itoa(hex+1)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
-	tmp2 = ft_itoa(hex+1);
-	tmp = ft_convert_base(tmp2, DEC, HEX2);
+	if (!(tmp = ft_convert_base(tmp2, DEC, HEX2)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
 	// tmp = ft_conv_hex(ft_itoa(hex+1), HEX2);
 	env->verbose_line = ft_strcat(env->verbose_line, tmp);
 	ft_memdel((void*)&tmp);
