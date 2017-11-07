@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 22:34:15 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/07 17:30:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	parse(t_asm_env *env, char *line, int printmode)
 			color(C_GREEN);
 			ft_printf("- Line %d ", env->line);
 			color(C_YELLOW);
-      ft_printf("(Actual byte: %d)", env->bytes);
+      ft_printf("(Actual byte: %d)", env->bytes - 1);
       color(C_RESET);
 			ft_printf(" : '%s'\n", line);
 		}

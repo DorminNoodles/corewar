@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 15:13:01 by rfulop           ###   ########.fr       */
+/*   Created: 2017/11/07 16:08:37 by rfulop            #+#    #+#             */
+/*   Updated: 2017/11/07 16:09:26 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strnew(size_t size)
+char*ft_strrev(char *str)
 {
-	char	*res;
+	int		i;
+	int		l;
+	char	t;
 
-	res = NULL;
-	if (!(res = (char*)malloc(sizeof(char) * size + 1)))
-		return (NULL);
-	// ft_bzero(res, ft_strlen(res));
-		ft_bzero(res, size + 1);
-	return (res);
+	l = 0;
+	while (str[l] != '\0')
+		l++;
+	i = -1;
+	while (++i < --l)
+	{
+		t = str[i];
+		str[i] = str[l];
+		str[l] = t;
+	}
+	return (str);
 }
