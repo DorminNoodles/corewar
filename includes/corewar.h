@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 11:53:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/10 13:05:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ int			process_living(t_vm *vm);
 void		set_ctd(t_vm *vm);
 int			check_reg(int nb);
 int			check_params(t_op *op);
+int			check_ocp(int ocp, int code);
 
 /*
  ** --------INSTRUCTIONS----------

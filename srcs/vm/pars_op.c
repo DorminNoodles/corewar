@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/10/23 01:03:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/10 13:04:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 	if (optab_ref->need_ocp)
 	{
 		get_ocp(vm, proc);
-		while (i < op_tab[proc->op->code - 1].nb_arg)
+		if (check_ocp(proc->op->ocp, proc->op->code))
 		{
-			find_args(vm, proc, i);
-			i++;
+			while (i < op_tab[proc->op->code - 1].nb_arg)
+			{
+				find_args(vm, proc, i);
+				i++;
+			}
 		}
 	}
 	else
