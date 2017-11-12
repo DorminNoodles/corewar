@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 11:31:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 17:26:03 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,6 @@ t_player	*get_survivor(t_vm *vm)
 	return (vm->last_one);
 }
 
-// int		cycle_to_die(t_vm *vm)
-// {
-// 	if (vm->cycle % vm->ctd == 0 && vm->cycle / vm->ctd > 0)
-// 		return (1);
-// 	return (0);
-// }
-
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	if (!proc->op)
@@ -177,8 +170,8 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
-			fill_cur_op(vm, proc);
-			if (op_tab[proc->op->code - 1].func != NULL)
+			if (op_tab[proc->op->code - 1].func != NULL
+			&& fill_cur_op(vm, proc))
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}

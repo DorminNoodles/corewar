@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 11:39:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 17:19:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data);
 void		call_ncurses(t_vm *vm);
 void		undertaker(t_vm *vm);
 void		kill_proc(t_vm *vm);
-void		fill_cur_op(t_vm *vm, t_proc *proc);
+int			fill_cur_op(t_vm *vm, t_proc *proc);
 void		controller(t_vm *vm);
 int			is_pc(t_vm *vm, int nb);
 int			count_proc(t_vm *vm);
@@ -256,7 +256,7 @@ int			process_living(t_vm *vm);
 void		set_ctd(t_vm *vm);
 int			check_reg(int nb);
 int			check_params(t_op *op);
-int			check_ocp(int ocp, int code);
+int			check_ocp(int ocp, int opcode);
 
 /*
  ** --------INSTRUCTIONS----------

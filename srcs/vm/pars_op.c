@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 11:32:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 17:25:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_op		*create_op(t_vm *vm, t_proc *proc, char data)
 	return (op);
 }
 
-void	fill_cur_op(t_vm *vm, t_proc *proc)
+int		fill_cur_op(t_vm *vm, t_proc *proc)
 {
 	int i;
 	t_optab *optab_ref;
@@ -59,8 +59,11 @@ void	fill_cur_op(t_vm *vm, t_proc *proc)
 				i++;
 			}
 		}
+		else
+			return (0);
 	}
 	else
 		get_dir(vm, proc, 0);
 	proc->pc++;
+	return (1);
 }
