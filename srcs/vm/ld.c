@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/07 16:08:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 12:22:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ld(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>ENTER LD<<<<  : Cycle > %d\n", vm->cycle);
 	int		reg_nb;
 	int		addr;
 
 	addr = 0;
+	reg_nb = proc->op->ar[1];
 
 	if (!check_params(proc->op))
 		return ;
@@ -46,12 +46,6 @@ void	ld(t_vm *vm, t_proc *proc)
 	else
 		proc->reg[reg_nb] = proc->op->ar[0];
 	proc->carry = (proc->reg[reg_nb] == 0) ? 1 : 0;
-
-	// printf("##LD registre %d == %d\n", proc->op->ar[1], proc->op->ar[0]);
-	/*proc->carry = 0;
-	if (proc->reg[reg_nb] == 0)
-		proc->carry = 1*/
-
 
 	if (0x4 & vm->verbosity)
 	{

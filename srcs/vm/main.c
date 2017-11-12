@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 09:28:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 11:31:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,14 +165,26 @@ t_player	*get_survivor(t_vm *vm)
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
-	// if (proc->state == IDLE)
-
-	idle_state(vm, proc);
-
-	// else if (proc->state == WAIT)
-	// 	wait_state(vm, proc);
-	// else if (proc->state == START)
-	// 	proc->state = IDLE;
+	if (!proc->op)
+	{
+		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
+			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
+		else
+			proc->pc = (proc->pc + 1) % MEM_SIZE;
+	}
+	else
+	{
+		proc->op->loadtime--;
+		if (proc->op->loadtime <= 0)
+		{
+			fill_cur_op(vm, proc);
+			if (op_tab[proc->op->code - 1].func != NULL)
+			{
+				op_tab[proc->op->code - 1].func(vm, proc);
+			}
+			proc->op = NULL;
+		}
+	}
 }
 
 int		count_proc(t_vm *vm)
@@ -203,32 +215,19 @@ void	run(t_vm *vm)
 
 	while (process_living(vm))
 	{
-
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
-
-		// ft_putstr("SEGV 1\n");
-		//-------------------NCURSES
 		if (vm->ncurses)
 		{
 			call_ncurses(vm);
 			controller(vm);
 			usleep(vm->delay);
 		}
-		//-------------------NCURSES
-		// printf("RRRRRRRRRRRRRUUUUUUUUUUUNNNNNNNNNNNN   %d\n", vm->cycle);
-		// printf("here\n");
 		proc = vm->proc;
 		while (proc != NULL)
 		{
 			if (proc->active)
-			{
-				// printf("SEGFFAULT_3\n");
-				// printf("SEGV 2\n");
 				animate_proc(vm, proc);
-				// printf("SEGV 3\n");
-			}
-			// printf("SEGFFAULT_4\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->last_pc = proc->pc;
@@ -238,12 +237,8 @@ void	run(t_vm *vm)
 //-------------------------Debug
 
 //-------------------------Debug
-		// printf("%d\n", vm->dump);
 		if (vm->dump != -1 && !vm->ncurses)
 			dump(vm);
-		// printf("SEGFFAULT_5\n");
-		// printf("SEGV 4\n");
-		// ft_putstr("SEGV 4\n");
 	}
 	printf("END\n");
 	if (vm->last_one)

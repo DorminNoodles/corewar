@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/10 13:05:49 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/12 11:39:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);
 void		add_process(t_vm *vm, t_proc *proc);
 void		wait_state(t_vm *vm, t_proc *proc);
-void		idle_state(t_vm *vm, t_proc *proc);
 t_op		*create_op(t_vm *vm, t_proc *proc, char data);
 void		call_ncurses(t_vm *vm);
 void		undertaker(t_vm *vm);
