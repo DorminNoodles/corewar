@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 16:13:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 17:13:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ int		is_opcode(char data)
 	return (0);
 }
 
-
-
 t_player	*get_survivor(t_vm *vm)
 {
 	int i;
@@ -163,9 +161,13 @@ int		move_pc(t_proc *proc)
 	// printf ("ocp => %#x\n", proc->op->ocp);
 	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
 	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
-	printf ("move => %d\n", count_octet((0x30 & proc->op->ocp) >> 4, ref));
 	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
 
+
+	if (ref->need_ocp)
+		move += 1;
+	else
+		move += (ref->direct_size) ? 2 : 4;
 	printf("move => %d\n", move);
 	return (move);
 }
@@ -190,7 +192,7 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}
 			printf ("proc pc => %d\n", proc->pc);
-			proc->pc += move_pc(proc) + 1;
+			proc->pc += move_pc(proc);
 			proc->op = NULL;
 		}
 	}
