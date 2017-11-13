@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/01 14:35:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 14:56:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 		new->reg[i] = proc->reg[i];
 		i++;
 	}
-
 }
 
 static void	clone_proc(t_proc *proc, t_proc *new)
@@ -34,13 +33,6 @@ static void	clone_proc(t_proc *proc, t_proc *new)
 
 void	ft_fork(t_vm *vm, t_proc *proc)
 {
-	// 	printf("po");
-
-	if (!vm->ncurses && vm->debug)
-		printf(">>>>>>>ENTER FORK<<<<<<<<<<  : Cycle > %d  : Pos > %d  : Proc > %d\n", vm->cycle, proc->op->pos_opcode, proc->id);
-
-	// if (vm->verbosity)
-
 	t_proc	*new;
 	new = create_process(vm, proc->num);
 
@@ -48,7 +40,6 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	new->last_pc = new->pc;
 	clone_proc(proc, new);
 	add_process(vm, new);
-
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);

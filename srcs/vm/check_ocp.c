@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 12:45:10 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 15:27:28 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 14:57:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ int		arg_available(int ocp_chunk, int opcode, int num_arg)
 		return (0);
 	if (ocp_chunk == 3)
 		ocp_chunk += 1;
-
-	// printf("ocp_chunk => %d\n", ocp_chunk);
-	// printf("ocp => %d\n", op_tab[opcode - 1].ocp[num_arg]);
 
 	int ret = ocp_chunk & op_tab[opcode - 1].ocp[num_arg];
 

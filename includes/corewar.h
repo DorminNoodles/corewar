@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 17:19:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 15:46:41 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ typedef struct s_optab
 	char	*name;
 	int		need_ocp;
 	int		direct_size; 	// nombre d'octect d'encodage. 2 ou 4;
-	//changez ce nom de variable de merde :)
 }	t_optab;
 
 extern t_optab op_tab[];

@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 16:07:59 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 14:56:27 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 
 	value = 0x0;
 	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
-	// printf("POS LDI %d\n", pos);
 	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
 	value = value << 8;
 	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
@@ -47,14 +46,12 @@ void		ldi(t_vm *vm, t_proc *proc)
 
 	if (proc->op->ar_typ[0] == REG_CODE)
 	{
-		// printf("reg %d\n", proc->op->ar[0]);
 		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
 	}
 	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
 	{
 		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
 		printf("ar1 IND => %d\n", proc->op->ar[0]);
-		// ar1 = vm->ram[].mem         proc->op->pos_opcode
 	}
 
 	if (proc->op->ar_typ[1] == REG_CODE && !check_reg(proc->op->ar[1]))
