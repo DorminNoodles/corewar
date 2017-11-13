@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/12 17:26:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/13 11:22:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,17 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 {
 	// printf(">>>>>>>>>>GET_DIR<<<<<<<<<<<\n");
 	unsigned int value;
+	int i;
 
+	i = 0;
 	value = 0;
 
-	proc->pc++;
+	i++;
 
-	value = (unsigned char)vm->ram[proc->pc].mem;
-	if (vm->debug)
-		printf("Value => %x\n", value);
-	if (vm->debug)
-	printf("Pc => %d\n", proc->pc);
-	proc->pc++;
+	value = (unsigned char)vm->ram[proc->pc + i].mem;
+	i++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
-	if (vm->debug)
-	printf("Value => %x\n", value);
-	if (vm->debug)
-	printf("Pc => %d\n", proc->pc);
+	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
 
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
@@ -52,23 +46,14 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 		proc->op->ar[num] = value;
 		return ;
 	}
-
-	if (proc->op->code == 1 && proc->id == 5 && vm->debug)
-		printf("GET DIR 4\n");
-	proc->pc++;
+	i++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
-	// printf("get dir 2 -> %x\n", (unsigned char)vm->ram[proc->pc].mem);
+	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
 
-	proc->pc++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc].mem;
+	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
 
-	// printf("get dir value -> %d\n", value);
 	proc->op->ar[num] = value;
-
-	if (proc->op->code == 1 && proc->id == 5 && vm->debug)
-		printf("live value => %d   arg_num => %d\n", value, num);
 }
 
 void	get_reg(t_vm *vm, t_proc *proc, int num)
@@ -76,8 +61,7 @@ void	get_reg(t_vm *vm, t_proc *proc, int num)
 	// printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
 	unsigned char value;
 
-	proc->pc++;
-	value = (unsigned char)vm->ram[proc->pc].mem;
+	value = (unsigned char)vm->ram[proc->pc + 1].mem;
 
 	// printf("reg value %d\n", value);
 
@@ -156,6 +140,11 @@ t_player	*get_survivor(t_vm *vm)
 	return (vm->last_one);
 }
 
+void	move_pc()
+{
+
+}
+
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	if (!proc->op)
@@ -170,12 +159,16 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
+			printf("bordel pc >> %d\n", proc->pc);
 			if (op_tab[proc->op->code - 1].func != NULL
 			&& fill_cur_op(vm, proc))
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}
 			proc->op = NULL;
+			move_pc(proc);
+			printf("bordel pc >> %d\n", proc->pc);
+			printf("\n");
 		}
 	}
 }
