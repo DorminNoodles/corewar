@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 17:13:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/14 17:09:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	get_ocp(t_vm *vm, t_proc *proc)
 {
 	if (op_tab[proc->op->code - 1].need_ocp)
-		proc->op->ocp = vm->ram[proc->pc + 1].mem;
+		proc->op->ocp = vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
 }
 
-void	get_dir(t_vm *vm, t_proc *proc, int num)
+void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	unsigned int value;
 	int i;
@@ -28,44 +28,42 @@ void	get_dir(t_vm *vm, t_proc *proc, int num)
 
 	i++;
 
-	value = (unsigned char)vm->ram[proc->pc + i].mem;
+	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	i++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
+	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
 
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
 		if ((value & 0x8000) == 0x8000)
 			value = (value - USHRT_MAX) - 1;
-		// printf("deux octets value %x\n", value);
 		proc->op->ar[num] = value;
 		return ;
 	}
 	i++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
+	value = value | (unsigned char)vm->ram[(pos + 3) % MEM_SIZE].mem;
 
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
+	value = value | (unsigned char)vm->ram[(pos + 4) % MEM_SIZE].mem;
 
 	proc->op->ar[num] = value;
 }
 
-void	get_reg(t_vm *vm, t_proc *proc, int num)
+void	get_reg(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	// printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
 	unsigned char value;
 
-	value = (unsigned char)vm->ram[proc->pc + 1].mem;
+	value = (unsigned char)vm->ram[(pos + REG_CODE) % MEM_SIZE].mem;
 
 	// printf("reg value %d\n", value);
 
 	proc->op->ar[num] = value;
 }
 
-void	get_ind(t_vm *vm, t_proc *proc, int num)
+void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
 {
-	// printf(">>>>>>>>>>GET_IND<<<<<<<<<<<\n");
 
 	unsigned int value;
 	int i;
@@ -74,37 +72,13 @@ void	get_ind(t_vm *vm, t_proc *proc, int num)
 	value = 0;
 
 	i++;
-	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
+	value = value | (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	i++;
 	value = value << 8;
-	value = value | (unsigned char)vm->ram[proc->pc + i].mem;
+	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
 	proc->op->ar[num] = value;
 	if ((value & 0x8000) == 0x8000)
 	 	proc->op->ar[num] = (value - USHRT_MAX) - 1;
-}
-
-void	find_args(t_vm *vm, t_proc *proc, int num)
-{
-	// printf("ENTER FUNC : FIND_ARGS\n");
-	unsigned char	type;
-	unsigned char	mask;
-
-	type = proc->op->ocp;
-	mask = 0xC0;
-	mask = mask >> (2 * num);
-	type = type & mask;
-	type = type >> (6 - 2 * num);
-	proc->op->ar_typ[num] = type;
-
-	if (proc->op->code == 1)
-		printf("LIVE OP CODE\n");
-
-	if (type == REG_CODE)
-		get_reg(vm, proc, num);
-	if (type == DIR_CODE)
-		get_dir(vm, proc, num);
-	if (type == IND_CODE)
-		get_ind(vm, proc, num);
 }
 
 int		is_opcode(char data)
@@ -138,11 +112,11 @@ t_player	*get_survivor(t_vm *vm)
 int		count_octet(int octet, t_optab *ref)
 {
 	if (octet == 1)
-		return (1);
+		return (REG_SIZE);
 	else if (octet == 2)
 		return ((ref->direct_size) ? 2 : 4);
 	else if (octet == 3)
-		return (4);
+		return (IND_SIZE);
 	return (0);
 }
 
@@ -156,19 +130,20 @@ int		move_pc(t_proc *proc)
 	move = 0;
 	ref = &op_tab[proc->op->code - 1];
 
-	// printf("opcode ");
-	// printf ("%d\n", proc->op->code);
-	// printf ("ocp => %#x\n", proc->op->ocp);
-	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
-	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
-	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
 
+	// printf ("move => %d\n", move);
+
+	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
+	// printf ("move => %d\n", move);
+	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
+	// printf ("move => %d\n", move);
+	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
+	// printf ("move => %d\n", move);
 
 	if (ref->need_ocp)
 		move += 1;
 	else
 		move += (ref->direct_size) ? 2 : 4;
-	printf("move => %d\n", move);
 	return (move);
 }
 
@@ -191,7 +166,6 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}
-			printf ("proc pc => %d\n", proc->pc);
 			proc->pc += move_pc(proc);
 			proc->op = NULL;
 		}
@@ -251,7 +225,6 @@ void	run(t_vm *vm)
 		if (vm->dump != -1 && !vm->ncurses)
 			dump(vm);
 	}
-	printf("END\n");
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 11:35:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/14 16:23:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	sti(t_vm *vm, t_proc *proc)
 {
 	int addr;
 	int reg;
-
 	if (!check_params(proc->op))
 		return ;
 

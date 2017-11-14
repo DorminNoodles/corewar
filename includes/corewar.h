@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 15:46:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/14 16:14:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,8 +245,10 @@ int			is_opcode(char data);
 int			cycle_to_die(t_vm *vm);
 t_player	*get_survivor(t_vm *vm);
 void		get_ocp(t_vm *vm, t_proc *proc);
-void		find_args(t_vm *vm, t_proc *proc, int num);
-void		get_dir(t_vm *vm, t_proc *proc, int num);
+int			find_args(t_vm *vm, t_proc *proc, int num, int pos);
+void		get_dir(t_vm *vm, t_proc *proc, int num, int pos);
+void		get_reg(t_vm *vm, t_proc *proc, int num, int pos);
+void		get_ind(t_vm *vm, t_proc *proc, int num, int pos);
 int			modulo(int a, int b);
 void		show_operations(t_vm *vm, t_proc *proc);
 void		show_pc_move(t_vm *vm, t_proc *proc);
