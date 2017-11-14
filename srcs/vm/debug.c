@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/05 14:15:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/14 17:52:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,11 @@ void	show_pc_move(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	move_size = proc->pc - proc->last_pc;
+	if (proc->op && proc->op->code == 9)
+		return ;
 	if (move_size > 1)
 	{
+		// printf(">> %x\n", proc->op);
 		printf("ADV %d (0x%04x -> 0x%04x)", move_size, proc->last_pc, proc->pc);
 		while (i < move_size)
 		{

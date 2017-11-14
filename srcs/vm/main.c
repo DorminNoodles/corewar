@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/14 17:09:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/14 17:49:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,7 @@ int		move_pc(t_proc *proc)
 	// printf ("move => %d\n", move);
 
 	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
-	// printf ("move => %d\n", move);
 	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
-	// printf ("move => %d\n", move);
 	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
 	// printf ("move => %d\n", move);
 
@@ -167,6 +165,8 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}
 			proc->pc += move_pc(proc);
+			if (16 & vm->verbosity)
+				show_pc_move(vm, proc);
 			proc->op = NULL;
 		}
 	}
@@ -213,8 +213,6 @@ void	run(t_vm *vm)
 		{
 			if (proc->active)
 				animate_proc(vm, proc);
-			if (16 & vm->verbosity)
-				show_pc_move(vm, proc);
 			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}
