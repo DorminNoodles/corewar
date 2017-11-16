@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/04 10:11:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/16 15:25:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		first_free_nb_player(t_vm *vm)
 	i = 1;
 	while (i <= MAX_PLAYERS)
 	{
+		// printf ("bordel de merde %d \n", vm->player[i].active);
 		if (!vm->player[i].active)
 			return (i);
 		i++;

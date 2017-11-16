@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/15 15:53:28 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/16 19:01:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int		move_pc(t_proc *proc)
 	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
 	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
 	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
-	// printf ("move => %d\n", move);
 
 	if (ref->need_ocp)
 		move += 1;
@@ -145,12 +144,15 @@ int		move_pc(t_proc *proc)
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
+	printf("Pouet 1\n");
 	if (!proc->op)
 	{
+		// printf ("SEGV 2\n");
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
 			proc->pc = (proc->pc + 1) % MEM_SIZE;
+			// printf ("SEGV 3\n");
 	}
 	else
 	{
@@ -162,17 +164,17 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);
 			}
-			// printf ("pc before %d\n", proc->pc);
-			// printf (">>>> %d\n", op_tab[proc->op->code - 1].code);
-			// printf(">>> %d\n", proc->op->code - 1);
+			// printf("tm %d\n", proc->op->code);
 			if (proc->op->code != 9)
 				proc->pc += move_pc(proc);
-			// printf ("pc after %d\n", proc->pc);
+				// printf("fuck\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->op = NULL;
 		}
+		// printf ("SEGV 5\n");
 	}
+	printf("Pouet 8\n");
 }
 
 int		count_proc(t_vm *vm)
@@ -215,11 +217,17 @@ void	run(t_vm *vm)
 		while (proc != NULL)
 		{
 			if (proc->active)
+			{
+				printf ("SOUPE 1\n");
 				animate_proc(vm, proc);
+				printf ("SOUPE 2\n");
+			}
 			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}
 		vm->cycle++;
+		printf ("SOUPE 4\n");
+
 //-------------------------Debug
 
 //-------------------------Debug
@@ -228,6 +236,7 @@ void	run(t_vm *vm)
 	}
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
+	printf ("SOUPE 5\n");
 }
 
 int		modulo(int a, int b)
@@ -274,7 +283,9 @@ int		main(int argc, char **argv)
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
+	printf("SEGV 1\n");
 	run(&vm);//lancement du combat
+	printf("SEGV 2\n");
 	if (vm.ncurses)
 		endwin();
 
