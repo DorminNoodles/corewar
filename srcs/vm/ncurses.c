@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 18:21:36 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/17 17:45:15 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 static void	colors_init(void)
 {
-	init_color(35, 350, 350, 350);//basic grey
-	init_color(40, 1000, 1000, 1000);//basic white
-	init_pair(15, 35, COLOR_BLACK);//basic
-	init_pair(40, COLOR_BLACK, 40);//basic white on black
-	init_pair(41, 35, 35);//grey back
-	init_pair(20, COLOR_GREEN, COLOR_BLACK);//player_1
-	init_color(36, 150, 1000, 150);//fluo_green
-	init_color(38, 500, 1000, 500);//blingbling_green
-	init_pair(21, COLOR_GREEN, 36);//player_1_highlight
-	init_pair(24, 38, COLOR_BLACK);//player_1_blingbling
-	init_pair(22, COLOR_BLUE, COLOR_BLACK);//player_2
+	init_color(NC_C_GREY, 350, 350, 350);//basic grey
+	init_color(NC_C_WHITE, 1000, 1000, 1000);//basic white
+	init_pair(NC_C_BASIC, NC_C_GREY, COLOR_BLACK);//basic
+	init_pair(NC_C_WHITE, COLOR_BLACK, NC_C_WHITE);//basic white on black
+	init_pair(NC_C_GREYBLACK, NC_C_GREY, NC_C_GREY);//grey back
+
+	init_pair(NC_C_GREEN, COLOR_GREEN, COLOR_BLACK);//player_1
+	init_color(NC_C_GREEN_FLUO, 150, 1000, 150);//fluo_green
+	init_color(NC_C_GREEN_BLING, 500, 1000, 500);//blingbling_green
+	init_pair(NC_C_GREEN_LIGHT, COLOR_GREEN, NC_C_GREEN_FLUO);//player_1_highlight
+	init_pair(NC_C_GREEN_BLACK, NC_C_GREEN_BLING, COLOR_BLACK);//player_1_blingbling
+
+	init_pair(NC_C_BLUE, COLOR_BLUE, COLOR_BLACK);//player_2
 	init_color(COLOR_BLUE, 200, 200, 800);//blue change
-	init_color(37, 400, 400, 1000);//fluo_blue
-	init_pair(23, COLOR_BLUE, 37);//player_2_highlight
-	init_pair(25, 37, COLOR_BLACK);//player_2_blingbling
-	init_pair(26, COLOR_GREEN, COLOR_RED);//life highlight
+	init_color(NC_C_BLUE_FLUO, 400, 400, 1000);//fluo_blue
+	init_pair(NC_C_BLUE_LIGHT, COLOR_BLUE, NC_C_BLUE_FLUO);//player_2_highlight
+	init_pair(NC_C_BLUE_BLING, NC_C_GREEN_FLUO, COLOR_BLACK);//player_2_blingbling
+
+	init_pair(NC_C_LIFE_LIGHT, COLOR_GREEN, COLOR_RED);//life highlight
 
 }
 
@@ -40,41 +43,41 @@ static void	ram_init(t_vm *vm)
 	i = -1;
 	while (++i < MEM_SIZE)
 	{
-		attron(COLOR_PAIR(15));
+		attron(COLOR_PAIR(NC_C_BASIC));
 		if ((is_pc(vm, i)))
 		{
 			if (vm->ram[i].num == -1)
-				attron(COLOR_PAIR(21));
+				attron(COLOR_PAIR(NC_C_GREEN_LIGHT));
 			else if (vm->ram[i].num == -2)
-				attron(COLOR_PAIR(23));
+				attron(COLOR_PAIR(NC_C_BLUE_LIGHT));
 			attron(A_STANDOUT);
 		}
 		else if (vm->ram[i].num == -1)
 		{
-			attron(COLOR_PAIR(20));
+			attron(COLOR_PAIR(NC_C_GREEN));
 		}
 		else if (vm->ram[i].num == -2)
 		{
-			attron(COLOR_PAIR(22));
+			attron(COLOR_PAIR(NC_C_BLUE));
 		}
 		if (vm->ram[i].blingbling)
 		{
 			attron(A_BOLD);
 			if (vm->ram[i].num == -1)
-				attron(COLOR_PAIR(24));
+				attron(COLOR_PAIR(NC_C_GREEN_BLACK));
 			if (vm->ram[i].num == -2)
-				attron(COLOR_PAIR(25));
+				attron(COLOR_PAIR(NC_C_BLUE_BLING));
 			vm->ram[i].blingbling--;
 		}
 		if (vm->ram[i].live)
 		{
-			attron(COLOR_PAIR(26));
+			attron(COLOR_PAIR(NC_C_LIFE_LIGHT));
 			vm->ram[i].live--;
 		}
 		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
 		attroff(A_STANDOUT);
 		attroff(A_BOLD);
-		attroff(COLOR_PAIR(35));
+		attroff(COLOR_PAIR(NC_C_GREY));
 	}
 }
 
@@ -88,7 +91,7 @@ void	call_ncurses(t_vm *vm)
 	ret = 0;
 	colors_init();
 	ram_init(vm);
-	attron(COLOR_PAIR(41));
+	attron(COLOR_PAIR(NC_C_GREYBLACK));
 	attron(A_INVIS);
 	while (++i < MEM_SIZE / 64 + 6)
 	{
@@ -101,10 +104,10 @@ void	call_ncurses(t_vm *vm)
 				mvprintw(i, j, "*");
 		}
 	}
-	attroff(COLOR_PAIR(41));
+	attroff(COLOR_PAIR(NC_C_GREYBLACK));
 	attroff(A_INVIS);
 	attron(A_STANDOUT);
-	attron(COLOR_PAIR(40));
+	attron(COLOR_PAIR(NC_C_WHITE));
 	attron(A_BOLD);
 	mvprintw(32, 3 * (MEM_SIZE / 64) + 6, "%d <= pause", vm->pause);
 	if (vm->pause == 1)
@@ -120,7 +123,7 @@ void	call_ncurses(t_vm *vm)
 	mvprintw(28, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d", MAX_CHECKS);
 	mvprintw(30, 3 * (MEM_SIZE / 64) + 6, "Live P1 : %08d", vm->player[1].life_signal);
 	printw("%i", MEM_SIZE);
-	attroff(COLOR_PAIR(40));
+	attroff(COLOR_PAIR(NC_C_WHITE));
 	//attron(A_BOLD);
 	attroff(A_BOLD);
 	attroff(A_STANDOUT);

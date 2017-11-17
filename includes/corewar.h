@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/14 16:14:05 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/17 17:42:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <ncurses.h>
 #include "libft.h"
 #include "ft_printf.h"
+
 //-------------------------
 
 #define IND_SIZE				2
@@ -118,6 +119,21 @@ typedef struct		header_s
 #define BLING_DELAY 65
 #define BLING_LIVE 45
 #define NCURSES_DELAY 100000
+
+#define NC_C_GREY 35
+#define NC_C_WHITE 40
+#define NC_C_BASIC 15
+#define NC_C_GREYBLACK 41
+#define NC_C_GREEN 20
+#define NC_C_GREEN_FLUO 36
+#define NC_C_GREEN_BLING 38
+#define NC_C_GREEN_LIGHT 21
+#define NC_C_GREEN_BLACK 24
+#define NC_C_BLUE 22
+#define NC_C_BLUE_FLUO 37
+#define NC_C_BLUE_LIGHT 23
+#define NC_C_BLUE_BLING 25
+#define NC_C_LIFE_LIGHT 26
 
 typedef struct s_vm t_vm;
 typedef struct s_optab t_optab;
