@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 17:14:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/17 18:18:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,18 +166,19 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 			if (op_tab[proc->op->code - 1].func != NULL
 			&& fill_cur_op(vm, proc))
 			{
-				printf("Pouet 3\n");
 				// printf("proc->op->code - 1 => %d\n", proc->op->code - 1);
 				// printf("pouet > %d\n", proc->op->code);
+				// printf("Pouet 3\n");
+				// printf("Pouet %d\n", proc->op->code - 1);
 				op_tab[proc->op->code - 1].func(vm, proc);
-				printf("Pouet 4\n");
+				// printf("Pouet 4\n");
 			}
 			// printf("Pouet 5\n");
 			// printf("tm %d\n", proc->op->code);
 			if (proc->op->code != 9)
 				proc->pc += move_pc(proc);
 				// printf("fuck\n");
-			printf("Pouet 7\n");
+			// printf("Pouet 7\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->op = NULL;
@@ -292,9 +293,9 @@ int		main(int argc, char **argv)
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
-	printf("SEGV 1\n");
+	// printf("SEGV 1\n");
 	run(&vm);//lancement du combat
-	printf("SEGV 2\n");
+	// printf("SEGV 2\n");
 	if (vm.ncurses)
 		endwin();
 
