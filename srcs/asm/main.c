@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 15:53:05 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 23:19:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	check_mode(t_asm_env *env, int fd)
 	env->bytes = 1;
 	env->labs = NULL;
 	env->line = 1;
+	env->ko = 0;
 	env->current_line = NULL;
 	env->verbose_line = NULL;
 	line = NULL;
@@ -129,11 +130,11 @@ void	debug_mode(t_asm_env *env, int fd)
 {
 	char	*line;
 
-	ft_printf("**********");
+	ft_printf("\n**********");
 	color(C_BLUE);
 	ft_printf(" Debug Mode ");
 	color(C_RESET);
-	ft_printf("**********\n");
+	ft_printf("**********\n\n");
 	line = NULL;
 	env->fd = 0;
 	env->line = 1;

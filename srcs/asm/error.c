@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 21:37:27 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 23:17:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
+	if (env->debug && env->ko)
+		return ;
 	display_error(err);
 	if (err == NO_FILE_ERR)
 	{

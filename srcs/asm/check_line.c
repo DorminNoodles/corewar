@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 22:53:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 23:19:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	check_header(t_asm_env *env, char *line)
 			asm_error(NAME_EXISTS, NULL, env, 0);
 		else if (len > PROG_NAME_LENGTH)
 			asm_error(NAME_SIZE_ERR, NULL, env, 0);
-		++env->name;
+		if (!env->ko)
+			++env->name;
 	}
 	else if (!ft_strcmp(word, COMMENT_CMD_STRING))
 	{
@@ -85,7 +86,8 @@ void	check_header(t_asm_env *env, char *line)
 			asm_error(COM_EXISTS, NULL, env, 0);
 		else if (len > COMMENT_LENGTH)
 			asm_error(COM_SIZE_ERR, NULL, env, 0);
-		++env->comment;
+		if (!env->ko)
+			++env->comment;
 	}
 	else if (len)
 		asm_error(COMMAND_ERR, word, env, 0);
