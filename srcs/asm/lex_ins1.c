@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 22:29:33 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 22:33:37 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	check_instr_3(char *str, t_asm_env *env, int col)
 	i += arg;
 	i += until_next_arg(str + i, env, col + i);
 	arg = is_reg_or_ind(str + i, env, col + i);
+	if (!arg)
+		asm_error(BAD_ARG_REG_IND, str + i, env, col + i);
 	i += arg;
 	check_instr_endline(str + i, env, col + i);
 }

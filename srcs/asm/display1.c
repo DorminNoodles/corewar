@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 15:36:28 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 22:52:18 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	write_ind(t_asm_env *env, char *line)
 	char	*str;
 
 	a = 0;
-	if (ft_isdigit(*line))
+	if (ft_isdigit(*line) || *line == '-')
 	{
-		while (line[a] && ft_isdigit(line[a]))
+		while (line[a] && (line[a] == '-' || ft_isdigit(line[a])))
 			++a;
 		str = ft_strndup(line, a);
 		ind = ft_atoi(str);

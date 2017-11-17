@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 22:20:18 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 22:53:42 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		analyse_args(int oct, char *line, int i)
 			oct += IND_SIZE;
 	}
 	else if (*line == LABEL_CHAR || ft_isdigit(*line))
+		oct += IND_SIZE;
+	else if (*line == '-' && ft_isdigit(line[1]))
 		oct += IND_SIZE;
 	return (oct);
 }

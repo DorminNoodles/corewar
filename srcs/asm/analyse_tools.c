@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 15:11:13 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 22:53:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		detect_arg(t_asm_env *env, char *line)
 	if (line[a] == 'r')
 		return (REG_CODE);
 	if (line[a] == LABEL_CHAR || ft_isdigit(line[a]))
+		return (IND_CODE);
+	if (line[a] == '-' && ft_isdigit(line[a + 1]))
 		return (IND_CODE);
 	if (line[a] == DIRECT_CHAR)
 		return (DIR_CODE);
