@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/16 19:01:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/17 17:14:26 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,17 @@ void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
 
 int		is_opcode(char data)
 {
-	int i;
+	if (data > 0 && data < 17)
+		return (1);
+	// int i;
 
-	i = 0;
-	while (i < 16)
-	{
-		if ((char)op_tab[i].code == data)
-			return (data);
-		i++;
-	}
+	// i = 0;
+	// while (i < 16)
+	// {
+	// 	if ((char)op_tab[i].code == data)
+	// 		return (data);
+	// 	i++;
+	// }
 	return (0);
 }
 
@@ -144,10 +146,11 @@ int		move_pc(t_proc *proc)
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
-	printf("Pouet 1\n");
+	// printf("Pouet 1\n");
 	if (!proc->op)
 	{
 		// printf ("SEGV 2\n");
+		// printf("id opcode");
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
@@ -156,25 +159,32 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 	}
 	else
 	{
+		// printf("Pouet 2\n");
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
 			if (op_tab[proc->op->code - 1].func != NULL
 			&& fill_cur_op(vm, proc))
 			{
+				printf("Pouet 3\n");
+				// printf("proc->op->code - 1 => %d\n", proc->op->code - 1);
+				// printf("pouet > %d\n", proc->op->code);
 				op_tab[proc->op->code - 1].func(vm, proc);
+				printf("Pouet 4\n");
 			}
+			// printf("Pouet 5\n");
 			// printf("tm %d\n", proc->op->code);
 			if (proc->op->code != 9)
 				proc->pc += move_pc(proc);
 				// printf("fuck\n");
+			printf("Pouet 7\n");
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			proc->op = NULL;
 		}
 		// printf ("SEGV 5\n");
 	}
-	printf("Pouet 8\n");
+	// printf("Pouet 8\n");
 }
 
 int		count_proc(t_vm *vm)
@@ -218,15 +228,14 @@ void	run(t_vm *vm)
 		{
 			if (proc->active)
 			{
-				printf ("SOUPE 1\n");
 				animate_proc(vm, proc);
-				printf ("SOUPE 2\n");
 			}
+			// printf("Hello\n");
 			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}
 		vm->cycle++;
-		printf ("SOUPE 4\n");
+		// printf ("SOUPE 7\n");
 
 //-------------------------Debug
 
@@ -236,7 +245,7 @@ void	run(t_vm *vm)
 	}
 	if (vm->last_one)
 		printf("Last_one => %s\n", vm->last_one->file_name);
-	printf ("SOUPE 5\n");
+	// printf ("SOUPE 7\n");
 }
 
 int		modulo(int a, int b)
