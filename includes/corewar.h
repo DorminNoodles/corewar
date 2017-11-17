@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 17:42:14 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/17 18:23:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,30 @@ typedef struct		header_s
 #define NC_C_WHITE 40
 #define NC_C_BASIC 15
 #define NC_C_GREYBLACK 41
+
 #define NC_C_GREEN 20
 #define NC_C_GREEN_FLUO 36
 #define NC_C_GREEN_BLING 38
 #define NC_C_GREEN_LIGHT 21
 #define NC_C_GREEN_BLACK 24
+
 #define NC_C_BLUE 22
 #define NC_C_BLUE_FLUO 37
 #define NC_C_BLUE_LIGHT 23
 #define NC_C_BLUE_BLING 25
+
+#define NC_C_RED 50
+#define NC_C_RED_FLUO 51
+#define NC_C_RED_BLING 52
+#define NC_C_RED_LIGHT 53
+#define NC_C_RED_BLACK 54
+
+#define NC_C_YELLOW 60
+#define NC_C_YELLOW_FLUO 61
+#define NC_C_YELLOW_BLING 62
+#define NC_C_YELLOW_LIGHT 63
+#define NC_C_YELLOW_BLACK 64
+
 #define NC_C_LIFE_LIGHT 26
 
 typedef struct s_vm t_vm;
