@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 23:17:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 15:33:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
-	if (env->debug && env->ko)
+	if (env && env->debug && env->ko)
 		return ;
 	display_error(err);
 	if (err == NO_FILE_ERR)
@@ -72,7 +72,7 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	}
 	else if (err == SIZE_MAX_ERR)
 	{
-		ft_printf("Has too large a code (%d bytes > %d bytes)\n", env->size, CHAMP_MAX_SIZE);
+		ft_printf("File '%s' as too large a code (%d bytes > %d bytes)\n", str, env->size, CHAMP_MAX_SIZE);
 		exit(EXIT_FAILURE);
 	}
 	else if (env)

@@ -6,13 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 23:19:14 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 15:36:48 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	check_mode(t_asm_env *env, int fd)
+void	check_mode(t_asm_env *env, char *name, int fd)
 {
 	char	*line;
 
@@ -43,7 +43,7 @@ void	check_mode(t_asm_env *env, int fd)
 		asm_error(NO_INSTRUCTIONS, NULL, env, 0);
 	env->size = env->bytes - 1;
 	if (env->size > CHAMP_MAX_SIZE)
-		asm_error(SIZE_MAX_ERR, NULL, env, 0);
+		asm_error(SIZE_MAX_ERR, name, env, 0);
 }
 
 void	print_mode(t_asm_env *env, char *file)
@@ -161,6 +161,7 @@ void	debug_mode(t_asm_env *env, int fd)
 
 int		main(int argc, char **argv)
 {
+	int			a;
 	int			fd;
 	int			arg;
 	char 		buf[1];
@@ -171,23 +172,28 @@ int		main(int argc, char **argv)
 		print_help();
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	}
-	env.ko = 0;
-	env.debug = 0;
-	env.verbose = 0;
 	arg = parse_args(&env, argv);
-	if (env.debug)
-		debug_mode(&env, 0);
-	if (argc == arg)
-		asm_error(NO_FILE_ERR, NULL, 0, 0);
-	if ((fd = open(argv[arg], O_RDONLY)) == -1)
-		asm_error(SOURCE_ERR, argv[arg], 0, 0);
-	if (!check_name(argv[arg]))
-		asm_error(FILE_ERROR, argv[arg], 0, 0);
-	check_mode(&env, fd);
-	create_file(&env, argv[arg]);
-	print_mode(&env, argv[arg]);
-	argv[arg][ft_strlen(argv[arg]) - 2] = '\0';
-	ft_printf("Writting output program to %s.cor\n", argv[arg]);
-	free_labels(&env);
+
+	while (arg < argc)
+	{
+		env.ko = 0;
+		env.debug = 0;
+		env.verbose = 0;
+		if (env.debug)
+			debug_mode(&env, 0);
+		if (argc == arg)
+			asm_error(NO_FILE_ERR, NULL, 0, 0);
+		if ((fd = open(argv[arg], O_RDONLY)) == -1)
+			asm_error(SOURCE_ERR, argv[arg], 0, 0);
+		if (!check_name(argv[arg]))
+			asm_error(FILE_ERROR, argv[arg], 0, 0);
+		check_mode(&env, argv[arg], fd);
+		create_file(&env, argv[arg]);
+		print_mode(&env, argv[arg]);
+		argv[arg][ft_strlen(argv[arg]) - 2] = '\0';
+		ft_printf("Writting output program to %s.cor\n", argv[arg]);
+		free_labels(&env);
+		++arg;
+	}
 	return (0);
 }
