@@ -6,7 +6,7 @@
 /*   By: zaz <zaz@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2017/11/14 17:01:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 10:10:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_optab	op_tab[17] =
 		"store index", 1, 1},
 	{"fork", &ft_fork, 1, {T_DIR}, 12, 800, "fork", 0, 1},
 	{"lld", &lld, 2, {T_DIR | T_IND, T_REG}, 13, 10, "long load", 1, 0},
-	{"lldi", NULL, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
+	{"lldi", &lldi, 3, {T_REG | T_DIR | T_IND, T_DIR | T_REG, T_REG}, 14, 50,
 		"long load index", 1, 1},
 	{"lfork", NULL, 1, {T_DIR}, 15, 1000, "long fork", 0, 1},
 	{"aff", NULL, 1, {T_REG}, 16, 2, "aff", 1, 0},

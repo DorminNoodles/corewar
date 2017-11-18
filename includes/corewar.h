@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 18:23:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 15:19:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,7 @@ void		sub(t_vm *vm, t_proc *proc);
 void		ft_fork(t_vm *vm, t_proc *proc);
 void		zjmp(t_vm *vm, t_proc *proc);
 void		lld(t_vm *vm, t_proc *proc);
+void		lldi(t_vm *vm, t_proc *proc);
 
 /*
 **--------NCURSES---------
