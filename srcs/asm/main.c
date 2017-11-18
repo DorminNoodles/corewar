@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/18 15:36:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 18:54:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,16 +173,15 @@ int		main(int argc, char **argv)
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	}
 	arg = parse_args(&env, argv);
-
+	if (env.debug)
+		debug_mode(&env, 0);
+	if (argc == arg)
+		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	while (arg < argc)
 	{
 		env.ko = 0;
 		env.debug = 0;
 		env.verbose = 0;
-		if (env.debug)
-			debug_mode(&env, 0);
-		if (argc == arg)
-			asm_error(NO_FILE_ERR, NULL, 0, 0);
 		if ((fd = open(argv[arg], O_RDONLY)) == -1)
 			asm_error(SOURCE_ERR, argv[arg], 0, 0);
 		if (!check_name(argv[arg]))
