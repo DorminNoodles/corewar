@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 18:27:35 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 19:51:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@ static void	colors_init(void)
 
 	init_pair(NC_C_BLUE, COLOR_BLUE, COLOR_BLACK);//player_2
 	init_color(COLOR_BLUE, 200, 200, 800);//blue change
-	init_color(NC_C_BLUE_FLUO, 400, 400, 1000);//fluo_blue
+	init_color(NC_C_BLUE_FLUO, 500, 500, 1000);//fluo_blue
 	init_pair(NC_C_BLUE_LIGHT, COLOR_BLUE, NC_C_BLUE_FLUO);//player_2_highlight
-	init_pair(NC_C_BLUE_BLING, NC_C_GREEN_FLUO, COLOR_BLACK);//player_2_blingbling
+	init_pair(NC_C_BLUE_BLING, NC_C_BLUE_FLUO, COLOR_BLACK);//player_2_blingbling
 
 	init_pair(NC_C_RED, COLOR_RED, COLOR_BLACK);
-	init_color(NC_C_RED_FLUO, 1000, 150, 150);
-	init_color(NC_C_RED_BLING, 500, 1000, 500);
+	init_color(NC_C_RED_FLUO, 1000, 250, 250);
+	init_color(NC_C_RED_BLING, 1000, 400, 400);
 	init_pair(NC_C_RED_LIGHT, COLOR_RED, NC_C_RED_FLUO);
 	init_pair(NC_C_RED_BLACK, NC_C_RED_BLING, COLOR_BLACK);
 
 	init_pair(NC_C_YELLOW, COLOR_YELLOW, COLOR_BLACK);
-	init_color(NC_C_YELLOW_FLUO, 350, 350, 350);
-	init_color(NC_C_YELLOW_BLING, 100, 100, 500);
+	init_color(COLOR_YELLOW, 650, 650, 0); // change yellow color
+	init_color(NC_C_YELLOW_FLUO, 750, 750, 50);
+	init_color(NC_C_YELLOW_BLING, 900, 900, 50);
 	init_pair(NC_C_YELLOW_LIGHT, COLOR_YELLOW, NC_C_YELLOW_FLUO);
 	init_pair(NC_C_YELLOW_BLACK, NC_C_YELLOW_BLING, COLOR_BLACK);
 
@@ -92,9 +93,9 @@ static void	ram_init(t_vm *vm)
 			if (vm->ram[i].num == -2)
 				attron(COLOR_PAIR(NC_C_BLUE_BLING));
 			if (vm->ram[i].num == -3)
-				attron(COLOR_PAIR(NC_C_RED_BLING));
+				attron(COLOR_PAIR(NC_C_RED_BLACK));
 			if (vm->ram[i].num == -4)
-				attron(COLOR_PAIR(NC_C_YELLOW_BLING));
+				attron(COLOR_PAIR(NC_C_YELLOW_BLACK));
 			vm->ram[i].blingbling--;
 		}
 		if (vm->ram[i].live)

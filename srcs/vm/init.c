@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/16 15:43:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 19:35:58 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	init_vm(t_vm *vm)
 
 void	write_player(t_vm *vm, int nb, int num)
 {
-	printf("Write Player\n");
+	// printf("Write Player\n");
 	int		i;
 	char	*data;
 	char	*data_tmp;
@@ -158,8 +158,9 @@ void	init_process(t_vm *vm)
 	int i;
 
 	i = 0;
-	while (i < MAX_PLAYERS)
+	while (i <= MAX_PLAYERS)
 	{
+		// printf("loop init process i = %d | vm->player[i].active = %d\n", i, vm->player[i].active);
 		if (vm->player[i].active)
 			add_process(vm, create_process(vm, i * (-1)));
 		i++;
@@ -186,6 +187,7 @@ void	create_players(t_vm *vm)
 	init_mem(vm);
 	while (i <= MAX_PLAYERS)
 	{
+		// printf("loop create_players\n");
 		if (vm->player[i].active)
 		{
 			write_player(vm, i, j);

@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/07 18:14:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 19:13:03 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	st(t_vm *vm, t_proc *proc)
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 16;
 		vm->ram[addr].num = proc->num;
+		// printf("num = %d\n", vm->ram[addr].num);
 		vm->ram[addr].blingbling = 40;
 
 		if (!vm->ncurses && vm->debug)
