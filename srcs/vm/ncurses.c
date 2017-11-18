@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 19:51:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:08:45 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,9 @@ void	call_ncurses(t_vm *vm)
 
 	i = -1;
 	ret = 0;
+	ft_putstr("BORDEL A\n");
 	colors_init();
+	ft_putstr("BORDEL B\n");
 	ram_init(vm);
 	attron(COLOR_PAIR(NC_C_GREYBLACK));
 	attron(A_INVIS);

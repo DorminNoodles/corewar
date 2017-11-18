@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/17 18:18:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:23:48 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,30 +146,21 @@ int		move_pc(t_proc *proc)
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
-	// printf("Pouet 1\n");
 	if (!proc->op)
 	{
-		// printf ("SEGV 2\n");
-		// printf("id opcode");
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
 			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
 			proc->pc = (proc->pc + 1) % MEM_SIZE;
-			// printf ("SEGV 3\n");
 	}
 	else
 	{
-		// printf("Pouet 2\n");
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
 			if (op_tab[proc->op->code - 1].func != NULL
 			&& fill_cur_op(vm, proc))
 			{
-				// printf("proc->op->code - 1 => %d\n", proc->op->code - 1);
-				// printf("pouet > %d\n", proc->op->code);
-				// printf("Pouet 3\n");
-				// printf("Pouet %d\n", proc->op->code - 1);
 				op_tab[proc->op->code - 1].func(vm, proc);
 				// printf("Pouet 4\n");
 			}
@@ -185,7 +176,6 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		}
 		// printf ("SEGV 5\n");
 	}
-	// printf("Pouet 8\n");
 }
 
 int		count_proc(t_vm *vm)
@@ -218,11 +208,14 @@ void	run(t_vm *vm)
 	{
 		if (2 & vm->verbosity)
 			printf("It is now cycle %d\n", vm->cycle + 1);
+		// printf("ncurses = %d\n", vm->ncurses);
 		if (vm->ncurses)
 		{
-			call_ncurses(vm);
-			controller(vm);
-			usleep(vm->delay);
+		//   printf("WTF 1\n");
+			// call_ncurses(vm);
+			// // printf("BORDEL 2\n");
+			// controller(vm);
+			// usleep(vm->delay);
 		}
 		proc = vm->proc;
 		while (proc != NULL)
@@ -231,7 +224,6 @@ void	run(t_vm *vm)
 			{
 				animate_proc(vm, proc);
 			}
-			// printf("Hello\n");
 			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}

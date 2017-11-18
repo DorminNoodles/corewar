@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 15:19:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:20:32 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,7 @@ void		set_ctd(t_vm *vm);
 int			check_reg(int nb);
 int			check_params(t_op *op);
 int			check_ocp(int ocp, int opcode);
+void		aff(t_vm *vm, t_proc *proc);
 
 /*
  ** --------INSTRUCTIONS----------

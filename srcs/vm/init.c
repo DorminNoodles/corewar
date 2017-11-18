@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 19:35:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/18 21:52:57 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,11 @@ void	write_player(t_vm *vm, int nb, int num)
 	while (i < prog_size)
 	{
 		//vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
+		// printf("SEGFAULT_1\n");
+		// printf("mem => %d\n", i % MEM_SIZE);
+		// printf("mem => %d\n", (unsigned char)*data_tmp);
 		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
+		// printf("SEGFAULT_2\n");
 		// printf(">__&>>> %d\n", (num + 1) * -1);
 		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
 		data_tmp++;
@@ -190,7 +194,9 @@ void	create_players(t_vm *vm)
 		// printf("loop create_players\n");
 		if (vm->player[i].active)
 		{
+			// printf("SEGFAULT_1\n");
 			write_player(vm, i, j);
+			// printf("SEGFAULT_2\n");
 			j++;
 		}
 		i++;

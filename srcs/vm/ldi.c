@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/13 14:56:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:23:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
 
 void		ldi(t_vm *vm, t_proc *proc)
 {
+	// printf("SEGFAULT\n");
 	unsigned int		addr;
 	unsigned int		reg_nb;
 	int ar1;
@@ -51,7 +52,6 @@ void		ldi(t_vm *vm, t_proc *proc)
 	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
 	{
 		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
-		printf("ar1 IND => %d\n", proc->op->ar[0]);
 	}
 
 	if (proc->op->ar_typ[1] == REG_CODE && !check_reg(proc->op->ar[1]))

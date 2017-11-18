@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 01:19:08 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 09:50:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:30:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	lld(t_vm *vm, t_proc *proc)
 	int		addr;
 
 	addr = 0;
+	if (!check_params(proc->op))
+		return ;
 	reg_nb = proc->op->ar[1];
 	if (proc->op->ar_typ[0] == IND_CODE)
 	{

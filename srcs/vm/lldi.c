@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/18 15:20:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/18 22:27:38 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void		lldi(t_vm *vm, t_proc *proc)
 	else if (proc->op->ar_typ[0] == IND_CODE)// IND CODE
 	{
 		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
-		printf("ar1 IND => %d\n", proc->op->ar[0]);
 	}
 
 	if (proc->op->ar_typ[1] == REG_CODE && !check_reg(proc->op->ar[1]))
@@ -75,7 +74,8 @@ void		lldi(t_vm *vm, t_proc *proc)
 
 	if (proc->op->ar_typ[2] == REG_CODE && !check_reg(proc->op->ar[2]))
 		return ;
-	proc->reg[proc->op->ar[2]] = value;
+	if (check_reg(proc->op->ar[2]))
+		proc->reg[proc->op->ar[2]] = value;
 
 	if (0x4 & vm->verbosity)
 	{
@@ -83,5 +83,4 @@ void		lldi(t_vm *vm, t_proc *proc)
 		printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
 		printf("\n");
 	}
-
 }
