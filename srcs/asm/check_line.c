@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 23:19:24 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 19:21:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int		check_op(char *instr, t_asm_env *env, int col)
 	return (ret);
 }
 
-int check_header_form(t_asm_env *env, char *line)
+int		check_header_form(t_asm_env *env, char *line)
 {
 	int i;
 	int len;
 
-	i = 0;
-	while (line[i] && !is_space(line[i]))
-		++i;
+	i = until_is_space(line);
 	i += until_is_not_space(line + i);
 	if (line[i] != '\"')
 	{
@@ -64,6 +62,26 @@ int check_header_form(t_asm_env *env, char *line)
 	return (0);
 }
 
+void	check_header_name(t_asm_env *env, int len)
+{
+	if (env->name)
+		asm_error(NAME_EXISTS, NULL, env, 0);
+	else if (len > PROG_NAME_LENGTH)
+		asm_error(NAME_SIZE_ERR, NULL, env, 0);
+	if (!env->ko)
+		++env->name;
+}
+
+void	check_header_com(t_asm_env *env, int len)
+{
+	if (env->comment)
+		asm_error(COM_EXISTS, NULL, env, 0);
+	else if (len > COMMENT_LENGTH)
+		asm_error(COM_SIZE_ERR, NULL, env, 0);
+	if (!env->ko)
+		++env->comment;
+}
+
 void	check_header(t_asm_env *env, char *line)
 {
 	char	*word;
@@ -72,23 +90,9 @@ void	check_header(t_asm_env *env, char *line)
 	word = take_word(line);
 	len = check_header_form(env, line);
 	if (!ft_strcmp(word, NAME_CMD_STRING))
-	{
-		if (env->name)
-			asm_error(NAME_EXISTS, NULL, env, 0);
-		else if (len > PROG_NAME_LENGTH)
-			asm_error(NAME_SIZE_ERR, NULL, env, 0);
-		if (!env->ko)
-			++env->name;
-	}
+		check_header_name(env, len);
 	else if (!ft_strcmp(word, COMMENT_CMD_STRING))
-	{
-		if (env->comment)
-			asm_error(COM_EXISTS, NULL, env, 0);
-		else if (len > COMMENT_LENGTH)
-			asm_error(COM_SIZE_ERR, NULL, env, 0);
-		if (!env->ko)
-			++env->comment;
-	}
+		check_header_com(env, len);
 	else if (len)
 		asm_error(COMMAND_ERR, word, env, 0);
 	ft_memdel((void*)&word);
@@ -116,37 +120,40 @@ void	check_parse_arg(char *str, int instr, t_asm_env *env, int col)
 		check_instr_16(str, env, col);
 }
 
+void	init_check_ins(t_check_ins *ch)
+{
+	ch->args = 0;
+	ch->inst = -1;
+	ch->label = 0;
+	ch->word = NULL;
+}
+
 void	check_instr(char *line, t_asm_env *env)
 {
-	int		i;
-	int		inst;
-	int		label;
-	int 	args;
-	char	*word;
+	int			i;
+	t_check_ins	ch;
 
 	i = 0;
-	args = 0;
-	inst = -1;
-	label = 0;
+	init_check_ins(&ch);
 	while (line[i])
 	{
 		i += until_is_not_space(line + i);
-		word = take_word(line + i);
-		if (!label && inst == -1 && is_label_str(word))
-			++label;
-		else if (inst == -1)
-			inst = check_op(word, env, i);
+		ch.word = take_word(line + i);
+		if (!ch.label && ch.inst == -1 && is_label_str(ch.word))
+			++ch.label;
+		else if (ch.inst == -1)
+			ch.inst = check_op(ch.word, env, i);
 		else
 		{
-			check_parse_arg(line + i, inst + 1, env, i);
-			ft_memdel((void*)&word);
-			++args;
+			check_parse_arg(line + i, ch.inst + 1, env, i);
+			ft_memdel((void*)&ch.word);
+			++ch.args;
 			break ;
 		}
-		i += ft_strlen(word);
-		ft_memdel((void*)&word);
+		i += ft_strlen(ch.word);
+		ft_memdel((void*)&ch.word);
 	}
-	if (inst != -1 && !args)
+	if (ch.inst != -1 && !ch.args)
 		asm_error(NO_ARGUMENTS, line, env, i);
 }
 
@@ -165,7 +172,9 @@ void	check_line(t_asm_env *env, char *line)
 		if (line[i] == COMMENT_CHAR || !line[i])
 			return ;
 		if (env->name && env->comment)
+		{
 			check_instr(line, env);
+		}
 		else
 		{
 			if (!env->name)

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 17:30:29 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 20:07:27 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,41 +31,41 @@ void	parse_label(t_asm_env *env, char *line, char *label, int printmode)
 	ft_memdel((void*)&label);
 }
 
-void	parse(t_asm_env *env, char *line, int printmode)
+void	parse_verbose(t_asm_env *env, char *line)
+{
+	color(C_GREEN);
+	ft_printf("- Line %d ", env->line);
+	color(C_YELLOW);
+	ft_printf("(Actual byte: %d)", env->bytes - 1);
+	color(C_RESET);
+	ft_printf(" : '%s'\n", line);
+}
+
+void	parse(t_asm_env *env, char *line)
 {
 	int		a;
 	int		len;
-	char	*word;
+	char	*w;
 
 	if (line && line[0] != COMMENT_CHAR)
 	{
-		if (env->verbose && printmode == PRINT_MODE)
-		{
-			color(C_GREEN);
-			ft_printf("- Line %d ", env->line);
-			color(C_YELLOW);
-      ft_printf("(Actual byte: %d)", env->bytes - 1);
-      color(C_RESET);
-			ft_printf(" : '%s'\n", line);
-		}
-		a = 0;
-		while (line[a] && is_space(line[a]))
-			++a;
+		if (env->verbose && env->print == PRINT_MODE)
+			parse_verbose(env, line);
+		a = until_is_not_space(line);
 		if (!line[a] || line[a] == COMMENT_CHAR)
 			return ;
-		word = take_word(line + a);
-		len = len_is_label(word);
-		if (word[len] == LABEL_CHAR && len + 1 != ft_strlen(word))
-			word = red_label_name(word, len);
-		if (!ft_strcmp(word, NAME_CMD_STRING) ||
-			!ft_strcmp(word, COMMENT_CMD_STRING))
-			write_header(env, line, printmode);
-		else if (word[ft_strlen(word) - 1] == LABEL_CHAR)
-			parse_label(env, line + a, word, printmode);
+		w = take_word(line + a);
+		len = len_is_label(w);
+		if (w[len] == LABEL_CHAR && len + 1 != ft_strlen(w))
+			w = red_label_name(w, len);
+		if (!ft_strcmp(w, NAME_CMD_STRING) || !ft_strcmp(w, COMMENT_CMD_STRING))
+			write_header(env, line, env->print);
+		else if (w[ft_strlen(w) - 1] == LABEL_CHAR)
+			parse_label(env, line + a, w, env->print);
 		else
-			env->bytes += find_op(env, word, line + a, printmode);
-		ft_memdel((void*)&word);
-		if (env->verbose && printmode == PRINT_MODE)
+			env->bytes += find_op(env, w, line + a, env->print);
+		ft_memdel((void*)&w);
+		if (env->verbose && env->print == PRINT_MODE)
 			ft_printf("\n");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/07 17:27:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 20:08:51 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 {
-	int a;
-	char *tmp;
-	char *tmp2;
+	int		a;
+	char	*tmp;
+	char	*tmp2;
 
 	a = 0;
 	ft_printf("|");
@@ -51,8 +51,8 @@ void	verbose_inst(t_asm_env *env, char *ins, int hex)
 	color(C_RESET);
 	ft_printf("| ");
 	if (!(env->verbose_line = ft_strnew(30)))
-			asm_error(MALLOC_ERR, NULL, 0, 0);
-	if (!(tmp2 = ft_itoa(hex+1)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
+	if (!(tmp2 = ft_itoa(hex + 1)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
 	if (!(tmp = ft_convert_base(tmp2, DEC, HEX2)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
@@ -87,7 +87,7 @@ void	verbose_ocp(t_asm_env *env, char ocp)
 		if (!(tmp2 = ft_itoa((unsigned char)ocp)))
 			asm_error(MALLOC_ERR, NULL, 0, 0);
 		tmp = ft_convert_base(tmp2, DEC, HEX2);
-		env->verbose_line =  ft_strcat(env->verbose_line, tmp);
+		env->verbose_line = ft_strcat(env->verbose_line, tmp);
 		ft_memdel((void*)&tmp);
 		ft_memdel((void*)&tmp2);
 		env->verbose_line = ft_strcat(env->verbose_line, " ");

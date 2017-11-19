@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 22:20:32 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/19 18:53:20 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,6 +395,14 @@ typedef struct s_tab_labs
 	struct s_tab_labs  *next;
 }                   t_tab_labs;
 
+typedef struct s_check_ins
+{
+	int						args;
+	int						inst;
+	int 					label;
+	char					*word;
+}								t_check_ins;
+
 void free_labels(t_asm_env *env);
 void print_labs_lst(t_tab_labs *lst);
 /*
@@ -417,7 +425,7 @@ char *concat_opcode(char *ocp, int arg);
 /*
  ** ---------- Read -------------
 */
-void parse(t_asm_env *env, char *line, int printmode);
+void parse(t_asm_env *env, char *line);
 int goto_nextarg(char *line);
 char *red_label_name(char *word, int len);
 
@@ -425,6 +433,7 @@ char *red_label_name(char *word, int len);
  ** ---------- Parsing tools ---------
 */
 int until_is_not_space(char *str);
+int until_is_space(char *str);
 int until_next_arg(char *str, t_asm_env *env, int col);
 int len_is_label(char *line);
 

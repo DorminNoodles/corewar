@@ -6,17 +6,31 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 22:20:39 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 19:56:04 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int	find_op(t_asm_env *env, char *word, char *line, int printmode)
+int		find_op_no_ocp(t_asm_env *env, char *line, int i)
 {
-	int i;
-	int tmp;
-	int oct;
+	if (env->print == PRINT_MODE)
+		op_no_ocp(env, i, line);
+	return (i);
+}
+
+int		find_op_ocp(t_asm_env *env, char *line, int i)
+{
+	if (env->print == PRINT_MODE)
+		op_ocp(env, i, line);
+	return (i);
+}
+
+int		find_op(t_asm_env *env, char *word, char *line, int printmode)
+{
+	int	i;
+	int	tmp;
+	int	oct;
 
 	oct = 1;
 	i = 0;
@@ -25,20 +39,14 @@ int	find_op(t_asm_env *env, char *word, char *line, int printmode)
 	{
 		if (!ft_strcmp(word, op_tab[i].inst))
 		{
-			if (env->verbose && printmode == PRINT_MODE)
+			if (env->verbose && env->print == PRINT_MODE)
 				verbose_inst(env, word, i);
 			if (!op_tab[i].need_ocp)
-			{
-				tmp = i;
-				if (printmode == PRINT_MODE)
-					op_no_ocp(env, i, line);
-			}
+				tmp = find_op_no_ocp(env, line, i);
 			else
 			{
-				tmp = i;
+				tmp = find_op_ocp(env, line, i);
 				++oct;
-				if (printmode == PRINT_MODE)
-					op_ocp(env, i, line);
 			}
 			oct = analyse(oct, line, tmp);
 		}

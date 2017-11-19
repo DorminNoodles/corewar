@@ -6,11 +6,30 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 22:54:19 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 20:09:26 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+int	is_ind_lab(char *str)
+{
+	int i;
+	int check;
+
+	i = 0;
+	check = 0;
+	++i;
+	while (str[i] && str[i] != ' ' && str[i] != '\t' &&
+	str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
+	{
+		++check;
+		if (!is_label_char(str[i]))
+			return (0);
+		++i;
+	}
+	return (check ? i : 0);
+}
 
 int	is_ind(char *str)
 {
@@ -20,18 +39,7 @@ int	is_ind(char *str)
 	i = 0;
 	check = 0;
 	if (str[i] == LABEL_CHAR)
-	{
-		++i;
-		while (str[i] && str[i] != ' ' && str[i] != '\t' &&
-		str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
-		{
-			++check;
-			if (!is_label_char(str[i]))
-				return (0);
-			++i;
-		}
-		return (check ? i : 0);
-	}
+		return (is_ind_lab(str));
 	if (str[i] == '-')
 		++i;
 	while (str[i] && str[i] != ' ' && str[i] != '\t' &&

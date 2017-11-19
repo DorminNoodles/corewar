@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 19:16:19 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 19:56:53 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ int		until_is_not_space(char *str)
 
 	i = 0;
 	while (str[i] && is_space(str[i]))
+		++i;
+	return (i);
+}
+
+int		until_is_space(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && !is_space(str[i]))
 		++i;
 	return (i);
 }

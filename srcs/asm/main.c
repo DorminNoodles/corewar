@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/18 18:54:14 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 20:04:53 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_mode(t_asm_env *env, char *name, int fd)
 	{
 		env->current_line = line;
 		check_line(env, line);
-		parse(env, line, CHECK_MODE);
+		parse(env, line);
 		ft_memdel((void*)&line);
 		++env->line;
 	}
@@ -60,7 +60,7 @@ void	print_mode(t_asm_env *env, char *file)
 	// print_labs_lst(env->labs);
 	while (get_next_line(fd, &line))
 	{
-		parse(env, line, PRINT_MODE);
+		parse(env, line);
 		ft_memdel((void*)&line);
 		if (env->verbose && env->verbose_line)
 		{
@@ -141,6 +141,7 @@ void	debug_mode(t_asm_env *env, int fd)
 	env->bytes = 1;
 	env->name = 0;
 	env->comment = 0;
+	env->print = 0;
 	env->labs = NULL;
 	while (get_next_line(fd, &line))
 	{
@@ -172,6 +173,8 @@ int		main(int argc, char **argv)
 		print_help();
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	}
+	env.debug = 0;
+	env.verbose = 0;
 	arg = parse_args(&env, argv);
 	if (env.debug)
 		debug_mode(&env, 0);
@@ -179,9 +182,6 @@ int		main(int argc, char **argv)
 		asm_error(NO_FILE_ERR, NULL, 0, 0);
 	while (arg < argc)
 	{
-		env.ko = 0;
-		env.debug = 0;
-		env.verbose = 0;
 		if ((fd = open(argv[arg], O_RDONLY)) == -1)
 			asm_error(SOURCE_ERR, argv[arg], 0, 0);
 		if (!check_name(argv[arg]))

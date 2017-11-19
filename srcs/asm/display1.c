@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 22:52:18 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 18:43:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	write_ind(t_asm_env *env, char *line)
 	}
 	ind = reverse_short(ind);
 	if (ft_isdigit(*line) && env->verbose)
-			verbose_arg(env, line, 0, ind);
+		verbose_arg(env, line, 0, ind);
 	else if (env->verbose)
-			verbose_arg(env, line, 1, ind);
+		verbose_arg(env, line, 1, ind);
 	write(env->fd, &ind, 2);
 }
