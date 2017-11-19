@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/18 15:33:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 21:38:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	display_current_line(t_asm_env *env, int err, int column)
 	int i;
 
 	if (!env || !env->current_line)
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	if (err == TOO_MUCH_ARG_ERR || err == LEX_ERROR)
 		--column;
 	if (err >= ERROR_MIN && err <= ERROR_MAX)
@@ -48,6 +48,15 @@ void	display_current_line(t_asm_env *env, int err, int column)
 	}
 }
 
+void	put_line_col(int err, int line, int column)
+{
+	if (err == INST_ERROR || err == LEX_ERROR || err == BAD_ARG_DIR ||
+	err == BAD_ARG_REG || err == BAD_ARG_IND || err == BAD_ARG_REG_DIR ||
+	err == BAD_ARG_REG_IND || err == BAD_ARG_IND_DIR || err == NO_ARGUMENTS ||
+	err == BAD_ARG_REG_DIR_IND || err == WRONG_FORM_COM)
+		ft_printf("At [%d:%d], ", line, column);
+}
+
 void	asm_error(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
@@ -55,26 +64,9 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	if (env && env->debug && env->ko)
 		return ;
 	display_error(err);
-	if (err == NO_FILE_ERR)
-	{
-		ft_printf("Missing filename.\n");
-		exit(EXIT_FAILURE);
-	}
-	else if (err == SOURCE_ERR)
-	{
-		ft_printf("Can't read source file '%s'.\n", str);
-		exit(EXIT_FAILURE);
-	}
-	else if (err == FILE_ERROR)
-	{
-		ft_printf("'%s' is not a .s file.\n", str);
-		exit(EXIT_FAILURE);
-	}
-	else if (err == SIZE_MAX_ERR)
-	{
-		ft_printf("File '%s' as too large a code (%d bytes > %d bytes)\n", str, env->size, CHAMP_MAX_SIZE);
-		exit(EXIT_FAILURE);
-	}
+	if (err == NO_FILE_ERR || err == SOURCE_ERR || err == FILE_ERROR ||
+	err == SIZE_MAX_ERR)
+		asm_error1(err, str, env, column);
 	else if (env)
 		line = env->line;
 	free_labels(env);
@@ -82,63 +74,132 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 		return ;
 	if (env && env->debug)
 		++env->ko;
-	if (err == MALLOC_ERR)
-		ft_printf("Malloc failed.\n");
-	else if (err == INST_ERROR)
-		ft_printf("At [%d:%d], instruction '%s' does not exist.\n", line, column, str);
-	else if (err == LEX_ERROR)
-		ft_printf("Lexical error at [%d:%d]. Waiting for a ',' between arguments.\n", line, column - 1);
-	else if (err == BAD_ARG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number.\n", line, column);
-	else if (err == BAD_ARG_REG)
-		ft_printf("At [%d:%d], this instruction expected a register.\n", line, column, str);
-	else if (err == BAD_ARG_IND)
-		ft_printf("At [%d:%d], this instruction expected an index.\n", line, column);
-	else if (err == BAD_ARG_REG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number or a register.\n", line, column);
-	else
-		asm_error2(err, str, env, column);
+	put_line_col(err, line, column);
+	asm_error2(err, str, env, column);
 	display_current_line(env, err, column);
 	if (!env->debug)
 		exit(EXIT_FAILURE);
 }
 
+void	asm_error1(int err, char *str, t_asm_env *env, int column)
+{
+	if (err == NO_FILE_ERR)
+		ft_printf("Missing filename.\n");
+	else if (err == SOURCE_ERR)
+		ft_printf("Can't read source file '%s'.\n", str);
+	else if (err == FILE_ERROR)
+		ft_printf("'%s' is not a .s file.\n", str);
+	else if (err == SIZE_MAX_ERR)
+	{
+		ft_printf("File '%s' as too large a code (%d bytes > %d bytes)\n",
+		str, env->size, CHAMP_MAX_SIZE);
+	}
+	exit(EXIT_FAILURE);
+}
+
 void	asm_error2(int err, char *str, t_asm_env *env, int column)
+{
+	if (err == MALLOC_ERR)
+		ft_printf("Malloc failed.\n");
+	else if (err == INST_ERROR)
+		ft_printf("instruction '%s' does not exist.\n", str);
+	else if (err == LEX_ERROR)
+		ft_printf("lexical error. Waiting for a ',' between arguments.\n");
+	else if (err == BAD_ARG_DIR)
+		ft_printf("this instruction expected a direct number.\n");
+	else if (err == BAD_ARG_REG)
+		ft_printf("this instruction expected a register.\n");
+	else if (err == BAD_ARG_IND)
+		ft_printf(", this instruction expected an index.\n");
+	else if (err == BAD_ARG_REG_DIR)
+		ft_printf("this instruction expected a direct number or a register.\n");
+	else
+		asm_error3(err, str, env, column);
+}
+
+void	asm_error3(int err, char *str, t_asm_env *env, int column)
 {
 	int line;
 
 	if (env)
 		line = env->line;
-	if (err == BAD_ARG_REG_DIR)
-		ft_printf("At [%d:%d], this instruction expected a direct number or a register.\n", line, column);
-	else if (err == BAD_ARG_REG_IND)
-		ft_printf("At [%d:%d], this instruction expected a register or an index.\n", line, column);
+	if (err == BAD_ARG_REG_IND)
+		ft_printf("this instruction expected a register or an index.\n");
 	else if (err == BAD_ARG_IND_DIR)
-		ft_printf("At [%d:%d], this instruction expected an index or a direct number.\n", line, column);
+		ft_printf("this instruction expected an index or a direct number.\n");
 	else if (err == BAD_ARG_REG_DIR_IND)
-		ft_printf("At [%d:%d], this instruction expected a register, a direct number or an index.\n", line, column);
+		ft_printf("this instruction expected a reg, a direct or an index.\n");
 	else if (err == NO_ARGUMENTS)
-		ft_printf("At [%d:%d], instruction has no arguments\n", line, column);
+		ft_printf("instruction has no arguments\n");
 	else if (err == LABEL_ERROR)
 		ft_printf("Label '%s' is not find.\n", str);
 	else if (err == TOO_MUCH_ARG_ERR)
 		ft_printf("Too much arguments at [%d:%d] : '%s'.\n", line, column, str);
-	else if (err == NAME_SIZE_ERR)
-		ft_printf("Line %d, name size is too big. Must be < %d.\n", line, PROG_NAME_LENGTH);
+	else
+		asm_error4(err, str, env, column);
+}
+
+void	asm_error4(int err, char *str, t_asm_env *env, int column)
+{
+	int line;
+
+	if (env)
+		line = env->line;
+	if (err == NAME_SIZE_ERR)
+	{
+		ft_printf("Line %d, name size is too big. Must be < %d.\n",
+		line, PROG_NAME_LENGTH);
+	}
 	else if (err == COM_SIZE_ERR)
-		ft_printf("Line %d, comment is size too big. Must be < %d.\n", line, COMMENT_LENGTH);
+	{
+		ft_printf("Line %d, comment is size too big. Must be < %d.\n",
+		line, COMMENT_LENGTH);
+	}
+	else if (err == NAME_EXISTS)
+		ft_printf("Line %d, name is already defined.\n", line);
+	else
+		asm_error5(err, str, env, column);
+}
+
+void	asm_error5(int err, char *str, t_asm_env *env, int column)
+{
+	int line;
+
+	if (env)
+		line = env->line;
+	if (err == COM_SIZE_ERR)
+	{
+		ft_printf("Line %d, comment is size too big. Must be < %d.\n",
+		line, COMMENT_LENGTH);
+	}
 	else if (err == NAME_EXISTS)
 		ft_printf("Line %d, name is already defined.\n", line);
 	else if (err == COM_EXISTS)
 		ft_printf("Line %d, comments are already defined.\n", line);
 	else if (err == COMMAND_ERR)
 		ft_printf("Line %d, command '%s' not found.\n", line, str);
-	else if (err == NO_NAME)
-		ft_printf("Line %d, Your champion needs a name before instructions\n", line);
+	else
+		asm_error6(err, str, env, column);
+}
+
+void	asm_error6(int err, char *str, t_asm_env *env, int column)
+{
+	int line;
+
+	if (env)
+		line = env->line;
+	if (err == NO_NAME)
+	{
+		ft_printf("Line %d, Your champion needs a name before instructions\n",
+		line);
+	}
 	else if (err == NO_COMMENT)
-		ft_printf("Line %d, Your champion needs a comment before instructions\n", line);
+	{
+		ft_printf("Line %d, Your champ needs a comment before instructions\n",
+		line);
+	}
 	else if (err == NO_INSTRUCTIONS)
 		ft_printf("You need, at least, one instruction !\n");
 	else if (err == WRONG_FORM_COM)
-		ft_printf("At [%d:%d], wrong format. Name and comment need to begin and end by \"\n", line, column);
+		ft_printf("wrong format. Name and com need to begin and end by \"\n");
 }
