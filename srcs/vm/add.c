@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 09:39:08 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/19 21:53:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	add(t_vm *vm, t_proc *proc)
 {
+	printf("ADDDDD    \n");
 	// printf(">>>>ENTER_ADD<<<<\n");
 	int		sum;
 

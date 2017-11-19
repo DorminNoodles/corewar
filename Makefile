@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/18 15:11:48 by lchety           ###   ########.fr        #
+#    Updated: 2017/11/19 22:27:24 by lchety           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -37,6 +37,7 @@ SRC_FILES_VM = main.c \
 								cycle_to_die.c	\
 								check_inst.c	\
 								debug.c	\
+								aff.c	\
 								sti.c	\
 								ld.c	\
 								ldi.c	\
@@ -49,6 +50,7 @@ SRC_FILES_VM = main.c \
 								players.c	\
 								processus.c	\
 								fork.c \
+								lfork.c	\
 								or.c \
 								xor.c \
 								sub.c \

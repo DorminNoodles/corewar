@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 10:48:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/19 22:16:11 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 			}
 			// printf("Pouet 5\n");
 			// printf("tm %d\n", proc->op->code);
-			if (proc->op->code != 9)
+			if (proc->op->code != 9 || (proc->op->code == 9 && !proc->carry))
 				proc->pc += move_pc(proc);
 				// printf("fuck\n");
 			// printf("Pouet 7\n");

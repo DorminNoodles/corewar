@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 18:53:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/19 22:27:43 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void		aff(t_vm *vm, t_proc *proc);
 /*
  ** --------INSTRUCTIONS----------
  */
+void		aff(t_vm *vm, t_proc *proc);
 void		and(t_vm *vm, t_proc *proc);
 void		ld(t_vm *vm, t_proc *proc);
 void		ldi(t_vm *vm, t_proc *proc);
@@ -305,6 +306,7 @@ void		xor(t_vm *vm, t_proc *proc);
 void		st(t_vm *vm, t_proc *proc);
 void		sub(t_vm *vm, t_proc *proc);
 void		ft_fork(t_vm *vm, t_proc *proc);
+void		ft_lfork(t_vm *vm, t_proc *proc);
 void		zjmp(t_vm *vm, t_proc *proc);
 void		lld(t_vm *vm, t_proc *proc);
 void		lldi(t_vm *vm, t_proc *proc);
