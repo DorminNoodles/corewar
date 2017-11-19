@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 22:23:48 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/19 10:48:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ void	dump(t_vm *vm)
 void	run(t_vm *vm)
 {
 	t_proc	*proc;
-
 	while (process_living(vm))
 	{
 		if (2 & vm->verbosity)
@@ -211,11 +210,9 @@ void	run(t_vm *vm)
 		// printf("ncurses = %d\n", vm->ncurses);
 		if (vm->ncurses)
 		{
-		//   printf("WTF 1\n");
-			// call_ncurses(vm);
-			// // printf("BORDEL 2\n");
-			// controller(vm);
-			// usleep(vm->delay);
+			call_ncurses(vm);
+			controller(vm);
+			usleep(vm->delay);
 		}
 		proc = vm->proc;
 		while (proc != NULL)

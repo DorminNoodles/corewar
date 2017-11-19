@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 12:45:10 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 14:57:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/19 11:58:51 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ int		check_ocp(int ocp, int opcode)
 	// printf ("nb_arg %d\n", nb_arg);
 	if (nb_arg >= 1 && !arg_available((ocp & 0xC0) >> 6, opcode, 0))
 		return (0);
-		// printf("BAD OCP\n");
+	if (nb_arg >= 2 && !arg_available((ocp & 0x30) >> 4, opcode, 1))
+		return (0);
+	if (nb_arg >= 3 && !arg_available((ocp & 0xC) >> 2, opcode, 2))
+		return (0);
 
 	// if (nb_arg >= 2 && !arg_available((ocp & 0x30) >> 4, opcode))
 	// 	return (0);
