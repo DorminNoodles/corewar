@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 22:30:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 09:25:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ void	live(t_vm *vm, t_proc *proc)
 	proc->last_live = vm->cycle + 1;
 
 	num = 0;
-	// printf("NUM player => %d\n", proc->op->ar[0]);
 
 	num = proc->op->ar[0] * -1;
 
-	// printf("fuck num %d\n", num);
 	if (4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
@@ -34,7 +32,6 @@ void	live(t_vm *vm, t_proc *proc)
 
 	if (num >= 1 && num <= vm->nb_player)
 	{
-		// printf("LIVE HERE ##################################\n");
 		vm->player[num].life_signal++;
 		vm->player[num].last_live = vm->cycle;
 		vm->ram[modulo(proc->op->pos_opcode, MEM_SIZE)].live = BLING_LIVE;

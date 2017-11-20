@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 21:52:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 11:22:18 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	init_vm(t_vm *vm)
 	vm->nb_player = 0;
 	vm->lives_in_cycle = 0;
 	vm->ctd = CYCLE_TO_DIE;
-	vm->cycle = 0;
 	vm->cycle = 0;
 	vm->proc = NULL;
 	vm->last_one = NULL;
