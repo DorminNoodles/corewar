@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 14:14:29 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/20 17:56:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ typedef struct s_player
 	int		life_signal;
 	int		last_live;
 	char	*file_name;
+	char	name[PROG_NAME];
 }	t_player;
 
 typedef struct s_proc

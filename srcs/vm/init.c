@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 11:22:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 18:15:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*get_data(char *filename)
 
 	fd = 0;
 	ret = 0;
+
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		error("error : file\n");
@@ -78,6 +79,7 @@ void	init_vm(t_vm *vm)
 	vm->lives_in_cycle = 0;
 	vm->ctd = CYCLE_TO_DIE;
 	vm->cycle = 0;
+	vm->cycle = 0;
 	vm->proc = NULL;
 	vm->last_one = NULL;
 	vm->pause = 1;
@@ -92,7 +94,6 @@ void	init_vm(t_vm *vm)
 
 void	write_player(t_vm *vm, int nb, int num)
 {
-	// printf("Write Player\n");
 	int		i;
 	char	*data;
 	char	*data_tmp;
@@ -102,7 +103,11 @@ void	write_player(t_vm *vm, int nb, int num)
 
 	// printf("File Name %s\n", vm->player[nb].file_name);
 	data = get_data(vm->player[nb].file_name);
-
+ // 	printf("data = '%s'\n", data + MAGIC_NB);
+	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
+	// vm->player[nb].name[ft_strlen(data + MAGIC_NB)] = '\0';
+	vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
+	printf("name = %s\n", vm->player[nb].name);
 	// printf(">>>>>>$$> %s\n", data);
 	prog_size = get_prog_size(data);
 
@@ -114,11 +119,7 @@ void	write_player(t_vm *vm, int nb, int num)
 	while (i < prog_size)
 	{
 		//vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
-		// printf("SEGFAULT_1\n");
-		// printf("mem => %d\n", i % MEM_SIZE);
-		// printf("mem => %d\n", (unsigned char)*data_tmp);
 		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
-		// printf("SEGFAULT_2\n");
 		// printf(">__&>>> %d\n", (num + 1) * -1);
 		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
 		data_tmp++;
@@ -193,9 +194,7 @@ void	create_players(t_vm *vm)
 		// printf("loop create_players\n");
 		if (vm->player[i].active)
 		{
-			// printf("SEGFAULT_1\n");
 			write_player(vm, i, j);
-			// printf("SEGFAULT_2\n");
 			j++;
 		}
 		i++;
