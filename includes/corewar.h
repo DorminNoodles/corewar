@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 22:27:43 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 14:14:29 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -521,7 +521,12 @@ char *take_word(char *str);
  ** ------- Error -------
 */
 void asm_error(int err, char *str, t_asm_env *env, int column);
+void asm_error1(int err, char *str, t_asm_env *env, int column);
 void asm_error2(int err, char *str, t_asm_env *env, int column);
+void asm_error3(int err, char *str, t_asm_env *env, int column);
+void asm_error4(int err, char *str, t_asm_env *env, int column);
+void asm_error5(int err, char *str, t_asm_env *env, int column);
+void asm_error6(int err, char *str, t_asm_env *env, int column);
 
 void verbose_inst(t_asm_env *env, char *ins, int hex);
 void verbose_arg(t_asm_env *env, char *line, int add, int hex);
