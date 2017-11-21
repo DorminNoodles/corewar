@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 11:22:18 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 16:45:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void	create_players(t_vm *vm)
 	init_mem(vm);
 	while (i <= MAX_PLAYERS)
 	{
-		// printf("loop create_players\n");
 		if (vm->player[i].active)
 		{
 			// printf("SEGFAULT_1\n");

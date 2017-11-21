@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/18 19:24:18 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/20 16:40:18 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	ft_bzero(tmp->reg, sizeof(int) * (REG_NUMBER + 1));
 	// printf("INIT REG 1 >>> %x\n", num * -1);
 	tmp->reg[1] = num;
-	tmp->state = IDLE;
+	// tmp->state = IDLE;
 	tmp->carry = 0;
 	tmp->last_live = 0;
 	tmp->active = 1;
