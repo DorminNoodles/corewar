@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:12:14 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/04 20:45:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/20 16:19:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	xor(t_vm *vm, t_proc *proc)
 
 	if (proc->op->ar_typ[0] == T_REG)
 	{
+		ar1 = proc->reg[proc->op->ar[0]];
 		if (proc->op->ar[0] <= 16 && proc->op->ar[0] >= 1)
 		{
 			proc->op->ar[0] = proc->reg[proc->op->ar[0]];
@@ -60,9 +61,10 @@ void	xor(t_vm *vm, t_proc *proc)
 	else
 		proc->op->ar[1] = get_indirect(vm, proc->op, 0);
 
-
+	ar1 = proc->op->ar[0];
+	ar2 = proc->op->ar[1];
 	proc->reg[proc->op->ar[2]] = proc->op->ar[0] ^ proc->op->ar[1];
-
+	proc->carry = ((ar1 ^ ar2) == 0) ? 1 : 0;
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
