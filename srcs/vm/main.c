@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 18:45:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/22 23:08:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,12 @@ t_player	*get_survivor(t_vm *vm)
 
 int		count_octet(int octet, t_optab *ref)
 {
-	// printf("octet => %d\n", octet);
-
 	if (octet == 1)
 		return (REG_SIZE);
 	else if (octet == 2)
 		return ((ref->direct_size) ? 2 : 4);
 	else if (octet == 3)
 	{
-		printf("IND_SIZE\n");
 		return (IND_SIZE);
 	}
 	return (0);
@@ -128,25 +125,18 @@ int		move_pc(t_proc *proc)
 	t_optab	*ref;
 
 	i = 0;
-	move = 0;
+	move = 1;
 	ref = &op_tab[proc->op->code - 1];
-
-	printf ("ocp ====>  %x\n", proc->op->ocp);
-
-
+	if (!ref->need_ocp)
+		return ((ref->direct_size) ? move + 2 : move + 4);
+	else
+		move++;
 	if (op_tab[proc->op->code - 1].nb_arg >= 1)
-	{
 		move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
-	}
 	if (op_tab[proc->op->code - 1].nb_arg >= 2)
 		move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
 	if (op_tab[proc->op->code - 1].nb_arg >= 3)
 		move += count_octet((0xC & proc->op->ocp) >> 2, ref);
-
-
-	if (!ref->need_ocp)
-		move = (ref->direct_size) ? 2 : 4;
-	printf("move => %d\n", move);
 	return (move);
 }
 
@@ -165,20 +155,15 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		if (proc->op->loadtime <= 0)
 		{
 			if(fill_cur_op(vm, proc))
-			{
 				op_tab[proc->op->code - 1].func(vm, proc);
-				if (proc->op->code != 9 ||
-					(proc->op->code == 9 && !proc->carry))
-					proc->pc += move_pc(proc);
-			}
+			if (proc->op->code != 9 ||
+				(proc->op->code == 9 && !proc->carry))
+				proc->pc += move_pc(proc);
 
-				if (16 & vm->verbosity)
-			{
+			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
-			}
 			proc->op = NULL;
 		}
-		// printf ("SEGV 5\n");
 	}
 }
 

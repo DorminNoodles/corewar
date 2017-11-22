@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 18:44:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/22 22:55:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,5 @@ int		fill_cur_op(t_vm *vm, t_proc *proc)
 	}
 	else
 		get_dir(vm, proc, 0, pos);
-	proc->pc++;
 	return (1);
 }
