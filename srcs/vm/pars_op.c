@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/14 16:42:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/22 18:44:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	type = type >> (6 - 2 * num);
 	proc->op->ar_typ[num] = type;
 
-	if (proc->op->code == 1)
-		printf("LIVE OP CODE\n");
+	// if (proc->op->code == 1)
+	// 	printf("LIVE OP CODE\n");
 
 	if (type == REG_CODE)
 	{
@@ -85,7 +85,8 @@ int		fill_cur_op(t_vm *vm, t_proc *proc)
 	if (optab_ref->need_ocp)
 	{
 		pos++;
-		get_ocp(vm, proc);
+		// get_ocp(vm, proc);
+		proc->op->ocp = (unsigned char)vm->ram[pos % MEM_SIZE].mem;
 		if (check_ocp(proc->op->ocp, proc->op->code))
 		{
 			while (i < op_tab[proc->op->code - 1].nb_arg)

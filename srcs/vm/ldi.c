@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/20 14:51:09 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/21 16:32:19 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,4 @@ void		ldi(t_vm *vm, t_proc *proc)
 		printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
 		printf("\n");
 	}
-
 }

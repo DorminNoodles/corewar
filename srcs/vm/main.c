@@ -6,30 +6,29 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 15:13:55 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/22 18:45:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	get_ocp(t_vm *vm, t_proc *proc)
-{
-	if (op_tab[proc->op->code - 1].need_ocp)
-		proc->op->ocp = vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
-}
+// void	get_ocp(t_vm *vm, t_proc *proc)
+// {
+// 	if (op_tab[proc->op->code - 1].need_ocp)
+// 		proc->op->ocp = vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
+// }
 
 void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	unsigned int value;
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	value = 0;
 
-	i++;
+	// i++;
 
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
-	i++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
 
@@ -40,7 +39,6 @@ void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 		proc->op->ar[num] = value;
 		return ;
 	}
-	i++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 3) % MEM_SIZE].mem;
 
@@ -52,13 +50,9 @@ void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 
 void	get_reg(t_vm *vm, t_proc *proc, int num, int pos)
 {
-	// printf(">>>>>>>>>>GET_REG<<<<<<<<<<<\n");
 	unsigned char value;
 
-	value = (unsigned char)vm->ram[(pos + REG_CODE) % MEM_SIZE].mem;
-
-	// printf("reg value %d\n", value);
-
+	value = (unsigned char)vm->ram[(pos + REG_SIZE) % MEM_SIZE].mem;
 	proc->op->ar[num] = value;
 }
 
@@ -113,12 +107,17 @@ t_player	*get_survivor(t_vm *vm)
 
 int		count_octet(int octet, t_optab *ref)
 {
+	// printf("octet => %d\n", octet);
+
 	if (octet == 1)
 		return (REG_SIZE);
 	else if (octet == 2)
 		return ((ref->direct_size) ? 2 : 4);
 	else if (octet == 3)
+	{
+		printf("IND_SIZE\n");
 		return (IND_SIZE);
+	}
 	return (0);
 }
 
@@ -132,15 +131,22 @@ int		move_pc(t_proc *proc)
 	move = 0;
 	ref = &op_tab[proc->op->code - 1];
 
+	printf ("ocp ====>  %x\n", proc->op->ocp);
 
-	move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
-	move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
-	move += count_octet((0xC & proc->op->ocp) >> 2, ref);
 
-	if (ref->need_ocp)
-		move += 1;
-	else
-		move += (ref->direct_size) ? 2 : 4;
+	if (op_tab[proc->op->code - 1].nb_arg >= 1)
+	{
+		move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
+	}
+	if (op_tab[proc->op->code - 1].nb_arg >= 2)
+		move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
+	if (op_tab[proc->op->code - 1].nb_arg >= 3)
+		move += count_octet((0xC & proc->op->ocp) >> 2, ref);
+
+
+	if (!ref->need_ocp)
+		move = (ref->direct_size) ? 2 : 4;
+	printf("move => %d\n", move);
 	return (move);
 }
 
@@ -158,20 +164,18 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		proc->op->loadtime--;
 		if (proc->op->loadtime <= 0)
 		{
-			if (op_tab[proc->op->code - 1].func != NULL
-			&& fill_cur_op(vm, proc))
+			if(fill_cur_op(vm, proc))
 			{
 				op_tab[proc->op->code - 1].func(vm, proc);
-				// printf("Pouet 4\n");
+				if (proc->op->code != 9 ||
+					(proc->op->code == 9 && !proc->carry))
+					proc->pc += move_pc(proc);
 			}
-			// printf("Pouet 5\n");
-			// printf("tm %d\n", proc->op->code);
-			if (proc->op->code != 9 || (proc->op->code == 9 && !proc->carry))
-				proc->pc += move_pc(proc);
-				// printf("fuck\n");
-			// printf("Pouet 7\n");
-			if (16 & vm->verbosity)
+
+				if (16 & vm->verbosity)
+			{
 				show_pc_move(vm, proc);
+			}
 			proc->op = NULL;
 		}
 		// printf ("SEGV 5\n");
