@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 11:55:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 22:42:17 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ void	sti(t_vm *vm, t_proc *proc)
 	reg = proc->op->ar[0];
 
 	if (proc->op->ar_typ[1] == REG_CODE)
+	{
 		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
+		proc->op->ar_typ[1] = DIR_CODE;
+	}
 	if (proc->op->ar_typ[2] == REG_CODE)
+	{
 		proc->op->ar[2] = proc->reg[proc->op->ar[2]];
+		proc->op->ar_typ[2] = DIR_CODE;
+	}
 
 	addr = (proc->op->ar[1] + proc->op->ar[2]) % IDX_MOD;
 	addr = proc->op->pos_opcode + addr;
