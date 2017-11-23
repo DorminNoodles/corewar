@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/21 15:08:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 20:10:43 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ void	write_player(t_vm *vm, int nb, int num)
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
 	// vm->player[nb].name[ft_strlen(data + MAGIC_NB)] = '\0';
 	vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
-	printf("name = %s\n", vm->player[nb].name);
-	// printf(">>>>>>$$> %s\n", data);
+	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB + PROG_NAME + PROG_SIZE, PROG_COMS);
+	vm->player[nb].comments[COMMENT_LENGTH] = '\0';
 	prog_size = get_prog_size(data);
-
-	// printf("prog_size => %d\n", prog_size);
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\")\n", nb, prog_size,
+	vm->player[nb].name, vm->player[nb].comments);
 	data_tmp = data + SRC_BEGIN;
 
 	// printf("I => %d\n", i);
@@ -189,6 +189,7 @@ void	create_players(t_vm *vm)
 	j = 0;
 	// printf("Debug : init_vm nb_player %d\n", vm->nb_player);
 	init_mem(vm);
+	ft_printf("Introducing contestants...\n");
 	while (i <= MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
