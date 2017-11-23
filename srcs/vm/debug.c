@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 18:45:08 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:01:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 void	show_mem(t_vm *vm)
 {
-	printf(">>>>>>>>SHOW MEM<<<<<<<<\n");
-	printf("Cycle : %d\n", vm->cycle);
 	int i;
 	i = 0;
 
 	while (i < MEM_SIZE)
 	{
-		printf("%02x ", (unsigned char)vm->ram[i].mem);
+		ft_printf("%02x ", (unsigned char)vm->ram[i].mem);
 		if (i / 64 != (i + 1) / 64)
-			printf("\n");
+			ft_printf("\n");
 		i++;
 	}
-	printf("\n\n");
+	ft_printf("\n\n");
 }
 
 void	show_proc_nb(t_vm *vm)
@@ -41,7 +39,6 @@ void	show_proc_nb(t_vm *vm)
 		i++;
 		tmp = tmp->next;
 	}
-	// printf("NB_PROC => %d\n", i);
 }
 
 void	debug_display_proc(t_vm *vm)
@@ -65,8 +62,8 @@ void	debug_display_proc(t_vm *vm)
 static void	display_args(t_vm *vm, t_proc *proc, int n)
 {
 	if (proc->op->ar_typ[n] == REG_CODE)
-		printf("r");
-	printf("%d", proc->op->ar[n]);
+		ft_printf("r");
+	ft_printf("%d", proc->op->ar[n]);
 }
 
 void	show_operations(t_vm *vm, t_proc *proc)
@@ -76,10 +73,10 @@ void	show_operations(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	nb_arg = op_tab[proc->op->code - 1].nb_arg;
-	printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
+	ft_printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
 	while (i < nb_arg)
 	{
-		printf(" ");
+		ft_printf(" ");
 		display_args(vm, proc, i);
 		i++;
 	}
@@ -94,15 +91,12 @@ void	show_pc_move(t_vm *vm, t_proc *proc)
 	move_size = proc->pc - proc->last_pc;
 	if (move_size > 1)
 	{
-		// printf(">> %x\n", proc->op);
-		printf("ADV %d (0x%04x -> 0x%04x)", move_size, proc->last_pc, proc->pc);
+		ft_printf("ADV %d (0x%04x -> 0x%04x)", move_size, proc->last_pc, proc->pc);
 		while (i < move_size)
 		{
-			// printf(">> %d \n", i);
-			printf(" %02x", (unsigned char)vm->ram[(proc->last_pc + i) % MEM_SIZE].mem);
+			ft_printf(" %02x", (unsigned char)vm->ram[(proc->last_pc + i) % MEM_SIZE].mem);
 			i++;
 		}
-		printf("\n");
-		// printf("\n");
+		ft_printf("\n");
 	}
 }

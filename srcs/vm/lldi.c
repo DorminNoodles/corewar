@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/18 22:27:38 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 14:11:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		lldi(t_vm *vm, t_proc *proc)
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
-		printf("\n");
+		ft_printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op->ar[0], proc->op->ar[1], value, addr);
+		ft_printf("\n");
 	}
 }

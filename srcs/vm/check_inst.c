@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 11:43:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 11:53:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 14:30:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_reg(int nb)
 {
-	if (nb < 1 || nb > 16)
+	if (nb < 1 || nb > REG_NUMBER)
 		return (0);
 	return (1);
 }

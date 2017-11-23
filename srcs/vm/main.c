@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 23:08:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:58:01 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,7 @@
 void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	unsigned int value;
-	// int i;
-
-	// i = 0;
 	value = 0;
-
-	// i++;
-
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
@@ -79,15 +73,6 @@ int		is_opcode(char data)
 {
 	if (data > 0 && data < 17)
 		return (1);
-	// int i;
-
-	// i = 0;
-	// while (i < 16)
-	// {
-	// 	if ((char)op_tab[i].code == data)
-	// 		return (data);
-	// 	i++;
-	// }
 	return (0);
 }
 
@@ -195,8 +180,7 @@ void	run(t_vm *vm)
 	while (process_living(vm))
 	{
 		if (2 & vm->verbosity)
-			printf("It is now cycle %d\n", vm->cycle + 1);
-		// printf("ncurses = %d\n", vm->ncurses);
+			ft_printf("It is now cycle %d\n", vm->cycle + 1);
 		if (vm->ncurses)
 		{
 			call_ncurses(vm);
@@ -214,7 +198,6 @@ void	run(t_vm *vm)
 			proc = proc->next;
 		}
 		vm->cycle++;
-		// printf ("SOUPE 7\n");
 
 //-------------------------Debug
 
@@ -223,8 +206,7 @@ void	run(t_vm *vm)
 			dump(vm);
 	}
 	if (vm->last_one)
-		printf("Last_one => %s\n", vm->last_one->file_name);
-	// printf ("SOUPE 7\n");
+		ft_printf("Last_one => %s\n", vm->last_one->file_name);
 }
 
 int		modulo(int a, int b)
@@ -233,7 +215,6 @@ int		modulo(int a, int b)
 		return (a % b);
 	else
 		return ((a % b) + b);
-	// return (a % b) >= 0 ? (a % b) : (a % b) + b;
 }
 
 int		get_winner(t_vm *vm)
@@ -267,17 +248,17 @@ int		main(int argc, char **argv)
 	if (vm.ncurses)
 		init_ncurses(&w);
 //-------------Debug
-	// printf("Debug : active -> %d\n", vm.player[1].active);
+	// ft_printf("Debug : active -> %d\n", vm.player[1].active);
 //-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
 
-	// printf("SEGV 1\n");
+	// ft_printf("SEGV 1\n");
 	run(&vm);//lancement du combat
-	// printf("SEGV 2\n");
+	// ft_printf("SEGV 2\n");
 	if (vm.ncurses)
 		endwin();
 
-	printf("winner nb -> %d\n", get_winner(&vm));
+	ft_printf("winner nb -> %d\n", get_winner(&vm));
 
 	return (0);
 }

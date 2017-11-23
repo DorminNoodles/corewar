@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 15:16:09 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:14:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	zjmp(t_vm *vm, t_proc *proc)
 {
-	// printf(">>>>>>ENTER ZJMP<<<<<<   : Cycle > %d\n", vm->cycle);
 
 	// printf("zjmp pos op => %d\n", proc->op->pos_opcode);
 	// printf("ZJMP VALUE => %d\n", proc->op->ar[0]);
@@ -28,9 +27,9 @@ void	zjmp(t_vm *vm, t_proc *proc)
 	{
 		show_operations(vm, proc);
 		if (proc->carry)
-			printf(" OK");
+			ft_printf(" OK");
 		else
-			printf(" FAILED");
-		printf("\n");
+			ft_printf(" FAILED");
+		ft_printf("\n");
 	}
 }

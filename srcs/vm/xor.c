@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:12:14 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/20 16:19:33 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:53:51 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	xor(t_vm *vm, t_proc *proc)
 	unsigned int	ar1;
 	unsigned int	ar2;
 
+	if (!check_params(proc->op))
+		return ;
 	if (proc->op->ar_typ[0] == T_REG)
 	{
 		ar1 = proc->reg[proc->op->ar[0]];
@@ -68,6 +70,6 @@ void	xor(t_vm *vm, t_proc *proc)
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n");
+		ft_printf("\n");
 	}
 }

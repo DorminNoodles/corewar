@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 18:48:25 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:00:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	live(t_vm *vm, t_proc *proc)
 	if (4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n");
+		ft_printf("\n");
 	}
 	if (num >= 1 && num <= vm->nb_player)
 	{
@@ -36,6 +36,6 @@ void	live(t_vm *vm, t_proc *proc)
 		vm->player[num].last_live = vm->cycle;
 		vm->ram[modulo(proc->op->pos_opcode, MEM_SIZE)].live = BLING_LIVE;
 		if (5 & vm->verbosity)
-			printf("Player %d (%s) is said to be alive\n", num, vm->player[num].name);
+			ft_printf("Player %d (%s) is said to be alive\n", num, vm->player[num].name);
 	}
 }

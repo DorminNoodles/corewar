@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 00:00:52 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 18:42:49 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:59:43 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_ctd(t_vm *vm)
 		vm->ctd -= CYCLE_DELTA;
 		vm->ctd_check = 0;
 		if (2 & vm->verbosity)
-			printf("Cycle to die is now %d\n", vm->ctd);
+			ft_printf("Cycle to die is now %d\n", vm->ctd);
 	}
 	else
 		vm->ctd_check++;

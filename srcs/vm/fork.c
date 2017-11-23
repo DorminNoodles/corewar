@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/13 14:56:26 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:59:11 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void	ft_fork(t_vm *vm, t_proc *proc)
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf(" (%d)\n", new->pc);
+		ft_printf(" (%d)\n", new->pc);
 	}
 }

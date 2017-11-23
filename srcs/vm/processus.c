@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/21 15:08:02 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 13:14:15 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	kill_proc(t_vm *vm)
 		{
 			tmp->active = 0;
 			if (0x8 & vm->verbosity)
-				printf("Process %d hasn't lived for %d cycles (CTD %d)\n", tmp->id + 1, vm->cycle - tmp->last_live, vm->ctd);
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", tmp->id + 1, vm->cycle - tmp->last_live, vm->ctd);
 		}
 		tmp = tmp->next;
 	}
@@ -53,8 +53,6 @@ t_proc	*create_process(t_vm *vm, int num)
 	if(!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
 		error("error : malloc\n");
 	tmp->id = set_proc_id(vm);
-	// printf("NOMBRE => %d\n", num * (-1));
-	// printf("NUM > %d\n", num);
 	tmp->num = num;
 	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) -1));
 	tmp->last_pc = 0;

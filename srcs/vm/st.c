@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:37:51 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/18 19:13:03 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:56:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,29 @@ void	st(t_vm *vm, t_proc *proc)
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
-
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 16;
 		vm->ram[addr].num = proc->num;
 		// printf("num = %d\n", vm->ram[addr].num);
 		vm->ram[addr].blingbling = 40;
 
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]] >> 8;
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
 
-		if (!vm->ncurses && vm->debug)
-			printf("> : %x  ", vm->ram[addr].mem);
 
 		addr = modulo(addr + 1, MEM_SIZE);
 		vm->ram[addr].mem = proc->reg[proc->op->ar[0]];
 		vm->ram[addr].num = proc->num;
 		vm->ram[addr].blingbling = 40;
-
-		if (!vm->ncurses && vm->debug)
-		{
-			printf("> : %x  ", vm->ram[addr].mem);
-			printf("\n");
-		}
 	}
 
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n");
+		ft_printf("\n");
 	}
 }
 

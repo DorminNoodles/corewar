@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/21 15:33:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:58:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ld(t_vm *vm, t_proc *proc)
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n");
+		ft_printf("\n");
 	}
 
 	// printf ("proc->reg[1] : %d\n", proc->reg[1]);

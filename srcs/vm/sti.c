@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 19:03:04 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 11:55:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	sti(t_vm *vm, t_proc *proc)
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
-		printf("\n       | -> store to %d + %d = %d (with pc and mod %d)\n", proc->op->ar[1], proc->op->ar[2], proc->op->ar[1] + proc->op->ar[2], addr);
+		ft_printf("\n       | -> store to %d + %d = %d (with pc and mod %d)\n", proc->op->ar[1], proc->op->ar[2], proc->op->ar[1] + proc->op->ar[2], addr);
 	}
 }
