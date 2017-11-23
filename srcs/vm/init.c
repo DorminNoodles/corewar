@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 20:10:43 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/23 20:13:41 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	write_player(t_vm *vm, int nb, int num)
 	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB + PROG_NAME + PROG_SIZE, PROG_COMS);
 	vm->player[nb].comments[COMMENT_LENGTH] = '\0';
 	prog_size = get_prog_size(data);
-	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\")\n", nb, prog_size,
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", nb, prog_size,
 	vm->player[nb].name, vm->player[nb].comments);
 	data_tmp = data + SRC_BEGIN;
 
