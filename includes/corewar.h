@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 09:11:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 14:58:02 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,7 @@ void		debug_display_proc(t_vm *vm);
 #define NO_ARGUMENTS 25
 #define WRONG_FORM_COM 26
 #define SIZE_MAX_ERR 27
+#define WRONG_FILE 28
 
 typedef struct s_asm_env
 {

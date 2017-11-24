@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 20:27:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/24 14:25:17 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	debug_mode(t_asm_env *env, int fd)
 	env->fd = 0;
 	env->print = 0;
 	env->labs = NULL;
+	ft_printf("********** DEBUG MODE **********\n");
 	while (get_next_line(fd, &line))
 	{
 		env->current_line = line;
