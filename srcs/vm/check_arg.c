@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 16:49:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 20:27:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ void	init_player(t_vm *vm)
 	{
 		vm->player[i].active = 0;
 		vm->player[i].life_signal = 0;
-		vm->player[i].last_live = 0;
 		vm->player[i].file_name = NULL;
+		vm->player[i].last_live = 0;
 		i++;
 	}
 }
@@ -137,6 +137,7 @@ void	init_player(t_vm *vm)
 void	new_player(t_vm *vm, int nb, char *str)
 {
 	vm->player[nb].active = 1;
+	vm->player[nb].last_live = 0;
 	vm->player[nb].life_signal = 0;
 	vm->player[nb].file_name = str;
 }
@@ -153,7 +154,7 @@ int		srch_players(t_vm *vm, int argc, char **argv)
 		if ((tmp = ft_strstr(argv[i], ".cor")) && !tmp[4])
 		{
 			vm->nb_player++;
-			if (vm->nb_player > 4)
+			if (vm->nb_player > MAX_PLAYERS)
 				error("Too many champs\n");
 			new_player(vm, get_nb_player(vm, argc, argv, i), argv[i]);
 		}

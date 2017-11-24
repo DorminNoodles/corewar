@@ -6,9 +6,10 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 20:20:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 20:35:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "corewar.h"
 
@@ -179,6 +180,7 @@ void	run(t_vm *vm)
 		proc = vm->proc;
 		while (proc != NULL)
 		{
+			ft_printf("POUET\n");
 			if (proc->active)
 			{
 				animate_proc(vm, proc);
@@ -220,7 +222,6 @@ void	get_winner(t_vm *vm)
 		}
 		i++;
 	}
-	// ft_printf("FUCCCCCCK    %d\n", vm->player[i].last_live);
 	ft_printf("Contestant %d, \"%s\", has won !\n", best, vm->player[best].name);
 }
 
@@ -229,12 +230,15 @@ int		main(int argc, char **argv)
 	t_vm	vm;
 
 	WINDOW *w;//ncurses
+
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
+
 	if (vm.ncurses)
 		init_ncurses(&w);
 	create_players(&vm);//initialisation de la machine virtuelle
+
 	run(&vm);//lancement du combat
 	if (vm.ncurses)
 		endwin();
