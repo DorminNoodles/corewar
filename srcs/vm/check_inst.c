@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 11:43:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 14:30:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 09:14:16 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		check_params(t_op *op)
 	int i;
 
 	i = 0;
-	while (i < op_tab[op->code].nb_arg)
+	while (i < op_tab[op->code - 1].nb_arg)
 	{
 		if (op->ar_typ[i] == REG_CODE)
 		{
