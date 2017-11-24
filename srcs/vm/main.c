@@ -6,13 +6,10 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2017/11/24 12:18:23 by lchety           ###   ########.fr       */
-=======
-/*   Updated: 2017/11/24 11:39:17 by rfulop           ###   ########.fr       */
->>>>>>> 2bd81fb9dc012842d1d6524974ffa2ccd946f871
+/*   Updated: 2017/11/24 17:46:27 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "corewar.h"
 
@@ -251,10 +248,10 @@ int		main(int argc, char **argv)
 		init_ncurses(&w);
 //-------------Debug
 	// ft_printf("Debug : active -> %d\n", vm.player[1].active);
-//-------------Debug
+//-------------Debu
 	create_players(&vm);//initialisation de la machine virtuelle
 
-	// ft_printf("SEGV 1\n");
+	// ft_printf("SEGV 1\n")
 	run(&vm);//lancement du combat
 	// ft_printf("SEGV 2\n");
 	if (vm.ncurses)

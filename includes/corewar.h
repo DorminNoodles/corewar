@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 14:58:02 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/24 17:37:20 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct		header_s
 #define NC_C_RED_BLING 52
 #define NC_C_RED_LIGHT 53
 #define NC_C_RED_BLACK 54
+#define NC_C_RED2 55
 
 #define NC_C_YELLOW 60
 #define NC_C_YELLOW_FLUO 61
