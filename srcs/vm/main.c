@@ -6,7 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2017/11/24 12:18:23 by lchety           ###   ########.fr       */
+=======
+/*   Updated: 2017/11/24 11:39:17 by rfulop           ###   ########.fr       */
+>>>>>>> 2bd81fb9dc012842d1d6524974ffa2ccd946f871
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +218,7 @@ int		modulo(int a, int b)
 		return ((a % b) + b);
 }
 
-int		get_winner(t_vm *vm)
+void	get_winner(t_vm *vm)
 {
 	int i;
 	int best;
@@ -228,7 +232,8 @@ int		get_winner(t_vm *vm)
 			best = i;
 		i++;
 	}
-	return (i);
+	ft_printf("Contestant %d, \"%s\", has won !\n", i, vm->player[i].name);
+
 }
 
 int		main(int argc, char **argv)
@@ -254,8 +259,6 @@ int		main(int argc, char **argv)
 	// ft_printf("SEGV 2\n");
 	if (vm.ncurses)
 		endwin();
-
-	ft_printf("winner nb -> %d\n", get_winner(&vm));
-
+	get_winner(&vm);
 	return (0);
 }

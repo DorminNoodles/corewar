@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/27 04:10:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/24 14:59:37 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	print_head(t_dasm_env *env)
 
 	binsize = ft_bin_len(env->file + MAGIC_NB);
 	if (binsize > PROG_NAME_LENGTH)
-		dasm_error(0, NULL);
+		dasm_error(NAME_SIZE_ERR, NULL);
 	name = ft_strnew(binsize + 1);
 	name[binsize] = '\0';
 	ft_memcpy(name, env->file + MAGIC_NB, binsize);
@@ -67,7 +67,7 @@ void	print_head(t_dasm_env *env)
 	write(env->fd, "\"\n", 2);
 	binsize = ft_bin_len(env->file + PROG_NAME + PROG_SIZE + MAGIC_NB);
 	if (binsize > COMMENT_LENGTH)
-		dasm_error(0, NULL);
+		dasm_error(COM_SIZE_ERR, NULL);
 	comments = ft_strnew(binsize + 1);
 	name[binsize] = '\0';
 	ft_memcpy(comments, env->file + (PROG_NAME + PROG_SIZE + MAGIC_NB),
@@ -80,17 +80,31 @@ void	print_head(t_dasm_env *env)
 int		main(int argc, char **argv)
 {
 	int			fd;
+	int			arg;
+	int 		len;
 	char		*line;
 	t_dasm_env	env;
 
-	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		dasm_error(SOURCE_ERR, argv[1]);
-	line = NULL;
-	create_file_cor(&env, argv[1]);
-	env.file = open_bin(&env, fd);
-	print_head(&env);
-	parse_cor(&env);
-	argv[1][ft_strlen(argv[1]) - 4] = '\0';
-	ft_printf("Writting output file to %s.s\n", argv[1]);
+	arg = 1;
+	while (arg < argc)
+	{
+		if ((fd = open(argv[arg], O_RDONLY)) == -1)
+			dasm_error(SOURCE_ERR, argv[arg]);
+		line = NULL;
+		len = ft_strlen(argv[arg]) - 1;
+		if (len > 3 && argv[arg][len] == 'r' && argv[arg][len-1] == 'o' &&
+		argv[arg][len-2] == 'c' && argv[arg][len-3] == '.')
+		{
+			create_file_cor(&env, argv[arg]);
+			env.file = open_bin(&env, fd);
+			print_head(&env);
+			parse_cor(&env);
+			argv[arg][ft_strlen(argv[arg]) - 4] = '\0';
+			ft_printf("Writting output file to %s.s\n", argv[arg]);
+		}
+		else
+			dasm_error(WRONG_FILE, argv[arg]);
+		++arg;
+	}
 	return (0);
 }
