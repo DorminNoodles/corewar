@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/20 12:57:04 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 16:49:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int		srch_nb_dump(int argc, char **argv)
 	nb = 0;
 	if ((ret = ft_strargv(argc, argv, "-dump")))
 	{
-			if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
-				return (ft_atoi(argv[ret + 1]));
-			else
-				error("error : verbosity bad number\n");
+		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
+			return (ft_atoi(argv[ret + 1]));
+		else
+			error("error : verbosity bad number\n");
 	}
 	return (-1);
 }
@@ -52,10 +52,10 @@ int		srch_verbose(int argc, char **argv)
 	nb = 0;
 	if ((ret = ft_strargv(argc, argv, "-v")))
 	{
-			if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
-				return (ft_atoi(argv[ret + 1]));
-			else
-				error("error : dump bad number\n");
+		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
+			return (ft_atoi(argv[ret + 1]));
+		else
+			error("error : dump bad number\n");
 	}
 	return (0);
 }
@@ -76,7 +76,6 @@ int		srch_nb_player(int argc, char **argv, int arg_num)
 		if (ft_strstr(argv[arg_num - 2], "-n"))
 			return (1);
 	return (0);
-	//si "pouet-npouet" a corriger
 }
 
 int		is_free_nb_player(t_vm *vm, int nb)
@@ -85,7 +84,6 @@ int		is_free_nb_player(t_vm *vm, int nb)
 		return (1);
 	if (vm->player[nb].active)
 		return (0);
-	// printf("is free !\n");
 	return (1);
 }
 
@@ -96,7 +94,6 @@ int		first_free_nb_player(t_vm *vm)
 	i = 1;
 	while (i <= MAX_PLAYERS)
 	{
-		// printf ("bordel de merde %d \n", vm->player[i].active);
 		if (!vm->player[i].active)
 			return (i);
 		i++;
@@ -139,12 +136,9 @@ void	init_player(t_vm *vm)
 
 void	new_player(t_vm *vm, int nb, char *str)
 {
-	// if (!vm->nb_player) // ca sert a rien cette merde
-	// 	init_player(vm);
 	vm->player[nb].active = 1;
 	vm->player[nb].life_signal = 0;
 	vm->player[nb].file_name = str;
-	// printf("Debug : New Player %d !\n", nb);
 }
 
 int		srch_players(t_vm *vm, int argc, char **argv)
@@ -174,7 +168,6 @@ int		srch_players(t_vm *vm, int argc, char **argv)
 int		check_arg(t_vm *vm, int argc, char **argv)
 {
 	vm->dump = srch_nb_dump(argc, argv);
-	// vm->debug = ft_strargv(argc, argv, "-debug");
 	vm->ncurses = srch_ncurses(argc, argv);
 	vm->verbosity = srch_verbose(argc, argv);
 	if(srch_players(vm, argc, argv))

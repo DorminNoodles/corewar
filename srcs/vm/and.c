@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 11:59:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 15:50:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	and(t_vm *vm, t_proc *proc)
 
 	if (!check_params(proc->op))
 		return ;
-
 	if (proc->op->ar_typ[0] == T_REG)
 		ar1 = proc->reg[proc->op->ar[0]];
 	else
@@ -28,12 +27,11 @@ void	and(t_vm *vm, t_proc *proc)
 		ar2 = proc->reg[proc->op->ar[1]];
 	else
 		ar2 = proc->op->ar[1];
-	 proc->reg[proc->op->ar[2]] = ar1 & ar2;
-	 proc->carry = ((ar1 & ar2) == 0) ? 1 : 0;
-
-	 if (0x4 & vm->verbosity)
-	 {
-		 show_operations(vm, proc);
-		 ft_printf("\n");
-	 }
+	proc->reg[proc->op->ar[2]] = ar1 & ar2;
+	proc->carry = ((ar1 & ar2) == 0) ? 1 : 0;
+	if (0x4 & vm->verbosity)
+	{
+		show_operations(vm, proc);
+		ft_printf("\n");
+	}
 }

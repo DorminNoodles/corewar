@@ -6,21 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2017/11/24 12:18:23 by lchety           ###   ########.fr       */
-=======
-/*   Updated: 2017/11/24 11:39:17 by rfulop           ###   ########.fr       */
->>>>>>> 2bd81fb9dc012842d1d6524974ffa2ccd946f871
+/*   Updated: 2017/11/24 20:20:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-// void	get_ocp(t_vm *vm, t_proc *proc)
-// {
-// 	if (op_tab[proc->op->code - 1].need_ocp)
-// 		proc->op->ocp = vm->ram[(proc->pc + 1) % MEM_SIZE].mem;
-// }
 
 void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
@@ -98,9 +88,7 @@ int		count_octet(int octet, t_optab *ref)
 	else if (octet == 2)
 		return ((ref->direct_size) ? 2 : 4);
 	else if (octet == 3)
-	{
 		return (IND_SIZE);
-	}
 	return (0);
 }
 
@@ -117,11 +105,11 @@ int		move_pc(t_proc *proc)
 		return ((ref->direct_size) ? move + 2 : move + 4);
 	else
 		move++;
-	if (op_tab[proc->op->code - 1].nb_arg >= 1)
+	if (ref->nb_arg >= 1)
 		move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
-	if (op_tab[proc->op->code - 1].nb_arg >= 2)
+	if (ref->nb_arg >= 2)
 		move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
-	if (op_tab[proc->op->code - 1].nb_arg >= 3)
+	if (ref->nb_arg >= 3)
 		move += count_octet((0xC & proc->op->ocp) >> 2, ref);
 	return (move);
 }
@@ -199,10 +187,6 @@ void	run(t_vm *vm)
 			proc = proc->next;
 		}
 		vm->cycle++;
-
-//-------------------------Debug
-
-//-------------------------Debug
 		if (vm->dump != -1 && !vm->ncurses)
 			dump(vm);
 	}
@@ -225,15 +209,19 @@ void	get_winner(t_vm *vm)
 
 
 	i = 1;
-	best = 1;
-	while (i < vm->nb_player)
+	best = 0;
+	// ft_printf (">>>> %d\n", vm->nb_player);
+	while (i < MAX_PLAYERS)
 	{
-		if (vm->player[i].last_live < vm->player[best].last_live)
-			best = i;
+		if (vm->player[i].active)
+		{
+			if (vm->player[i].last_live > vm->player[best].last_live)
+				best = i;
+		}
 		i++;
 	}
-	ft_printf("Contestant %d, \"%s\", has won !\n", i, vm->player[i].name);
-
+	// ft_printf("FUCCCCCCK    %d\n", vm->player[i].last_live);
+	ft_printf("Contestant %d, \"%s\", has won !\n", best, vm->player[best].name);
 }
 
 int		main(int argc, char **argv)
@@ -241,22 +229,13 @@ int		main(int argc, char **argv)
 	t_vm	vm;
 
 	WINDOW *w;//ncurses
-
-	// show_mem(&vm);
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
-
 	if (vm.ncurses)
 		init_ncurses(&w);
-//-------------Debug
-	// ft_printf("Debug : active -> %d\n", vm.player[1].active);
-//-------------Debug
 	create_players(&vm);//initialisation de la machine virtuelle
-
-	// ft_printf("SEGV 1\n");
 	run(&vm);//lancement du combat
-	// ft_printf("SEGV 2\n");
 	if (vm.ncurses)
 		endwin();
 	get_winner(&vm);
