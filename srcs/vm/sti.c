@@ -6,11 +6,29 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:54:19 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 22:42:17 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 14:07:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
+{
+	int	value;
+	int	pos;
+
+	value = 0x0;
+	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
+	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 2, MEM_SIZE)].mem;
+	value = value << 8;
+	value |= (unsigned char)vm->ram[modulo(pos + 3, MEM_SIZE)].mem;
+
+	return (value);
+}
 
 void	sti(t_vm *vm, t_proc *proc)
 {
@@ -26,6 +44,9 @@ void	sti(t_vm *vm, t_proc *proc)
 		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
 		proc->op->ar_typ[1] = DIR_CODE;
 	}
+	else if (proc->op->ar_typ[1] == IND_CODE)
+		proc->op->ar[1] = get_indirect(vm, proc->op, 1);
+
 	if (proc->op->ar_typ[2] == REG_CODE)
 	{
 		proc->op->ar[2] = proc->reg[proc->op->ar[2]];

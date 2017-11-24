@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 09:16:29 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 12:18:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@
 void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	unsigned int value;
-	value = 0;
+	value = 0x0;
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
-
 	if (op_tab[proc->op->code - 1].direct_size)
 	{
 		if ((value & 0x8000) == 0x8000)
@@ -35,10 +34,8 @@ void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 	}
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 3) % MEM_SIZE].mem;
-
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 4) % MEM_SIZE].mem;
-
 	proc->op->ar[num] = value;
 }
 

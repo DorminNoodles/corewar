@@ -1,6 +1,13 @@
 .name "zork"
 .comment "just a basic living prog"
 
+		ld %50, r6
+		live %-1
+		live %-1
+		live %-1
+		live %-1
+		live %-1
+		live %-1
 		sti r5, %-120, %-80
 #		ld %8888, r6
 #		fork %10

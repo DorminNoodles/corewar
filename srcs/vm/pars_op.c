@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 22:55:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/24 12:14:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int		fill_cur_op(t_vm *vm, t_proc *proc)
 	if (optab_ref->need_ocp)
 	{
 		pos++;
-		// get_ocp(vm, proc);
 		proc->op->ocp = (unsigned char)vm->ram[pos % MEM_SIZE].mem;
 		if (check_ocp(proc->op->ocp, proc->op->code))
 		{
