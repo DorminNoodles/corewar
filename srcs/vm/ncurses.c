@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 19:23:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/24 19:51:35 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,10 +199,13 @@ void	call_ncurses(t_vm *vm)
 		b += 4;
 	}
 	//
-	mvprintw(b, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
-	mvprintw(b + 2, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
-	mvprintw(b + 4, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);
-	mvprintw(b + 6, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d", MAX_CHECKS);
+	mvprintw(b, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :", vm->ctd);
+	mvprintw(b + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :", vm->ctd);
+
+	mvprintw(b, 5 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
+	mvprintw(b + 7, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
+	mvprintw(b + 9, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);
+	mvprintw(b + 11, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d", MAX_CHECKS);
 
 	// printw("%i", MEM_SIZE);
 	attroff(COLOR_PAIR(NC_C_WHITE));
@@ -210,6 +213,7 @@ void	call_ncurses(t_vm *vm)
 	attroff(A_BOLD);
 	attroff(A_STANDOUT);
 	// debug_display_proc(vm);
+
 
 	refresh();
 }
