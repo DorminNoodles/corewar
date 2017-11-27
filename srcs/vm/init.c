@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 20:13:41 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/27 17:41:57 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ char	*get_data(char *filename)
 		error("error : file\n");
 	ret = read(fd, buff, 4096);
 	data = ft_memalloc(ret + 1);
-
-	int i = 0;
-
 	ft_memcpy(data, buff, ret);
 	return (data);
 }
@@ -125,6 +122,7 @@ void	write_player(t_vm *vm, int nb, int num)
 		data_tmp++;
 		i++;
 	}
+	ft_memdel((void*)&data);
 	// show_mem(vm);
 }
 
@@ -143,18 +141,13 @@ void	write_player(t_vm *vm, int nb, int num)
 
 void	add_process(t_vm *vm, t_proc *proc)
 {
-	t_proc	*tmp;
-
-	// tmp = vm->proc;
 	if (vm->proc)
 	{
 		proc->next = vm->proc;
 		vm->proc = proc;
 	}
 	else
-	{
 		vm->proc = proc;
-	}
 }
 
 void	init_process(t_vm *vm)
@@ -171,15 +164,6 @@ void	init_process(t_vm *vm)
 	}
 }
 
-// void	init_each_players(t_vm *vm)
-// {
-// 	int nb;
-//
-// 	nb = 0;
-// 	init_nb_player(vm);
-// 	init_process(vm);
-// }
-
 void	create_players(t_vm *vm)
 {//appel de toutes les fonctions d init
 	int i;
@@ -187,7 +171,6 @@ void	create_players(t_vm *vm)
 
 	i = 1;
 	j = 0;
-	// printf("Debug : init_vm nb_player %d\n", vm->nb_player);
 	init_mem(vm);
 	ft_printf("Introducing contestants...\n");
 	while (i <= MAX_PLAYERS)
@@ -200,9 +183,4 @@ void	create_players(t_vm *vm)
 		i++;
 	}
 	init_process(vm);
-	// init_each_players(vm);
-	// init_optab(vm);
-	// vm->cycle = 0;
-	// vm->ctd = CYCLE_TO_DIE;
-	// printf("SEGV\n");
 }

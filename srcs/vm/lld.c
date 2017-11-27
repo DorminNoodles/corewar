@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 01:19:08 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 11:58:25 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 11:55:46 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	lld(t_vm *vm, t_proc *proc)
 	int		addr;
 
 	addr = 0;
-	if (!check_params(proc->op))
+	if (!check_params(&proc->op))
 		return ;
-	reg_nb = proc->op->ar[1];
-	if (proc->op->ar_typ[0] == IND_CODE)
+	reg_nb = proc->op.ar[1];
+	if (proc->op.ar_typ[0] == IND_CODE)
 	{
-		addr = proc->op->pos_opcode + proc->op->ar[0];
+		addr = proc->op.pos_opcode + proc->op.ar[0];
 		proc->reg[reg_nb] = 0;
 		proc->reg[reg_nb] = (unsigned char)vm->ram[modulo(addr, MEM_SIZE)].mem;
 		proc->reg[reg_nb] <<= 8;
@@ -39,7 +39,7 @@ void	lld(t_vm *vm, t_proc *proc)
 		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo((addr + 3), MEM_SIZE)].mem;
 	}
 	else
-		proc->reg[reg_nb] = proc->op->ar[0];
+		proc->reg[reg_nb] = proc->op.ar[0];
 	proc->carry = (proc->reg[reg_nb] == 0) ? 1 : 0;
 
 		if (0x4 & vm->verbosity)

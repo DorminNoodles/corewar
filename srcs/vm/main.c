@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 20:42:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 17:42:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
-	if (op_tab[proc->op->code - 1].direct_size)
+	if (op_tab[proc->op.code - 1].direct_size)
 	{
 		if ((value & 0x8000) == 0x8000)
 			value = (value - USHRT_MAX) - 1;
-		proc->op->ar[num] = value;
+		proc->op.ar[num] = value;
 		return ;
 	}
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 3) % MEM_SIZE].mem;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 4) % MEM_SIZE].mem;
-	proc->op->ar[num] = value;
+	proc->op.ar[num] = value;
 }
 
 void	get_reg(t_vm *vm, t_proc *proc, int num, int pos)
@@ -39,7 +39,7 @@ void	get_reg(t_vm *vm, t_proc *proc, int num, int pos)
 	unsigned char value;
 
 	value = (unsigned char)vm->ram[(pos + REG_SIZE) % MEM_SIZE].mem;
-	proc->op->ar[num] = value;
+	proc->op.ar[num] = value;
 }
 
 void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
@@ -56,9 +56,9 @@ void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
 	i++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
-	proc->op->ar[num] = value;
+	proc->op.ar[num] = value;
 	if ((value & 0x8000) == 0x8000)
-	 	proc->op->ar[num] = (value - USHRT_MAX) - 1;
+	 	proc->op.ar[num] = (value - USHRT_MAX) - 1;
 }
 
 int		is_opcode(char data)
@@ -101,43 +101,54 @@ int		move_pc(t_proc *proc)
 
 	i = 0;
 	move = 1;
-	ref = &op_tab[proc->op->code - 1];
+	ref = &op_tab[proc->op.code - 1];
 	if (!ref->need_ocp)
 		return ((ref->direct_size) ? move + 2 : move + 4);
 	else
 		move++;
 	if (ref->nb_arg >= 1)
-		move += count_octet((0xC0 & proc->op->ocp) >> 6, ref);
+		move += count_octet((0xC0 & proc->op.ocp) >> 6, ref);
 	if (ref->nb_arg >= 2)
-		move += count_octet((0x30 & proc->op->ocp) >> 4, ref);
+		move += count_octet((0x30 & proc->op.ocp) >> 4, ref);
 	if (ref->nb_arg >= 3)
-		move += count_octet((0xC & proc->op->ocp) >> 2, ref);
+		move += count_octet((0xC & proc->op.ocp) >> 2, ref);
 	return (move);
+}
+
+void		delete_op(t_proc *proc)
+{
+	proc->op.code = 0;
+	proc->op.ocp = 0;
+	ft_bzero(proc->op.ar, 3);
+	ft_bzero(proc->op.ar_typ, 3);
+	proc->op.loadtime = 0;
+	proc->op.pos_opcode = 0;
+	proc->op.active = 0;
 }
 
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
-	if (!proc->op)
+	if (!proc->op.active)
 	{
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
-			proc->op = create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
+			create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
 			proc->pc = (proc->pc + 1) % MEM_SIZE;
 	}
 	else
 	{
-		proc->op->loadtime--;
-		if (proc->op->loadtime <= 0)
+		proc->op.loadtime--;
+		if (proc->op.loadtime <= 0)
 		{
 			if(fill_cur_op(vm, proc))
-				op_tab[proc->op->code - 1].func(vm, proc);
-			if (proc->op->code != 9 ||
-				(proc->op->code == 9 && !proc->carry))
+				op_tab[proc->op.code - 1].func(vm, proc);
+			if (proc->op.code != 9 ||
+				(proc->op.code == 9 && !proc->carry))
 				proc->pc += move_pc(proc);
 
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
-			proc->op = NULL;
+			delete_op(proc);
 		}
 	}
 }
@@ -211,7 +222,6 @@ void	get_winner(t_vm *vm)
 
 	i = 1;
 	best = 0;
-	// ft_printf (">>>> %d\n", vm->nb_player);
 	while (i < MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
@@ -233,7 +243,6 @@ int		main(int argc, char **argv)
 	init_vm(&vm);
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
-
 	if (vm.ncurses)
 		init_ncurses(&w);
 	create_players(&vm);//initialisation de la machine virtuelle
@@ -242,5 +251,6 @@ int		main(int argc, char **argv)
 	if (vm.ncurses)
 		endwin();
 	get_winner(&vm);
+	free_everything(&vm);
 	return (0);
 }

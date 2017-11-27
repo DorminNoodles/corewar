@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 13:01:46 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 15:09:52 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	debug_display_proc(t_vm *vm)
 
 static void	display_args(t_vm *vm, t_proc *proc, int n)
 {
-	if (proc->op->ar_typ[n] == REG_CODE)
+	if (proc->op.ar_typ[n] == REG_CODE)
 		ft_printf("r");
-	ft_printf("%d", proc->op->ar[n]);
+	ft_printf("%d", proc->op.ar[n]);
 }
 
 void	show_operations(t_vm *vm, t_proc *proc)
@@ -72,8 +72,10 @@ void	show_operations(t_vm *vm, t_proc *proc)
 	int i;
 
 	i = 0;
-	nb_arg = op_tab[proc->op->code - 1].nb_arg;
-	ft_printf("P%5d | %s", proc->id + 1, op_tab[proc->op->code - 1].inst);
+	nb_arg = op_tab[proc->op.code - 1].nb_arg;
+	// ft_printf(">>> %d\n", proc->op.code);
+	// ft_printf(">>> %s\n", op_tab[proc->op.code - 1].inst);
+	ft_printf("P%5d | %s", proc->id + 1, op_tab[proc->op.code - 1].inst);
 	while (i < nb_arg)
 	{
 		ft_printf(" ");

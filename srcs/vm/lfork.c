@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 11:58:37 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 15:05:24 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ static void	clone_proc(t_proc *proc, t_proc *new)
 
 void	ft_lfork(t_vm *vm, t_proc *proc)
 {
+	// ft_printf("Debug lfork\n");
 	t_proc	*new;
 	new = create_process(vm, proc->num);
-
-	new->pc = modulo(proc->op->pos_opcode + proc->op->ar[0], MEM_SIZE);
+	init_op(&new->op);
+	new->pc = modulo(proc->op.pos_opcode + proc->op.ar[0], MEM_SIZE);
 	new->last_pc = new->pc;
 	clone_proc(proc, new);
 	add_process(vm, new);

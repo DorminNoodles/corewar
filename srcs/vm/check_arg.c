@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 20:42:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 17:44:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		srch_ncurses(int argc, char **argv)
 	return (0);
 }
 
-int		srch_nb_player(int argc, char **argv, int arg_num)
+int		srch_nb_player(char **argv, int arg_num)
 {
 	if (arg_num - 2 > 0)
 		if (ft_strstr(argv[arg_num - 2], "-n"))
@@ -101,12 +101,12 @@ int		first_free_nb_player(t_vm *vm)
 	return (0);
 }
 
-int		get_nb_player(t_vm *vm, int argc, char **argv, int arg_num)
+int		get_nb_player(t_vm *vm, char **argv, int arg_num)
 {
 	int ret;
 
 	ret = 0;
-	if (srch_nb_player(argc, argv, arg_num))
+	if (srch_nb_player(argv, arg_num))
 	{
 		ret = ft_atoi(argv[arg_num - 1]);
 		if (ret > 0 && ret < 5 && is_free_nb_player(vm, ret))
@@ -156,7 +156,7 @@ int		srch_players(t_vm *vm, int argc, char **argv)
 			vm->nb_player++;
 			if (vm->nb_player > MAX_PLAYERS)
 				error("Too many champs\n");
-			new_player(vm, get_nb_player(vm, argc, argv, i), argv[i]);
+			new_player(vm, get_nb_player(vm, argv, i), argv[i]);
 		}
 		i++;
 	}

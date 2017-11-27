@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 12:14:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 14:11:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 void	init_op(t_op *op)
 {
+	op->active = 0;
+	op->code = 0;
+	op->ocp = 0;
 	op->ar[0] = 0;
 	op->ar[1] = 0;
 	op->ar[2] = 0;
 	op->ar_typ[0] = 0;
 	op->ar_typ[1] = 0;
 	op->ar_typ[2] = 0;
+	op->loadtime = 0;
+	op->pos_opcode = 0;
 }
 
 int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
@@ -27,12 +32,12 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	unsigned char	type;
 	unsigned char	mask;
 
-	type = proc->op->ocp;
+	type = proc->op.ocp;
 	mask = 0xC0;
 	mask = mask >> (2 * num);
 	type = type & mask;
 	type = type >> (6 - 2 * num);
-	proc->op->ar_typ[num] = type;
+	proc->op.ar_typ[num] = type;
 
 	// if (proc->op->code == 1)
 	// 	printf("LIVE OP CODE\n");
@@ -45,7 +50,7 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	if (type == DIR_CODE)
 	{
 		get_dir(vm, proc, num, pos);
-		return((op_tab[proc->op->code - 1].direct_size) ? 2 : 4);
+		return((op_tab[proc->op.code - 1].direct_size) ? 2 : 4);
 	}
 	if (type == IND_CODE)
 	{
@@ -55,22 +60,18 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	return (0);
 }
 
-t_op		*create_op(t_vm *vm, t_proc *proc, char data)
+void		create_op(t_vm *vm, t_proc *proc, char data)
 {
 	int		i;
-	t_op	*op;
 
 	i = 0;
-	op = NULL;
 	if (!is_opcode(data))
-		return (NULL);
-	if (!(op = (t_op*)ft_memalloc(sizeof(t_op))))
-		error("error : malloc\n");
-	init_op(op);
-	op->code = data;
-	op->loadtime = op_tab[data - 1].loadtime - 1;
-	op->pos_opcode = proc->pc;
-	return (op);
+		return ;
+	init_op(&proc->op);
+	proc->op.active = 1;
+	proc->op.code = data;
+	proc->op.loadtime = op_tab[data - 1].loadtime - 1;
+	proc->op.pos_opcode = proc->pc;
 }
 
 int		fill_cur_op(t_vm *vm, t_proc *proc)
@@ -81,14 +82,14 @@ int		fill_cur_op(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	pos = proc->pc;
-	optab_ref = &op_tab[proc->op->code - 1];
+	optab_ref = &op_tab[proc->op.code - 1];
 	if (optab_ref->need_ocp)
 	{
 		pos++;
-		proc->op->ocp = (unsigned char)vm->ram[pos % MEM_SIZE].mem;
-		if (check_ocp(proc->op->ocp, proc->op->code))
+		proc->op.ocp = (unsigned char)vm->ram[pos % MEM_SIZE].mem;
+		if (check_ocp(proc->op.ocp, proc->op.code))
 		{
-			while (i < op_tab[proc->op->code - 1].nb_arg)
+			while (i < op_tab[proc->op.code - 1].nb_arg)
 			{
 				pos += find_args(vm, proc, i, pos);
 				i++;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/24 17:37:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/27 17:32:35 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,14 +156,14 @@ typedef struct s_optab t_optab;
 
 typedef struct s_op
 {
-	t_optab			*optab_ref;
+	int				active;
+	// t_optab			*optab_ref;
 	char			code;
 	unsigned char	ocp;
 	int				ar[3];
 	int				ar_typ[3];
 	int				loadtime;
 	int				pos_opcode;
-	int				countdown;
 }	t_op;
 
 
@@ -185,13 +185,11 @@ typedef struct s_proc
 	int		num;//Num du programme/player a fournir dans r1 (registre 1)
 	int		last_pc;
 	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
-	int		state;
-	char	carry;// Mystere //edit : plus maintenant;
-	// int		*reg;//la on garde les registres en void* car ca taille est defini par une macro
+	char	carry;
 	int		reg[17];
 	// int		loadtime;
 	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
-	t_op	*op;
+	t_op	op;
 	struct	s_proc	*next;
 }	t_proc;
 
@@ -258,6 +256,7 @@ typedef struct s_vm
 
 
 void		init_vm(t_vm *vm);
+void		init_op(t_op *op);
 void		create_players(t_vm *vm);
 void		error(char *str);
 // void	write_player(t_vm *vm);
@@ -266,7 +265,7 @@ int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);
 void		add_process(t_vm *vm, t_proc *proc);
 void		wait_state(t_vm *vm, t_proc *proc);
-t_op		*create_op(t_vm *vm, t_proc *proc, char data);
+void		create_op(t_vm *vm, t_proc *proc, char data);
 void		call_ncurses(t_vm *vm);
 void		undertaker(t_vm *vm);
 void		kill_proc(t_vm *vm);
@@ -292,7 +291,8 @@ void		set_ctd(t_vm *vm);
 int			check_reg(int nb);
 int			check_params(t_op *op);
 int			check_ocp(int ocp, int opcode);
-void		aff(t_vm *vm, t_proc *proc);
+void		free_everything(t_vm *vm);
+
 
 /*
  ** --------INSTRUCTIONS----------

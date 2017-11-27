@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:09:08 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/23 23:48:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 11:52:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,27 @@ void	or(t_vm *vm, t_proc *proc)
 	// unsigned int	ar1;
 	// unsigned int	ar2;
 
-	if (!check_params(proc->op))
+	if (!check_params(&proc->op))
 		return ;
-	// printf("fuck %d\n", proc->op->ar_typ[0]);
-	if (proc->op->ar_typ[0] == REG_CODE)
+	// printf("fuck %d\n", proc->op.ar_typ[0]);
+	if (proc->op.ar_typ[0] == REG_CODE)
 	{
-		proc->op->ar[0] = proc->reg[proc->op->ar[0]];
-		proc->op->ar_typ[0] = DIR_CODE;
+		proc->op.ar[0] = proc->reg[proc->op.ar[0]];
+		proc->op.ar_typ[0] = DIR_CODE;
 	}
-	else if (proc->op->ar_typ[0] == IND_CODE)
-		proc->op->ar[0] = get_indirect(vm, proc->op, 0);
+	else if (proc->op.ar_typ[0] == IND_CODE)
+		proc->op.ar[0] = get_indirect(vm, &proc->op, 0);
 
-	if (proc->op->ar_typ[1] == REG_CODE)
+	if (proc->op.ar_typ[1] == REG_CODE)
 	{
-		proc->op->ar[1] = proc->reg[proc->op->ar[1]];
-		proc->op->ar_typ[1] = DIR_CODE;
+		proc->op.ar[1] = proc->reg[proc->op.ar[1]];
+		proc->op.ar_typ[1] = DIR_CODE;
 	}
-	else if (proc->op->ar_typ[1] == IND_CODE)
-		proc->op->ar[1] = get_indirect(vm, proc->op, 1);
+	else if (proc->op.ar_typ[1] == IND_CODE)
+		proc->op.ar[1] = get_indirect(vm, &proc->op, 1);
 
-	proc->reg[proc->op->ar[2]] = proc->op->ar[0] | proc->op->ar[1];
-	proc->carry = (proc->reg[proc->op->ar[2]] == 0) ? 1 : 0;
+	proc->reg[proc->op.ar[2]] = proc->op.ar[0] | proc->op.ar[1];
+	proc->carry = (proc->reg[proc->op.ar[2]] == 0) ? 1 : 0;
 	if (0x4 & vm->verbosity)
 	{
 		show_operations(vm, proc);
