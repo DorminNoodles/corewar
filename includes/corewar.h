@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 17:32:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:51:00 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,6 @@ void		init_vm(t_vm *vm);
 void		init_op(t_op *op);
 void		create_players(t_vm *vm);
 void		error(char *str);
-// void	write_player(t_vm *vm);
 void		write_player(t_vm *vm, int nb, int num);
 int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);
@@ -292,6 +291,7 @@ int			check_reg(int nb);
 int			check_params(t_op *op);
 int			check_ocp(int ocp, int opcode);
 void		free_everything(t_vm *vm);
+int			get_indirect(t_vm *vm, t_op *op, int nb_arg);
 
 
 /*

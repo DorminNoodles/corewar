@@ -6,29 +6,11 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/27 11:43:19 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:50:13 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-static int	get_indirect(t_vm *vm, t_op *op, int nb_arg)
-{
-	int	value;
-	int	pos;
-
-	value = 0x0;
-	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
-	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 2, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 3, MEM_SIZE)].mem;
-
-	return (value);
-}
 
 void		lldi(t_vm *vm, t_proc *proc)
 {

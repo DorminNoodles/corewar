@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 15:05:24 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:49:41 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void registre_cpy(t_proc *proc, t_proc *new)
 		new->reg[i] = proc->reg[i];
 		i++;
 	}
-
 }
 
 static void	clone_proc(t_proc *proc, t_proc *new)

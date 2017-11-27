@@ -6,16 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 12:45:10 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/22 11:41:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:11:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-static int		convert_code(int ocp)
-{
-	return (0);
-}
 
 int		arg_available(int ocp_chunk, int opcode, int num_arg)
 {

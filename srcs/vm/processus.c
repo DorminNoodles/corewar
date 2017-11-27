@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 17:32:28 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 19:19:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,15 @@ void	kill_proc(t_vm *vm)
 			tmp->active = 0;
 			if (0x8 & vm->verbosity)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", tmp->id + 1, vm->cycle - tmp->last_live, vm->ctd);
-			if (tmp->next && !tmp->next->active)
-			{
-				t = tmp->next;
-				if (tmp->next && tmp->next->next)
-					tmp->next = tmp->next->next;
-				else
-					tmp->next = NULL;
-				free(t);
-			}
-
-			// free(t);
-
+		}
+		if (tmp->next && !tmp->next->active)
+		{
+			t = tmp->next;
+			tmp->next = tmp->next->next;
+			free(t);
 		}
 		tmp = tmp->next;
 	}
-	// ft_printf("SEG2\n");
 }
 
 void free_everything(t_vm *vm)
@@ -71,10 +64,11 @@ int		set_proc_id(t_vm *vm)
 		return (nb);
 	while (tmp)
 	{
+		if (tmp->id > nb)
+			nb = tmp->id;
 		tmp = tmp->next;
-		nb++;
 	}
-	return (nb);
+	return (nb + 1);
 }
 
 t_proc	*create_process(t_vm *vm, int num)

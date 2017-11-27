@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 20:55:40 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 11:39:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:47:34 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,16 @@ void	ld(t_vm *vm, t_proc *proc)
 
 		proc->reg[reg_nb] = 0;
 		proc->reg[reg_nb] = (unsigned char)vm->ram[modulo(proc->op.pos_opcode + addr, MEM_SIZE)].mem;
-		// printf("%x     \n", vm->ram[modulo(addr % IDX_MOD, MEM_SIZE)].mem);
-		// printf("%x     \n", proc->reg[reg_nb]);
 		proc->reg[reg_nb] <<= 8;
 		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo(proc->op.pos_opcode + addr + 1, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
 
 
 		proc->reg[reg_nb] <<= 8;
 		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo(proc->op.pos_opcode + addr + 2, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
 
 
 		proc->reg[reg_nb] <<= 8;
 		proc->reg[reg_nb] |= (unsigned char)vm->ram[modulo(proc->op.pos_opcode + addr + 3, MEM_SIZE)].mem;
-		// printf("%x     \n", proc->reg[reg_nb]);
 	}
 	else
 		proc->reg[reg_nb] = proc->op.ar[0];

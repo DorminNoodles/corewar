@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 15:03:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 18:47:09 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static void registre_cpy(t_proc *proc, t_proc *new)
+static void	registre_cpy(t_proc *proc, t_proc *new)
 {
 	int i;
 
@@ -31,12 +31,14 @@ static void	clone_proc(t_proc *proc, t_proc *new)
 	new->last_live = proc->last_live;
 }
 
-void	ft_fork(t_vm *vm, t_proc *proc)
+void		ft_fork(t_vm *vm, t_proc *proc)
 {
 	t_proc	*new;
+
 	new = create_process(vm, proc->num);
 	init_op(&new->op);
-	new->pc = modulo(proc->op.pos_opcode + (proc->op.ar[0] % IDX_MOD), MEM_SIZE);
+	new->pc = modulo(proc->op.pos_opcode + (proc->op.ar[0] % IDX_MOD),
+	MEM_SIZE);
 	new->last_pc = new->pc;
 	clone_proc(proc, new);
 	add_process(vm, new);
