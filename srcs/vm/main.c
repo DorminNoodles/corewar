@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 20:27:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/27 21:06:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void reset_live(t_vm *vm)
 	i = 1;
 	while (i <= vm->nb_player)
 	{
-		ft_printf("tot = %d\n", vm->player[i].tot);
 		vm->player[i].last_period = vm->player[i].tot;
 		vm->player[i].life_signal = 0;
 		++i;
