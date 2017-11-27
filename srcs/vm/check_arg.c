@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 17:44:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 20:23:10 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ void	init_player(t_vm *vm)
 		vm->player[i].life_signal = 0;
 		vm->player[i].file_name = NULL;
 		vm->player[i].last_live = 0;
+		vm->player[i].last_period = 0;
+		vm->player[i].tot = 0;
 		i++;
 	}
 }
@@ -139,6 +141,8 @@ void	new_player(t_vm *vm, int nb, char *str)
 	vm->player[nb].active = 1;
 	vm->player[nb].last_live = 0;
 	vm->player[nb].life_signal = 0;
+	vm->player[nb].last_period = 0;
+	vm->player[nb].tot = 0;
 	vm->player[nb].file_name = str;
 }
 

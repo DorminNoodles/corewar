@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 18:51:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 20:42:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct		header_s
 #define BLING_DELAY 65
 #define BLING_LIVE 45
 #define NCURSES_DELAY 100000
+#define BREAK_DIS 60
 
 #define NC_C_GREY 35
 #define NC_C_WHITE 40
@@ -173,6 +174,8 @@ typedef struct s_player
 	// int		id;
 	int		life_signal;
 	int		last_live;
+	int  	tot;
+	int		last_period;
 	char	*file_name;
 	char	name[PROG_NAME];
 	char	comments[PROG_COMS];

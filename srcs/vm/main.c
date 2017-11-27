@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 18:07:07 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/27 20:27:46 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,27 @@ void	dump(t_vm *vm)
 		show_mem(vm);
 }
 
+void reset_live(t_vm *vm)
+{
+	int i;
+
+	i = 1;
+	while (i <= vm->nb_player)
+	{
+		ft_printf("tot = %d\n", vm->player[i].tot);
+		vm->player[i].last_period = vm->player[i].tot;
+		vm->player[i].life_signal = 0;
+		++i;
+	}
+}
+
 void	run(t_vm *vm)
 {
 	t_proc	*proc;
 	while (process_living(vm))
 	{
+		if (!(vm->cycle % CYCLE_TO_DIE))
+			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);
 		if (vm->ncurses)
