@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 21:06:22 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/28 13:22:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void	run(t_vm *vm)
 	t_proc	*proc;
 	while (process_living(vm))
 	{
-		if (!(vm->cycle % CYCLE_TO_DIE))
+		if (!(vm->cycle % vm->ctd))
 			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);

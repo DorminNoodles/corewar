@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 20:59:50 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/28 13:27:30 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	ram_init(t_vm *vm)
 			attron(COLOR_PAIR(NC_C_LIFE_LIGHT));
 			vm->ram[i].live--;
 		}
-		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
+		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x   ", (unsigned char)vm->ram[i].mem);
 		attroff(A_STANDOUT);
 		attroff(A_BOLD);
 		attroff(COLOR_PAIR(NC_C_GREY));
@@ -159,7 +159,7 @@ void display_breakdown(t_vm *vm, int a)
 	int live;
 
 	p = 1;
-	mvprintw(a, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :", vm->ctd);
+	mvprintw(a, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :");
 	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6, "[");
 	attroff(A_STANDOUT);
 	attroff(COLOR_PAIR(NC_C_WHITE));
@@ -199,7 +199,7 @@ void display_breakdown(t_vm *vm, int a)
 	attron(A_STANDOUT);
 	attron(COLOR_PAIR(NC_C_WHITE));
 	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "]");
-	mvprintw(a + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :", vm->ctd);
+	mvprintw(a + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
 	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6, "[");
 	attroff(A_STANDOUT);
 	attroff(COLOR_PAIR(NC_C_WHITE));
@@ -264,8 +264,8 @@ void	call_ncurses(t_vm *vm)
 		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** RUNNING **");
 	mvprintw(4, 3 * (MEM_SIZE / 64) + 6, "Speed : %d  ",
 	100 - (vm->delay / 10000));
-	mvprintw(7, 3 * (MEM_SIZE / 64) + 6, "Cycles : %d", vm->cycle);
-	mvprintw(9, 3 * (MEM_SIZE / 64) + 6, "Processes : %d", count_proc(vm));
+	mvprintw(7, 3 * (MEM_SIZE / 64) + 6, "Cycles : %d    ", vm->cycle);
+	mvprintw(9, 3 * (MEM_SIZE / 64) + 6, "Processes : %d     ", count_proc(vm));
 
 	int a = 1;
 	int b = 11;
@@ -288,8 +288,8 @@ void	call_ncurses(t_vm *vm)
 		if (!vm->player[a].last_live)
 			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 6 + 1 + 25, "0");
 		else
-			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 6 + 1 + 25, "%d", vm->player[a].last_live + 1);
-		mvprintw(b + 2, 3 * (MEM_SIZE / 64) + 6 + 1, "Live in current period : %d",
+			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 6 + 1 + 25, "%d   ", vm->player[a].last_live + 1);
+		mvprintw(b + 2, 3 * (MEM_SIZE / 64) + 6 + 1, "Live in current period : %d      ",
 		vm->player[a].life_signal);
 		++a;
 		b += 4;
@@ -299,9 +299,9 @@ void	call_ncurses(t_vm *vm)
 	// mvprintw(b, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :", vm->ctd);
 	// mvprintw(b + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :", vm->ctd);
 
-	mvprintw(b + 6, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d", vm->ctd);
-	mvprintw(b + 8, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d", CYCLE_DELTA);
-	mvprintw(b + 10, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d", NBR_LIVE);
+	mvprintw(b + 6, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d     ", vm->ctd);
+	mvprintw(b + 8, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d    ", CYCLE_DELTA);
+	mvprintw(b + 10, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d    ", NBR_LIVE);
 	mvprintw(b + 12, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d    ", MAX_CHECKS);
 
 
