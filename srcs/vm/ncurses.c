@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 13:27:30 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:20:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,6 @@ void	call_ncurses(t_vm *vm)
 	// attroff(A_STANDOUT);
 	attron(COLOR_PAIR(COLOR_BLACK));
 	attron(A_INVIS);
-
 	mvprintw((MEM_SIZE / 64) + 5, 0, "");
 
 	// debug_display_proc(vm);
