@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 19:19:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/28 19:32:14 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void	run(t_vm *vm)
 			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);
-		if (vm->ncurses)
+		if (vm->ncurses && !(vm->cycle % 20))
 		{
 			call_ncurses(vm);
 			controller(vm);
