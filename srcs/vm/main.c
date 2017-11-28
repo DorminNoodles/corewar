@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 13:22:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/28 15:12:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,11 @@ int		count_proc(t_vm *vm)
 
 void	dump(t_vm *vm)
 {
-	if (!(vm->cycle % vm->dump))
+	if (vm->cycle == vm->dump)
+	{
 		show_mem(vm);
+		exit(1);
+	}
 }
 
 void reset_live(t_vm *vm)

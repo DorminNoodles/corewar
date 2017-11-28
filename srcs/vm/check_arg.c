@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 20:23:10 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/28 15:12:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int		srch_nb_dump(int argc, char **argv)
 
 	ret = 0;
 	nb = 0;
-	if ((ret = ft_strargv(argc, argv, "-dump")))
+	if ((ret = ft_strargv(argc, argv, "-d")))
 	{
+		// ft_printf("here\n");
 		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
 			return (ft_atoi(argv[ret + 1]));
 		else
