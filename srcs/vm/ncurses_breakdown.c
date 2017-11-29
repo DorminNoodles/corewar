@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:06:02 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/29 17:45:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/29 18:55:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int last_breakdown(t_vm *vm, int line)
   col = 1;
   while (p <= MAX_PLAYERS)
   {
-    on_color(p);
+    name_color(p);
     i = 0;
     while (i < vm->player[p].last_period)
     {
@@ -57,15 +57,16 @@ int last_breakdown(t_vm *vm, int line)
       ++i;
     }
     col += i;
-    off_color(p);
+    // name_color_off(p);
     ++p;
   }
+  attron(COLOR_PAIR(NC_P_WHITE));
   while (col <= BREAK_DIS)
   {
     mvprintw(line, 3 * (MEM_SIZE / 64) + 6 + col, "-");
     ++col;
   }
-  attron(COLOR_PAIR(NC_C_WHITE));
+  // attron(COLOR_PAIR(NC_P_WHITE));
   mvprintw(line, 3 * (MEM_SIZE / 64) + 6 + col, "]");
   return (col);
 }
@@ -89,17 +90,17 @@ int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
     }
     else
       p_lives = 0;
-    on_color(p);
+    name_color(p);
     i = loop_breakdown(line, col, p_lives);
     vm->player[p].tot = i;
     col += i;
-    off_color(p);
+    // name_color_off(p);
     ++p;
   }
   return (col);
 }
 
-void init_breakdown(t_vm *vm, int line)
+void display_breakdown(t_vm *vm, int line)
 {
   int col;
   int dv;
@@ -107,20 +108,21 @@ void init_breakdown(t_vm *vm, int line)
 
 	mvprintw(line, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :");
 	mvprintw(line + 1, 3 * (MEM_SIZE / 64) + 6, "[");
-	attroff(COLOR_PAIR(NC_C_WHITE));
+	// attroff(COLOR_PAIR(NC_C_WHITE));
 	tot_live = get_nb_live(vm);
   dv = get_dv(vm, tot_live);
-  col = current_breakdown(vm, line, tot_live, dv);
+  col = current_breakdown(vm, line + 1, tot_live, dv);
+  attron(COLOR_PAIR(NC_P_WHITE));
   while (col <= BREAK_DIS)
   {
   	mvprintw(line + 1, 3 * (MEM_SIZE / 64) + 6 + col, "-");
   	++col;
   }
-	attron(COLOR_PAIR(NC_C_WHITE));
+	// attron(COLOR_PAIR(NC_C_WHITE));
   mvprintw(line + 1, 3 * (MEM_SIZE / 64) + 6 + col, "]");
   mvprintw(line + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
   mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 6, "[");
-  attroff(COLOR_PAIR(NC_C_WHITE));
+  // attroff(COLOR_PAIR(NC_C_WHITE));
   col = last_breakdown(vm, line + 4);
 
 }

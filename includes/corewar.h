@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 13:52:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 18:47:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,36 +121,76 @@ typedef struct		header_s
 #define NCURSES_DELAY 90000
 #define BREAK_DIS 60
 
-#define NC_C_GREY 35
-#define NC_C_WHITE 40
+#define NC_C_WHITE 20
+#define NC_C_BLACK 21
+#define NC_C_GREY 22
+#define NC_C_GREEN 23
+#define NC_C_BLUE 24
+#define NC_C_RED 25
+#define NC_C_CYAN 26
+
+// #define NC_C_WHITE_BLING 30
+// #define NC_C_BLACK_BLING 31
+#define NC_C_GREEN_BLING 32
+#define NC_C_BLUE_BLING 33
+#define NC_C_RED_BLING 34
+#define NC_C_CYAN_BLING 35
+
+#define NC_P_GREY 20
+#define NC_P_WHITE 21
+#define NC_P_BLACK 22
+#define NC_P_GREEN 23
+#define NC_P_BLUE 24
+#define NC_P_RED 25
+#define NC_P_CYAN 26
+
+#define NC_P_GREEN_BLING 30
+#define NC_P_BLUE_BLING 31
+#define NC_P_RED_BLING 32
+#define NC_P_CYAN_BLING 33
+
+#define NC_P_GREEN_PC 40
+#define NC_P_BLUE_PC 41
+#define NC_P_RED_PC 42
+#define NC_P_CYAN_PC 43
+
+#define NC_P_GREEN_LIFE 50
+#define NC_P_BLUE_LIFE 51
+#define NC_P_RED_LIFE 52
+#define NC_P_CYAN_LIFE 53
+
+
+
+// #define NC_C_GREY 35
+// #define NC_C_WHITE 40
 #define NC_C_BASIC 15
-#define NC_C_GREYBLACK 41
-
-#define NC_C_GREEN 20
-#define NC_C_GREEN_FLUO 36
-#define NC_C_GREEN_BLING 38
-#define NC_C_GREEN_LIGHT 21
-#define NC_C_GREEN_BLACK 24
-
-#define NC_C_BLUE 22
-#define NC_C_BLUE_FLUO 37
-#define NC_C_BLUE_LIGHT 23
-#define NC_C_BLUE_BLING 25
-
-#define NC_C_RED 50
-#define NC_C_RED_FLUO 51
-#define NC_C_RED_BLING 52
-#define NC_C_RED_LIGHT 53
-#define NC_C_RED_BLACK 54
-#define NC_C_RED2 55
-
+// #define NC_C_GREYBLACK 41
+//
+// #define NC_C_GREEN 20
+// #define NC_C_GREEN_FLUO 36
+// #define NC_C_GREEN_BLING 38
+// #define NC_C_GREEN_LIGHT 21
+// #define NC_C_GREEN_BLACK 24
+//
+// #define NC_C_BLUE 22
+// #define NC_C_BLUE_FLUO 37
+// #define NC_C_BLUE_LIGHT 23
+// #define NC_C_BLUE_BLING 25
+//
+// #define NC_C_RED 50
+// #define NC_C_RED_FLUO 51
+// #define NC_C_RED_BLING 52
+// #define NC_C_RED_LIGHT 53
+// #define NC_C_RED_BLACK 54
+// #define NC_C_RED2 55
+//
 #define NC_C_YELLOW 60
-#define NC_C_YELLOW_FLUO 61
-#define NC_C_YELLOW_BLING 62
-#define NC_C_YELLOW_LIGHT 63
-#define NC_C_YELLOW_BLACK 64
-
-#define NC_C_LIFE_LIGHT 26
+// #define NC_C_YELLOW_FLUO 61
+// #define NC_C_YELLOW_BLING 62
+// #define NC_C_YELLOW_LIGHT 63
+// #define NC_C_YELLOW_BLACK 64
+//
+// #define NC_C_LIFE_LIGHT 26
 
 typedef struct s_vm t_vm;
 typedef struct s_optab t_optab;
@@ -326,7 +366,10 @@ void		lldi(t_vm *vm, t_proc *proc);
 void		init_ncurses(WINDOW **w);
 void		display_mem(t_vm *vm);
 void		display_menu(t_vm *vm);
-
+int 		display_players(t_vm *vm);
+void 		display_breakdown(t_vm *vm, int line);
+void		name_color(int player);
+void		name_color_off(int player);
 
 /*
 **

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 16:02:39 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 18:46:05 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,103 @@
 
 static void	colors_init(void)
 {
-	init_color(NC_C_GREY, 350, 350, 350);//basic grey
-	init_color(NC_C_WHITE, 1000, 1000, 1000);//basic white
-	init_pair(NC_C_BASIC, NC_C_GREY, COLOR_BLACK);//basic
-	init_pair(NC_C_WHITE, COLOR_BLACK, NC_C_WHITE);//basic white on black
-	init_pair(NC_C_GREYBLACK, NC_C_GREY, NC_C_GREY);//grey back
+	init_color(NC_C_WHITE, 800, 800, 800);
+	init_color(NC_C_BLACK, 0, 0, 0);
+	init_color(NC_C_GREY, 350, 350, 350);
+	init_color(NC_C_GREEN, 410, 750, 300);
+	init_color(NC_C_BLUE, 200, 300, 600);
+	init_color(NC_C_RED, 700, 150, 200);
+	init_color(NC_C_CYAN, 100, 500, 600);
 
-	init_pair(NC_C_GREEN, COLOR_GREEN, COLOR_BLACK);//player_1
-	init_color(NC_C_GREEN_FLUO, 150, 1000, 150);//fluo_green
-	init_color(NC_C_GREEN_BLING, 500, 1000, 500);//blingbling_green
-	init_pair(NC_C_GREEN_LIGHT, COLOR_GREEN, NC_C_GREEN_FLUO);//player_1_highlight
-	init_pair(NC_C_GREEN_BLACK, NC_C_GREEN_BLING, COLOR_BLACK);//player_1_blingbling
+	init_color(NC_C_GREEN_BLING, 600, 1000, 500);
+	init_color(NC_C_BLUE_BLING, 400, 600, 1000);
+	init_color(NC_C_RED_BLING, 1000, 300, 400);
+	init_color(NC_C_CYAN_BLING, 300, 1000, 1000);
 
-	init_pair(NC_C_BLUE, COLOR_BLUE, COLOR_BLACK);//player_2
-	init_color(COLOR_BLUE, 200, 200, 800);//blue change
-	init_color(NC_C_BLUE_FLUO, 500, 500, 1000);//fluo_blue
-	init_pair(NC_C_BLUE_LIGHT, COLOR_BLUE, NC_C_BLUE_FLUO);//player_2_highlight
-	init_pair(NC_C_BLUE_BLING, NC_C_BLUE_FLUO, COLOR_BLACK);//player_2_blingbling
 
-	init_pair(NC_C_RED, COLOR_RED, COLOR_BLACK);
-	init_color(NC_C_RED_FLUO, 1000, 250, 250);
-	init_color(NC_C_RED_BLING, 1000, 400, 400);
-	init_pair(NC_C_RED_LIGHT, COLOR_RED, NC_C_RED_FLUO);
-	init_pair(NC_C_RED_BLACK, NC_C_RED_BLING, COLOR_BLACK);
+	init_pair(NC_P_GREY, NC_C_GREY, NC_C_BLACK);
+	init_pair(NC_P_WHITE, NC_C_WHITE, NC_C_BLACK);
+	init_pair(NC_P_GREEN, NC_C_GREEN, NC_C_BLACK);
+	init_pair(NC_P_BLUE, NC_C_BLUE, NC_C_BLACK);
+	init_pair(NC_P_RED, NC_C_RED, NC_C_BLACK);
+	init_pair(NC_P_CYAN, NC_C_CYAN, NC_C_BLACK);
 
-	init_pair(NC_C_YELLOW, COLOR_YELLOW, COLOR_BLACK);
-	init_color(COLOR_YELLOW, 650, 650, 0); // change yellow color
-	init_color(NC_C_YELLOW_FLUO, 750, 750, 50);
-	init_color(NC_C_YELLOW_BLING, 900, 900, 50);
-	init_pair(NC_C_YELLOW_LIGHT, COLOR_YELLOW, NC_C_YELLOW_FLUO);
-	init_pair(NC_C_YELLOW_BLACK, NC_C_YELLOW_BLING, COLOR_BLACK);
+	init_pair(NC_P_GREEN_BLING, NC_C_GREEN_BLING, NC_C_BLACK);
+	init_pair(NC_P_BLUE_BLING, NC_C_BLUE_BLING, NC_C_BLACK);
+	init_pair(NC_P_RED_BLING, NC_C_RED_BLING, NC_C_BLACK);
+	init_pair(NC_P_CYAN_BLING, NC_C_CYAN_BLING, NC_C_BLACK);
 
-	init_pair(NC_C_LIFE_LIGHT, COLOR_GREEN, COLOR_RED);//life highlight
+	init_pair(NC_P_GREEN_PC, NC_C_BLACK, NC_C_GREEN);
+	init_pair(NC_P_BLUE_PC, NC_C_BLACK, NC_C_BLUE);
+	init_pair(NC_P_RED_PC, NC_C_BLACK, NC_C_RED);
+	init_pair(NC_P_CYAN_PC, NC_C_BLACK, NC_C_CYAN);
+
+	init_pair(NC_P_GREEN_LIFE, NC_C_WHITE, NC_C_GREEN);
+	init_pair(NC_P_BLUE_LIFE, NC_C_WHITE, NC_C_BLUE);
+	init_pair(NC_P_RED_LIFE, NC_C_WHITE, NC_C_RED);
+	init_pair(NC_P_CYAN_LIFE, NC_C_WHITE, NC_C_CYAN);
+
+
+	// init_color(NC_C_GREY, 350, 350, 350);//basic grey
+	// // init_color(NC_C_WHITE, 1000, 1000, 1000);//basic white
+	// init_pair(NC_C_BASIC, NC_C_GREY, COLOR_BLACK);//basic
+	// init_pair(NC_C_WHITE, COLOR_WHITE, COLOR_BLACK);//basic white on black
+	// init_pair(NC_C_GREYBLACK, NC_C_GREY, NC_C_GREY);//grey back
+    //
+	// init_pair(NC_C_GREEN, COLOR_GREEN, COLOR_BLACK);//player_1
+	// init_color(NC_C_GREEN_FLUO, 150, 1000, 150);//fluo_green
+	// init_color(NC_C_GREEN_BLING, 500, 1000, 500);//blingbling_green
+	// init_pair(NC_C_GREEN_LIGHT, COLOR_GREEN, NC_C_GREEN_FLUO);//player_1_highlight
+	// init_pair(NC_C_GREEN_BLACK, NC_C_GREEN_BLING, COLOR_BLACK);//player_1_blingbling
+    //
+	// init_pair(NC_C_BLUE, COLOR_BLUE, COLOR_BLACK);//player_2
+	// init_color(COLOR_BLUE, 200, 200, 800);//blue change
+	// init_color(NC_C_BLUE_FLUO, 500, 500, 1000);//fluo_blue
+	// init_pair(NC_C_BLUE_LIGHT, COLOR_BLUE, NC_C_BLUE_FLUO);//player_2_highlight
+	// init_pair(NC_C_BLUE_BLING, NC_C_BLUE_FLUO, COLOR_BLACK);//player_2_blingbling
+    //
+	// init_pair(NC_C_RED, COLOR_RED, COLOR_BLACK);
+	// init_color(NC_C_RED_FLUO, 1000, 250, 250);
+	// init_color(NC_C_RED_BLING, 1000, 400, 400);
+	// init_pair(NC_C_RED_LIGHT, COLOR_RED, NC_C_RED_FLUO);
+	// init_pair(NC_C_RED_BLACK, NC_C_RED_BLING, COLOR_BLACK);
+    //
+	// init_pair(NC_C_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+	// init_color(COLOR_YELLOW, 650, 650, 0); // change yellow color
+	// init_color(NC_C_YELLOW_FLUO, 750, 750, 50);
+	// init_color(NC_C_YELLOW_BLING, 900, 900, 50);
+	// init_pair(NC_C_YELLOW_LIGHT, COLOR_YELLOW, NC_C_YELLOW_FLUO);
+	// init_pair(NC_C_YELLOW_BLACK, NC_C_YELLOW_BLING, COLOR_BLACK);
+    //
+	// init_pair(NC_C_LIFE_LIGHT, COLOR_GREEN, COLOR_RED);//life highlight
 
 }
 
 
 
-void on_color(int player)
-{
-	if (player == 1)
-		attron(COLOR_PAIR(NC_C_GREEN));
-	else if (player == 2)
-		attron(COLOR_PAIR(NC_C_BLUE));
-	else if (player == 3)
-		attron(COLOR_PAIR(NC_C_RED));
-	else
-		attron(COLOR_PAIR(NC_C_YELLOW));
-}
-
-void off_color(int player)
-{
-	if (player == 1)
-		attroff(COLOR_PAIR(NC_C_GREEN));
-	else if (player == 2)
-		attroff(COLOR_PAIR(NC_C_BLUE));
-	else if (player == 3)
-		attroff(COLOR_PAIR(NC_C_RED));
-	else
-		attroff(COLOR_PAIR(NC_C_YELLOW));
-}
+// void on_color(int player)
+// {
+// 	if (player == 1)
+// 		attron(COLOR_PAIR(NC_C_GREEN));
+// 	else if (player == 2)
+// 		attron(COLOR_PAIR(NC_C_BLUE));
+// 	else if (player == 3)
+// 		attron(COLOR_PAIR(NC_C_RED));
+// 	else
+// 		attron(COLOR_PAIR(NC_C_YELLOW));
+// }
+//
+// void off_color(int player)
+// {
+// 	if (player == 1)
+// 		attroff(COLOR_PAIR(NC_C_GREEN));
+// 	else if (player == 2)
+// 		attroff(COLOR_PAIR(NC_C_BLUE));
+// 	else if (player == 3)
+// 		attroff(COLOR_PAIR(NC_C_RED));
+// 	else
+// 		attroff(COLOR_PAIR(NC_C_YELLOW));
+// }
 
 int get_nb_live(t_vm *vm)
 {
@@ -89,86 +126,86 @@ int get_nb_live(t_vm *vm)
 	}
 	return (live);
 }
-
-void display_breakdown(t_vm *vm, int a)
-{
-	int i;
-	int j;
-	int p;
-	int di;
-	int tot;
-	int live;
-
-	p = 1;
-	mvprintw(a, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :");
-	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6, "[");
-	attroff(A_STANDOUT);
-	attroff(COLOR_PAIR(NC_C_WHITE));
-	live = get_nb_live(vm);
-	j = 1;
-	while (p <= MAX_PLAYERS)
-	{
-		if (live)
-		{
-			di = (BREAK_DIS / live);
-			if (BREAK_DIS % live)
-				++di;
-			tot = di * vm->player[p].life_signal;
-			if (BREAK_DIS % live && tot)
-				++tot;
-		}
-		else
-			tot = 0;
-		on_color(p);
-		i = 0;
-		while (i < tot && i + j <= BREAK_DIS)
-		{
-			mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
-			++i;
-		}
-		vm->player[p].tot = i;
-		j += i;
-		off_color(p);
-		++p;
-	}
-	while (j <= BREAK_DIS)
-	{
-		mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "-");
-		++j;
-	}
-	// attroff(A_INVIS);
-	attron(A_STANDOUT);
-	attron(COLOR_PAIR(NC_C_WHITE));
-	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "]");
-	mvprintw(a + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
-	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6, "[");
-	attroff(A_STANDOUT);
-	attroff(COLOR_PAIR(NC_C_WHITE));
-	p = 1;
-	j = 1;
-	while (p <= MAX_PLAYERS)
-	{
-		on_color(p);
-		i = 0;
-		while (i < vm->player[p].last_period)
-		{
-			mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
-			++i;
-		}
-		j += i;
-		off_color(p);
-		++p;
-	}
-	while (j <= BREAK_DIS)
-	{
-		mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "-");
-		++j;
-	}
-	attroff(A_INVIS);
-	attron(A_STANDOUT);
-	attron(COLOR_PAIR(NC_C_WHITE));
-	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "]");
-}
+//
+// void display_breakdown(t_vm *vm, int a)
+// {
+// 	int i;
+// 	int j;
+// 	int p;
+// 	int di;
+// 	int tot;
+// 	int live;
+//
+// 	p = 1;
+// 	mvprintw(a, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :");
+// 	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6, "[");
+// 	attroff(A_STANDOUT);
+// 	attroff(COLOR_PAIR(NC_C_WHITE));
+// 	live = get_nb_live(vm);
+// 	j = 1;
+// 	while (p <= MAX_PLAYERS)
+// 	{
+// 		if (live)
+// 		{
+// 			di = (BREAK_DIS / live);
+// 			if (BREAK_DIS % live)
+// 				++di;
+// 			tot = di * vm->player[p].life_signal;
+// 			if (BREAK_DIS % live && tot)
+// 				++tot;
+// 		}
+// 		else
+// 			tot = 0;
+// 		on_color(p);
+// 		i = 0;
+// 		while (i < tot && i + j <= BREAK_DIS)
+// 		{
+// 			mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
+// 			++i;
+// 		}
+// 		vm->player[p].tot = i;
+// 		j += i;
+// 		off_color(p);
+// 		++p;
+// 	}
+// 	while (j <= BREAK_DIS)
+// 	{
+// 		mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "-");
+// 		++j;
+// 	}
+// 	// attroff(A_INVIS);
+// 	attron(A_STANDOUT);
+// 	attron(COLOR_PAIR(NC_C_WHITE));
+// 	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "]");
+// 	mvprintw(a + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
+// 	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6, "[");
+// 	attroff(A_STANDOUT);
+// 	attroff(COLOR_PAIR(NC_C_WHITE));
+// 	p = 1;
+// 	j = 1;
+// 	while (p <= MAX_PLAYERS)
+// 	{
+// 		on_color(p);
+// 		i = 0;
+// 		while (i < vm->player[p].last_period)
+// 		{
+// 			mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
+// 			++i;
+// 		}
+// 		j += i;
+// 		off_color(p);
+// 		++p;
+// 	}
+// 	while (j <= BREAK_DIS)
+// 	{
+// 		mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "-");
+// 		++j;
+// 	}
+// 	attroff(A_INVIS);
+// 	attron(A_STANDOUT);
+// 	attron(COLOR_PAIR(NC_C_WHITE));
+// 	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "]");
+// }
 
 void	border_ncurses(t_vm *vm)
 {
