@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 14:54:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 18:49:41 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 12:07:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	clone_proc(t_proc *proc, t_proc *new)
 	registre_cpy(proc, new);
 	new->carry = proc->carry;
 	new->last_live = proc->last_live;
+	new->num = proc->num;
 }
 
 void	ft_lfork(t_vm *vm, t_proc *proc)

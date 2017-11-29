@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 17:41:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 14:25:50 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	init_vm(t_vm *vm)
 	vm->ctd = CYCLE_TO_DIE;
 	vm->cycle = 0;
 	vm->cycle = 0;
+	vm->boost = 0;
 	vm->proc = NULL;
 	vm->last_one = NULL;
 	vm->pause = 1;

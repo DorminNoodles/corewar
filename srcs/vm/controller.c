@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/06 18:21:33 by ahouel           ###   ########.fr       */
+/*   Updated: 2017/11/29 15:55:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ static void	keys_press(t_vm *vm, char key)
 	{
 		vm->pause = 1;
 		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
+	}
+	if (key == 'r')
+	{
+		vm->boost = (vm->boost) ? 0 : 1;
 	}
 	if (key == 'w')
 	{
@@ -51,13 +55,12 @@ void	controller(t_vm *vm)
 		if (key != -1)
 		{
 			keys_press(vm, key);
-			call_ncurses(vm);
 			if (key == ' ')
 			{
 				vm->pause = 0;
 				break;
 			}
 		}
-		sleep(1);
+		usleep(180000);
 	}
 }

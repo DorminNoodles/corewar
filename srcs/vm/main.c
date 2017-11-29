@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 19:32:14 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 15:53:23 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
 {
 
 	unsigned int value;
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	value = 0;
 
-	i++;
+	// i++;
 	value = value | (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
-	i++;
+	// i++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
 	proc->op.ar[num] = value;
@@ -126,8 +126,15 @@ void		delete_op(t_proc *proc)
 	proc->op.active = 0;
 }
 
+void	mount_pc_in_ram(t_vm *vm, t_proc *proc)
+{
+
+
+}
+
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
+	vm->ram[proc->pc % MEM_SIZE].pc = 0;
 	if (!proc->op.active)
 	{
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
@@ -145,12 +152,12 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 			if (proc->op.code != 9 ||
 				(proc->op.code == 9 && !proc->carry))
 				proc->pc += move_pc(proc);
-
 			if (16 & vm->verbosity)
 				show_pc_move(vm, proc);
 			delete_op(proc);
 		}
 	}
+	vm->ram[proc->pc % MEM_SIZE].pc = proc->num;
 }
 
 int		count_proc(t_vm *vm)
@@ -191,6 +198,9 @@ void reset_live(t_vm *vm)
 	}
 }
 
+
+
+
 void	run(t_vm *vm)
 {
 	t_proc	*proc;
@@ -200,12 +210,25 @@ void	run(t_vm *vm)
 			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);
-		if (vm->ncurses && !(vm->cycle % 20))
-		{
-			call_ncurses(vm);
-			controller(vm);
-			usleep(vm->delay);
-		}
+		call_ncurses(vm);
+		// ft_printf("srx ? \n");
+		// controller(vm);
+
+		// if (vm->ncurses)
+		// {
+		// 	if (vm->boost && !(vm->cycle % 25))
+		// 	{
+		// 		call_ncurses(vm);
+		// 		controller(vm);
+		// 		usleep(vm->delay);
+		// 	}
+		// 	else if (!vm->boost)
+		// 	{
+		// 		call_ncurses(vm);
+		// 		controller(vm);
+		// 		usleep(vm->delay);
+		// 	}
+		// }
 		proc = vm->proc;
 		while (proc != NULL)
 		{
@@ -224,34 +247,6 @@ void	run(t_vm *vm)
 		ft_printf("Last_one => %s\n", vm->last_one->file_name);
 }
 
-int		modulo(int a, int b)
-{
-	if (a % b >= 0)
-		return (a % b);
-	else
-		return ((a % b) + b);
-}
-
-void	get_winner(t_vm *vm)
-{
-	int i;
-	int best;
-
-
-	i = 1;
-	best = 0;
-	while (i < MAX_PLAYERS)
-	{
-		if (vm->player[i].active)
-		{
-			if (vm->player[i].last_live > vm->player[best].last_live)
-				best = i;
-		}
-		i++;
-	}
-	ft_printf("Contestant %d, \"%s\", has won !\n", best, vm->player[best].name);
-}
-
 int		main(int argc, char **argv)
 {
 	t_vm	vm;
@@ -262,7 +257,10 @@ int		main(int argc, char **argv)
 	if(check_arg(&vm, argc, argv))//check des parametres
 		error("Error\n");
 	if (vm.ncurses)
+	{
+		// ft_printf("init_ncurses\n");
 		init_ncurses(&w);
+	}
 	create_players(&vm);//initialisation de la machine virtuelle
 
 	run(&vm);//lancement du combat

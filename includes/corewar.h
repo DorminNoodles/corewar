@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 19:14:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 13:52:39 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct		header_s
 
 #define BLING_DELAY 65
 #define BLING_LIVE 45
-#define NCURSES_DELAY 100000
+#define NCURSES_DELAY 90000
 #define BREAK_DIS 60
 
 #define NC_C_GREY 35
@@ -210,6 +210,7 @@ typedef struct s_mem
 	int		num;
 	int		blingbling;
 	int		live;
+	int		pc;
 }	t_mem;
 
 typedef struct s_optab
@@ -234,6 +235,7 @@ typedef struct s_vm
 	int		ctd;
 	int		cycle;
 //	int		keycode;
+	int		boost;
 	int		pause;
 	int		ncurses;
 	int		delay;
@@ -295,6 +297,7 @@ int			check_params(t_op *op);
 int			check_ocp(int ocp, int opcode);
 void		free_everything(t_vm *vm);
 int			get_indirect(t_vm *vm, t_op *op, int nb_arg);
+void		get_winner(t_vm *vm);
 
 
 /*
@@ -321,6 +324,8 @@ void		lldi(t_vm *vm, t_proc *proc);
 **--------NCURSES---------
 */
 void		init_ncurses(WINDOW **w);
+void		display_mem(t_vm *vm);
+void		display_menu(t_vm *vm);
 
 
 /*
