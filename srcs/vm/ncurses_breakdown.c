@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:06:02 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/29 18:55:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 21:35:21 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,21 @@ int get_dv(t_vm *vm, int live)
   return (dv);
 }
 
+int get_nb_live(t_vm *vm)
+{
+	int i;
+	int live;
+
+	i = 1;
+	live = 0;
+	while (i <= MAX_PLAYERS)
+	{
+		live += vm->player[i].life_signal;
+		++i;
+	}
+	return (live);
+}
+
 int last_breakdown(t_vm *vm, int line)
 {
   int i;
@@ -68,7 +83,7 @@ int last_breakdown(t_vm *vm, int line)
   }
   // attron(COLOR_PAIR(NC_P_WHITE));
   mvprintw(line, 3 * (MEM_SIZE / 64) + 6 + col, "]");
-  return (col);
+  return (line);
 }
 
 int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
@@ -76,7 +91,8 @@ int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
   int p;
   int i;
   int col;
-  int p_lives;
+  float perdiv;
+  float p_lives;
 
   p = 1;
   col = 1;
@@ -84,9 +100,13 @@ int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
   {
     if (tot_live)
     {
-      p_lives = dv * vm->player[p].life_signal;
-      if (BREAK_DIS % tot_live && p_lives)
+      perdiv = (vm->player[p].life_signal * 100.0) / tot_live;
+      p_lives = ((BREAK_DIS / 100.0) * perdiv);
+      if (p_lives)
         ++p_lives;
+      // p_lives = dv * vm->player[p].life_signal;
+      // if (BREAK_DIS % tot_live && p_lives)
+      //   ++p_lives;
     }
     else
       p_lives = 0;
@@ -100,7 +120,7 @@ int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
   return (col);
 }
 
-void display_breakdown(t_vm *vm, int line)
+int display_breakdown(t_vm *vm, int line)
 {
   int col;
   int dv;
@@ -123,88 +143,6 @@ void display_breakdown(t_vm *vm, int line)
   mvprintw(line + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
   mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 6, "[");
   // attroff(COLOR_PAIR(NC_C_WHITE));
-  col = last_breakdown(vm, line + 4);
-
+  line = last_breakdown(vm, line + 4);
+  return (line);
 }
-
-// void display_breakdown(t_vm *vm, int a)
-// {
-// 	int i;
-// 	int j;
-// 	int p;
-// 	int di;
-// 	int tot;
-// 	int live;
-
-	// p = 1;
-	// mvprintw(a, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for current period :");
-	// mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6, "[");
-	// attroff(A_STANDOUT);
-	// attroff(COLOR_PAIR(NC_C_WHITE));
-	// live = get_nb_live(vm);
-	// j = 1;
-	// while (p <= MAX_PLAYERS)
-	// {
-	// 	if (live)
-	// 	{
-	// 		di = (BREAK_DIS / live);
-	// 		if (BREAK_DIS % live)
-	// 			++di;
-	// 		tot = di * vm->player[p].life_signal;
-	// 		if (BREAK_DIS % live && tot)
-	// 			++tot;
-	// 	}
-	// 	else
-	// 		tot = 0;
-	// 	on_color(p);
-	// 	i = 0;
-	// 	while (i < tot && i + j <= BREAK_DIS)
-	// 	{
-	// 		mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
-	// 		++i;
-	// 	}
-	// 	vm->player[p].tot = i;
-	// 	j += i;
-	// 	off_color(p);
-	// 	++p;
-	// }
-
-
-	// while (j <= BREAK_DIS)
-	// {
-	// 	mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "-");
-	// 	++j;
-	// }
-	// attroff(A_INVIS);
-	// attron(A_STANDOUT);
-	// attron(COLOR_PAIR(NC_C_WHITE));
-	// mvprintw(a + 1, 3 * (MEM_SIZE / 64) + 6 + j, "]");
-	// mvprintw(a + 3, 3 * (MEM_SIZE / 64) + 6, "Live breakdown for last period :");
-	// mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6, "[");
-	// attroff(A_STANDOUT);
-	// attroff(COLOR_PAIR(NC_C_WHITE));
-	// p = 1;
-	// j = 1;
-	// while (p <= MAX_PLAYERS)
-	// {
-	// 	on_color(p);
-	// 	i = 0;
-	// 	while (i < vm->player[p].last_period)
-	// 	{
-	// 		mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + i + j, "-");
-	// 		++i;
-	// 	}
-	// 	j += i;
-	// 	off_color(p);
-	// 	++p;
-	// }
-	// while (j <= BREAK_DIS)
-	// {
-	// 	mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "-");
-	// 	++j;
-	// }
-	// attroff(A_INVIS);
-	// attron(A_STANDOUT);
-	// attron(COLOR_PAIR(NC_C_WHITE));
-	// mvprintw(a + 4, 3 * (MEM_SIZE / 64) + 6 + j, "]");
-// }

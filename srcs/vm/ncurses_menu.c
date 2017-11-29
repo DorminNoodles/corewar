@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:43:34 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 18:46:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/29 21:34:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	name_color_off(int i)
 	else if (i == 4)
 		attroff(COLOR_PAIR(NC_P_CYAN_BLING));
 }
-
 
 
 int		display_players(t_vm *vm)
@@ -93,12 +92,12 @@ void		display_menu(t_vm *vm)
 	mvprintw(9, 3 * (MEM_SIZE / 64) + 6, "Processes : %d     ", count_proc(vm));
 
 	line = display_players(vm);
-	display_breakdown(vm, line);
+	line = display_breakdown(vm, line);
 
+	mvprintw(line + 2, 3 * (MEM_SIZE / 64) + 6, "CYCLE_TO_DIE : %d     ", vm->ctd);
+	mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 6, "CYCLE_DELTA : %d    ", CYCLE_DELTA);
+	mvprintw(line + 6, 3 * (MEM_SIZE / 64) + 6, "NBR_LIVE : %d    ", NBR_LIVE);
+	mvprintw(line + 8, 3 * (MEM_SIZE / 64) + 6, "MAX_CHECKS : %d    ", MAX_CHECKS);
 
-
-
-	// int a = 1;
-	// int b = 11;
 	attroff(A_BOLD);
 }
