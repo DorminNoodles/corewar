@@ -6,18 +6,36 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 15:55:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:20:09 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
+void display_winner(t_vm *vm)
+{
+	int win;
+
+	win = vm->winner;
+	attron(A_BOLD);
+	mvprintw(45, 3 * (MEM_SIZE / 64) + 20, "The winner is : ");
+	name_color(win);
+	mvprintw(45, 3 * (MEM_SIZE / 64) + 20 + 16, "%s", vm->player[win].name);
+	attron(COLOR_PAIR(NC_P_WHITE));
+	mvprintw(46, 3 * (MEM_SIZE / 64) + 20, "Press Space to finish");
+}
+
 static void	keys_press(t_vm *vm, char key)
 {
-	if (key == ' ' && vm->pause != 1)
+	if ((key == ' ' && vm->pause != 1) || vm->winner)
 	{
 		vm->pause = 1;
-		mvprintw(2, 3 * (MEM_SIZE / 64) + 6, "** PAUSED **");
+		attron(COLOR_PAIR(NC_P_WHITE));
+		mvprintw(3, 3 * (MEM_SIZE / 64) + 7, "** PAUSED **");
+		if (vm->winner)
+			display_winner(vm);
+		attron(COLOR_PAIR(NC_P_WHITE_B));
+		mvprintw(68, 2, "");
 	}
 	if (key == 'r')
 	{
@@ -45,13 +63,17 @@ void	controller(t_vm *vm)
 
 	key = -1;
 	key = getch();
-	if (key != -1)
+	if (key != -1 || vm->winner)
 	{
+		if (vm->winner)
+			key = -2;
 		keys_press(vm, key);
 	}
 	while (vm->pause)
 	{
 		key = getch();
+		// if (vm->winner)
+			// key = -2;
 		if (key != -1)
 		{
 			keys_press(vm, key);
@@ -61,6 +83,8 @@ void	controller(t_vm *vm)
 				break;
 			}
 		}
+		// if (vm->winner)
+		// 	display_winner(vm);
 		usleep(180000);
 	}
 }

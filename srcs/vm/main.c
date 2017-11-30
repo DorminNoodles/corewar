@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 15:53:23 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:29:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void reset_live(t_vm *vm)
 {
 	int i;
 
+	// ft_printf("reset live cycle = %d\n", vm->cycle);
 	i = 1;
 	while (i <= vm->nb_player)
 	{
@@ -206,11 +207,14 @@ void	run(t_vm *vm)
 	t_proc	*proc;
 	while (process_living(vm))
 	{
-		if (!(vm->cycle % vm->ctd))
+		// ft_printf("%d / %d\n", vm->cycle + 1, vm->ctd);
+		if (!((vm->cycle + 1) % vm->ctd))
 			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);
 		call_ncurses(vm);
+		// if (!(vm->cycle % vm->ctd))
+		// 	reset_live(vm);
 		// ft_printf("srx ? \n");
 		// controller(vm);
 
@@ -264,9 +268,17 @@ int		main(int argc, char **argv)
 	create_players(&vm);//initialisation de la machine virtuelle
 
 	run(&vm);//lancement du combat
+	get_winner(&vm);
+	if (vm.ncurses)
+	{
+		// ft_printf("Display winner\n");
+		// init_ncurses(&w);
+		vm.pause = 1;
+		call_ncurses(&vm);
+	}
 	if (vm.ncurses)
 		endwin();
-	get_winner(&vm);
+	ft_printf("Contestant %d, \"%s\", has won !\n", vm.winner, vm.player[vm.winner].name);
 	free_everything(&vm);
 	return (0);
 }

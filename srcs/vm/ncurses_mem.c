@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:25:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 18:35:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 15:38:10 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void		mem_main(t_vm *vm)
 			display_pc(vm, i);
 		if (vm->ram[i].live)
 			life(vm, i);
-		mvprintw((3 + i / 64), (3 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
+		mvprintw((3 + i / 64), (4 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
 		attroff(A_BOLD);
 		i++;
 	}

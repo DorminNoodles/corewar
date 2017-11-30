@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 21:32:19 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 16:32:03 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	colors_init(void)
 	init_pair(NC_P_RED_LIFE, NC_C_WHITE, NC_C_RED);
 	init_pair(NC_P_CYAN_LIFE, NC_C_WHITE, NC_C_CYAN);
 
+	init_pair(NC_P_WHITE_B, NC_C_WHITE, NC_C_WHITE);
 
 	// init_color(NC_C_GREY, 350, 350, 350);//basic grey
 	// // init_color(NC_C_WHITE, 1000, 1000, 1000);//basic white
@@ -214,16 +215,17 @@ void	border_ncurses(t_vm *vm)
 
 	i = 0;
 	j = 0;
-	attron(COLOR_PAIR(NC_P_WHITE));
-	while (++i < MEM_SIZE / 64 + 6)
+	attron(COLOR_PAIR(NC_P_WHITE_B));
+	while (++i < MEM_SIZE / 64 + 5)
 	{
 		j = -1;
-		while (++j < 3 * (MEM_SIZE / 64) + 71)
+		while (++j < 3 * (MEM_SIZE / 64) + 72)
 		{
-			if (i == 1 || j == 0 || i == MEM_SIZE / 64 + 5
-					|| j == 3 * (MEM_SIZE / 64) + 4 ||
-					j == 3 * (MEM_SIZE / 64) + 70)
-				mvprintw(i, j, "*");
+			if (i == 1 || j == 0 || i == MEM_SIZE / 64 + 4
+					|| j == 3 * (MEM_SIZE / 64) + 5 ||
+					j == 3 * (MEM_SIZE / 64) + 70
+					|| j == 3 * (MEM_SIZE / 64) + 71 || j == 1)
+				mvprintw(i, j, " ");
 		}
 	}
 }
@@ -238,7 +240,7 @@ void	call_ncurses(t_vm *vm)
 	ret = 0;
 	if (!vm->ncurses)
 		return ;
-	if (vm->boost && (vm->cycle % 25))
+	if (vm->boost && !vm->winner && (vm->cycle % BOOST_CYCLES))
 		return ;
 	colors_init();
 	border_ncurses(vm);

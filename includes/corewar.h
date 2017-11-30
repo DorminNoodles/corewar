@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 18:47:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 16:25:59 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct		header_s
 #define BLING_LIVE 45
 #define NCURSES_DELAY 90000
 #define BREAK_DIS 60
+#define BOOST_CYCLES 200
 
 #define NC_C_WHITE 20
 #define NC_C_BLACK 21
@@ -158,7 +159,7 @@ typedef struct		header_s
 #define NC_P_BLUE_LIFE 51
 #define NC_P_RED_LIFE 52
 #define NC_P_CYAN_LIFE 53
-
+#define NC_P_WHITE_B 54
 
 
 // #define NC_C_GREY 35
@@ -284,6 +285,7 @@ typedef struct s_vm
 	int		dump;
 	int		debug;
 	int		verbosity;
+	int 	winner;
 	int		lives_in_cycle;
 	// char	*mem;
 	char	mem[MEM_SIZE];
@@ -367,7 +369,7 @@ void		init_ncurses(WINDOW **w);
 void		display_mem(t_vm *vm);
 void		display_menu(t_vm *vm);
 int 		display_players(t_vm *vm);
-void 		display_breakdown(t_vm *vm, int line);
+int 		display_breakdown(t_vm *vm, int line);
 void		name_color(int player);
 void		name_color_off(int player);
 

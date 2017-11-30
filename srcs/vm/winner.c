@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:09:37 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 15:52:35 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:26:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	get_winner(t_vm *vm)
 		i++;
 	}
 	vm->winner = best;
-	ft_printf("Contestant %d, \"%s\", has won !\n", best, vm->player[best].name);
+	// ft_printf("Contestant %d, \"%s\", has won !\n", best, vm->player[best].name);
 }
