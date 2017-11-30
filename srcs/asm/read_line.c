@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 18:01:33 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 18:08:21 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	parse_label(t_asm_env *env, char *line, char *label, int printmode)
 	if (!printmode)
 		create_label(&env->labs, env->bytes, line);
 	if (env->verbose && printmode == PRINT_MODE)
-		verbose_lab(label, env->bytes);
+		verbose_lab(label);
 	while (line[a] && (is_label_char(line[a])))
 		++a;
 	while (line[a] && (is_space(line[a]) || line[a] == LABEL_CHAR))
