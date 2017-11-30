@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/24 14:25:17 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:52:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void	loop_args(t_asm_env *env, char **argv, int arg)
 int		main(int argc, char **argv)
 {
 	int			arg;
-	char		buf[1];
 	t_asm_env	env;
 
 	if (argc == 1)

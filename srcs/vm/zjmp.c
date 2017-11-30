@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/09 21:03:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 11:55:09 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:46:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	zjmp(t_vm *vm, t_proc *proc)
 
 	if (0x4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		if (proc->carry)
 			ft_printf(" OK");
 		else

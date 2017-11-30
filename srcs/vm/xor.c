@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 14:12:14 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/27 18:52:15 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:46:51 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	xor(t_vm *vm, t_proc *proc)
 	proc->carry = (proc->reg[proc->op.ar[2]] == 0) ? 1 : 0;
 	if (0x4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		ft_printf("\n");
 	}
 }

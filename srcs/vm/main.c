@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:29:30 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:51:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,19 +126,13 @@ void		delete_op(t_proc *proc)
 	proc->op.active = 0;
 }
 
-void	mount_pc_in_ram(t_vm *vm, t_proc *proc)
-{
-
-
-}
-
 void	animate_proc(t_vm *vm, t_proc *proc)
 {
 	vm->ram[proc->pc % MEM_SIZE].pc = 0;
 	if (!proc->op.active)
 	{
 		if (is_opcode(vm->ram[proc->pc % MEM_SIZE].mem))
-			create_op(vm, proc, vm->ram[proc->pc % MEM_SIZE].mem);
+			create_op(proc, vm->ram[proc->pc % MEM_SIZE].mem);
 		else
 			proc->pc = (proc->pc + 1) % MEM_SIZE;
 	}

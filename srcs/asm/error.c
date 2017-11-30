@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 21:38:30 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:58:42 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 	display_error(err);
 	if (err == NO_FILE_ERR || err == SOURCE_ERR || err == FILE_ERROR ||
 	err == SIZE_MAX_ERR)
-		asm_error1(err, str, env, column);
+		asm_error1(err, str, env);
 	else if (env)
 		line = env->line;
 	free_labels(env);
@@ -81,7 +81,7 @@ void	asm_error(int err, char *str, t_asm_env *env, int column)
 		exit(EXIT_FAILURE);
 }
 
-void	asm_error1(int err, char *str, t_asm_env *env, int column)
+void	asm_error1(int err, char *str, t_asm_env *env)
 {
 	if (err == NO_FILE_ERR)
 		ft_printf("Missing filename.\n");
@@ -136,10 +136,10 @@ void	asm_error3(int err, char *str, t_asm_env *env, int column)
 	else if (err == TOO_MUCH_ARG_ERR)
 		ft_printf("Too much arguments at [%d:%d] : '%s'.\n", line, column, str);
 	else
-		asm_error4(err, str, env, column);
+		asm_error4(err, str, env);
 }
 
-void	asm_error4(int err, char *str, t_asm_env *env, int column)
+void	asm_error4(int err, char *str, t_asm_env *env)
 {
 	int line;
 
@@ -158,10 +158,10 @@ void	asm_error4(int err, char *str, t_asm_env *env, int column)
 	else if (err == NAME_EXISTS)
 		ft_printf("Line %d, name is already defined.\n", line);
 	else
-		asm_error5(err, str, env, column);
+		asm_error5(err, str, env);
 }
 
-void	asm_error5(int err, char *str, t_asm_env *env, int column)
+void	asm_error5(int err, char *str, t_asm_env *env)
 {
 	int line;
 
@@ -179,10 +179,10 @@ void	asm_error5(int err, char *str, t_asm_env *env, int column)
 	else if (err == COMMAND_ERR)
 		ft_printf("Line %d, command '%s' not found.\n", line, str);
 	else
-		asm_error6(err, str, env, column);
+		asm_error6(err, env);
 }
 
-void	asm_error6(int err, char *str, t_asm_env *env, int column)
+void	asm_error6(int err, t_asm_env *env)
 {
 	int line;
 

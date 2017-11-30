@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 20:08:51 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 18:01:52 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	verbose_dist_lab(int dist)
 	ft_printf("(Jump dist: %d) ", dist);
 }
 
-void	verbose_lab(char *lab, int pos)
+void	verbose_lab(char *lab)
 {
 	ft_printf("label:|");
 	color(C_RED);

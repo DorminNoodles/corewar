@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:06:02 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 16:09:49 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:49:51 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int loop_breakdown(int line, int col, int until)
   return (i);
 }
 
-int get_dv(t_vm *vm, int live)
+int get_dv(int live)
 {
   int dv;
 
@@ -86,7 +86,7 @@ int last_breakdown(t_vm *vm, int line)
   return (line);
 }
 
-int current_breakdown(t_vm *vm, int line, int tot_live, int dv)
+int current_breakdown(t_vm *vm, int line, int tot_live)
 {
   int p;
   int i;
@@ -130,8 +130,8 @@ int display_breakdown(t_vm *vm, int line)
 	mvprintw(line + 1, 3 * (MEM_SIZE / 64) + 7, "[");
 	// attroff(COLOR_PAIR(NC_C_WHITE));
 	tot_live = get_nb_live(vm);
-  dv = get_dv(vm, tot_live);
-  col = current_breakdown(vm, line + 1, tot_live, dv);
+  dv = get_dv(tot_live);
+  col = current_breakdown(vm, line + 1, tot_live);
   attron(COLOR_PAIR(NC_P_WHITE));
   while (col <= BREAK_DIS)
   {

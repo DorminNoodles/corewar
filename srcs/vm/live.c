@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 14:03:11 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 11:44:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:47:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	live(t_vm *vm, t_proc *proc)
 {
 	// printf(">>>>>ENTER_LIVE<<<<<\n");
 	int		num;
-	char	*name;
 	vm->lives_in_cycle++;
 	proc->last_live = vm->cycle + 1;
 
@@ -27,7 +26,7 @@ void	live(t_vm *vm, t_proc *proc)
 
 	if (4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		ft_printf("\n");
 	}
 	if (num >= 1 && num <= vm->nb_player)

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 15:06:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:43:17 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,16 @@ void	debug_display_proc(t_vm *vm)
 		tmp = tmp->next;
 		i++;
 	}
-
-
 }
 
-static void	display_args(t_vm *vm, t_proc *proc, int n)
+static void	display_args(t_proc *proc, int n)
 {
 	if (proc->op.ar_typ[n] == REG_CODE)
 		ft_printf("r");
 	ft_printf("%d", proc->op.ar[n]);
 }
 
-void	show_operations(t_vm *vm, t_proc *proc)
+void	show_operations(t_proc *proc)
 {
 	int	nb_arg;
 	int i;
@@ -82,7 +80,7 @@ void	show_operations(t_vm *vm, t_proc *proc)
 	while (i < nb_arg)
 	{
 		ft_printf(" ");
-		display_args(vm, proc, i);
+		display_args(proc, i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 19:56:04 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:59:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		find_op_ocp(t_asm_env *env, char *line, int i)
 	return (i);
 }
 
-int		find_op(t_asm_env *env, char *word, char *line, int printmode)
+int		find_op(t_asm_env *env, char *word, char *line)
 {
 	int	i;
 	int	tmp;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 16:25:59 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 18:02:11 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,7 +311,7 @@ int			check_arg(t_vm *vm, int argc, char **argv);
 t_proc		*create_process(t_vm *vm, int num);
 void		add_process(t_vm *vm, t_proc *proc);
 void		wait_state(t_vm *vm, t_proc *proc);
-void		create_op(t_vm *vm, t_proc *proc, char data);
+void		create_op(t_proc *proc, char data);
 void		call_ncurses(t_vm *vm);
 void		undertaker(t_vm *vm);
 void		kill_proc(t_vm *vm);
@@ -329,7 +329,7 @@ void		get_dir(t_vm *vm, t_proc *proc, int num, int pos);
 void		get_reg(t_vm *vm, t_proc *proc, int num, int pos);
 void		get_ind(t_vm *vm, t_proc *proc, int num, int pos);
 int			modulo(int a, int b);
-void		show_operations(t_vm *vm, t_proc *proc);
+void		show_operations(t_proc *proc);
 void		show_pc_move(t_vm *vm, t_proc *proc);
 void		reduce_ctd(t_vm *vm);
 int			process_living(t_vm *vm);
@@ -478,7 +478,7 @@ int analyse_args(int oct, char *line, int i);
 void op_no_ocp(t_asm_env *env, int i, char *line);
 void op_ocp(t_asm_env *env, int i, char *line);
 char *moove_on_line(char *line);
-int detect_arg(t_asm_env *env, char *line);
+int detect_arg(char *line);
 char *concat_opcode(char *ocp, int arg);
 
 /*
@@ -499,7 +499,7 @@ int len_is_label(char *line);
 /*
  ** --------- Find op -----------
 */
-int find_op(t_asm_env *env, char *word, char *line, int printmode);
+int find_op(t_asm_env *env, char *word, char *line);
 
 /*
  ** --------- Check line --------------
@@ -578,16 +578,16 @@ char *take_word(char *str);
  ** ------- Error -------
 */
 void asm_error(int err, char *str, t_asm_env *env, int column);
-void asm_error1(int err, char *str, t_asm_env *env, int column);
+void asm_error1(int err, char *str, t_asm_env *env);
 void asm_error2(int err, char *str, t_asm_env *env, int column);
 void asm_error3(int err, char *str, t_asm_env *env, int column);
-void asm_error4(int err, char *str, t_asm_env *env, int column);
-void asm_error5(int err, char *str, t_asm_env *env, int column);
-void asm_error6(int err, char *str, t_asm_env *env, int column);
+void asm_error4(int err, char *str, t_asm_env *env);
+void asm_error5(int err, char *str, t_asm_env *env);
+void asm_error6(int err, t_asm_env *env);
 
 void verbose_inst(t_asm_env *env, char *ins, int hex);
 void verbose_arg(t_asm_env *env, char *line, int add, int hex);
-void verbose_lab(char *lab, int pos);
+void verbose_lab(char *lab);
 void verbose_dist_lab(int dist);
 void verbose_ocp(t_asm_env *env, char ocp);
 /* ------------------- DECOMPILER ------------------

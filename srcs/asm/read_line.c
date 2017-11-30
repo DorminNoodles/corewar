@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 20:07:27 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/11/30 18:01:33 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	parse_label(t_asm_env *env, char *line, char *label, int printmode)
 		++a;
 	label = take_word(line + a);
 	if (*label)
-		env->bytes += find_op(env, label, line + a, printmode);
+		env->bytes += find_op(env, label, line + a);
 	ft_memdel((void*)&label);
 }
 
@@ -43,9 +43,9 @@ void	parse_verbose(t_asm_env *env, char *line)
 
 void	parse(t_asm_env *env, char *line)
 {
-	int		a;
-	int		len;
-	char	*w;
+	int			a;
+	size_t	len;
+	char		*w;
 
 	if (line && line[0] != COMMENT_CHAR)
 	{
@@ -63,7 +63,7 @@ void	parse(t_asm_env *env, char *line)
 		else if (w[ft_strlen(w) - 1] == LABEL_CHAR)
 			parse_label(env, line + a, w, env->print);
 		else
-			env->bytes += find_op(env, w, line + a, env->print);
+			env->bytes += find_op(env, w, line + a);
 		ft_memdel((void*)&w);
 		if (env->verbose && env->print == PRINT_MODE)
 			ft_printf("\n");

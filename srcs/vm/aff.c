@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 09:43:12 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/19 22:28:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:51:59 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	aff(t_vm *vm, t_proc *proc)
+void	aff()
 {
 
 

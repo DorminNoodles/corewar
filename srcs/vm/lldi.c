@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 00:20:16 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/27 18:50:13 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:47:23 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 void		lldi(t_vm *vm, t_proc *proc)
 {
 	unsigned int		addr;
-	unsigned int		reg_nb;
-	int ar1;
-	int ar2;
 	int value;
 
 	value = 0x0;
@@ -61,7 +58,7 @@ void		lldi(t_vm *vm, t_proc *proc)
 
 	if (0x4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		ft_printf("\n| -> load from %d + %d = %d (with pc and mod %d)", proc->op.ar[0], proc->op.ar[1], value, addr);
 		ft_printf("\n");
 	}

@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 15:08:30 by mlambert          #+#    #+#             */
-/*   Updated: 2017/11/27 11:53:52 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:46:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sub(t_vm *vm, t_proc *proc)
 
 	if (0x4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		ft_printf("\n");
 	}
 }

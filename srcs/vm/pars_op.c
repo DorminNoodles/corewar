@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 14:11:00 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:50:20 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	return (0);
 }
 
-void		create_op(t_vm *vm, t_proc *proc, char data)
+void		create_op(t_proc *proc, char data)
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 18:45:37 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:45:09 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add(t_vm *vm, t_proc *proc)
 	proc->carry = (sum == 0) ? 1 : 0;
 	if (0x4 & vm->verbosity)
 	{
-		show_operations(vm, proc);
+		show_operations(proc);
 		ft_printf("\n");
 	}
 }

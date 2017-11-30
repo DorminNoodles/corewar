@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/08 12:45:10 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/27 18:11:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/11/30 17:41:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int		arg_available(int ocp_chunk, int opcode, int num_arg)
 int		check_ocp(int ocp, int opcode)
 {
 	// printf("CHECK _OCP\n");
-	int		i;
 	int		nb_arg;
 
 	nb_arg = op_tab[opcode - 1].nb_arg;
