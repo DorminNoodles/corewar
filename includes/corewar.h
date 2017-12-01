@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 10:46:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/01 15:22:23 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 //-------------------------
 
+#define t_WINDOW WINDOW
 #define IND_SIZE				2
 #define REG_SIZE				1
 #define DIR_SIZE				4
