@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 19:21:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:15:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	check_line(t_asm_env *env, char *line)
 	else
 	{
 		i += until_is_not_space(line + i);
-		if (line[i] == COMMENT_CHAR || !line[i])
+		if (char_is_com(line[i]) || !line[i])
 			return ;
 		if (env->name && env->comment)
 		{

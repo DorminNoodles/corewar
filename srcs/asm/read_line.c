@@ -6,11 +6,17 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 18:08:21 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:17:43 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+
+int 	char_is_com(char c)
+{
+	return (c == COMMENT_CHAR || c == SCOLON_CHAR ? 1 : 0);
+}
 
 void	parse_label(t_asm_env *env, char *line, char *label, int printmode)
 {
@@ -47,12 +53,12 @@ void	parse(t_asm_env *env, char *line)
 	size_t	len;
 	char		*w;
 
-	if (line && line[0] != COMMENT_CHAR)
+	if (line && !(char_is_com(line[0])))
 	{
 		if (env->verbose && env->print == PRINT_MODE)
 			parse_verbose(env, line);
 		a = until_is_not_space(line);
-		if (!line[a] || line[a] == COMMENT_CHAR)
+		if (!line[a] || char_is_com(line[a]))
 			return ;
 		w = take_word(line + a);
 		len = len_is_label(w);

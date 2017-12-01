@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 15:54:45 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:12:08 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 #define COMMENT_CHAR			'#'
+#define SCOLON_CHAR ';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
 #define SEPARATOR_CHAR			','
@@ -469,6 +470,8 @@ typedef struct s_check_ins
 
 void free_labels(t_asm_env *env);
 void print_labs_lst(t_tab_labs *lst);
+int char_is_com(char c);
+
 /*
  ** -------- Create file ---------
 */
