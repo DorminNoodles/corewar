@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 15:22:23 by amacieje         ###   ########.fr       */
+/*   Updated: 2017/12/01 15:40:48 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -510,7 +510,7 @@ int find_op(t_asm_env *env, char *word, char *line);
 */
 void check_instr(char *line, t_asm_env *env);
 int check_op(char *instr, t_asm_env *env, int col);
-void check_header(void);
+void check_header(t_asm_env *env, char *line);
 void check_parse_arg(char *str, int instr, t_asm_env *env, int col);
 void check_line(t_asm_env *env, char *line);
 
