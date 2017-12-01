@@ -6,16 +6,16 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:51:14 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:16:13 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "corewar.h"
 
-void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
+void				get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 {
-	unsigned int value;
+	unsigned int	value;
+
 	value = 0x0;
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	value = value << 8;
@@ -34,45 +34,39 @@ void	get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 	proc->op.ar[num] = value;
 }
 
-void	get_reg(t_vm *vm, t_proc *proc, int num, int pos)
+void				get_reg(t_vm *vm, t_proc *proc, int num, int pos)
 {
-	unsigned char value;
+	unsigned char	value;
 
 	value = (unsigned char)vm->ram[(pos + REG_SIZE) % MEM_SIZE].mem;
 	proc->op.ar[num] = value;
 }
 
-void	get_ind(t_vm *vm, t_proc *proc, int num, int pos)
+void				get_ind(t_vm *vm, t_proc *proc, int num, int pos)
 {
+	unsigned int	value;
 
-	unsigned int value;
-	// int i;
-
-	// i = 0;
 	value = 0;
-
-	// i++;
 	value = value | (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
-	// i++;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
 	proc->op.ar[num] = value;
 	if ((value & 0x8000) == 0x8000)
-	 	proc->op.ar[num] = (value - USHRT_MAX) - 1;
+		proc->op.ar[num] = (value - USHRT_MAX) - 1;
 }
 
-int		is_opcode(char data)
+int					is_opcode(char data)
 {
 	if (data > 0 && data < 17)
 		return (1);
 	return (0);
 }
 
-t_player	*get_survivor(t_vm *vm)
+t_player			*get_survivor(t_vm *vm)
 {
-	int i;
+	int				i;
 
-	i  = 1;
+	i = 1;
 	while (i <= MAX_PLAYERS)
 	{
 		if (vm->player[i].active)
@@ -82,7 +76,7 @@ t_player	*get_survivor(t_vm *vm)
 	return (vm->last_one);
 }
 
-int		count_octet(int octet, t_optab *ref)
+int					count_octet(int octet, t_optab *ref)
 {
 	if (octet == 1)
 		return (REG_SIZE);
@@ -93,11 +87,11 @@ int		count_octet(int octet, t_optab *ref)
 	return (0);
 }
 
-int		move_pc(t_proc *proc)
+int					move_pc(t_proc *proc)
 {
-	int		i;
-	int		move;
-	t_optab	*ref;
+	int				i;
+	int				move;
+	t_optab			*ref;
 
 	i = 0;
 	move = 1;
@@ -115,7 +109,7 @@ int		move_pc(t_proc *proc)
 	return (move);
 }
 
-void		delete_op(t_proc *proc)
+void				delete_op(t_proc *proc)
 {
 	proc->op.code = 0;
 	proc->op.ocp = 0;
@@ -126,7 +120,7 @@ void		delete_op(t_proc *proc)
 	proc->op.active = 0;
 }
 
-void	animate_proc(t_vm *vm, t_proc *proc)
+void				animate_proc(t_vm *vm, t_proc *proc)
 {
 	vm->ram[proc->pc % MEM_SIZE].pc = 0;
 	if (!proc->op.active)
@@ -141,7 +135,7 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 		proc->op.loadtime--;
 		if (proc->op.loadtime <= 0)
 		{
-			if(fill_cur_op(vm, proc))
+			if (fill_cur_op(vm, proc))
 				op_tab[proc->op.code - 1].func(vm, proc);
 			if (proc->op.code != 9 ||
 				(proc->op.code == 9 && !proc->carry))
@@ -154,10 +148,10 @@ void	animate_proc(t_vm *vm, t_proc *proc)
 	vm->ram[proc->pc % MEM_SIZE].pc = proc->num;
 }
 
-int		count_proc(t_vm *vm)
+int					count_proc(t_vm *vm)
 {
-	int i;
-	t_proc	*proc;
+	int				i;
+	t_proc			*proc;
 
 	i = 0;
 	proc = vm->proc;
@@ -170,7 +164,7 @@ int		count_proc(t_vm *vm)
 	return (i);
 }
 
-void	dump(t_vm *vm)
+void				dump(t_vm *vm)
 {
 	if (vm->cycle == vm->dump)
 	{
@@ -179,11 +173,10 @@ void	dump(t_vm *vm)
 	}
 }
 
-void reset_live(t_vm *vm)
+void				reset_live(t_vm *vm)
 {
-	int i;
+	int				i;
 
-	// ft_printf("reset live cycle = %d\n", vm->cycle);
 	i = 1;
 	while (i <= vm->nb_player)
 	{
@@ -193,47 +186,22 @@ void reset_live(t_vm *vm)
 	}
 }
 
-
-
-
-void	run(t_vm *vm)
+void				run(t_vm *vm)
 {
-	t_proc	*proc;
+	t_proc			*proc;
+
 	while (process_living(vm))
 	{
-		// ft_printf("%d / %d\n", vm->cycle + 1, vm->ctd);
 		if (!((vm->cycle + 1) % vm->ctd))
 			reset_live(vm);
 		if (2 & vm->verbosity)
 			ft_printf("It is now cycle %d\n", vm->cycle + 1);
 		call_ncurses(vm);
-		// if (!(vm->cycle % vm->ctd))
-		// 	reset_live(vm);
-		// ft_printf("srx ? \n");
-		// controller(vm);
-
-		// if (vm->ncurses)
-		// {
-		// 	if (vm->boost && !(vm->cycle % 25))
-		// 	{
-		// 		call_ncurses(vm);
-		// 		controller(vm);
-		// 		usleep(vm->delay);
-		// 	}
-		// 	else if (!vm->boost)
-		// 	{
-		// 		call_ncurses(vm);
-		// 		controller(vm);
-		// 		usleep(vm->delay);
-		// 	}
-		// }
 		proc = vm->proc;
 		while (proc != NULL)
 		{
 			if (proc->active)
-			{
 				animate_proc(vm, proc);
-			}
 			proc->last_pc = proc->pc;
 			proc = proc->next;
 		}
@@ -245,34 +213,28 @@ void	run(t_vm *vm)
 		ft_printf("Last_one => %s\n", vm->last_one->file_name);
 }
 
-int		main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
-	t_vm	vm;
-
-	WINDOW *w;//ncurses
+	t_vm			vm;
+	t_WINDOW		*w;
 
 	init_vm(&vm);
-	if(check_arg(&vm, argc, argv))//check des parametres
+	if (check_arg(&vm, argc, argv))
 		error("Error\n");
 	if (vm.ncurses)
-	{
-		// ft_printf("init_ncurses\n");
 		init_ncurses(&w);
-	}
-	create_players(&vm);//initialisation de la machine virtuelle
-
-	run(&vm);//lancement du combat
+	create_players(&vm);
+	run(&vm);
 	get_winner(&vm);
 	if (vm.ncurses)
 	{
-		// ft_printf("Display winner\n");
-		// init_ncurses(&w);
 		vm.pause = 1;
 		call_ncurses(&vm);
 	}
 	if (vm.ncurses)
 		endwin();
-	ft_printf("Contestant %d, \"%s\", has won !\n", vm.winner, vm.player[vm.winner].name);
+	ft_printf("Contestant %d, \"%s\", has won !\n", vm.winner,
+		vm.player[vm.winner].name);
 	free_everything(&vm);
 	return (0);
 }
