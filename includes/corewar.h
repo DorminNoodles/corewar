@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 15:40:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 15:54:45 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct		header_s
 #define NC_P_RED_LIFE 52
 #define NC_P_CYAN_LIFE 53
 #define NC_P_WHITE_B 54
+#define NC_P_BLACK_B 55
 
 
 // #define NC_C_GREY 35

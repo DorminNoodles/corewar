@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:48:42 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 15:55:00 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,28 @@ static void	colors_init(void)
 	init_pair(NC_P_RED_LIFE, NC_C_WHITE, NC_C_RED);
 	init_pair(NC_P_CYAN_LIFE, NC_C_WHITE, NC_C_CYAN);
 
+	init_pair(NC_P_BLACK_B, NC_C_BLACK, NC_C_BLACK);
 	init_pair(NC_P_WHITE_B, NC_C_WHITE, NC_C_WHITE);
 
+}
+
+void display_linux(void)
+{
+	int i;
+	int j;
+
+	i = 0;
+	attron(COLOR_PAIR(NC_P_BLACK_B));
+	while (i < (MEM_SIZE / 64) + 5)
+	{
+		j = 0;
+		while (j < 3 * (MEM_SIZE / 64) + 72)
+		{
+			mvprintw(i, j, " ");
+			++j;
+		}
+		++i;
+	}
 }
 
 void	border_ncurses()
@@ -61,6 +81,7 @@ void	border_ncurses()
 
 	i = 0;
 	j = 0;
+	display_linux();
 	attron(COLOR_PAIR(NC_P_WHITE_B));
 	while (++i < MEM_SIZE / 64 + 5)
 	{
