@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/01 16:15:36 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:53:27 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,13 @@ void	check_instr(char *line, t_asm_env *env)
 
 	i = 0;
 	init_check_ins(&ch);
-	while (line[i])
+	while (line[i] && !(char_is_com(line[i])))
 	{
 		i += until_is_not_space(line + i);
 		ch.word = take_word(line + i);
 		if (!ch.label && ch.inst == -1 && is_label_str(ch.word))
 			++ch.label;
-		else if (ch.inst == -1)
+		else if (ch.inst == -1 && !char_is_com(ch.word[0]) && ch.word[0])
 			ch.inst = check_op(ch.word, env, i);
 		else
 		{
@@ -164,17 +164,16 @@ void	check_line(t_asm_env *env, char *line)
 	i = 0;
 	if (!line)
 		return ;
-	if (*line == '.')
-		check_header(env, line);
+	i += until_is_not_space(line + i);
+	if (line[i] == '.')
+		check_header(env, line + i);
 	else
 	{
 		i += until_is_not_space(line + i);
 		if (char_is_com(line[i]) || !line[i])
 			return ;
 		if (env->name && env->comment)
-		{
 			check_instr(line, env);
-		}
 		else
 		{
 			if (!env->name)
