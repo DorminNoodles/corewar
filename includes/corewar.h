@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 10:46:22 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/01 11:59:35 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ int			check_ocp(int ocp, int opcode);
 void		free_everything(t_vm *vm);
 int			get_indirect(t_vm *vm, t_op *op, int nb_arg);
 void		get_winner(t_vm *vm);
+void		new_player(t_vm *vm, int nb, char *str);
 
 
 /*
