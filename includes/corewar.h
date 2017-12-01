@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 18:02:11 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 10:46:22 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,11 +212,11 @@ typedef struct s_op
 typedef struct s_player
 {
 	int		active;
-	// int		id;
 	int		life_signal;
 	int		last_live;
 	int  	tot;
 	int		last_period;
+	int		last_period2;
 	char	*file_name;
 	char	name[PROG_NAME];
 	char	comments[PROG_COMS];
@@ -248,6 +248,9 @@ typedef struct s_proc
 typedef struct s_mem
 {
 	char	mem;
+	char	padding1;
+	char	padding2;
+	char	padding3;
 	int		num;
 	int		blingbling;
 	int		live;
@@ -506,7 +509,7 @@ int find_op(t_asm_env *env, char *word, char *line);
 */
 void check_instr(char *line, t_asm_env *env);
 int check_op(char *instr, t_asm_env *env, int col);
-void check_header();
+void check_header(void);
 void check_parse_arg(char *str, int instr, t_asm_env *env, int col);
 void check_line(t_asm_env *env, char *line);
 

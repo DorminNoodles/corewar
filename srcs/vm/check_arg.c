@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/28 15:12:59 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/01 10:50:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,23 +120,6 @@ int		get_nb_player(t_vm *vm, char **argv, int arg_num)
 	return (0);
 }
 
-void	init_player(t_vm *vm)
-{
-	int i;
-
-	i = 0;
-	while (i <= MAX_PLAYERS)
-	{
-		vm->player[i].active = 0;
-		vm->player[i].life_signal = 0;
-		vm->player[i].file_name = NULL;
-		vm->player[i].last_live = 0;
-		vm->player[i].last_period = 0;
-		vm->player[i].tot = 0;
-		i++;
-	}
-}
-
 void	new_player(t_vm *vm, int nb, char *str)
 {
 	vm->player[nb].active = 1;
@@ -149,8 +132,8 @@ void	new_player(t_vm *vm, int nb, char *str)
 
 int		srch_players(t_vm *vm, int argc, char **argv)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 1;
 	vm->nb_player = 0;
@@ -176,7 +159,7 @@ int		check_arg(t_vm *vm, int argc, char **argv)
 	vm->dump = srch_nb_dump(argc, argv);
 	vm->ncurses = srch_ncurses(argc, argv);
 	vm->verbosity = srch_verbose(argc, argv);
-	if(srch_players(vm, argc, argv))
-		return(1);
+	if (srch_players(vm, argc, argv))
+		return (1);
 	return (0);
 }

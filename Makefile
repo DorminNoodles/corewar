@@ -6,13 +6,13 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/11/30 18:06:26 by rfulop           ###   ########.fr        #
+#    Updated: 2017/12/01 10:46:24 by lchety           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
 
 CC = clang
-CFLAGS = -g -Wall -Werror -Wextra# -Weverything
+CFLAGS = -g -Wall -Werror -Wextra -Weverything
 VM_NAME = corewar
 ASM_NAME = asm
 DASM_NAME = decompiler
