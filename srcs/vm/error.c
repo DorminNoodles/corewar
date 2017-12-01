@@ -6,14 +6,14 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/23 11:39:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:34:42 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	error(char *str)
-{//en cas d error afficher str et exit le programme
+void		error(char *str)
+{
 	ft_putstr(str);
 	exit(EXIT_FAILURE);
 }

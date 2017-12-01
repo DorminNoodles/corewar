@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 12:13:33 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:45:26 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:22:10 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	and(t_vm *vm, t_proc *proc)
+void				and(t_vm *vm, t_proc *proc)
 {
 	unsigned int	ar1;
 	unsigned int	ar2;

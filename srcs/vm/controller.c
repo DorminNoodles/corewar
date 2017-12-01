@@ -6,15 +6,15 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:20:09 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:27:10 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void display_winner(t_vm *vm)
+void			display_winner(t_vm *vm)
 {
-	int win;
+	int			win;
 
 	win = vm->winner;
 	attron(A_BOLD);
@@ -25,7 +25,7 @@ void display_winner(t_vm *vm)
 	mvprintw(46, 3 * (MEM_SIZE / 64) + 20, "Press Space to finish");
 }
 
-static void	keys_press(t_vm *vm, char key)
+static void		keys_press(t_vm *vm, char key)
 {
 	if ((key == ' ' && vm->pause != 1) || vm->winner)
 	{
@@ -38,15 +38,11 @@ static void	keys_press(t_vm *vm, char key)
 		mvprintw(68, 2, "");
 	}
 	if (key == 'r')
-	{
 		vm->boost = (vm->boost) ? 0 : 1;
-	}
 	if (key == 'w')
 	{
 		if (vm->delay + 24000 < 1000000)
 			vm->delay += 24000;
-		// vm->delay += 40000;
-		// vm->delay *= 2;
 	}
 	else if (key == 'e')
 	{
@@ -57,9 +53,9 @@ static void	keys_press(t_vm *vm, char key)
 	}
 }
 
-void	controller(t_vm *vm)
+void			controller(t_vm *vm)
 {
-	char	key;
+	char		key;
 
 	key = -1;
 	key = getch();
@@ -72,19 +68,15 @@ void	controller(t_vm *vm)
 	while (vm->pause)
 	{
 		key = getch();
-		// if (vm->winner)
-			// key = -2;
 		if (key != -1)
 		{
 			keys_press(vm, key);
 			if (key == ' ')
 			{
 				vm->pause = 0;
-				break;
+				break ;
 			}
 		}
-		// if (vm->winner)
-		// 	display_winner(vm);
 		usleep(180000);
 	}
 }
