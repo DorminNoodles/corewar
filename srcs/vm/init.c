@@ -6,33 +6,16 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:36:02 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:37:24 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
 void	init_mem(t_vm *vm)
-{//init la memoire 4096 * un octet
-
+{
 	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
-
 }
-
-// void	init_nb_player(t_vm *vm)
-// {//init le nombre de players
-// 	vm->nb_player = 1;
-//
-// 	vm->life_signal[0] = 0;
-//
-// 	// ugly, i know.
-//
-// 	vm->life_signal[1] = -1;
-// 	vm->life_signal[2] = -1;
-// 	vm->life_signal[3] = -1;
-// 	// vm->life_signal initialisation based on it.
-//
-// }
 
 char	*get_data(char *filename)
 {
@@ -43,7 +26,6 @@ char	*get_data(char *filename)
 
 	fd = 0;
 	ret = 0;
-
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		error("error : file\n");
@@ -57,8 +39,8 @@ int		get_prog_size(char *data)
 {
 	int ret;
 
-	data += 4; //magic
-	data += 128 + 4; //prog_name
+	data += 4;
+	data += 128 + 4;
 	ret = 0x0;
 	ret = ret | (unsigned char)*data;
 	ret = ret << 8;
@@ -99,47 +81,26 @@ void	write_player(t_vm *vm, int nb, int num)
 	int		prog_size;
 
 	i = (MEM_SIZE / vm->nb_player) * num;
-
-	// printf("File Name %s\n", vm->player[nb].file_name);
 	data = get_data(vm->player[nb].file_name);
- // 	printf("data = '%s'\n", data + MAGIC_NB);
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
-	// vm->player[nb].name[ft_strlen(data + MAGIC_NB)] = '\0';
 	vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
-	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB + PROG_NAME + PROG_SIZE, PROG_COMS);
+	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB
+			+ PROG_NAME + PROG_SIZE, PROG_COMS);
 	vm->player[nb].comments[COMMENT_LENGTH] = '\0';
 	prog_size = get_prog_size(data);
-	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n", nb, prog_size,
-	vm->player[nb].name, vm->player[nb].comments);
+	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+		nb, prog_size, vm->player[nb].name, vm->player[nb].comments);
 	data_tmp = data + SRC_BEGIN;
-
-	// printf("I => %d\n", i);
 	prog_size += i;
 	while (i < prog_size)
 	{
-		//vm->mem[i % MEM_SIZE] = (unsigned char)*data_tmp;
 		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
-		// printf(">__&>>> %d\n", (num + 1) * -1);
 		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
 		data_tmp++;
 		i++;
 	}
 	ft_memdel((void*)&data);
-	// show_mem(vm);
 }
-
-// int		*init_registre(int id)
-// {
-// 	int i;
-// 	int	*reg;
-//
-// 	i = 0;
-//
-// 	if (!(reg = (int*)ft_memalloc(sizeof(int) * REG_NUMBER)))
-// 		error("error : MALLOC\n");
-// 	reg[0] = id;
-// 	return (reg);
-// }
 
 void	add_process(t_vm *vm, t_proc *proc)
 {
@@ -159,7 +120,6 @@ void	init_process(t_vm *vm)
 	i = 0;
 	while (i <= MAX_PLAYERS)
 	{
-		// printf("loop init process i = %d | vm->player[i].active = %d\n", i, vm->player[i].active);
 		if (vm->player[i].active)
 			add_process(vm, create_process(vm, i * (-1)));
 		i++;
@@ -167,7 +127,7 @@ void	init_process(t_vm *vm)
 }
 
 void	create_players(t_vm *vm)
-{//appel de toutes les fonctions d init
+{
 	int i;
 	int j;
 

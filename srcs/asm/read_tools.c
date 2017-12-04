@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/06 21:58:35 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:18:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int		goto_nextarg(char *line)
 	int a;
 
 	a = 0;
-	while (line[a] && line[a] != SEPARATOR_CHAR && line[a] != COMMENT_CHAR)
+	while (line[a] && line[a] != SEPARATOR_CHAR && !(char_is_com(line[a])))
 		++a;
 	if (line[a] == SEPARATOR_CHAR)
 		++a;
-	if (line[a] == COMMENT_CHAR)
+	if (char_is_com(line[a]))
 		return (a);
 	while (line[a] && is_space(line[a]))
 		++a;

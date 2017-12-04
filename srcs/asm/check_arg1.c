@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/19 20:09:26 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:14:44 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_ind_lab(char *str)
 	check = 0;
 	++i;
 	while (str[i] && str[i] != ' ' && str[i] != '\t' &&
-	str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
+	str[i] != SEPARATOR_CHAR && !(char_is_com(str[i])))
 	{
 		++check;
 		if (!is_label_char(str[i]))
@@ -43,7 +43,7 @@ int	is_ind(char *str)
 	if (str[i] == '-')
 		++i;
 	while (str[i] && str[i] != ' ' && str[i] != '\t' &&
-	str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
+	str[i] != SEPARATOR_CHAR && !(char_is_com(str[i])))
 	{
 		++check;
 		if (!ft_isdigit(str[i]))
@@ -77,7 +77,7 @@ int	is_reg(char *str)
 	++i;
 	tmp = i;
 	while (str[i] && str[i] != ' ' && str[i] != '\t' &&
-	str[i] != SEPARATOR_CHAR && str[i] != COMMENT_CHAR)
+	str[i] != SEPARATOR_CHAR && !(char_is_com(str[i])))
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 11:59:35 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 12:36:42 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 //-------------------------
 
+#define t_WINDOW WINDOW
 #define IND_SIZE				2
 #define REG_SIZE				1
 #define DIR_SIZE				4
@@ -44,6 +45,7 @@
 #define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 
 #define COMMENT_CHAR			'#'
+#define SCOLON_CHAR ';'
 #define LABEL_CHAR				':'
 #define DIRECT_CHAR				'%'
 #define SEPARATOR_CHAR			','
@@ -160,6 +162,7 @@ typedef struct		header_s
 #define NC_P_RED_LIFE 52
 #define NC_P_CYAN_LIFE 53
 #define NC_P_WHITE_B 54
+#define NC_P_BLACK_B 55
 
 
 // #define NC_C_GREY 35
@@ -468,6 +471,8 @@ typedef struct s_check_ins
 
 void free_labels(t_asm_env *env);
 void print_labs_lst(t_tab_labs *lst);
+int char_is_com(char c);
+
 /*
  ** -------- Create file ---------
 */
@@ -510,7 +515,7 @@ int find_op(t_asm_env *env, char *word, char *line);
 */
 void check_instr(char *line, t_asm_env *env);
 int check_op(char *instr, t_asm_env *env, int col);
-void check_header(void);
+void check_header(t_asm_env *env, char *line);
 void check_parse_arg(char *str, int instr, t_asm_env *env, int col);
 void check_line(t_asm_env *env, char *line);
 

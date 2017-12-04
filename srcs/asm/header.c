@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:13:29 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/02 00:49:37 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 17:38:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,17 @@ void	write_name(t_asm_env *env, char *line)
 
 void	write_header(t_asm_env *env, char *line, int printmode)
 {
-	int	a;
-	int	tmp;
+	int i;
 
-	a = 0;
-	tmp = 0;
+	i = until_is_not_space(line);
 	if (!printmode)
 		;
 	else
 	{
-		if (line[1] == 'n' && line[2] == 'a' && line[3] == 'm' &&
-				line[4] == 'e')
-			write_name(env, line);
+		if (line[i + 1] == 'n' && line[i + 2] == 'a' && line[i + 3] == 'm' &&
+				line[i + 4] == 'e')
+			write_name(env, line + i);
 		else
-			write_comment(env, line);
+			write_comment(env, line + i);
 	}
 }

@@ -6,15 +6,15 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 14:33:15 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 12:05:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 12:38:25 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		display_winner(t_vm *vm)
+void			display_winner(t_vm *vm)
 {
-	int	win;
+	int			win;
 
 	win = vm->winner;
 	attron(A_BOLD);
@@ -25,7 +25,7 @@ void		display_winner(t_vm *vm)
 	mvprintw(46, 3 * (MEM_SIZE / 64) + 20, "Press Space to finish");
 }
 
-static void	keys_press(t_vm *vm, char key)
+static void		keys_press(t_vm *vm, char key)
 {
 	if ((key == ' ' && vm->pause != 1) || vm->winner)
 	{
@@ -53,9 +53,9 @@ static void	keys_press(t_vm *vm, char key)
 	}
 }
 
-void		controller(t_vm *vm)
+void			controller(t_vm *vm)
 {
-	char	key;
+	char		key;
 
 	key = -1;
 	key = getch();

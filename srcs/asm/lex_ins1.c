@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/17 22:33:37 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 16:16:59 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	check_instr_endline(char *str, t_asm_env *env, int col)
 	int i;
 
 	i = until_is_not_space(str);
-	if (str[i] != COMMENT_CHAR && str[i] != '\0')
+	if (!(char_is_com(str[i])) && str[i] != '\0')
 		asm_error(TOO_MUCH_ARG_ERR, str, env, col + i);
 }
 

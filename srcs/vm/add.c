@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 16:57:54 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:45:09 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/01 14:21:10 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	add(t_vm *vm, t_proc *proc)
+void		add(t_vm *vm, t_proc *proc)
 {
 	int		sum;
 
