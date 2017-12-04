@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 17:59:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:36:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int		find_op(t_asm_env *env, char *word, char *line)
 		}
 		++i;
 	}
-	return (oct);
+	return (oct == 1 ? 0 : oct);
 }
