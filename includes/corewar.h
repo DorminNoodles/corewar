@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 15:07:59 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:48:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -481,6 +481,15 @@ int char_is_com(char c);
 */
 void create_file(t_asm_env *env, char *str);
 int check_name(char *str);
+int parse_args(t_asm_env *env, char **argv);
+void check_args_letter(t_asm_env *env, char let);
+void debug_mode(t_asm_env *env, int fd);
+void print_mode(t_asm_env *env, char *file);
+void check_mode(t_asm_env *env, char *name, int fd);
+void print_mode_verbose(t_asm_env *env);
+void init_env(t_asm_env *env);
+void print_help(void);
+
 
 /*
  ** -------- Analyse -------------

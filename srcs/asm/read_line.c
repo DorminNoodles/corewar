@@ -6,14 +6,13 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/01 17:38:58 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:41:46 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-
-int 	char_is_com(char c)
+int		char_is_com(char c)
 {
 	return (c == COMMENT_CHAR || c == SCOLON_CHAR ? 1 : 0);
 }
@@ -50,7 +49,7 @@ void	parse_verbose(t_asm_env *env, char *line)
 void	parse(t_asm_env *env, char *line)
 {
 	int			a;
-	size_t	len;
+	size_t		len;
 	char		*w;
 
 	if (line && !(char_is_com(line[0])))
