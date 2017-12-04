@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/24 14:59:11 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:03:58 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	dasm_error(int err, char *str)
 {
-	color(C_RED);
+	COLOR(C_RED);
 	ft_printf("Error: ");
-	color(C_RESET);
+	COLOR(C_RESET);
 	if (err == SOURCE_ERR)
 		ft_printf("Can't read source file %s\n", str);
 	else if (err == MALLOC_ERR)

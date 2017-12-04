@@ -6,35 +6,32 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:31:03 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int					move_pc(t_proc *proc)
+void			usage(void)
 {
-	int				i;
-	int				move;
-	t_optab			*ref;
-
-	i = 0;
-	move = 1;
-	ref = &g_op_tab[proc->op.code - 1];
-	if (!ref->need_ocp)
-		return ((ref->direct_size) ? move + 2 : move + 4);
-	else
-		move++;
-	if (ref->nb_arg >= 1)
-		move += count_octet((0xC0 & proc->op.ocp) >> 6, ref);
-	if (ref->nb_arg >= 2)
-		move += count_octet((0x30 & proc->op.ocp) >> 4, ref);
-	if (ref->nb_arg >= 3)
-		move += count_octet((0xC & proc->op.ocp) >> 2, ref);
-	return (move);
+	ft_printf("Usage: ./corewar [-d N -v N | -ncurses ] <[-n N]");
+	ft_printf("champion1.cor><...>\n");
+	ft_printf("  -d N\t\t: Dumps memory after N cycles then exits\n");
+	ft_printf("  -v N\t\t: Verbosity levels, can be added together to enable ");
+	ft_printf("several\n");
+	ft_printf("\t\t\t- 0 : Show only essentials\n");
+	ft_printf("\t\t\t- 1 : Show lives\n");
+	ft_printf("\t\t\t- 2 : Show cycles\n");
+	ft_printf("\t\t\t- 4 : Show operations (Params are NOT litteral ...)\n");
+	ft_printf("\t\t\t- 8 : Show deaths\n");
+	ft_printf("\t\t\t- 16 : Show PC movements (Except for jumps)\n");
+	ft_printf("  -ncurses\t: Ncurses output mode\n");
+	ft_printf("\t-n N\t\t: Champion number (position at initalisation of ");
+	ft_printf("memory)\n");
+	exit(EXIT_FAILURE);
 }
 
-void				animate_proc(t_vm *vm, t_proc *proc)
+void			animate_proc(t_vm *vm, t_proc *proc)
 {
 	vm->ram[proc->pc % MEM_SIZE].pc = 0;
 	if (!proc->op.active)
@@ -62,7 +59,7 @@ void				animate_proc(t_vm *vm, t_proc *proc)
 	vm->ram[proc->pc % MEM_SIZE].pc = proc->num;
 }
 
-int					count_proc(t_vm *vm)
+int				count_proc(t_vm *vm)
 {
 	int				i;
 	t_proc			*proc;
@@ -78,7 +75,7 @@ int					count_proc(t_vm *vm)
 	return (i);
 }
 
-void				run(t_vm *vm)
+void			run(t_vm *vm)
 {
 	t_proc			*proc;
 
@@ -105,10 +102,10 @@ void				run(t_vm *vm)
 		ft_printf("Last_one => %s\n", vm->last_one->file_name);
 }
 
-int					main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_vm			vm;
-	t_WINDOW		*w;
+	T_WINDOW		*w;
 
 	init_vm(&vm);
 	if (check_arg(&vm, argc, argv))

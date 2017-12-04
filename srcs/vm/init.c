@@ -6,16 +6,11 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 14:37:24 by amacieje         ###   ########.fr       */
+/*   Updated: 2017/12/04 22:25:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-void	init_mem(t_vm *vm)
-{
-	ft_bzero(&vm->ram, sizeof(t_mem) * MEM_SIZE);
-}
 
 char	*get_data(char *filename)
 {
@@ -71,6 +66,7 @@ void	init_vm(t_vm *vm)
 	vm->debug = 0;
 	vm->winner = 0;
 	ft_bzero(vm->player, sizeof(t_player) * 5);
+	ft_bzero(vm->ram, sizeof(t_mem) * MEM_SIZE);
 }
 
 void	write_player(t_vm *vm, int nb, int num)
@@ -102,17 +98,6 @@ void	write_player(t_vm *vm, int nb, int num)
 	ft_memdel((void*)&data);
 }
 
-void	add_process(t_vm *vm, t_proc *proc)
-{
-	if (vm->proc)
-	{
-		proc->next = vm->proc;
-		vm->proc = proc;
-	}
-	else
-		vm->proc = proc;
-}
-
 void	init_process(t_vm *vm)
 {
 	int i;
@@ -124,25 +109,4 @@ void	init_process(t_vm *vm)
 			add_process(vm, create_process(vm, i * (-1)));
 		i++;
 	}
-}
-
-void	create_players(t_vm *vm)
-{
-	int i;
-	int j;
-
-	i = 1;
-	j = 0;
-	init_mem(vm);
-	ft_printf("Introducing contestants...\n");
-	while (i <= MAX_PLAYERS)
-	{
-		if (vm->player[i].active)
-		{
-			write_player(vm, i, j);
-			j++;
-		}
-		i++;
-	}
-	init_process(vm);
 }

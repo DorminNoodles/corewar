@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:09:42 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 17:39:23 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 21:58:55 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	display_error(int err)
 {
 	if (err >= ERROR_MIN && err <= ERROR_MAX)
 	{
-		color(C_RED);
+		COLOR(C_RED);
 		ft_printf("Error: ");
-		color(C_RESET);
+		COLOR(C_RESET);
 	}
 }
 
@@ -42,9 +42,9 @@ void	display_current_line(t_asm_env *env, int err, int column)
 				write(1, " ", 1);
 			++i;
 		}
-		color(C_GREEN);
+		COLOR(C_GREEN);
 		ft_printf("^\n");
-		color(C_RESET);
+		COLOR(C_RESET);
 	}
 }
 

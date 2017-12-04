@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 15:42:51 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:25:56 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,24 @@ void	reset_live(t_vm *vm)
 		vm->player[i].life_signal = 0;
 		++i;
 	}
+}
+
+void	create_players(t_vm *vm)
+{
+	int i;
+	int j;
+
+	i = 1;
+	j = 0;
+	ft_printf("Introducing contestants...\n");
+	while (i <= MAX_PLAYERS)
+	{
+		if (vm->player[i].active)
+		{
+			write_player(vm, i, j);
+			j++;
+		}
+		i++;
+	}
+	init_process(vm);
 }

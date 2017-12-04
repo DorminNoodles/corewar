@@ -6,11 +6,18 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 16:17:19 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:28:20 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
+void	add_process(t_vm *vm, t_proc *proc)
+{
+	if (vm->proc)
+		proc->next = vm->proc;
+	vm->proc = proc;
+}
 
 void	kill_proc(t_vm *vm)
 {
@@ -35,21 +42,6 @@ void	kill_proc(t_vm *vm)
 		}
 		tmp = tmp->next;
 	}
-}
-
-void	free_everything(t_vm *vm)
-{
-	t_proc *tmp;
-	t_proc *tmp2;
-
-	tmp = vm->proc;
-	while (tmp)
-	{
-		tmp2 = tmp;
-		tmp = tmp->next;
-		free(tmp2);
-	}
-	vm->proc = NULL;
 }
 
 int		set_proc_id(t_vm *vm)
@@ -88,38 +80,6 @@ t_proc	*create_process(t_vm *vm, int num)
 	tmp->op.active = 0;
 	tmp->next = NULL;
 	return (tmp);
-}
-
-void	undertaker(t_vm *vm)
-{
-	int		i;
-	t_proc	*tmp;
-
-	i = 1;
-	tmp = vm->proc;
-	while (i <= MAX_PLAYERS)
-	{
-		if (!vm->player[i].life_signal && vm->player[i].active)
-		{
-			vm->player[i].active = 0;
-		}
-		i++;
-	}
-	kill_proc(vm);
-}
-
-int		is_pc(t_vm *vm, int nb)
-{
-	t_proc *tmp;
-
-	tmp = vm->proc;
-	while (tmp)
-	{
-		if (tmp->pc == nb && tmp->active)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
 }
 
 int		process_living(t_vm *vm)
