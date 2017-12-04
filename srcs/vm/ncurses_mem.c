@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:25:41 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 15:38:10 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 16:35:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void		mem_main(t_vm *vm)
 	int	i;
 
 	i = 0;
-	// attron(A_BOLD);
 	while (i < MEM_SIZE)
 	{
 		attron(COLOR_PAIR(NC_P_GREY));
@@ -71,26 +70,19 @@ static void		mem_main(t_vm *vm)
 		else if (vm->ram[i].num == -4)
 			attron(COLOR_PAIR(NC_P_CYAN));
 		if (vm->ram[i].blingbling)
-		{
 			bling(vm, i);
-		}
 		if (vm->ram[i].pc)
 			display_pc(vm, i);
 		if (vm->ram[i].live)
 			life(vm, i);
-		mvprintw((3 + i / 64), (4 + (i % 64) * 3), "%02x", (unsigned char)vm->ram[i].mem);
+		mvprintw((3 + i / 64), (4 + (i % 64) * 3), "%02x",
+		(unsigned char)vm->ram[i].mem);
 		attroff(A_BOLD);
 		i++;
 	}
-	// attroff(A_STANDOUT);
-	// attroff(COLOR_PAIR(NC_C_GREY));
 }
 
-// static void		display_bling()
-
-
-void	display_mem(t_vm *vm)
+void			display_mem(t_vm *vm)
 {
 	mem_main(vm);
-
 }

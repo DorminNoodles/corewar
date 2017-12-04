@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:43:34 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 10:46:27 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 16:26:32 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	name_color(int i)
 {
-	// NC_C_WHITE
+	attron(A_BOLD);
 	if (i == 1)
 		attron(COLOR_PAIR(NC_P_GREEN_BLING));
 	else if (i == 2)
@@ -24,20 +24,6 @@ void	name_color(int i)
 	else if (i == 4)
 		attron(COLOR_PAIR(NC_P_CYAN_BLING));
 }
-
-void	name_color_off(int i)
-{
-	// NC_C_WHITE
-	if (i == 1)
-		attroff(COLOR_PAIR(NC_P_GREEN_BLING));
-	else if (i == 2)
-		attroff(COLOR_PAIR(NC_P_BLUE_BLING));
-	else if (i == 3)
-		attroff(COLOR_PAIR(NC_P_RED_BLING));
-	else if (i == 4)
-		attroff(COLOR_PAIR(NC_P_CYAN_BLING));
-}
-
 
 int		display_players(t_vm *vm)
 {
@@ -50,25 +36,17 @@ int		display_players(t_vm *vm)
 	{
 		attron(COLOR_PAIR(NC_P_WHITE));
 		mvprintw(b, 3 * (MEM_SIZE / 64) + 7, "Player -%d : ", i);
-		// attroff(A_STANDOUT);
-		// attroff(COLOR_PAIR(NC_C_WHITE));
-		// attroff(A_BOLD);
-		// on_color(a);
-		attron(A_BOLD);
 		name_color(i);
 		mvprintw(b, 3 * (MEM_SIZE / 64) + 9 + 10, "%s", vm->player[i].name);
 		attron(COLOR_PAIR(NC_P_WHITE));
-		// attroff(A_BOLD);
-		// off_color(a);
-		// attroff(A_INVIS);
-		// attron(A_STANDOUT);
-		// attron(COLOR_PAIR(NC_C_WHITE));
 		mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 7 + 1, "Last live : ");
 		if (!vm->player[i].last_live)
 			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 7 + 1 + 25, "0");
 		else
-			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 7 + 1 + 25, "%d   ", vm->player[i].last_live + 1);
-		mvprintw(b + 2, 3 * (MEM_SIZE / 64) + 7 + 1, "Live in current period : %d      ",
+			mvprintw(b + 1, 3 * (MEM_SIZE / 64) + 7 + 1 + 25, "%d   ",
+			vm->player[i].last_live + 1);
+		mvprintw(b + 2, 3 * (MEM_SIZE / 64) + 7 + 1,
+		"Live in current period : %d      ",
 		vm->player[i].life_signal);
 		b += 4;
 		i++;
@@ -76,8 +54,7 @@ int		display_players(t_vm *vm)
 	return (b);
 }
 
-
-void		display_menu(t_vm *vm)
+void	display_menu(t_vm *vm)
 {
 	int line;
 
@@ -89,17 +66,18 @@ void		display_menu(t_vm *vm)
 	mvprintw(5, 3 * (MEM_SIZE / 64) + 7, "Speed : %d  ",
 	100 - (vm->delay / 10000));
 	mvprintw(8, 3 * (MEM_SIZE / 64) + 7, "Cycles : %d    ", vm->cycle);
-	mvprintw(10, 3 * (MEM_SIZE / 64) + 7, "Processes : %d     ", count_proc(vm));
-
+	mvprintw(10, 3 * (MEM_SIZE / 64) + 7, "Processes : %d     ",
+	count_proc(vm));
 	line = display_players(vm);
 	line = display_breakdown(vm, line);
-
-	mvprintw(line + 2, 3 * (MEM_SIZE / 64) + 7, "CYCLE_TO_DIE : %d     ", vm->ctd);
-	mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 7, "CYCLE_DELTA : %d    ", CYCLE_DELTA);
-	mvprintw(line + 6, 3 * (MEM_SIZE / 64) + 7, "NBR_LIVE : %d    ", NBR_LIVE);
-	mvprintw(line + 8, 3 * (MEM_SIZE / 64) + 7, "MAX_CHECKS : %d    ", MAX_CHECKS);
-
+	mvprintw(line + 2, 3 * (MEM_SIZE / 64) + 7, "CYCLE_TO_DIE : %d     ",
+	vm->ctd);
+	mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 7, "CYCLE_DELTA : %d    ",
+	CYCLE_DELTA);
+	mvprintw(line + 6, 3 * (MEM_SIZE / 64) + 7, "NBR_LIVE : %d    ",
+	NBR_LIVE);
+	mvprintw(line + 8, 3 * (MEM_SIZE / 64) + 7, "MAX_CHECKS : %d    ",
+	MAX_CHECKS);
 	attroff(A_BOLD);
 	attron(COLOR_PAIR(NC_P_WHITE_B));
-	mvprintw(line + 37, 2, "");
 }

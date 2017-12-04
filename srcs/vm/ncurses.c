@@ -6,13 +6,37 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/01 15:55:00 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 16:22:22 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-static void	colors_init(void)
+void	init_color_pair(void)
+{
+	init_pair(NC_P_GREY, NC_C_GREY, NC_C_BLACK);
+	init_pair(NC_P_WHITE, NC_C_WHITE, NC_C_BLACK);
+	init_pair(NC_P_GREEN, NC_C_GREEN, NC_C_BLACK);
+	init_pair(NC_P_BLUE, NC_C_BLUE, NC_C_BLACK);
+	init_pair(NC_P_RED, NC_C_RED, NC_C_BLACK);
+	init_pair(NC_P_CYAN, NC_C_CYAN, NC_C_BLACK);
+	init_pair(NC_P_GREEN_BLING, NC_C_GREEN_BLING, NC_C_BLACK);
+	init_pair(NC_P_BLUE_BLING, NC_C_BLUE_BLING, NC_C_BLACK);
+	init_pair(NC_P_RED_BLING, NC_C_RED_BLING, NC_C_BLACK);
+	init_pair(NC_P_CYAN_BLING, NC_C_CYAN_BLING, NC_C_BLACK);
+	init_pair(NC_P_GREEN_PC, NC_C_BLACK, NC_C_GREEN);
+	init_pair(NC_P_BLUE_PC, NC_C_BLACK, NC_C_BLUE);
+	init_pair(NC_P_RED_PC, NC_C_BLACK, NC_C_RED);
+	init_pair(NC_P_CYAN_PC, NC_C_BLACK, NC_C_CYAN);
+	init_pair(NC_P_GREEN_LIFE, NC_C_WHITE, NC_C_GREEN);
+	init_pair(NC_P_BLUE_LIFE, NC_C_WHITE, NC_C_BLUE);
+	init_pair(NC_P_RED_LIFE, NC_C_WHITE, NC_C_RED);
+	init_pair(NC_P_CYAN_LIFE, NC_C_WHITE, NC_C_CYAN);
+	init_pair(NC_P_BLACK_B, NC_C_BLACK, NC_C_BLACK);
+	init_pair(NC_P_WHITE_B, NC_C_WHITE, NC_C_WHITE);
+}
+
+void	colors_init(void)
 {
 	init_color(NC_C_WHITE, 800, 800, 800);
 	init_color(NC_C_BLACK, 0, 0, 0);
@@ -21,41 +45,14 @@ static void	colors_init(void)
 	init_color(NC_C_BLUE, 200, 300, 600);
 	init_color(NC_C_RED, 700, 150, 200);
 	init_color(NC_C_CYAN, 100, 500, 600);
-
 	init_color(NC_C_GREEN_BLING, 600, 1000, 500);
 	init_color(NC_C_BLUE_BLING, 400, 600, 1000);
 	init_color(NC_C_RED_BLING, 1000, 300, 400);
 	init_color(NC_C_CYAN_BLING, 300, 1000, 1000);
-
-
-	init_pair(NC_P_GREY, NC_C_GREY, NC_C_BLACK);
-	init_pair(NC_P_WHITE, NC_C_WHITE, NC_C_BLACK);
-	init_pair(NC_P_GREEN, NC_C_GREEN, NC_C_BLACK);
-	init_pair(NC_P_BLUE, NC_C_BLUE, NC_C_BLACK);
-	init_pair(NC_P_RED, NC_C_RED, NC_C_BLACK);
-	init_pair(NC_P_CYAN, NC_C_CYAN, NC_C_BLACK);
-
-	init_pair(NC_P_GREEN_BLING, NC_C_GREEN_BLING, NC_C_BLACK);
-	init_pair(NC_P_BLUE_BLING, NC_C_BLUE_BLING, NC_C_BLACK);
-	init_pair(NC_P_RED_BLING, NC_C_RED_BLING, NC_C_BLACK);
-	init_pair(NC_P_CYAN_BLING, NC_C_CYAN_BLING, NC_C_BLACK);
-
-	init_pair(NC_P_GREEN_PC, NC_C_BLACK, NC_C_GREEN);
-	init_pair(NC_P_BLUE_PC, NC_C_BLACK, NC_C_BLUE);
-	init_pair(NC_P_RED_PC, NC_C_BLACK, NC_C_RED);
-	init_pair(NC_P_CYAN_PC, NC_C_BLACK, NC_C_CYAN);
-
-	init_pair(NC_P_GREEN_LIFE, NC_C_WHITE, NC_C_GREEN);
-	init_pair(NC_P_BLUE_LIFE, NC_C_WHITE, NC_C_BLUE);
-	init_pair(NC_P_RED_LIFE, NC_C_WHITE, NC_C_RED);
-	init_pair(NC_P_CYAN_LIFE, NC_C_WHITE, NC_C_CYAN);
-
-	init_pair(NC_P_BLACK_B, NC_C_BLACK, NC_C_BLACK);
-	init_pair(NC_P_WHITE_B, NC_C_WHITE, NC_C_WHITE);
-
+	init_color_pair();
 }
 
-void display_linux(void)
+void	display_linux(void)
 {
 	int i;
 	int j;
@@ -74,7 +71,7 @@ void display_linux(void)
 	}
 }
 
-void	border_ncurses()
+void	border_ncurses(void)
 {
 	int i;
 	int j;
@@ -114,7 +111,6 @@ void	call_ncurses(t_vm *vm)
 	display_menu(vm);
 	controller(vm);
 	usleep(vm->delay);
-
 	refresh();
 }
 
@@ -127,7 +123,7 @@ void	init_ncurses(WINDOW **w)
 		endwin();
 		exit(1);
 	}
-	start_color();			/* Start color 			*/
-	cbreak(); //getch() no block
+	start_color();
+	cbreak();
 	nodelay(*w, TRUE);
 }

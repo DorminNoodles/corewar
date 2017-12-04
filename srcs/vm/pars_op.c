@@ -6,13 +6,13 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/30 17:50:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 16:18:45 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	init_op(t_op *op)
+void		init_op(t_op *op)
 {
 	op->active = 0;
 	op->code = 0;
@@ -27,7 +27,7 @@ void	init_op(t_op *op)
 	op->pos_opcode = 0;
 }
 
-int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
+int			find_args(t_vm *vm, t_proc *proc, int num, int pos)
 {
 	unsigned char	type;
 	unsigned char	mask;
@@ -38,19 +38,15 @@ int		find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	type = type & mask;
 	type = type >> (6 - 2 * num);
 	proc->op.ar_typ[num] = type;
-
-	// if (proc->op->code == 1)
-	// 	printf("LIVE OP CODE\n");
-
 	if (type == REG_CODE)
 	{
 		get_reg(vm, proc, num, pos);
-		return(REG_SIZE);
+		return (REG_SIZE);
 	}
 	if (type == DIR_CODE)
 	{
 		get_dir(vm, proc, num, pos);
-		return((op_tab[proc->op.code - 1].direct_size) ? 2 : 4);
+		return ((op_tab[proc->op.code - 1].direct_size) ? 2 : 4);
 	}
 	if (type == IND_CODE)
 	{
@@ -74,7 +70,7 @@ void		create_op(t_proc *proc, char data)
 	proc->op.pos_opcode = proc->pc;
 }
 
-int		fill_cur_op(t_vm *vm, t_proc *proc)
+int			fill_cur_op(t_vm *vm, t_proc *proc)
 {
 	int			i;
 	int			pos;
