@@ -6,33 +6,43 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 11:38:24 by lchety            #+#    #+#             */
-/*   Updated: 2017/11/29 10:12:14 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 15:38:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int		get_indirect(t_vm *vm, t_op *op, int nb_arg)
-{
-	int	value;
-	int	pos;
-
-	value = 0x0;
-	pos = op->pos_opcode + (op->ar[nb_arg] % IDX_MOD);
-	value |= (unsigned char)vm->ram[modulo(pos, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 1, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 2, MEM_SIZE)].mem;
-	value = value << 8;
-	value |= (unsigned char)vm->ram[modulo(pos + 3, MEM_SIZE)].mem;
-	return (value);
-}
-
-int		modulo(int a, int b)
+int			modulo(int a, int b)
 {
 	if (a % b >= 0)
 		return (a % b);
 	else
 		return ((a % b) + b);
+}
+
+int			is_opcode(char data)
+{
+	if (data > 0 && data < 17)
+		return (1);
+	return (0);
+}
+
+int			count_octet(int octet, t_optab *ref)
+{
+	if (octet == 1)
+		return (REG_SIZE);
+	else if (octet == 2)
+		return ((ref->direct_size) ? 2 : 4);
+	else if (octet == 3)
+		return (IND_SIZE);
+	return (0);
+}
+
+void		dump(t_vm *vm)
+{
+	if (vm->cycle == vm->dump)
+	{
+		show_mem(vm);
+		exit(1);
+	}
 }

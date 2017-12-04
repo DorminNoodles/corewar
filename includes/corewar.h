@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 12:36:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 15:07:59 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,6 @@ int			count_proc(t_vm *vm);
 int			all_died(t_vm *vm);
 int			is_opcode(char data);
 int			cycle_to_die(t_vm *vm);
-t_player	*get_survivor(t_vm *vm);
 void		get_ocp(t_vm *vm, t_proc *proc);
 int			find_args(t_vm *vm, t_proc *proc, int num, int pos);
 void		get_dir(t_vm *vm, t_proc *proc, int num, int pos);
@@ -347,6 +346,10 @@ void		free_everything(t_vm *vm);
 int			get_indirect(t_vm *vm, t_op *op, int nb_arg);
 void		get_winner(t_vm *vm);
 void		new_player(t_vm *vm, int nb, char *str);
+int			count_octet(int octet, t_optab *ref);
+void		delete_op(t_proc *proc);
+void		reset_live(t_vm *vm);
+void		dump(t_vm *vm);
 
 
 /*
