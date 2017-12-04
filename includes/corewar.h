@@ -6,14 +6,12 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:12:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// VM = https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
-
 #ifndef COREWAR_H
-#define COREWAR_H
+# define COREWAR_H
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -26,13 +24,10 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-//-------------------------
-
 #define t_WINDOW WINDOW
 #define IND_SIZE				2
 #define REG_SIZE				1
 #define DIR_SIZE				4
-
 
 # define REG_CODE				1
 # define DIR_CODE				2
@@ -54,12 +49,9 @@
 #define TAB '\t'
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
-
 #define NAME_CMD_STRING			".name"
 #define COMMENT_CMD_STRING		".comment"
-
 #define REG_NUMBER				16
-
 #define CYCLE_TO_DIE			1536
 #define CYCLE_DELTA				50
 #define NBR_LIVE				21
@@ -68,14 +60,10 @@
 /*
  **
  */
-
-// typedef char	t_arg_type;
-
 #define T_REG					1
 #define T_DIR					2
 #define T_IND					4
 #define T_LAB					8
-
 /*
  **
  */
@@ -92,11 +80,6 @@ typedef struct		header_s
 	unsigned int		prog_size;
 	char				comment[COMMENT_LENGTH + 1];
 }					header_t;
-
-
-//-------------------------
-
-// #define PC;
 
 #define INST_IDLE 0
 #define INST_NAME 1
@@ -132,8 +115,6 @@ typedef struct		header_s
 #define NC_C_RED 25
 #define NC_C_CYAN 26
 
-// #define NC_C_WHITE_BLING 30
-// #define NC_C_BLACK_BLING 31
 #define NC_C_GREEN_BLING 32
 #define NC_C_BLUE_BLING 33
 #define NC_C_RED_BLING 34
@@ -165,16 +146,8 @@ typedef struct		header_s
 #define NC_P_BLACK_B 55
 
 
-// #define NC_C_GREY 35
-// #define NC_C_WHITE 40
 #define NC_C_BASIC 15
 #define NC_C_YELLOW 60
-// #define NC_C_YELLOW_FLUO 61
-// #define NC_C_YELLOW_BLING 62
-// #define NC_C_YELLOW_LIGHT 63
-// #define NC_C_YELLOW_BLACK 64
-//
-// #define NC_C_LIFE_LIGHT 26
 
 typedef struct s_vm t_vm;
 typedef struct s_optab t_optab;
@@ -182,7 +155,6 @@ typedef struct s_optab t_optab;
 typedef struct s_op
 {
 	int				active;
-	// t_optab			*optab_ref;
 	char			code;
 	unsigned char	ocp;
 	int				ar[3];
@@ -190,7 +162,6 @@ typedef struct s_op
 	int				loadtime;
 	int				pos_opcode;
 }	t_op;
-
 
 typedef struct s_player
 {
@@ -209,24 +180,15 @@ typedef struct s_proc
 {
 	int		id;
 	int		active;
-	int		num;//Num du programme/player a fournir dans r1 (registre 1)
+	int		num;
 	int		last_pc;
-	int		pc;// L adresse dans la memoire de la machine virtuelle de la prochaine instruction du programme
+	int		pc;
 	char	carry;
 	int		reg[17];
-	// int		loadtime;
-	int		last_live; // si le processus a fait appel a live durant CYCLE_TO_DIE
+	int		last_live;
 	t_op	op;
 	struct	s_proc	*next;
 }	t_proc;
-
-// typedef struct s_optab
-// {
-// 	void	(*func)(t_vm *vm, t_op *op, int player);
-// 	int		nb_arg;
-// 	int		direct;
-// 	int		ocp;
-// }	t_optab;
 
 typedef struct s_mem
 {
@@ -273,16 +235,12 @@ typedef struct s_vm
 	int		verbosity;
 	int 	winner;
 	int		lives_in_cycle;
-	// char	*mem;
 	char	mem[MEM_SIZE];
 	t_mem	ram[MEM_SIZE];
-	int		life_signal[4];			// tab pour les vies.
+	int		life_signal[4];
 	char	*files_name[5];
 	t_player	player[5];
 	t_player	*last_one;
-
-	//void	(*g_op_tab[20])(struct s_vm *vm, t_op *op, int player);
-
 	t_optab	optab[17];
 	t_proc	*proc;
 }	t_vm;
@@ -390,7 +348,6 @@ void		debug_display_proc(t_vm *vm);
 
 #define CHECK_MODE 0
 #define PRINT_MODE 1
-// asm_error(int ERROR, char *str, int line, int column)
 #define ERROR_MIN 0
 #define ERROR_MAX 27
 #define NO_FILE_ERR 0
@@ -576,7 +533,6 @@ short reverse_short(short nb);
 int is_dir_int(int i);
 int is_space(char c);
 char *take_word(char *str);
-//void	init_vm(t_vm *vm);
 
 /*
  ** ------- Error -------
@@ -594,6 +550,8 @@ void verbose_arg(t_asm_env *env, char *line, int add, int hex);
 void verbose_lab(char *lab);
 void verbose_dist_lab(int dist);
 void verbose_ocp(t_asm_env *env, char ocp);
+
+
 /* ------------------- DECOMPILER ------------------
  **
 */
@@ -604,7 +562,6 @@ typedef struct s_dasm_env
 	int								sizeFile;
 	unsigned char 		*file;
 }										t_dasm_env;
-
 
 /*
  ** ------ Display instructions ---------
