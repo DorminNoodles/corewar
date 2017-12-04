@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 18:02:33 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:25:56 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,21 @@ void	print_head(t_dasm_env *env)
 	write(env->fd, "\"\n\n", 3);
 }
 
+void	loop(t_dasm_env *env, char **argv, int arg, int fd)
+{
+	create_file_cor(env, argv[arg]);
+	env->file = open_bin(env, fd);
+	print_head(env);
+	parse_cor(env);
+	argv[arg][ft_strlen(argv[arg]) - 4] = '\0';
+	ft_printf("Writting output file to %s.s\n", argv[arg]);
+}
+
 int		main(int argc, char **argv)
 {
 	int			fd;
 	int			arg;
-	int 		len;
+	int			len;
 	char		*line;
 	t_dasm_env	env;
 
@@ -90,16 +100,9 @@ int		main(int argc, char **argv)
 			dasm_error(SOURCE_ERR, argv[arg]);
 		line = NULL;
 		len = ft_strlen(argv[arg]) - 1;
-		if (len > 3 && argv[arg][len] == 'r' && argv[arg][len-1] == 'o' &&
-		argv[arg][len-2] == 'c' && argv[arg][len-3] == '.')
-		{
-			create_file_cor(&env, argv[arg]);
-			env.file = open_bin(&env, fd);
-			print_head(&env);
-			parse_cor(&env);
-			argv[arg][ft_strlen(argv[arg]) - 4] = '\0';
-			ft_printf("Writting output file to %s.s\n", argv[arg]);
-		}
+		if (len > 3 && argv[arg][len] == 'r' && argv[arg][len - 1] == 'o' &&
+		argv[arg][len - 2] == 'c' && argv[arg][len - 3] == '.')
+			loop(&env, argv, arg, fd);
 		else
 			dasm_error(WRONG_FILE, argv[arg]);
 		++arg;
