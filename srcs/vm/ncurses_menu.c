@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 10:43:34 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 16:26:32 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:13:26 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,5 @@ void	display_menu(t_vm *vm)
 	NBR_LIVE);
 	mvprintw(line + 8, 3 * (MEM_SIZE / 64) + 7, "MAX_CHECKS : %d    ",
 	MAX_CHECKS);
-	attroff(A_BOLD);
-	attron(COLOR_PAIR(NC_P_WHITE_B));
+	attron(COLOR_PAIR(NC_P_BLACK_B));
 }

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 09:43:12 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 12:41:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:06:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	aff(t_vm *vm, t_proc *proc)
 	if (!check_params(&proc->op))
 		return ;
 	reg = proc->op.ar[0];
-	ft_printf("Code = %d\n", reg, proc->reg[reg] % 256);
+	if (!vm->ncurses)
+		ft_printf("%d\n", proc->reg[reg] % 256);
 	if (0x04 & vm->verbosity)
 	{
 		show_operations(proc);

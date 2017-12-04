@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 17:19:54 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:23:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ int					main(int argc, char **argv)
 	init_vm(&vm);
 	if (check_arg(&vm, argc, argv))
 		error("Error\n");
+	create_players(&vm);
 	if (vm.ncurses)
 		init_ncurses(&w);
-	create_players(&vm);
 	run(&vm);
 	get_winner(&vm);
 	if (vm.ncurses)

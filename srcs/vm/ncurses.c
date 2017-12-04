@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 16:22:22 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:12:23 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,5 @@ void	init_ncurses(WINDOW **w)
 	start_color();
 	cbreak();
 	nodelay(*w, TRUE);
+	curs_set(0);
 }
