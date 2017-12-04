@@ -17,7 +17,7 @@ void	print_instr(int fd, int c)
 	char	*ins;
 	int		size;
 
-	ins = op_tab[c - 1].inst;
+	ins = g_op_tab[c - 1].inst;
 	size = ft_strlen(ins);
 	write(fd, "\t", 1);
 	write(fd, ins, ft_strlen(ins));
@@ -35,7 +35,7 @@ void	parse_cor(t_dasm_env *env)
 		inst = env->file[i];
 		print_instr(env->fd, inst);
 		++i;
-		if (!op_tab[inst - 1].need_ocp)
+		if (!g_op_tab[inst - 1].need_ocp)
 		{
 			if (inst == 1)
 				i += print_dir4(env->fd, env->file + i);

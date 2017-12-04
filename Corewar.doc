@@ -10,7 +10,7 @@
 #ENCODAGE#
 
 
-	1 - Le code de l'instruction. (on le trouve dans op_tab dans op.c)
+	1 - Le code de l'instruction. (on le trouve dans g_op_tab dans op.c)
 		{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 
 		T_DIR = 2 mais c est quoi bordel ?

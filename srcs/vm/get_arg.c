@@ -20,7 +20,7 @@ void				get_dir(t_vm *vm, t_proc *proc, int num, int pos)
 	value = (unsigned char)vm->ram[(pos + 1) % MEM_SIZE].mem;
 	value = value << 8;
 	value = value | (unsigned char)vm->ram[(pos + 2) % MEM_SIZE].mem;
-	if (op_tab[proc->op.code - 1].direct_size)
+	if (g_op_tab[proc->op.code - 1].direct_size)
 	{
 		if ((value & 0x8000) == 0x8000)
 			value = (value - USHRT_MAX) - 1;

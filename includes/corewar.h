@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 17:46:06 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,26 +168,6 @@ typedef struct		header_s
 // #define NC_C_GREY 35
 // #define NC_C_WHITE 40
 #define NC_C_BASIC 15
-// #define NC_C_GREYBLACK 41
-//
-// #define NC_C_GREEN 20
-// #define NC_C_GREEN_FLUO 36
-// #define NC_C_GREEN_BLING 38
-// #define NC_C_GREEN_LIGHT 21
-// #define NC_C_GREEN_BLACK 24
-//
-// #define NC_C_BLUE 22
-// #define NC_C_BLUE_FLUO 37
-// #define NC_C_BLUE_LIGHT 23
-// #define NC_C_BLUE_BLING 25
-//
-// #define NC_C_RED 50
-// #define NC_C_RED_FLUO 51
-// #define NC_C_RED_BLING 52
-// #define NC_C_RED_LIGHT 53
-// #define NC_C_RED_BLACK 54
-// #define NC_C_RED2 55
-//
 #define NC_C_YELLOW 60
 // #define NC_C_YELLOW_FLUO 61
 // #define NC_C_YELLOW_BLING 62
@@ -273,7 +253,7 @@ typedef struct s_optab
 	int		direct_size; 	// nombre d'octect d'encodage. 2 ou 4;
 }	t_optab;
 
-extern t_optab op_tab[];
+extern t_optab g_op_tab[];
 
 
 typedef struct s_vm
@@ -301,7 +281,7 @@ typedef struct s_vm
 	t_player	player[5];
 	t_player	*last_one;
 
-	//void	(*op_tab[20])(struct s_vm *vm, t_op *op, int player);
+	//void	(*g_op_tab[20])(struct s_vm *vm, t_op *op, int player);
 
 	t_optab	optab[17];
 	t_proc	*proc;
@@ -484,6 +464,15 @@ int char_is_com(char c);
 */
 void create_file(t_asm_env *env, char *str);
 int check_name(char *str);
+int parse_args(t_asm_env *env, char **argv);
+void check_args_letter(t_asm_env *env, char let);
+void debug_mode(t_asm_env *env, int fd);
+void print_mode(t_asm_env *env, char *file);
+void check_mode(t_asm_env *env, char *name, int fd);
+void print_mode_verbose(t_asm_env *env);
+void init_env(t_asm_env *env);
+void print_help(void);
+
 
 /*
  ** -------- Analyse -------------

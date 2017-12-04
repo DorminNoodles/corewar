@@ -35,13 +35,13 @@ int		find_op(t_asm_env *env, char *word, char *line)
 	oct = 1;
 	i = 0;
 	tmp = 0;
-	while (op_tab[i].inst)
+	while (g_op_tab[i].inst)
 	{
-		if (!ft_strcmp(word, op_tab[i].inst))
+		if (!ft_strcmp(word, g_op_tab[i].inst))
 		{
 			if (env->verbose && env->print == PRINT_MODE)
 				verbose_inst(env, word, i);
-			if (!op_tab[i].need_ocp)
+			if (!g_op_tab[i].need_ocp)
 				tmp = find_op_no_ocp(env, line, i);
 			else
 			{

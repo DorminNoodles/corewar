@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/12/04 17:48:38 by lchety           ###   ########.fr        #
+#    Updated: 2017/12/04 17:52:44 by lchety           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -68,7 +68,9 @@ SRC_FILES_VM = main.c \
 
 SRC_FILES_ASM = main.c \
 								create_file.c \
+								mode.c \
 								error.c \
+								error2.c	\
 								labels.c \
 								header.c \
 								debug.c \
@@ -81,6 +83,7 @@ SRC_FILES_ASM = main.c \
 								display1.c \
 								display2.c \
 								check_line.c \
+								check_header.c \
 								lex_ins1.c \
 								lex_ins2.c \
 								check_arg1.c \

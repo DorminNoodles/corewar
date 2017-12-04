@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 17:23:40 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int					move_pc(t_proc *proc)
 
 	i = 0;
 	move = 1;
-	ref = &op_tab[proc->op.code - 1];
+	ref = &g_op_tab[proc->op.code - 1];
 	if (!ref->need_ocp)
 		return ((ref->direct_size) ? move + 2 : move + 4);
 	else
@@ -50,7 +50,7 @@ void				animate_proc(t_vm *vm, t_proc *proc)
 		if (proc->op.loadtime <= 0)
 		{
 			if (fill_cur_op(vm, proc))
-				op_tab[proc->op.code - 1].func(vm, proc);
+				g_op_tab[proc->op.code - 1].func(vm, proc);
 			if (proc->op.code != 9 ||
 				(proc->op.code == 9 && !proc->carry))
 				proc->pc += move_pc(proc);

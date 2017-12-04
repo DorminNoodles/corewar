@@ -24,7 +24,7 @@ int		check_params(t_op *op)
 	int i;
 
 	i = 0;
-	while (i < op_tab[op->code - 1].nb_arg)
+	while (i < g_op_tab[op->code - 1].nb_arg)
 	{
 		if (op->ar_typ[i] == REG_CODE)
 		{

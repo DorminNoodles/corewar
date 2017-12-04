@@ -46,7 +46,7 @@ int			find_args(t_vm *vm, t_proc *proc, int num, int pos)
 	if (type == DIR_CODE)
 	{
 		get_dir(vm, proc, num, pos);
-		return ((op_tab[proc->op.code - 1].direct_size) ? 2 : 4);
+		return ((g_op_tab[proc->op.code - 1].direct_size) ? 2 : 4);
 	}
 	if (type == IND_CODE)
 	{
@@ -66,7 +66,7 @@ void		create_op(t_proc *proc, char data)
 	init_op(&proc->op);
 	proc->op.active = 1;
 	proc->op.code = data;
-	proc->op.loadtime = op_tab[data - 1].loadtime - 1;
+	proc->op.loadtime = g_op_tab[data - 1].loadtime - 1;
 	proc->op.pos_opcode = proc->pc;
 }
 
@@ -78,14 +78,14 @@ int			fill_cur_op(t_vm *vm, t_proc *proc)
 
 	i = 0;
 	pos = proc->pc;
-	optab_ref = &op_tab[proc->op.code - 1];
+	optab_ref = &g_op_tab[proc->op.code - 1];
 	if (optab_ref->need_ocp)
 	{
 		pos++;
 		proc->op.ocp = (unsigned char)vm->ram[pos % MEM_SIZE].mem;
 		if (check_ocp(proc->op.ocp, proc->op.code))
 		{
-			while (i < op_tab[proc->op.code - 1].nb_arg)
+			while (i < g_op_tab[proc->op.code - 1].nb_arg)
 			{
 				pos += find_args(vm, proc, i, pos);
 				i++;

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 17:50:45 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void		show_operations(t_proc *proc)
 	int		i;
 
 	i = 0;
-	nb_arg = op_tab[proc->op.code - 1].nb_arg;
-	ft_printf("P%5d | %s", proc->id + 1, op_tab[proc->op.code - 1].inst);
+	nb_arg = g_op_tab[proc->op.code - 1].nb_arg;
+	ft_printf("P%5d | %s", proc->id + 1, g_op_tab[proc->op.code - 1].inst);
 	while (i < nb_arg)
 	{
 		ft_printf(" ");
