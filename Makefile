@@ -6,13 +6,13 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/12/04 15:09:18 by lchety           ###   ########.fr        #
+#    Updated: 2017/12/04 17:48:38 by lchety           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
 
 CC = clang
-CFLAGS = -g -Wall -Werror -Wextra #-Weverything
+CFLAGS = -g -Wall -Werror -Wextra -Wunused
 VM_NAME = corewar
 ASM_NAME = asm
 DASM_NAME = decompiler
@@ -52,6 +52,7 @@ SRC_FILES_VM = main.c \
 								pars_op.c	\
 								players.c	\
 								processus.c	\
+								pars_players.c	\
 								fork.c \
 								get_arg.c	\
 								lfork.c	\

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 15:07:59 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:46:06 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,10 @@ int			count_octet(int octet, t_optab *ref);
 void		delete_op(t_proc *proc);
 void		reset_live(t_vm *vm);
 void		dump(t_vm *vm);
-
+int			srch_nb_player(char **argv, int arg_num);
+int			srch_players(t_vm *vm, int argc, char **argv);
+void		new_player(t_vm *vm, int nb, char *str);
+int			get_nb_player(t_vm *vm, char **argv, int arg_num);
 
 /*
  ** --------INSTRUCTIONS----------
