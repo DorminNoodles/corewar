@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:21:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 16:18:45 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 16:58:36 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,15 @@ int			fill_cur_op(t_vm *vm, t_proc *proc)
 	else
 		get_dir(vm, proc, 0, pos);
 	return (1);
+}
+
+void		delete_op(t_proc *proc)
+{
+	proc->op.code = 0;
+	proc->op.ocp = 0;
+	ft_bzero(proc->op.ar, 3);
+	ft_bzero(proc->op.ar_typ, 3);
+	proc->op.loadtime = 0;
+	proc->op.pos_opcode = 0;
+	proc->op.active = 0;
 }
