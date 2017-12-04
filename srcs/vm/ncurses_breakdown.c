@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:06:02 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 16:34:04 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 17:03:57 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,11 @@ int		get_nb_live(t_vm *vm)
 	return (live);
 }
 
-int		last_breakdown(t_vm *vm, int line)
+int		last_breakdown(t_vm *vm, int line, int p)
 {
 	int i;
-	int p;
 	int col;
 
-	p = 1;
 	col = 1;
 	while (p <= MAX_PLAYERS)
 	{
@@ -80,6 +78,7 @@ int		last_breakdown(t_vm *vm, int line)
 		mvprintw(line, 3 * (MEM_SIZE / 64) + 7 + col, "-");
 		++col;
 	}
+	mvprintw(line, 3 * (MEM_SIZE / 64) + 7 + col, "]");
 	return (line);
 }
 
@@ -143,7 +142,6 @@ int		display_breakdown(t_vm *vm, int line)
 	mvprintw(line + 3, 3 * (MEM_SIZE / 64) + 7,
 	"Live breakdown for last period :");
 	mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 7, "[");
-	line = last_breakdown(vm, line + 4);
-	mvprintw(line + 4, 3 * (MEM_SIZE / 64) + 7 + col, "]");
+	line = last_breakdown(vm, line + 4, 1);
 	return (line);
 }
