@@ -6,17 +6,17 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/05 19:03:33 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 22:32:36 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-char	*get_data(char *filename)
+char	*get_data(char *filename, char *buff)
 {
 	int		fd;
-	char	buff[MEM_SIZE];
-	char	*data;
+	// char	buff[sizeof(t_header) + CHAMP_MAX_SIZE];
+	// char	*data;
 	int		ret;
 
 	fd = 0;
@@ -24,11 +24,13 @@ char	*get_data(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		error("File\n");
-	ret = read(fd, buff, MEM_SIZE);
-	if (!(data = ft_memalloc(ret + 1)))
-		error("Malloc\n");
-	ft_memcpy(data, buff, ret);
-	return (data);
+	ret = read(fd, buff, sizeof(t_header) + CHAMP_MAX_SIZE);
+	if (ret < (int)sizeof(t_header))
+		error("File size error\n");
+	// if (!(data = ft_memalloc(ret + 1)))
+	// 	error("Malloc\n");
+	// ft_memcpy(data, buff, ret);
+	return (buff);
 }
 
 int		get_prog_size(char *data)
@@ -45,6 +47,8 @@ int		get_prog_size(char *data)
 	ret = ret | (unsigned char)data[2];
 	ret = ret << 8;
 	ret = ret | (unsigned char)data[3];
+	if (ret > CHAMP_MAX_SIZE)
+		error("Champ is too big\n");
 	return (ret);
 }
 
@@ -74,14 +78,14 @@ void	write_player(t_vm *vm, int nb, int num)
 {
 	int		i;
 	char	*data;
-	char	*data_tmp;
 	int		prog_size;
+	char	buff[sizeof(t_header) + CHAMP_MAX_SIZE];
+
 
 	i = (MEM_SIZE / vm->nb_player) * num;
-	data = get_data(vm->player[nb].file_name);
+	data = get_data(vm->player[nb].file_name, buff);
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
 	vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
-	ft_printf("len name = %d\n", ft_strlen(vm->player[nb].name));
 	if (!ft_strlen(vm->player[nb].name))
 		error("Empty name\n");
 	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB
@@ -92,16 +96,15 @@ void	write_player(t_vm *vm, int nb, int num)
 	prog_size = get_prog_size(data);
 	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		nb, prog_size, vm->player[nb].name, vm->player[nb].comments);
-	data_tmp = data + SRC_BEGIN;
+	data = data + SRC_BEGIN;
 	prog_size += i;
 	while (i < prog_size)
 	{
-		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data_tmp;
+		vm->ram[i % MEM_SIZE].mem = (unsigned char)*data;
 		vm->ram[i % MEM_SIZE].num = (num + 1) * -1;
-		data_tmp++;
+		data++;
 		i++;
 	}
-	ft_memdel((void*)&data);
 }
 
 void	init_process(t_vm *vm)
