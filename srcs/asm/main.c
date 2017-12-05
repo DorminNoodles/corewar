@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 17:44:53 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:02:51 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	init_env(t_asm_env *env)
 
 void	print_mode_verbose(t_asm_env *env)
 {
-	color(C_GREEN);
+	COLOR(C_GREEN);
 	ft_printf("Total bytes: ");
-	color(C_RESET);
+	COLOR(C_RESET);
 	ft_printf("%d\n\n", env->bytes - 1);
 }
 

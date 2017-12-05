@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 17:41:46 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 21:59:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	parse_label(t_asm_env *env, char *line, char *label, int printmode)
 
 void	parse_verbose(t_asm_env *env, char *line)
 {
-	color(C_GREEN);
+	COLOR(C_GREEN);
 	ft_printf("- Line %d ", env->line);
-	color(C_YELLOW);
+	COLOR(C_YELLOW);
 	ft_printf("(Actual byte: %d)", env->bytes - 1);
-	color(C_RESET);
+	COLOR(C_RESET);
 	ft_printf(" : '%s'\n", line);
 }
 

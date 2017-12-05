@@ -6,7 +6,11 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 17:42:53 by rfulop            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2017/12/05 13:45:14 by rfulop           ###   ########.fr       */
+=======
+/*   Updated: 2017/12/04 21:58:30 by lchety           ###   ########.fr       */
+>>>>>>> 1dc48380dd0215a20d88c2922e523d7a6f5e7d21
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +59,9 @@ void	print_mode(t_asm_env *env, char *file)
 		ft_memdel((void*)&line);
 		if (env->verbose && env->verbose_line)
 		{
-			color(C_GREEN);
+			COLOR(C_GREEN);
 			ft_printf("-> ");
-			color(C_RESET);
+			COLOR(C_RESET);
 			ft_printf("0%s\n\n", env->verbose_line);
 			ft_memdel((void*)&env->verbose_line);
 		}
@@ -85,9 +89,9 @@ void	debug_mode(t_asm_env *env, int fd)
 		if (!env->ko)
 		{
 			ft_printf("This instruction is ");
-			color(C_GREEN);
+			COLOR(C_GREEN);
 			ft_printf("OK.\n\n");
-			color(C_RESET);
+			COLOR(C_RESET);
 		}
 		ft_memdel((void*)&line);
 		++env->line;

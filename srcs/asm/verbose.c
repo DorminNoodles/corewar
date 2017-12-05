@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 18:01:52 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:00:12 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 
 	a = 0;
 	ft_printf("|");
-	color(C_BLUE);
+	COLOR(C_BLUE);
 	if (add == 1)
 		ft_printf("%c", DIRECT_CHAR);
 	else if (add == 2)
@@ -30,7 +30,7 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 		ft_printf("%c", line[a]);
 		++a;
 	}
-	color(C_RESET);
+	COLOR(C_RESET);
 	ft_printf("| ");
 	tmp2 = ft_itoa(hex);
 	tmp = ft_conv_hex(tmp2, HEX2);
@@ -46,9 +46,9 @@ void	verbose_inst(t_asm_env *env, char *ins, int hex)
 	char *tmp2;
 
 	ft_printf("Instruction:|");
-	color(C_CYAN);
+	COLOR(C_CYAN);
 	ft_printf("%s", ins);
-	color(C_RESET);
+	COLOR(C_RESET);
 	ft_printf("| ");
 	if (!(env->verbose_line = ft_strnew(30)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
@@ -70,9 +70,9 @@ void	verbose_dist_lab(int dist)
 void	verbose_lab(char *lab)
 {
 	ft_printf("label:|");
-	color(C_RED);
+	COLOR(C_RED);
 	write(1, lab, ft_strlen(lab) - 1);
-	color(C_RESET);
+	COLOR(C_RESET);
 	ft_printf("| ");
 }
 

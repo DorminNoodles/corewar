@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 12:07:36 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 17:12:23 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 22:26:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,6 @@ void	colors_init(void)
 	init_color_pair();
 }
 
-void	display_linux(void)
-{
-	int i;
-	int j;
-
-	i = 0;
-	attron(COLOR_PAIR(NC_P_BLACK_B));
-	while (i < (MEM_SIZE / 64) + 5)
-	{
-		j = 0;
-		while (j < 3 * (MEM_SIZE / 64) + 72)
-		{
-			mvprintw(i, j, " ");
-			++j;
-		}
-		++i;
-	}
-}
-
 void	border_ncurses(void)
 {
 	int i;
@@ -105,8 +86,6 @@ void	call_ncurses(t_vm *vm)
 		return ;
 	if (vm->boost && !vm->winner && (vm->cycle % BOOST_CYCLES))
 		return ;
-	colors_init();
-	border_ncurses();
 	display_mem(vm);
 	display_menu(vm);
 	controller(vm);
@@ -124,6 +103,8 @@ void	init_ncurses(WINDOW **w)
 		exit(1);
 	}
 	start_color();
+	colors_init();
+	border_ncurses();
 	cbreak();
 	nodelay(*w, TRUE);
 	curs_set(0);

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 19:34:26 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 21:51:02 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	parse_cor(t_dasm_env *env)
 	int		inst;
 
 	i = SRC_BEGIN;
-	while (i < env->sizeFile)
+	while (i < env->size_file)
 	{
 		inst = env->file[i];
 		print_instr(env->fd, inst);

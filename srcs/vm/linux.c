@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   linux.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 09:50:43 by amacieje         ###   ########.fr       */
+/*   Created: 2017/12/04 22:26:34 by lchety            #+#    #+#             */
+/*   Updated: 2017/12/04 22:27:04 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "corewar.h"
 
-char	*ft_strnew(size_t size)
+void	display_linux(void)
 {
-	char	*res;
+	int i;
+	int j;
 
-	res = NULL;
-	if (!(res = (char*)malloc(sizeof(char) * size + 1)))
-		return (NULL);
-	ft_bzero(res, size + 1);
-	return (res);
+	i = 0;
+	attron(COLOR_PAIR(NC_P_BLACK_B));
+	while (i < (MEM_SIZE / 64) + 5)
+	{
+		j = 0;
+		while (j < 3 * (MEM_SIZE / 64) + 72)
+		{
+			mvprintw(i, j, " ");
+			++j;
+		}
+		++i;
+	}
 }

@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnew.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/16 14:16:37 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 09:50:43 by amacieje         ###   ########.fr       */
+/*   Created: 2017/12/04 20:22:06 by lchety            #+#    #+#             */
+/*   Updated: 2017/12/04 22:22:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "corewar.h"
 
-char	*ft_strnew(size_t size)
+void	free_everything(t_vm *vm)
 {
-	char	*res;
+	t_proc *tmp;
+	t_proc *tmp2;
 
-	res = NULL;
-	if (!(res = (char*)malloc(sizeof(char) * size + 1)))
-		return (NULL);
-	ft_bzero(res, size + 1);
-	return (res);
+	tmp = vm->proc;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free(tmp2);
+	}
+	vm->proc = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/20 18:09:20 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/04 21:50:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ unsigned char	*open_bin(t_dasm_env *env, int fd)
 
 	if (!(ret = malloc(MEM_SIZE + 1)))
 		dasm_error(MALLOC_ERR, NULL);
-	env->sizeFile = read(fd, ret, MEM_SIZE);
-	if (env->sizeFile > MEM_SIZE)
+	env->size_file = read(fd, ret, MEM_SIZE);
+	if (env->size_file > MEM_SIZE)
 		dasm_error(SIZE_ERROR, NULL);
 	return (ret);
 }
