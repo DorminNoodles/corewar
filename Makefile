@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/12/04 22:27:17 by lchety           ###   ########.fr        #
+#    Updated: 2017/12/05 13:55:39 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -50,6 +50,7 @@ SRC_FILES_VM = main.c \
 								ncurses_mem.c	\
 								ncurses_menu.c	\
 								ncurses_breakdown.c	\
+								ncurses_get.c	\
 								linux.c	\
 								pars_op.c	\
 								players.c	\

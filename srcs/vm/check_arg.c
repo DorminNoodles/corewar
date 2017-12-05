@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 11:49:01 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 20:25:13 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 14:45:36 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ int		srch_nb_dump(int argc, char **argv)
 	nb = 0;
 	if ((ret = ft_strargv(argc, argv, "-d")))
 	{
+		if (ft_strlen(argv[ret]) > 2)
+			error("Bad argument\n");
 		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
 			return (ft_atoi(argv[ret + 1]));
 		else
-			error("error : verbosity bad number\n");
+			error("Dump bad number\n");
 	}
 	return (-1);
 }
@@ -55,7 +57,7 @@ int		srch_verbose(int argc, char **argv)
 		if ((ret + 1) < argc && ft_str_isdigit(argv[ret + 1]))
 			return (ft_atoi(argv[ret + 1]));
 		else
-			error("error : dump bad number\n");
+			error("Verbosity bad number\n");
 	}
 	return (0);
 }
@@ -75,6 +77,8 @@ int		check_arg(t_vm *vm, int argc, char **argv)
 	if (argc == 1)
 		usage();
 	vm->dump = srch_nb_dump(argc, argv);
+	if (!vm->dump)
+		++vm->dump;
 	vm->ncurses = srch_ncurses(argc, argv);
 	vm->verbosity = srch_verbose(argc, argv);
 	if (srch_players(vm, argc, argv))

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 22:25:40 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 14:34:14 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_data(char *filename)
 {
 	int		fd;
-	char	buff[4096];
+	char	buff[MEM_SIZE];
 	char	*data;
 	int		ret;
 
@@ -23,8 +23,8 @@ char	*get_data(char *filename)
 	ret = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		error("error : file\n");
-	ret = read(fd, buff, 4096);
+		error("File\n");
+	ret = read(fd, buff, MEM_SIZE);
 	data = ft_memalloc(ret + 1);
 	ft_memcpy(data, buff, ret);
 	return (data);
@@ -34,8 +34,8 @@ int		get_prog_size(char *data)
 {
 	int ret;
 
-	data += 4;
-	data += 128 + 4;
+	data += MAGIC_NB;
+	data += PROG_NAME;
 	ret = 0x0;
 	ret = ret | (unsigned char)*data;
 	ret = ret << 8;

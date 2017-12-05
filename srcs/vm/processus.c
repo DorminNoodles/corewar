@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 16:57:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 22:28:20 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 14:32:11 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_proc	*create_process(t_vm *vm, int num)
 	t_proc	*tmp;
 
 	if (!(tmp = (t_proc*)ft_memalloc(sizeof(t_proc))))
-		error("error : malloc\n");
+		error("Malloc\n");
 	tmp->id = set_proc_id(vm);
 	tmp->num = num;
 	tmp->pc = (MEM_SIZE / vm->nb_player) * ((num * (-1) - 1));
