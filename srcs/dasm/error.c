@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 22:03:58 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:32:30 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	dasm_error(int err, char *str)
 		ft_printf("Comments size too big\n");
 	else if (err == WRONG_FILE)
 		ft_printf("\"%s\" : Wrong file\n", str);
-	if (!WRONG_FILE)
+	else if (err == NO_COMP)
+		ft_printf("Rly dude ? Don't touch my .cor !\n");
+	if (err != WRONG_FILE)
 		exit(EXIT_FAILURE);
 }

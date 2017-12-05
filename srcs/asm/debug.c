@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfulop <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/10/24 17:48:29 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:04:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	print_labs_lst(t_tab_labs *lst)
 
 	count = 0;
 	tmp = lst;
-	printf("Labels list :\n");
+	ft_printf("Labels list :\n");
 	while (tmp && tmp->label)
 	{
-		printf("%d - '%s' at + %d bytes\n", count, tmp->label, tmp->nb_oct);
+		ft_printf("%d - '%s' at + %d bytes\n", count, tmp->label, tmp->nb_oct);
 		tmp = tmp->next;
 		++count;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
