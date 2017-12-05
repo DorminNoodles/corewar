@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 17:38:33 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 17:39:17 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:08:18 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	asm_error3(int err, char *str, t_asm_env *env, int column)
 		ft_printf("instruction has no arguments\n");
 	else if (err == LABEL_ERROR)
 		ft_printf("Label '%s' is not find.\n", str);
+	else if (err == LAB_EXISTS)
+		ft_printf("Label '%s' exists already\n", str);
 	else if (err == TOO_MUCH_ARG_ERR)
 		ft_printf("Too much arguments at [%d:%d] : '%s'.\n", line, column, str);
 	else

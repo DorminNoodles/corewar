@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/04 19:12:31 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:08:25 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,20 @@ int			dist_label(t_asm_env *env, char *label)
 	return (tmp->nb_oct - env->bytes);
 }
 
-t_tab_labs	*new_label(char *line, int bytes)
+void check_lab_exits(t_tab_labs **labels, char *name)
+{
+	t_tab_labs	*tmp;
+
+	tmp = *labels;
+	while (tmp && tmp->label)
+	{
+		if (!(ft_strcmp(tmp->label, name)))
+			asm_error(LAB_EXISTS, name, 0, 0);
+		tmp = tmp->next;
+	}
+}
+
+t_tab_labs	*new_label(t_tab_labs **labels, char *line, int bytes)
 {
 	int			a;
 	int			len;
@@ -73,6 +86,7 @@ t_tab_labs	*new_label(char *line, int bytes)
 		++a;
 	}
 	name[a] = '\0';
+	check_lab_exits(labels, name);
 	if (!(new = (t_tab_labs*)malloc(sizeof(t_tab_labs))))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
 	new->label = ft_strdup(name);
@@ -91,8 +105,8 @@ void		create_label(t_tab_labs **labels, int bytes, char *line)
 	{
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = new_label(line, bytes);
+		tmp->next = new_label(labels, line, bytes);
 	}
 	else
-		*labels = new_label(line, bytes);
+		*labels = new_label(labels, line, bytes);
 }
