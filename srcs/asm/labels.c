@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 19:08:25 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:12:23 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,6 @@ int			dist_label(t_asm_env *env, char *label)
 	if (env->verbose)
 		verbose_dist_lab(tmp->nb_oct - env->bytes);
 	return (tmp->nb_oct - env->bytes);
-}
-
-void check_lab_exits(t_tab_labs **labels, char *name)
-{
-	t_tab_labs	*tmp;
-
-	tmp = *labels;
-	while (tmp && tmp->label)
-	{
-		if (!(ft_strcmp(tmp->label, name)))
-			asm_error(LAB_EXISTS, name, 0, 0);
-		tmp = tmp->next;
-	}
 }
 
 t_tab_labs	*new_label(t_tab_labs **labels, char *line, int bytes)

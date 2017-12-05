@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/05 09:27:13 by amacieje         ###   ########.fr       */
+/*   Updated: 2017/12/05 19:14:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ void			display_linux(void);
 # define CHECK_MODE 0
 # define PRINT_MODE 1
 # define ERROR_MIN 0
-# define ERROR_MAX 27
+# define ERROR_MAX 30
 # define NO_FILE_ERR 0
 # define SOURCE_ERR 1
 # define MALLOC_ERR 2
@@ -369,6 +369,8 @@ void			display_linux(void);
 # define WRONG_FORM_COM 26
 # define SIZE_MAX_ERR 27
 # define WRONG_FILE 28
+# define NO_COMP 29
+# define LAB_EXISTS 30
 
 typedef struct	s_asm_env
 {
@@ -507,11 +509,12 @@ void			write_header(t_asm_env *env, char *line, int printmode);
 /*
 ** --------- Labels ------------
 */
-t_tab_labs		*new_label(char *line, int bytes);
+t_tab_labs		*new_label(t_tab_labs **labels, char *line, int bytes);
 void			create_label(t_tab_labs **labels, int bytes, char *line);
 int				dist_label(t_asm_env *env, char *label);
 int				is_label_str(char *str);
 int				is_label_char(char c);
+void			check_lab_exits(t_tab_labs **labels, char *name);
 
 /*
 ** ---------- Toolkit ----------

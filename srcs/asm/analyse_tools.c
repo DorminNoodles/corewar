@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/30 17:59:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:13:53 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ char	*concat_opcode(char *ocp, int arg)
 	else if (arg == IND_CODE)
 		ft_strcat(ocp, "11");
 	return (ocp);
+}
+
+void	check_lab_exits(t_tab_labs **labels, char *name)
+{
+	t_tab_labs	*tmp;
+
+	tmp = *labels;
+	while (tmp && tmp->label)
+	{
+		if (!(ft_strcmp(tmp->label, name)))
+			asm_error(LAB_EXISTS, name, 0, 0);
+		tmp = tmp->next;
+	}
 }
