@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/05 14:34:14 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:03:33 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*get_data(char *filename)
 	if (fd < 0)
 		error("File\n");
 	ret = read(fd, buff, MEM_SIZE);
-	data = ft_memalloc(ret + 1);
+	if (!(data = ft_memalloc(ret + 1)))
+		error("Malloc\n");
 	ft_memcpy(data, buff, ret);
 	return (data);
 }
@@ -80,9 +81,14 @@ void	write_player(t_vm *vm, int nb, int num)
 	data = get_data(vm->player[nb].file_name);
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
 	vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
+	ft_printf("len name = %d\n", ft_strlen(vm->player[nb].name));
+	if (!ft_strlen(vm->player[nb].name))
+		error("Empty name\n");
 	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB
 			+ PROG_NAME + PROG_SIZE, PROG_COMS);
 	vm->player[nb].comments[COMMENT_LENGTH] = '\0';
+	if (!ft_strlen(vm->player[nb].comments))
+		error("Empty comments\n");
 	prog_size = get_prog_size(data);
 	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		nb, prog_size, vm->player[nb].name, vm->player[nb].comments);
