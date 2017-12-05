@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 21:51:02 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 13:59:54 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	print_head(t_dasm_env *env)
 	write(env->fd, "\"\n\n", 3);
 }
 
-void loop(t_dasm_env *env, char **argv, int arg, int fd)
+void	loop(t_dasm_env *env, char **argv, int arg, int fd)
 {
 	create_file_cor(env, argv[arg]);
 	env->file = open_bin(env, fd);
