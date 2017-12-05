@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 13:59:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:39:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	print_instr(int fd, int c)
 	char	*ins;
 	int		size;
 
+	if (c < 1 || c > 16)
+		dasm_error(NO_COMP, NULL);
 	ins = g_op_tab[c - 1].inst;
 	size = ft_strlen(ins);
 	write(fd, "\t", 1);
