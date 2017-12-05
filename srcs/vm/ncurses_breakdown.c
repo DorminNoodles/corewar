@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:06:02 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 17:03:57 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/05 09:23:31 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,6 @@ int		loop_breakdown(int line, int col, int until)
 		++i;
 	}
 	return (i);
-}
-
-int		get_dv(int live)
-{
-	int dv;
-
-	dv = 0;
-	if (live)
-	{
-		dv = (BREAK_DIS / live);
-		if (BREAK_DIS % live)
-			++dv;
-	}
-	return (dv);
-}
-
-int		get_nb_live(t_vm *vm)
-{
-	int i;
-	int live;
-
-	i = 1;
-	live = 0;
-	while (i <= MAX_PLAYERS)
-	{
-		live += vm->player[i].life_signal;
-		++i;
-	}
-	return (live);
 }
 
 int		last_breakdown(t_vm *vm, int line, int p)
@@ -80,23 +51,6 @@ int		last_breakdown(t_vm *vm, int line, int p)
 	}
 	mvprintw(line, 3 * (MEM_SIZE / 64) + 7 + col, "]");
 	return (line);
-}
-
-float	get_p_lives(t_vm *vm, int p, int tot_live)
-{
-	float p_lives;
-	float perdiv;
-
-	if (tot_live)
-	{
-		perdiv = (vm->player[p].life_signal * 100.0) / tot_live;
-		p_lives = ((BREAK_DIS / 100.0) * perdiv);
-		if (p_lives)
-			++p_lives;
-	}
-	else
-		p_lives = 0;
-	return (p_lives);
 }
 
 int		current_breakdown(t_vm *vm, int line, int tot_live)

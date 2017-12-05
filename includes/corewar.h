@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 22:30:01 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/05 09:27:13 by amacieje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,9 @@ void			display_mem(t_vm *vm);
 void			display_menu(t_vm *vm);
 int				display_players(t_vm *vm);
 int				display_breakdown(t_vm *vm, int line);
+int				get_dv(int live);
+int				get_nb_live(t_vm *vm);
+float			get_p_lives(t_vm *vm, int p, int tot_live);
 void			name_color(int player);
 void			name_color_off(int player);
 void			display_linux(void);
