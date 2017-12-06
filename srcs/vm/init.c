@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/06 10:37:42 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/06 14:21:21 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,18 @@ void	write_player(t_vm *vm, int nb, int num)
 	int		prog_size;
 	char	buff[sizeof(t_header) + CHAMP_MAX_SIZE];
 
-
 	i = (MEM_SIZE / vm->nb_player) * num;
 	data = get_data(vm->player[nb].file_name, buff);
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
-	// vm->player[nb].name[PROG_NAME_LENGTH] = '\0';
 	if (!ft_strlen(vm->player[nb].name))
 		error("Empty name\n");
 	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB
 			+ PROG_NAME + PROG_SIZE, PROG_COMS);
-	// vm->player[nb].comments[COMMENT_LENGTH] = '\0';
 	if (!ft_strlen(vm->player[nb].comments))
 		error("Empty comments\n");
 	prog_size = get_prog_size(data);
 	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		nb, prog_size, vm->player[nb].name, vm->player[nb].comments);
-	// data = data + SRC_BEGIN;
 	prog_size += i;
 	while (i < prog_size)
 	{
