@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 17:16:25 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 22:25:56 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/06 10:31:44 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ void	reset_life_signal(t_vm *vm)
 void	new_player(t_vm *vm, int nb, char *str)
 {
 	vm->player[nb].active = 1;
-	vm->player[nb].last_live = 0;
-	vm->player[nb].life_signal = 0;
-	vm->player[nb].last_period = 0;
-	vm->player[nb].tot = 0;
 	vm->player[nb].file_name = str;
 }
 
