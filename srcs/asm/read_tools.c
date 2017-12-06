@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/01 16:18:24 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/06 23:10:01 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*red_label_name(char *word, int len)
 	char	*label;
 
 	if (!(label = (char*)malloc(sizeof(char) * len + 1 + 1)))
-		exit(0);
+		asm_error(MALLOC_ERR, NULL, 0, 0);
 	label[len] = '\0';
 	i = 0;
 	while (i < len + 1)

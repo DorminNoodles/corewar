@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 17:42:53 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 13:56:49 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/06 23:09:24 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	check_args_letter(t_asm_env *env, char let)
 	{
 		ft_printf("Invalid argument\n");
 		print_help();
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -128,7 +128,7 @@ int		parse_args(t_asm_env *env, char **argv)
 		{
 			ft_printf("Invalid argument\n");
 			print_help();
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		++a;
 	}
