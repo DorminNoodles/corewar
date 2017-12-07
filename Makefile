@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/12/05 13:55:39 by rfulop           ###   ########.fr        #
+#    Updated: 2017/12/07 13:34:53 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -94,7 +94,8 @@ SRC_FILES_ASM = main.c \
 								check_arg2.c \
 								read_line.c \
 								read_tools.c \
-								verbose.c \
+								verbose1.c \
+								verbose2.c \
 								free.c
 SRC_FILES_DASM = main.c \
 				op.c \

@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/07 01:35:40 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 13:37:06 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -540,10 +540,11 @@ void			asm_error6(int err, t_asm_env *env);
 
 void			verbose_inst(t_asm_env *env, char *ins, int hex);
 void			verbose_arg(t_asm_env *env, char *line, int arg, int hex);
+void			verbose_arg_bis(char *line, int arg);
 void			verbose_lab(char *lab);
 void			verbose_dist_lab(int dist);
 void			verbose_ocp(t_asm_env *env, char ocp);
-
+char			*swap_hex(char *str);
 /*
 **------------------- DECOMPILER ------------------
 */
