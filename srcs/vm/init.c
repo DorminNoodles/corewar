@@ -6,24 +6,24 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 14:42:39 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/06 14:21:21 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/07 15:12:40 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-char	*get_data(char *filename, char *buff)
+char	*get_data(t_player *player, char *buff)
 {
 	int		fd;
 	int		ret;
 
 	fd = 0;
 	ret = 0;
-	fd = open(filename, O_RDONLY);
+	fd = open(player->file_name, O_RDONLY);
 	if (fd < 0)
 		error("File\n");
-	ret = read(fd, buff, sizeof(t_header) + CHAMP_MAX_SIZE);
-	if (ret < (int)sizeof(t_header))
+	player->read_ret = read(fd, buff, sizeof(t_header) + CHAMP_MAX_SIZE);
+	if (player->read_ret < (int)sizeof(t_header))
 		error("File size error\n");
 	return (buff);
 }
@@ -77,15 +77,15 @@ void	write_player(t_vm *vm, int nb, int num)
 	char	buff[sizeof(t_header) + CHAMP_MAX_SIZE];
 
 	i = (MEM_SIZE / vm->nb_player) * num;
-	data = get_data(vm->player[nb].file_name, buff);
+	data = get_data(&vm->player[nb], buff);
 	ft_memcpy(vm->player[nb].name, data + MAGIC_NB, PROG_NAME);
-	if (!ft_strlen(vm->player[nb].name))
-		error("Empty name\n");
+	ft_strlen(vm->player[nb].name) ? 0 : error("Empty name\n");
 	ft_memcpy(vm->player[nb].comments, data + MAGIC_NB
 			+ PROG_NAME + PROG_SIZE, PROG_COMS);
-	if (!ft_strlen(vm->player[nb].comments))
-		error("Empty comments\n");
+	ft_strlen(vm->player[nb].comments) ? 0 : error("Empty comments\n");
 	prog_size = get_prog_size(data);
+	if (!prog_size || vm->player[nb].read_ret != prog_size + sizeof(t_header))
+		error("Bad prog_size\n");
 	ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 		nb, prog_size, vm->player[nb].name, vm->player[nb].comments);
 	prog_size += i;

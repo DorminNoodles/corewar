@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/07 13:37:06 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 14:16:57 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ typedef struct	s_player
 	int		last_live;
 	int		tot;
 	int		last_period;
-	int		last_period2;
+	int		read_ret;
+	int		padding;
 	char	*file_name;
 	char	name[PROG_NAME];
 	char	comments[PROG_COMS];
