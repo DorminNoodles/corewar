@@ -6,7 +6,7 @@
 #    By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/26 22:48:41 by rfulop            #+#    #+#              #
-#    Updated: 2017/12/07 13:34:53 by rfulop           ###   ########.fr        #
+#    Updated: 2017/12/07 16:10:20 by rfulop           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 .PHONY: all, clean, fclean, re
@@ -165,15 +165,17 @@ clean:
 	@rm -rf $(OBJ_PATH_VM)
 	@rm -rf $(OBJ_PATH_ASM)
 	@rm -rf $(OBJ_PATH_DASM)
-	@make -C $(LIB_PATH) fclean
+	@make -C $(LIB_PATH) clean
 	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_VM)\033[1;0m\033[31m removed.\033[0m"
 	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_ASM)\033[1;0m\033[31m removed.\033[0m"
 	@echo "\033[31mObjects files \033[1;31m$(OBJ_FILES_DASM)\033[1;0m\033[31m removed.\033[0m"
 
 fclean: clean
-	@rm -f $(VM_NAME)
-	@rm -f $(ASM_NAME)
-	@rm -f $(DASM_NAME)
+	@rm -f $(BUILD_PATH)$(VM_NAME)
+	@rm -f $(BUILD_PATH)$(ASM_NAME)
+	@rm -f $(BUILD_PATH)$(DASM_NAME)
+	@rm -rf $(BUILD_PATH)
+	@make -C $(LIB_PATH) fclean
 	@echo "\033[31mBinary \033[1;31m$(VM_NAME)\033[1;0m\033[31m removed.\033[0m"
 	@echo "\033[31mBinary \033[1;31m$(ASM_NAME)\033[1;0m\033[31m removed.\033[0m"
 	@echo "\033[31mBinary \033[1;31m$(DASM_NAME)\033[1;0m\033[31m removed.\033[0m"
