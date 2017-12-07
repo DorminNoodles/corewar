@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/07 02:52:15 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 13:28:39 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	check_magic_nb(t_dasm_env *env)
 {
-	int i;
-	int j;
-	char *hex;
-	char *tmp;
-	char *mag;
+	int		i;
+	int		j;
+	char	*hex;
+	char	*tmp;
+	char	*mag;
 
 	mag = ft_conv_hex(ft_itoa(COREWAR_EXEC_MAGIC), HEX2);
 	i = 0;
@@ -60,6 +60,6 @@ void	dasm_error(int err, char *str)
 		ft_printf("Rly dude ? Don't touch my .cor !\n");
 	else if (err == WRONG_MAG)
 		ft_printf("Wrong magic number.\n");
-if (err != WRONG_FILE)
+	if (err != WRONG_FILE)
 		exit(EXIT_FAILURE);
 }
