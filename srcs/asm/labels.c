@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:57 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 19:12:23 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/06 23:15:51 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ t_tab_labs	*new_label(t_tab_labs **labels, char *line, int bytes)
 	char		*name;
 	t_tab_labs	*new;
 
-	len = 0;
-	while (line[len] != LABEL_CHAR)
-		++len;
+	len = len_is_label(line);
 	if (!(name = ft_strnew(len)))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
 	a = 0;
@@ -76,7 +74,8 @@ t_tab_labs	*new_label(t_tab_labs **labels, char *line, int bytes)
 	check_lab_exits(labels, name);
 	if (!(new = (t_tab_labs*)malloc(sizeof(t_tab_labs))))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
-	new->label = ft_strdup(name);
+	if (!(new->label = ft_strdup(name)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
 	ft_memdel((void*)&name);
 	new->nb_oct = bytes;
 	new->next = NULL;

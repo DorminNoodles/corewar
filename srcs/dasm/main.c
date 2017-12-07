@@ -6,48 +6,27 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/05 18:39:24 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 02:41:51 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	print_instr(int fd, int c)
-{
-	char	*ins;
-	int		size;
-
-	if (c < 1 || c > 16)
-		dasm_error(NO_COMP, NULL);
-	ins = g_op_tab[c - 1].inst;
-	size = ft_strlen(ins);
-	write(fd, "\t", 1);
-	write(fd, ins, ft_strlen(ins));
-	write(fd, "\t", 1);
-}
-
-void	parse_cor(t_dasm_env *env)
+int		ft_bin_len(unsigned char *str)
 {
 	int		i;
-	int		inst;
 
-	i = SRC_BEGIN;
-	while (i < env->size_file)
-	{
-		inst = env->file[i];
-		print_instr(env->fd, inst);
+	i = 0;
+	while (str[i])
 		++i;
-		if (!g_op_tab[inst - 1].need_ocp)
-		{
-			if (inst == 1)
-				i += print_dir4(env->fd, env->file + i);
-			else
-				i += print_dir2(env->fd, env->file + i);
-		}
-		else
-			i += print_args(env->fd, inst, env->file + i);
-		write(env->fd, "\n", 1);
-	}
+	return (i);
+}
+
+void	print_head_bis(t_dasm_env *env, char *comments, int binsize)
+{
+	write(env->fd, ".comment \"", 10);
+	write(env->fd, comments, binsize);
+	write(env->fd, "\"\n\n", 3);
 }
 
 void	print_head(t_dasm_env *env)
@@ -57,9 +36,10 @@ void	print_head(t_dasm_env *env)
 	int		binsize;
 
 	binsize = ft_bin_len(env->file + MAGIC_NB);
-	if (binsize > PROG_NAME_LENGTH)
+	if (binsize <= 0 || binsize > PROG_NAME_LENGTH)
 		dasm_error(NAME_SIZE_ERR, NULL);
-	name = ft_strnew(binsize + 1);
+	if (!(name = ft_strnew(binsize + 1)))
+		dasm_error(MALLOC_ERR, NULL);
 	name[binsize] = '\0';
 	ft_memcpy(name, env->file + MAGIC_NB, binsize);
 	write(env->fd, ".name \"", 7);
@@ -68,19 +48,21 @@ void	print_head(t_dasm_env *env)
 	binsize = ft_bin_len(env->file + PROG_NAME + PROG_SIZE + MAGIC_NB);
 	if (binsize > COMMENT_LENGTH)
 		dasm_error(COM_SIZE_ERR, NULL);
-	comments = ft_strnew(binsize + 1);
-	name[binsize] = '\0';
+	if (!(comments = ft_strnew(binsize + 1)))
+		dasm_error(MALLOC_ERR, NULL);
+	comments[binsize] = '\0';
 	ft_memcpy(comments, env->file + (PROG_NAME + PROG_SIZE + MAGIC_NB),
 	binsize);
-	write(env->fd, ".comment \"", 10);
-	write(env->fd, comments, binsize);
-	write(env->fd, "\"\n\n", 3);
+	print_head_bis(env, comments, binsize);
+	ft_memdel((void*)&name);
+	ft_memdel((void*)&comments);
 }
 
 void	loop(t_dasm_env *env, char **argv, int arg, int fd)
 {
-	create_file_cor(env, argv[arg]);
 	env->file = open_bin(env, fd);
+	check_magic_nb(env);
+	create_file_cor(env, argv[arg]);
 	print_head(env);
 	parse_cor(env);
 	argv[arg][ft_strlen(argv[arg]) - 4] = '\0';
@@ -107,6 +89,7 @@ int		main(int argc, char **argv)
 			loop(&env, argv, arg, fd);
 		else
 			dasm_error(WRONG_FILE, argv[arg]);
+		ft_memdel((void*)&env.file);
 		++arg;
 	}
 	return (0);

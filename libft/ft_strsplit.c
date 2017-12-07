@@ -121,7 +121,8 @@ char			**ft_strsplit(const char *s, char c)
 		letters[words] = '\0';
 		while (i != words)
 		{
-			tab[i] = (char*)malloc(sizeof(char*) * letters[i] + 1);
+			if (!(tab[i] = (char*)malloc(sizeof(char*) * letters[i] + 1)))
+				return (NULL);
 			++i;
 		}
 		tab[words] = 0;

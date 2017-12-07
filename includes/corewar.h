@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/05 19:14:54 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 01:35:40 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@
 
 # define T_REG					1
 # define T_DIR					2
+# define T_DIR4					3
 # define T_IND					4
 # define T_LAB					8
 
@@ -371,6 +372,7 @@ void			display_linux(void);
 # define WRONG_FILE 28
 # define NO_COMP 29
 # define LAB_EXISTS 30
+# define WRONG_MAG 50
 
 typedef struct	s_asm_env
 {
@@ -537,7 +539,7 @@ void			asm_error5(int err, char *str, t_asm_env *env);
 void			asm_error6(int err, t_asm_env *env);
 
 void			verbose_inst(t_asm_env *env, char *ins, int hex);
-void			verbose_arg(t_asm_env *env, char *line, int add, int hex);
+void			verbose_arg(t_asm_env *env, char *line, int arg, int hex);
 void			verbose_lab(char *lab);
 void			verbose_dist_lab(int dist);
 void			verbose_ocp(t_asm_env *env, char ocp);
@@ -567,6 +569,7 @@ int				print_args(int fd, int inst, unsigned char *str);
 */
 void			dasm_error(int err, char *str);
 int				len_is_label(char *str);
+void			check_magic_nb(t_dasm_env *env);
 
 /*
 ** ----- Create file -----
@@ -574,6 +577,7 @@ int				len_is_label(char *str);
 int				ft_bin_len(unsigned char *str);
 unsigned char	*open_bin(t_dasm_env *env, int fd);
 void			create_file_cor(t_dasm_env *env, char *str);
+void			parse_cor(t_dasm_env *env);
 
 /*
 ** ----- Get types ---

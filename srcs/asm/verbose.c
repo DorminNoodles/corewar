@@ -6,25 +6,23 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:44 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/04 22:00:12 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/07 01:15:19 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
+void	verbose_arg_bis(char *line, int arg)
 {
-	int		a;
-	char	*tmp;
-	char	*tmp2;
+	int a;
 
-	a = 0;
 	ft_printf("|");
 	COLOR(C_BLUE);
-	if (add == 1)
+	if (arg == T_DIR || arg == T_DIR4 || arg == T_LAB)
 		ft_printf("%c", DIRECT_CHAR);
-	else if (add == 2)
+	else if (arg == T_REG)
 		ft_printf("%c", REG_CHAR);
+	a = 0;
 	while (line[a] && !is_space(line[a]) && line[a] != SEPARATOR_CHAR)
 	{
 		ft_printf("%c", line[a]);
@@ -32,10 +30,54 @@ void	verbose_arg(t_asm_env *env, char *line, int add, int hex)
 	}
 	COLOR(C_RESET);
 	ft_printf("| ");
-	tmp2 = ft_itoa(hex);
-	tmp = ft_conv_hex(tmp2, HEX2);
-	env->verbose_line = ft_strcat(env->verbose_line, "0");
-	env->verbose_line = ft_strncat(env->verbose_line, ft_strrev(tmp), 8);
+}
+
+char	*swap_hex(char *str)
+{
+	int len;
+	int a;
+	int tmp;
+
+	len = ft_strlen(str) - 1;
+	a = 0;
+	while (a < len)
+	{
+		tmp = str[len];
+		str[len] = str[a + 1];
+		str[a + 1] = tmp;
+		tmp = str[len - 1];
+		str[len - 1] = str[a];
+		str[a] = tmp;
+		len -= 2;
+		a += 2;
+	}
+	return (str);
+}
+
+void	verbose_arg(t_asm_env *env, char *line, int arg, int hex)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	verbose_arg_bis(line, arg);
+	if (!(tmp2 = ft_itoa(hex)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
+	if (!(tmp = ft_conv_hex(tmp2, HEX2)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
+	if (arg == T_REG && hex == 16)
+		env->verbose_line = ft_strcat(env->verbose_line, "10");
+	else if ((line[0] != '-' && (ft_strlen(tmp) % 2)) || arg == T_REG)
+	{
+		env->verbose_line = ft_strcat(env->verbose_line, "0");
+		if (arg == T_DIR4)
+			env->verbose_line = ft_strncat(env->verbose_line, ft_strrev(tmp), 8);
+		else
+			env->verbose_line = ft_strncat(env->verbose_line, ft_strrev(tmp), 4);
+	}
+	else if (arg == T_DIR4)
+		env->verbose_line = ft_strncat(env->verbose_line, swap_hex(tmp), 8);
+	else
+		env->verbose_line = ft_strncat(env->verbose_line, swap_hex(tmp), 4);
 	env->verbose_line = ft_strcat(env->verbose_line, " ");
 	ft_memdel((void*)&tmp);
 }

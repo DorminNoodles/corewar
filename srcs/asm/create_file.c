@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/03 03:12:39 by rfulop            #+#    #+#             */
-/*   Updated: 2017/11/18 15:24:59 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/06 23:12:19 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	create_file(t_asm_env *env, char *str)
 	char	*name;
 
 	len = ft_strlen(str) - 2;
-	tmp = ft_strndup(str, len);
+	if (!(tmp = ft_strndup(str, len)))
+		asm_error(MALLOC_ERR, NULL, 0, 0);
 	if (!(name = (char*)malloc(sizeof(char) * (len + 4 + 1))))
 		asm_error(MALLOC_ERR, NULL, 0, 0);
 	name[len + 4] = '\0';
