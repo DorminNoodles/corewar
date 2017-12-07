@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 21:53:48 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/07 02:42:48 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 02:52:15 by rfulop           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_magic_nb(t_dasm_env *env)
 
 	mag = ft_conv_hex(ft_itoa(COREWAR_EXEC_MAGIC), HEX2);
 	i = 0;
-	j = 0;
+	j = 1;
 	while (mag[i])
 	{
 		hex = ft_strndup(mag + i, 2);
