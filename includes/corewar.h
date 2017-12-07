@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 15:05:43 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/07 14:16:57 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/07 16:02:54 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,6 @@ typedef struct	s_vm
 	int				verbosity;
 	int				winner;
 	int				lives_in_cycle;
-	char			mem[MEM_SIZE];
 	t_mem			ram[MEM_SIZE];
 	int				life_signal[4];
 	char			*files_name[5];

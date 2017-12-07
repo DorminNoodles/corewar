@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 15:13:38 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 18:01:10 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/07 16:28:53 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void		show_pc_move(t_vm *vm, t_proc *proc)
 				% MEM_SIZE].mem);
 			i++;
 		}
-		ft_printf("\n");
+		ft_printf(" \n");
 	}
 }

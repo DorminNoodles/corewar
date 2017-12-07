@@ -6,7 +6,7 @@
 /*   By: rfulop <rfulop@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 17:42:53 by rfulop            #+#    #+#             */
-/*   Updated: 2017/12/06 23:09:24 by rfulop           ###   ########.fr       */
+/*   Updated: 2017/12/07 15:49:49 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_mode(t_asm_env *env, char *name, int fd)
 	line = NULL;
 	env->print = 0;
 	env->labs = NULL;
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		env->current_line = line;
 		check_line(env, line);
@@ -49,7 +49,7 @@ void	print_mode(t_asm_env *env, char *file)
 	line = NULL;
 	env->print = 1;
 	fd = open(file, O_RDONLY);
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		parse(env, line);
 		ft_memdel((void*)&line);
@@ -77,7 +77,7 @@ void	debug_mode(t_asm_env *env, int fd)
 	env->print = 0;
 	env->labs = NULL;
 	ft_printf("********** DEBUG MODE **********\n");
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &line) > 0)
 	{
 		env->current_line = line;
 		env->ko = 0;

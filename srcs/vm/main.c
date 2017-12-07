@@ -6,7 +6,7 @@
 /*   By: lchety <lchety@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 22:10:50 by lchety            #+#    #+#             */
-/*   Updated: 2017/12/04 22:31:03 by lchety           ###   ########.fr       */
+/*   Updated: 2017/12/07 16:44:37 by lchety           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void			usage(void)
 {
-	ft_printf("Usage: ./corewar [-d N -v N | -ncurses ] <[-n N]");
-	ft_printf("champion1.cor><...>\n");
+	ft_printf("Usage: ./corewar [-d N -v N | -ncurses ] <[-n N] ");
+	ft_printf("champion1.cor> <...>\n");
 	ft_printf("  -d N\t\t: Dumps memory after N cycles then exits\n");
 	ft_printf("  -v N\t\t: Verbosity levels, can be added together to enable ");
 	ft_printf("several\n");
@@ -26,7 +26,7 @@ void			usage(void)
 	ft_printf("\t\t\t- 8 : Show deaths\n");
 	ft_printf("\t\t\t- 16 : Show PC movements (Except for jumps)\n");
 	ft_printf("  -ncurses\t: Ncurses output mode\n");
-	ft_printf("\t-n N\t\t: Champion number (position at initalisation of ");
+	ft_printf("  -n N\t\t: Champion number (position at initalisation of ");
 	ft_printf("memory)\n");
 	exit(EXIT_FAILURE);
 }
